@@ -1,0 +1,605 @@
+{
+  "icon": "fa fa-square",
+  "name": {
+    "ar": "أعلى الصفحة",
+    "en": "Header"
+  },
+  "groups": [
+    {
+      "id": "style",
+      "icon": "fa fa-paint-brush",
+      "name": {
+        "ar": "المظهر",
+        "en": "Appearance"
+      },
+      "settings": [
+        {
+          "id": "nav_bg",
+          "type": "color",
+          "label": { "ar": "لون خلفية الهيدر", "en": "Header Background" },
+          "default": "#000000"
+        },
+        {
+          "id": "nav_border",
+          "type": "color",
+          "label": { "ar": "لون حدود الهيدر", "en": "Header Border Color" },
+          "default": "#262626"
+        },
+        {
+          "id": "nav_height",
+          "type": "range",
+          "label": { "ar": "ارتفاع الهيدر", "en": "Header Height" },
+          "min": 48,
+          "max": 96,
+          "step": 4,
+          "unit": "px",
+          "default": 64
+        },
+        {
+          "id": "logo_height",
+          "type": "range",
+          "label": { "ar": "ارتفاع الشعار", "en": "Logo Height" },
+          "min": 20,
+          "max": 64,
+          "step": 2,
+          "unit": "px",
+          "default": 40
+        },
+        {
+          "id": "link_color",
+          "type": "color",
+          "label": { "ar": "لون روابط المنيو", "en": "Nav Link Color" },
+          "default": "#ffffff"
+        },
+        {
+          "id": "icon_color",
+          "type": "color",
+          "label": { "ar": "لون أيقونات الهيدر", "en": "Header Icon Color" },
+          "default": "#ffffff"
+        },
+        {
+          "id": "icon_color_mobile",
+          "type": "color",
+          "label": { "ar": "لون أيقونات الهيدر (الجوال)", "en": "Header Icon Color (Mobile)" },
+          "default": "#ffffff"
+        },
+        {
+          "id": "cart_badge_color",
+          "type": "color",
+          "label": { "ar": "لون شارة عدد السلة", "en": "Cart Badge Color" },
+          "default": "#25A562"
+        },
+        {
+          "id": "dropdown_bg",
+          "type": "color",
+          "label": { "ar": "خلفية القائمة المنسدلة", "en": "Dropdown Background" },
+          "default": "#111111"
+        },
+        {
+          "id": "dropdown_border",
+          "type": "color",
+          "label": { "ar": "حدود القائمة المنسدلة", "en": "Dropdown Border" },
+          "default": "#333333"
+        },
+        {
+          "id": "mega_bg",
+          "type": "color",
+          "label": { "ar": "خلفية الميجا منيو", "en": "Mega Menu Background" },
+          "default": "#000000"
+        },
+        {
+          "id": "mega_link_color",
+          "type": "color",
+          "label": { "ar": "لون روابط الميجا منيو", "en": "Mega Menu Link Color" },
+          "default": "#ffffff"
+        },
+        {
+          "id": "mega_col_head_color",
+          "type": "color",
+          "label": { "ar": "لون عناوين أعمدة الميجا منيو", "en": "Mega Menu Column Header Color" },
+          "default": "#d4d4d4"
+        },
+        {
+          "id": "search_bg",
+          "type": "color",
+          "label": { "ar": "خلفية لوحة البحث", "en": "Search Panel Background" },
+          "default": "#000000"
+        },
+        {
+          "id": "search_border",
+          "type": "color",
+          "label": { "ar": "لون حدود البحث", "en": "Search Panel Border" },
+          "default": "#27272a"
+        },
+        {
+          "id": "search_input_color",
+          "type": "color",
+          "label": { "ar": "لون نص البحث", "en": "Search Input Text Color" },
+          "default": "#a1a1a1"
+        }
+      ]
+    },
+    {
+      "id": "header",
+      "icon": "fa fa-cog",
+      "name": {
+        "ar": "إعدادات الرأس",
+        "en": "Header Settings"
+      },
+      "settings": [
+        {
+          "id": "enable_side_cart",
+          "type": "checkbox",
+          "label": {
+            "ar": "تفعيل السلة الجانبية",
+            "en": "Enable Side Cart"
+          },
+          "info": {
+            "ar": "عند التفعيل، يفتح أيقون السلة في الهيدر درج جانبي بدلاً من الانتقال لصفحة السلة",
+            "en": "When enabled, the cart icon opens a side drawer instead of navigating to the cart page"
+          },
+          "default": false
+        },
+        {
+          "id": "hide_language",
+          "type": "checkbox",
+          "label": {
+            "ar": "إخفاء اللغة",
+            "en": "Hide language"
+          },
+          "default": false
+        },
+        {
+          "id": "hide_country",
+          "type": "checkbox",
+          "label": {
+            "ar": "إخفاء اسم الدولة",
+            "en": "Hide country"
+          },
+          "default": false
+        }
+      ]
+    },
+    {
+      "id": "logo",
+      "icon": "fa fa-image",
+      "name": {
+        "ar": "الشعار",
+        "en": "Logo"
+      },
+      "settings": [
+        {
+          "id": "desktop",
+          "type": "image",
+          "label": {
+            "ar": "شعار سطح المكتب",
+            "en": "Desktop Logo"
+          },
+          "info": {
+            "ar": "ارفع صورة بحجم 200 × 80 بكسل (اختياري)",
+            "en": "Upload image 200 × 80 pixels (optional)"
+          }
+        },
+        {
+          "id": "mobile",
+          "type": "image",
+          "label": {
+            "ar": "شعار الجوال",
+            "en": "Mobile Logo"
+          },
+          "info": {
+            "ar": "ارفع صورة بحجم 150 × 60 بكسل (اختياري)",
+            "en": "Upload image 150 × 60 pixels (optional)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "announcement_bar",
+      "icon": "fa fa-bullhorn",
+      "name": {
+        "ar": "شريط الإعلانات",
+        "en": "Announcement Bar"
+      },
+      "settings": [
+        {
+          "id": "bar_bg_color",
+          "type": "color",
+          "label": { "ar": "لون خلفية الشريط", "en": "Bar Background Color" },
+          "default": "#d3db6f"
+        },
+        {
+          "id": "bar_text_color",
+          "type": "color",
+          "label": { "ar": "لون نص الشريط", "en": "Bar Text Color" },
+          "default": "#000000"
+        },
+        {
+          "id": "bar_icon",
+          "type": "image",
+          "label": { "ar": "أيقونة الشريط", "en": "Bar Icon" },
+          "info": {
+            "ar": "أيقونة تظهر بجانب النص — الحجم المثالي 20×20 بكسل. اتركه فارغاً لاستخدام أيقونة النجمة الافتراضية",
+            "en": "Icon shown next to the text — ideal size 20×20 px. Leave empty to use the default star icon"
+          }
+        },
+        {
+          "id": "bar_icon_size",
+          "type": "range",
+          "label": { "ar": "حجم الأيقونة", "en": "Icon Size" },
+          "min": 14,
+          "max": 32,
+          "step": 2,
+          "unit": "px",
+          "default": 20
+        },
+        {
+          "id": "display",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار شريط الإعلانات",
+            "en": "Display Announcement Bar"
+          },
+          "default": false
+        },
+        {
+          "id": "enable_marquee",
+          "type": "checkbox",
+          "label": {
+            "ar": "تفعيل التمرير المتحرك",
+            "en": "Enable Marquee Animation"
+          },
+          "default": false
+        },
+        {
+          "id": "marquee_speed",
+          "type": "range",
+          "label": {
+            "ar": "سرعة التمرير",
+            "en": "Marquee Speed"
+          },
+          "min": 10,
+          "max": 60,
+          "step": 5,
+          "unit": "s",
+          "default": 30
+        },
+        {
+          "id": "texts",
+          "type": "list",
+          "label": {
+            "ar": "النصوص",
+            "en": "Texts"
+          },
+          "item_label": {
+            "ar": "نص",
+            "en": "Text"
+          },
+          "settings": [
+            {
+              "id": "text",
+              "type": "text",
+              "label": {
+                "ar": "النص",
+                "en": "Text"
+              }
+            }
+          ]
+        },
+        {
+          "id": "url",
+          "type": "text",
+          "label": {
+            "ar": "الرابط",
+            "en": "Link URL"
+          },
+          "default": ""
+        },
+        {
+          "id": "page_display",
+          "type": "select",
+          "label": {
+            "ar": "عرض شريط الإعلانات في",
+            "en": "Display Announcement Bar In"
+          },
+          "default": "all",
+          "options": [
+            {
+              "label": {
+                "ar": "جميع الصفحات",
+                "en": "All pages"
+              },
+              "value": "all"
+            },
+            {
+              "label": {
+                "ar": "الصفحة الرئيسية فقط",
+                "en": "Home page only"
+              },
+              "value": "home"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nav",
+      "icon": "fa fa-bars",
+      "name": {
+        "ar": "المنيو والبحث",
+        "en": "Navigation & Search"
+      },
+      "settings": [
+        {
+          "id": "enable_mega_menu",
+          "type": "checkbox",
+          "label": {
+            "ar": "تفعيل الميجا منيو",
+            "en": "Enable Mega Menu"
+          },
+          "info": {
+            "ar": "يُفعَّل تلقائيًا لأي عنصر في المنيو يحتوي على ثلاثة مستويات",
+            "en": "Activates automatically for any menu item with three levels"
+          },
+          "default": true
+        },
+        {
+          "id": "mega_image",
+          "type": "image",
+          "label": {
+            "ar": "صورة الميجا منيو",
+            "en": "Mega Menu Image"
+          },
+          "info": {
+            "ar": "تظهر على يسار القائمة — الحجم المثالي 280 × 280 بكسل",
+            "en": "Shown on the left side of the dropdown — ideal size 280 × 280 px"
+          }
+        },
+        {
+          "id": "mega_label",
+          "type": "text",
+          "label": {
+            "ar": "عنوان الصورة",
+            "en": "Image Title"
+          },
+          "info": {
+            "ar": "النص الذي يظهر أسفل الصورة",
+            "en": "Text displayed at the bottom of the image"
+          },
+          "default": ""
+        },
+        {
+          "id": "mega_link",
+          "type": "text",
+          "label": {
+            "ar": "رابط الصورة",
+            "en": "Image Link URL"
+          },
+          "info": {
+            "ar": "الرابط الذي تنقل إليه الصورة عند الضغط عليها (اختياري)",
+            "en": "URL the image links to when clicked (optional)"
+          },
+          "default": ""
+        },
+        {
+          "id": "mega_decor",
+          "type": "image",
+          "label": {
+            "ar": "صورة الزينة (أسفل اليمين)",
+            "en": "Decorative Image (bottom right)"
+          },
+          "info": {
+            "ar": "صورة تزيينية تظهر في الزاوية السفلية اليمنى — تُستخدم في الوضع الثابت فقط",
+            "en": "Decorative image shown in the bottom-right corner — used in Static mode only"
+          }
+        },
+        {
+          "id": "mega_trigger_label",
+          "type": "text",
+          "label": {
+            "ar": "نص زر فتح الميجا منيو",
+            "en": "Mega Menu Button Label"
+          },
+          "info": {
+            "ar": "النص الذي يظهر على زر الميجا منيو في شريط التنقل — يُستخدم في الوضع الثابت فقط، اتركه فارغاً لاستخدام اسم عنصر المنيو تلقائياً",
+            "en": "Text shown on the mega menu trigger button in the nav bar — used in Static mode only, leave empty to use the menu item label"
+          },
+          "default": ""
+        },
+        {
+          "id": "mega_mode",
+          "type": "select",
+          "label": {
+            "ar": "نوع الميجا منيو",
+            "en": "Mega Menu Mode"
+          },
+          "info": {
+            "ar": "ديناميكي: يعرض الأقسام من بنية المنيو تلقائيًا — ثابت: تتحكم في الأعمدة والروابط يدويًا من الإعدادات",
+            "en": "Dynamic: columns are built from the menu tree automatically — Static: configure columns and links manually below"
+          },
+          "default": "dynamic",
+          "options": [
+            {
+              "value": "dynamic",
+              "label": { "ar": "ديناميكي (من المنيو)", "en": "Dynamic (from menu)" }
+            },
+            {
+              "value": "static",
+              "label": { "ar": "ثابت (من الإعدادات)", "en": "Static (from settings)" }
+            }
+          ]
+        },
+        {
+          "id": "mega_standalone_links",
+          "type": "list",
+          "label": {
+            "ar": "روابط بدون عنوان عمود (يمين)",
+            "en": "Standalone Links (no column header, far right)"
+          },
+          "info": {
+            "ar": "تظهر كعمود منفصل على أقصى اليمين بدون عنوان — تُستخدم في الوضع الثابت فقط",
+            "en": "Shown as a separate column on the far right with no heading — used in Static mode only"
+          },
+          "item_label": { "ar": "رابط", "en": "Link" },
+          "settings": [
+            {
+              "id": "label",
+              "type": "text",
+              "label": { "ar": "النص", "en": "Label" }
+            },
+            {
+              "id": "url",
+              "type": "text",
+              "label": { "ar": "الرابط", "en": "URL" },
+              "default": ""
+            }
+          ]
+        },
+        {
+          "id": "mega_columns",
+          "type": "list",
+          "label": {
+            "ar": "أعمدة الميجا منيو",
+            "en": "Mega Menu Columns"
+          },
+          "info": {
+            "ar": "كل عمود له عنوان وقائمة روابط — تُستخدم في الوضع الثابت فقط",
+            "en": "Each column has a heading and a list of links — used in Static mode only"
+          },
+          "item_label": { "ar": "عمود", "en": "Column" },
+          "settings": [
+            {
+              "id": "title",
+              "type": "text",
+              "label": { "ar": "عنوان العمود", "en": "Column Title" }
+            },
+            {
+              "id": "links",
+              "type": "list",
+              "label": { "ar": "الروابط", "en": "Links" },
+              "item_label": { "ar": "رابط", "en": "Link" },
+              "settings": [
+                {
+                  "id": "label",
+                  "type": "text",
+                  "label": { "ar": "النص", "en": "Label" }
+                },
+                {
+                  "id": "url",
+                  "type": "text",
+                  "label": { "ar": "الرابط", "en": "URL" },
+                  "default": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "enable_search",
+          "type": "checkbox",
+          "label": {
+            "ar": "تفعيل البحث المتقدم",
+            "en": "Enable Advanced Search"
+          },
+          "info": {
+            "ar": "يُظهر لوحة البحث المتقدمة مع منتجات مميزة وعمليات بحث شائعة",
+            "en": "Shows the advanced search panel with featured products and popular searches"
+          },
+          "default": true
+        },
+        {
+          "id": "search_placeholder",
+          "type": "text",
+          "label": { "ar": "نص placeholder حقل البحث", "en": "Search Input Placeholder" },
+          "default": ""
+        },
+        {
+          "id": "show_popular",
+          "type": "checkbox",
+          "label": { "ar": "إظهار عمليات البحث الشائعة", "en": "Show Popular Searches" },
+          "default": true
+        },
+        {
+          "id": "popular_title",
+          "type": "text",
+          "label": { "ar": "عنوان قسم البحث الشائع", "en": "Popular Searches Title" },
+          "info": {
+            "ar": "اتركه فارغاً لاستخدام النص الافتراضي",
+            "en": "Leave empty to use the default text"
+          },
+          "default": ""
+        },
+        {
+          "id": "show_products",
+          "type": "checkbox",
+          "label": { "ar": "إظهار المنتجات المميزة", "en": "Show Featured Products" },
+          "default": true
+        },
+        {
+          "id": "search_bg_color",
+          "type": "color",
+          "label": { "ar": "لون خلفية لوحة البحث", "en": "Search Panel Background" },
+          "default": "#000000"
+        },
+        {
+          "id": "search_border_color",
+          "type": "color",
+          "label": { "ar": "لون حدود لوحة البحث", "en": "Search Panel Border Color" },
+          "default": "#27272a"
+        },
+        {
+          "id": "search_text_color",
+          "type": "color",
+          "label": { "ar": "لون نص البحث والأيقونات", "en": "Search Text & Icons Color" },
+          "default": "#a1a1a1"
+        },
+        {
+          "id": "search_results_text_color",
+          "type": "color",
+          "label": { "ar": "لون نص نتائج البحث والعناوين", "en": "Results & Headings Color" },
+          "default": "#ffffff"
+        },
+        {
+          "id": "search_card_border_color",
+          "type": "color",
+          "label": { "ar": "لون حدود كارت المنتج في البحث", "en": "Product Card Border Color" },
+          "default": "#3f3f46"
+        },
+        {
+          "id": "popular_searches",
+          "type": "list",
+          "label": {
+            "ar": "عمليات البحث الشائعة",
+            "en": "Popular Searches"
+          },
+          "info": {
+            "ar": "تظهر على يمين لوحة البحث قبل الكتابة",
+            "en": "Shown on the right side of the search panel before typing"
+          },
+          "item_label": {
+            "ar": "كلمة بحث",
+            "en": "Search term"
+          },
+          "settings": [
+            {
+              "id": "term",
+              "type": "text",
+              "label": {
+                "ar": "الكلمة أو العبارة",
+                "en": "Keyword or phrase"
+              }
+            }
+          ]
+        },
+        {
+          "id": "search_products",
+          "type": "products",
+          "label": {
+            "ar": "المنتجات المميزة في البحث",
+            "en": "Featured Products in Search"
+          }
+        }
+      ]
+    }
+  ]
+}

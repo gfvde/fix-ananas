@@ -1,0 +1,228 @@
+{
+  "template": "sections/about-image-strip.jinja",
+  "name": {
+    "ar": "شريط الصور (About)",
+    "en": "Image Strip (About)"
+  },
+  "settings": [
+    {
+      "id": "photo1",
+      "type": "image",
+      "label": {
+        "ar": "الصورة 1",
+        "en": "Photo 1"
+      }
+    },
+    {
+      "id": "photo1_url",
+      "type": "url",
+      "label": {
+        "ar": "رابط الصورة 1",
+        "en": "Photo 1 URL"
+      },
+      "default": ""
+    },
+    {
+      "id": "photo1_title",
+      "type": "text",
+      "label": {
+        "ar": "عنوان الصورة 1",
+        "en": "Photo 1 Title"
+      },
+      "default": ""
+    },
+    {
+      "id": "photo1_subtitle",
+      "type": "text",
+      "label": {
+        "ar": "العنوان الفرعي للصورة 1",
+        "en": "Photo 1 Subtitle"
+      },
+      "default": ""
+    },
+    {
+      "id": "photo2",
+      "type": "image",
+      "label": {
+        "ar": "الصورة 2",
+        "en": "Photo 2"
+      }
+    },
+    {
+      "id": "photo2_url",
+      "type": "url",
+      "label": {
+        "ar": "رابط الصورة 2",
+        "en": "Photo 2 URL"
+      },
+      "default": ""
+    },
+    {
+      "id": "photo2_title",
+      "type": "text",
+      "label": {
+        "ar": "عنوان الصورة 2",
+        "en": "Photo 2 Title"
+      },
+      "default": ""
+    },
+    {
+      "id": "photo2_subtitle",
+      "type": "text",
+      "label": {
+        "ar": "العنوان الفرعي للصورة 2",
+        "en": "Photo 2 Subtitle"
+      },
+      "default": ""
+    },
+    {
+      "id": "photo3",
+      "type": "image",
+      "label": {
+        "ar": "الصورة 3",
+        "en": "Photo 3"
+      }
+    },
+    {
+      "id": "photo3_url",
+      "type": "url",
+      "label": {
+        "ar": "رابط الصورة 3",
+        "en": "Photo 3 URL"
+      },
+      "default": ""
+    },
+    {
+      "id": "photo3_title",
+      "type": "text",
+      "label": {
+        "ar": "عنوان الصورة 3",
+        "en": "Photo 3 Title"
+      },
+      "default": ""
+    },
+    {
+      "id": "photo3_subtitle",
+      "type": "text",
+      "label": {
+        "ar": "العنوان الفرعي للصورة 3",
+        "en": "Photo 3 Subtitle"
+      },
+      "default": ""
+    },
+    {
+      "id": "photo4",
+      "type": "image",
+      "label": {
+        "ar": "الصورة 4",
+        "en": "Photo 4"
+      }
+    },
+    {
+      "id": "photo4_url",
+      "type": "url",
+      "label": {
+        "ar": "رابط الصورة 4",
+        "en": "Photo 4 URL"
+      },
+      "default": ""
+    },
+    {
+      "id": "photo4_title",
+      "type": "text",
+      "label": {
+        "ar": "عنوان الصورة 4",
+        "en": "Photo 4 Title"
+      },
+      "default": ""
+    },
+    {
+      "id": "photo4_subtitle",
+      "type": "text",
+      "label": {
+        "ar": "العنوان الفرعي للصورة 4",
+        "en": "Photo 4 Subtitle"
+      },
+      "default": ""
+    },
+    {
+      "id": "title_color",
+      "type": "color",
+      "label": {
+        "ar": "لون عناوين الصور",
+        "en": "Image Title Color"
+      },
+      "default": "#000000"
+    },
+    {
+      "id": "subtitle_color",
+      "type": "color",
+      "label": {
+        "ar": "لون العناوين الفرعية للصور",
+        "en": "Image Subtitle Color"
+      },
+      "default": "#000000"
+    },
+    {
+      "id": "desktop_gap",
+      "type": "range",
+      "label": {
+        "ar": "المسافة بين الصور على الديسكتوب",
+        "en": "Desktop image gap"
+      },
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "id": "mobile_gap",
+      "type": "range",
+      "label": {
+        "ar": "المسافة بين الصور على الموبايل",
+        "en": "Mobile image gap"
+      },
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "id": "mobile_row_gap",
+      "type": "range",
+      "label": {
+        "ar": "المسافة الرأسية بين الصور على الموبايل",
+        "en": "Mobile row gap"
+      },
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "id": "mobile_padding",
+      "type": "range",
+      "label": {
+        "ar": "هامش الموبايل الجانبي",
+        "en": "Mobile side padding"
+      },
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "id": "remove_bottom_margin",
+      "type": "checkbox",
+      "label": {
+        "ar": "إزالة المسافة السفلية",
+        "en": "Remove Bottom Margin"
+      },
+      "default": false
+    }
+  ]
+}

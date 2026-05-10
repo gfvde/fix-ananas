@@ -1,0 +1,327 @@
+{# Quick View Modal - Fetches product page and injects content #}
+
+{# Scoped styles — only apply inside the quick-view modal #}
+<style>
+
+@media (max-width: 768px) {
+  
+  .quick-view-panel{
+    max-height: 75vh;
+    overflow-y: auto;
+  }
+}
+  .quick-view-panel{
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  #quick-view-content  {
+    .Features-Grid{
+      display: none !important;
+    }
+    .bundle-section{
+      display: none !important;
+    }
+    .qv_actions{
+      display: none !important;
+    }
+    .product-options__item.colorized {
+  width: 28px;
+  height: 28px;
+  border-radius: 9999px; /* rounded full */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: 0.2s ease;
+  padding: 0 !important;
+  font-size: 0; /* يخفي النص */
+}
+
+/* hover */
+.product-options__item.colorized:hover {
+  transform: scale(1.1);
+}
+
+/* active state */
+.product-options__item.active.colorized {
+  border-color: #111;
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
+}
+
+/* optional: spacing */
+.product-options__list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+  }
+ #quick-view-content .finish-buy{
+  display: none !important;
+  }
+  /* ── Gallery: main image with thumbnail strip beside it ── */
+/*  #quick-view-content .product-gallery-column .space-y-3 {
+    display: grid;
+    grid-template-columns: 300px 48px;
+    gap: 8px;
+    align-items: stretch;
+  }*/
+  #quick-view-content .checkout_dialog{
+    display: none !important;
+  }
+
+    #quick-view-content .product-options__list:not(:has(.colorized)){
+    width: 100%;
+  }
+  /* Reset space-y vertical margins in flex-row context */
+  #quick-view-content .product-gallery-column .space-y-3 > * + * {
+    margin-top: 0;
+  }
+
+  #quick-view-content .product-gallery-column .space-y-3 > .relative:first-child {
+    width: 100%;
+    height: 418px;
+    min-width: 0;
+  }
+  #quick-view-content .product-gallery-column .space-y-3 {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 12px;
+  align-items: stretch;
+}
+@media (max-width: 768px) {
+  #quick-view-content .product-gallery-column .space-y-3 {
+    display: flex;
+    flex-direction: column;
+  }
+}
+  #quick-view-content .border-border-light {
+    display: none;
+  }
+
+  .product-gallery__next,
+  .product-gallery__prev {
+    border-radius: 50%;
+  }
+
+  #product-form .qty-input {
+    border-color: #d4d4d4;
+    border-radius: 0;
+  }
+
+  #quick-view-content .product-gallery-thumbs {
+    display: flex !important;
+    flex-direction: column;
+    width: 48px;
+    min-width: 48px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    order: 2;
+    max-height: 418px;
+  }
+
+  #quick-view-content .product-gallery-thumbs::-webkit-scrollbar {
+    display: none;
+  }
+
+  #quick-view-content .product-gallery-thumbs__container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  #quick-view-content .product-gallery-thumbs__slide {
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+  }
+
+  #quick-view-content .product-gallery-thumbs__slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Hide mobile progress-bar row inside quick view */
+  #quick-view-content .product-gallery-column .md\:hidden {
+    display: none !important;
+  }
+
+  /* ── Details column: tighten spacing inside quick view ── */
+  #quick-view-content .product-details-column {
+    gap: 0.875rem;
+  }
+
+  @media (max-width: 767px) {
+    #quick-view-content .product-gallery-column .space-y-3 {
+      display: flex;
+      width: 100%;
+      height: auto;
+      flex-direction: column;
+      gap: 8px;
+      overflow: hidden;
+    }
+
+    #quick-view-content .product-gallery-column .space-y-3 > .relative:first-child {
+      width: 100%;
+      height: 187px;
+    }
+  }
+
+  /* .product-gallery__slide{
+    
+    flex: 0 0 calc(76% - 8px) !important;
+  } */
+</style>
+
+<el-dialog id="quick-view-dialog">
+  <dialog
+    id="product-quick-view-modal"
+    aria-labelledby="quick-view-title"
+    class="quick-view-dialog fixed inset-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent"
+    data-error-message="{{ _('Failed to load product. Please try again.') }}"
+    data-go-to-product="{{ _('Go to product page') }}"
+  >
+    <el-dialog-backdrop
+      class="fixed inset-0 bg-black/10 backdrop-blur-sm transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
+    ></el-dialog-backdrop>
+
+    <div
+      tabindex="0"
+      class="quick-view-shell flex min-h-full justify-center p-4 focus:outline-none sm:items-center"
+    >
+      <el-dialog-panel
+        class="quick-view-panel relative w-full transform overflow-x-hidden overflow-y-auto transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in data-closed:sm:translate-y-0 data-closed:sm:scale-95"
+      >
+        {# Header #}
+        <div class="quick-view-header">
+          <h2
+            id="quick-view-title"
+            class="quick-view-title"
+          >
+            {# {{ _("Select option") }} #}
+          </h2>
+          <button
+            command="close"
+            commandfor="product-quick-view-modal"
+            type="button"
+            class="quick-view-close"
+            aria-label="{{ _('Close') }}"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        {# Skeleton Loader #}
+        <div
+          id="quick-view-skeleton"
+          class="quick-view-skeleton grid gap-6 sm:grid-cols-2"
+          aria-label="{{ _('Loading product details') }}"
+          aria-busy="true"
+        >
+          {# Gallery Skeleton #}
+          <div class="animate-pulse space-y-3">
+            <div class="aspect-[3/4] rounded-lg bg-[#e9e4dd]"></div>
+            <div class="flex gap-2">
+              <div class="aspect-square w-1/4 rounded bg-[#e9e4dd]"></div>
+              <div class="aspect-square w-1/4 rounded bg-[#e9e4dd]"></div>
+              <div class="aspect-square w-1/4 rounded bg-[#e9e4dd]"></div>
+              <div class="aspect-square w-1/4 rounded bg-[#e9e4dd]"></div>
+            </div>
+          </div>
+
+          {# Details Skeleton #}
+          <div class="animate-pulse space-y-4">
+            <div class="space-y-2">
+              <div class="h-8 w-3/4 rounded bg-[#e9e4dd]"></div>
+              <div class="h-5 w-1/2 rounded bg-[#e9e4dd]"></div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="h-7 w-24 rounded bg-[#e9e4dd]"></div>
+              <div class="h-5 w-20 rounded bg-[#e9e4dd]"></div>
+            </div>
+            <div class="space-y-3">
+              <div class="h-4 w-20 rounded bg-[#e9e4dd]"></div>
+              <div class="flex gap-2">
+                <div class="h-10 w-16 rounded bg-[#e9e4dd]"></div>
+                <div class="h-10 w-16 rounded bg-[#e9e4dd]"></div>
+                <div class="h-10 w-16 rounded bg-[#e9e4dd]"></div>
+              </div>
+            </div>
+            <div class="space-y-2 pt-4">
+              <div class="h-12 w-full rounded bg-[#e9e4dd]"></div>
+            </div>
+          </div>
+        </div>
+
+        {# Content Container - Will receive fetched product content #}
+        <div
+          id="quick-view-content"
+          class="quick-view-content hidden"
+        ></div>
+
+        {% set quick_view_payment_methods = safeget(settings, 'cart_page_payment_methods', safeget(settings, 'cart_page_cart_page_payment_methods', [])) %}
+        <template id="quick-view-payment-template">
+          <div
+            class="quick-view-payments"
+            aria-label="{{ _('Payment methods') }}"
+          >
+            <div class="quick-view-payments__track">
+              {% for repeat in range(0,8) %}
+                <div
+                  class="quick-view-payments__group"
+                  {% if repeat == 2 %}aria-hidden="true"{% endif %}
+                >
+                  {% if quick_view_payment_methods and quick_view_payment_methods | length > 0 %}
+                    {% for method in quick_view_payment_methods %}
+                      <span class="quick-view-payment">
+                        {% if method.image %}
+                          <img
+                            src="{{ image_url(method.image, w=120, h=56, f='auto') }}"
+                            alt="{{ method.title | default('') }}"
+                          />
+                        {% else %}
+                          {{ method.title | default(_('Pay')) }}
+                        {% endif %}
+                      </span>
+                    {% endfor %}
+                  {% else %}
+                    {% for label in ['Western Union', 'BANK', 'PayPal', 'tabby', _('Tamara'), 'VISA', 'mada', 'MasterCard', 'valu', 'Apple Pay'] %}
+                      <span class="quick-view-payment quick-view-payment--text">{{ label }}</span>
+                    {% endfor %}
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </template>
+
+        {# View Full Details Link #}
+        <div
+          id="quick-view-footer"
+          class="quick-view-footer hidden"
+        >
+          <a
+            id="quick-view-product-link"
+            href=""
+            class="hidden"
+          >
+            {# {{ _("View full details") }} #}
+          </a>
+        </div>
+      </el-dialog-panel>
+    </div>
+  </dialog>
+</el-dialog>

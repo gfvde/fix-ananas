@@ -1,0 +1,43 @@
+<script>
+  (function () {
+    if (window.__ananasSidebarLayoutReadyBound) return;
+    window.__ananasSidebarLayoutReadyBound = true;
+
+    const desktopQuery = window.matchMedia("(min-width: 1024px)");
+
+    function reveal(root) {
+      root.classList.remove("products-with-sidebar--pending");
+      root.classList.add("products-with-sidebar--ready");
+    }
+
+    function watchRoot(root) {
+      if (!root || root.dataset.sidebarLayoutReady === "true") return;
+      root.dataset.sidebarLayoutReady = "true";
+
+      if (desktopQuery.matches) {
+        window.requestAnimationFrame(function () {
+          reveal(root);
+        });
+      } else {
+        reveal(root);
+      }
+    }
+
+    function initSidebarLayouts() {
+      document.querySelectorAll(".products-with-sidebar").forEach(watchRoot);
+    }
+
+    document.addEventListener("DOMContentLoaded", initSidebarLayouts);
+    window.addEventListener("load", initSidebarLayouts);
+    window.addEventListener("resize", initSidebarLayouts);
+    window.addEventListener("products-updated", function () {
+      document.querySelectorAll(".products-with-sidebar").forEach((root) => {
+        root.dataset.sidebarLayoutReady = "";
+        root.classList.remove("products-with-sidebar--pending");
+      });
+      initSidebarLayouts();
+    });
+
+    initSidebarLayouts();
+  })();
+</script>

@@ -1,0 +1,153 @@
+<section section-id="{{ sectionId }}"
+  data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}" class="bg-white py-6 px-4 md:py-10 md:px-14" dir="rtl" data-carousel>
+  
+  {% set border_radius = settings.border_radius | default(8) %}
+  {% set title_color = settings.title_color | default('#000000') %}
+  {% set subtitle_color = settings.subtitle_color | default('#000000') %}
+
+  {# Desktop Header #}
+  <div class="hidden md:flex flex-col gap-2 items-center text-center mb-6">
+    <h2 class="text-3xl font-medium" style="color: {{ title_color }};">{{ settings.title | default('لحظات من عالم أناناس') }}</h2>
+    <p class="text-base" style="color: {{ subtitle_color }};">{{ settings.subtitle | default('قهوة مو بس تُشرب… تنعاش') }}</p>
+  </div>
+
+  {# Mobile Header with Arrows #}
+  <div class="flex flex-col gap-2 items-center text-center mb-4 md:hidden">
+    <h2 class="text-2xl font-medium" style="color: {{ title_color }};">{{ settings.title | default('لحظات من عالم أناناس') }}</h2>
+    <div class="flex items-center gap-4">
+      <button data-carousel-prev class="w-6 h-6 flex items-center justify-center bg-[#f5f5f5] rounded flex-shrink-0 transition-opacity hover:opacity-80" aria-label="Previous">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="rotate-180"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <p class="text-sm" style="color: {{ subtitle_color }};">{{ settings.subtitle | default('قهوة مو بس تُشرب… تنعاش') }}</p>
+      <button data-carousel-next class="w-6 h-6 flex items-center justify-center bg-[#f5f5f5] rounded flex-shrink-0 transition-opacity hover:opacity-80" aria-label="Next">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+    </div>
+  </div>
+
+  {% set items_list = safeget(settings, "media_items", []) %}
+  {% if not items_list or items_list | length == 0 %}
+    {# Fallback if no items are added yet #}
+    {% set items_list = [
+      {'image': 'https://www.figma.com/api/mcp/asset/66e1e02d-2dd2-49b7-bb9c-6f4f1281b956'},
+      {'image': 'https://www.figma.com/api/mcp/asset/1b8ab7ec-3f3f-4e43-8c18-2287e79dfc67'},
+      {'image': 'https://www.figma.com/api/mcp/asset/56056697-b6c2-4237-96f9-fe6aff5935a6'},
+      {'image': 'https://www.figma.com/api/mcp/asset/d7c9a02c-3453-4a69-b43e-ca7305b48d4d'},
+      {'image': 'https://www.figma.com/api/mcp/asset/a24a842b-b208-40be-a6f1-c75368d75e9b'},
+      {'image': 'https://www.figma.com/api/mcp/asset/483e8e25-b92c-45c4-97a6-f010eef16f5c'},
+      {'image': 'https://www.figma.com/api/mcp/asset/56056697-b6c2-4237-96f9-fe6aff5935a6'},
+      {'image': 'https://www.figma.com/api/mcp/asset/cf54ba75-1088-43d6-abaf-4a19f376d496'},
+      {'image': 'https://www.figma.com/api/mcp/asset/63f9a2bf-3813-4bc5-8a18-761d07eaa6ab'},
+      {'image': 'https://www.figma.com/api/mcp/asset/bd937b91-13cc-49a1-add2-ee563fc39f01'}
+    ] %}
+  {% endif %}
+
+  {# Desktop Grid: 10 items max #}
+  <div class="hidden md:grid grid-cols-5 gap-2.5">
+    {% for i in range(10) %}
+      {% if items_list | length > i %}
+        {% set item = items_list[i] %}
+        <div class="relative w-full aspect-square overflow-hidden ag-media-cell" style="border-radius: {{ border_radius }}px;">
+          {% if item.video %}
+            <video src="{{ item.video }}" playsinline class="w-full h-full object-cover ag-video"></video>
+            <button class="ag-play-btn" aria-label="Play video">
+              <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+                <circle cx="28" cy="28" r="28" fill="rgba(0,0,0,0.45)"/>
+                <path d="M23 18L38 28L23 38V18Z" fill="white"/>
+              </svg>
+            </button>
+          {% elif item.image %}
+            <img src="{{ image_url(item.image, w=400, f='auto') }}" class="w-full h-full object-cover" alt="" />
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  {# Mobile Slider: 2 slides of 4 items max #}
+  <div class="md:hidden">
+    <div class="overflow-hidden" data-carousel-viewport>
+      <div class="flex">
+        {% for slide_idx in range(2) %}
+          {% set start_idx = slide_idx * 4 %}
+          {% if items_list | length > start_idx %}
+            <div class="embla__slide flex-none w-full min-w-0">
+              <div class="grid grid-cols-2 gap-2">
+                {% for i in range(start_idx, start_idx + 4) %}
+                  {% if items_list | length > i %}
+                    {% set item = items_list[i] %}
+                    <div class="relative w-full aspect-square overflow-hidden ag-media-cell" style="border-radius: {{ border_radius }}px;">
+                      {% if item.video %}
+                        <video src="{{ item.video }}" playsinline class="w-full h-full object-cover ag-video"></video>
+                        <button class="ag-play-btn" aria-label="Play video">
+                          <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+                            <circle cx="28" cy="28" r="28" fill="rgba(0,0,0,0.45)"/>
+                            <path d="M23 18L38 28L23 38V18Z" fill="white"/>
+                          </svg>
+                        </button>
+                      {% elif item.image %}
+                        <img src="{{ image_url(item.image, w=400, f='auto') }}" class="w-full h-full object-cover" alt="" />
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    
+    {# Pagination Scrollbar #}
+    <div class="flex justify-center mt-4">
+       <div class="w-[180px] h-[2px] bg-[#E5E5E5] relative overflow-hidden rounded-full flex flex-row-reverse">
+         <div class="h-full bg-[#737373] transition-all duration-300" data-carousel-progress style="width: 50%;"></div>
+       </div>
+    </div>
+  </div>
+
+
+<style>
+  [section-id="{{ sectionId }}"] .ag-media-cell { cursor: pointer; }
+  [section-id="{{ sectionId }}"] .ag-play-btn {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: opacity 0.2s;
+  }
+  [section-id="{{ sectionId }}"] .ag-play-btn svg { filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3)); }
+  [section-id="{{ sectionId }}"] .ag-media-cell.is-playing .ag-play-btn { opacity: 0; }
+  [section-id="{{ sectionId }}"] .ag-media-cell.is-playing:hover .ag-play-btn { opacity: 1; }
+</style>
+
+<script>
+  (function() {
+    var section = document.querySelector('[section-id="{{ sectionId }}"]');
+    if (!section) return;
+    section.querySelectorAll('.ag-media-cell').forEach(function(cell) {
+      var btn = cell.querySelector('.ag-play-btn');
+      var video = cell.querySelector('.ag-video');
+      if (!btn || !video) return;
+      btn.addEventListener('click', function() {
+        if (video.paused) {
+          video.play();
+          cell.classList.add('is-playing');
+        } else {
+          video.pause();
+          cell.classList.remove('is-playing');
+        }
+      });
+      video.addEventListener('ended', function() { cell.classList.remove('is-playing'); });
+    });
+  })();
+</script>
+
+</section>

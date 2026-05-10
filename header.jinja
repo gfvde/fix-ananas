@@ -1,0 +1,1894 @@
+{% set s_nav_bg           = settings.style_nav_bg           | default('#000000') %}
+{% set s_nav_border       = settings.style_nav_border       | default('#262626') %}
+{% set s_nav_height       = settings.style_nav_height       | default(64) %}
+{% set s_logo_height      = settings.style_logo_height      | default(40) %}
+{% set s_link_color       = settings.style_link_color       | default('#ffffff') %}
+{% set s_icon_color       = settings.style_icon_color       | default('#ffffff') %}
+{% set s_icon_color_mobile = settings.style_icon_color_mobile | default(s_icon_color) %}
+{% set s_badge_color      = settings.style_cart_badge_color | default('#25A562') %}
+{% set s_dd_bg            = settings.style_dropdown_bg      | default('#111111') %}
+{% set s_dd_border        = settings.style_dropdown_border  | default('#333333') %}
+{% set s_mega_bg          = settings.style_mega_bg          | default('#000000') %}
+{% set s_mega_link        = settings.style_mega_link_color  | default('#ffffff') %}
+{% set s_mega_head        = settings.style_mega_col_head_color | default('#d4d4d4') %}
+{# Search: specific search settings override the style-group fallbacks #}
+{% set s_search_bg        = settings.nav_search_bg_color      | default(settings.style_search_bg)        | default('#000000') %}
+{% set s_search_border    = settings.nav_search_border_color  | default(settings.style_search_border)    | default('#27272a') %}
+{% set s_search_input     = settings.nav_search_text_color    | default(settings.style_search_input_color) | default('#a1a1a1') %}
+{% set s_search_results   = settings.nav_search_results_text_color | default('#ffffff') %}
+{% set s_search_card_border = settings.nav_search_card_border_color | default('#3f3f46') %}
+
+<script>
+  (function () {
+    var REGION_DIALOG_KEY = 'region_settings_dialog';
+    var KIT_URL = 'https://static.zid.store/sdk/v2.10.7/kit/vitrin-kit.es.js';
+
+    function getDialogHost() {
+      var host = document.querySelector('[data-ananas-region-dialog-host]');
+      if (!host) {
+        host = document.createElement('div');
+        host.id = 'ananas-region-settings-dialog-host';
+        host.setAttribute('data-ananas-region-dialog-host', '');
+        document.body.appendChild(host);
+      }
+      return host;
+    }
+
+    function getDialogConfig() {
+      var config = Object.assign({}, window.ananasRegionSettingsConfig || {});
+      config.custom_styles = window.zidCustomStyles && window.zidCustomStyles.region_settings_dialog
+        ? window.zidCustomStyles.region_settings_dialog
+        : {};
+      return config;
+    }
+
+    function getRegionDialogProxy() {
+      if (window.region_settings_dialog && typeof window.region_settings_dialog.open === 'function') {
+        return window.region_settings_dialog;
+      }
+
+      try {
+        if (typeof region_settings_dialog !== 'undefined' && region_settings_dialog && typeof region_settings_dialog.open === 'function') {
+          return region_settings_dialog;
+        }
+      } catch (error) {}
+
+      return null;
+    }
+
+    function importVitrinKit() {
+      window.__ananasVitrinKitPromise = window.__ananasVitrinKitPromise || import(KIT_URL);
+      return window.__ananasVitrinKitPromise;
+    }
+
+    function waitForInit(initPromise, timeout) {
+      return Promise.race([
+        initPromise,
+        new Promise(function (resolve) {
+          window.setTimeout(resolve, timeout || 3000);
+        })
+      ]);
+    }
+
+    function isRegionDialogRegistered(kit) {
+      return !!(kit && kit.dialogService && typeof kit.dialogService.getDialog === 'function' && kit.dialogService.getDialog(REGION_DIALOG_KEY));
+    }
+
+    function waitForRegionDialog(kit, timeout) {
+      if (isRegionDialogRegistered(kit)) {
+        return Promise.resolve(true);
+      }
+
+      return new Promise(function (resolve) {
+        var startedAt = Date.now();
+        var timer = window.setInterval(function () {
+          if (isRegionDialogRegistered(kit)) {
+            window.clearInterval(timer);
+            resolve(true);
+            return;
+          }
+
+          if (Date.now() - startedAt >= (timeout || 3000)) {
+            window.clearInterval(timer);
+            resolve(false);
+          }
+        }, 100);
+      });
+    }
+
+    window.ananasEnsureRegionSettingsDialog = window.ananasEnsureRegionSettingsDialog || function () {
+      if (window.__ananasRegionDialogReady && window.__ananasRegionDialogKit) {
+        return Promise.resolve(window.__ananasRegionDialogKit);
+      }
+
+      if (window.__ananasRegionDialogInitPromise) {
+        return window.__ananasRegionDialogInitPromise;
+      }
+
+      window.__ananasRegionDialogInitPromise = importVitrinKit().then(function (kit) {
+        if (isRegionDialogRegistered(kit)) {
+          window.__ananasRegionDialogReady = true;
+          window.__ananasRegionDialogKit = kit;
+          return kit;
+        }
+
+        if (typeof kit.initKit !== 'function') {
+          return kit;
+        }
+
+        return waitForInit(kit.initKit(REGION_DIALOG_KEY, getDialogHost(), getDialogConfig()), 3000).then(function () {
+          return waitForRegionDialog(kit, 3000);
+        }).then(function (isReady) {
+          if (isReady) {
+            window.__ananasRegionDialogReady = true;
+            window.__ananasRegionDialogKit = kit;
+          } else {
+            window.__ananasRegionDialogInitPromise = null;
+          }
+
+          return kit;
+        });
+      }).catch(function (error) {
+        window.__ananasRegionDialogInitPromise = null;
+        console.warn('Unable to initialize Zid region settings dialog.', error);
+        return null;
+      });
+
+      return window.__ananasRegionDialogInitPromise;
+    };
+
+    window.openAnanasRegionSettings = function (event) {
+      if (event && event.preventDefault) event.preventDefault();
+      if (event && event.stopPropagation) event.stopPropagation();
+
+      window.ananasEnsureRegionSettingsDialog().then(function (kit) {
+        if (isRegionDialogRegistered(kit) && kit.dialogService && typeof kit.dialogService.openDialog === 'function') {
+          kit.dialogService.openDialog(REGION_DIALOG_KEY);
+          return;
+        }
+
+        if (!kit || !kit.dialogService || typeof kit.dialogService.getDialog !== 'function') {
+          var dialog = getRegionDialogProxy();
+          if (dialog) {
+            dialog.open();
+            return;
+          }
+        }
+
+        console.warn('Region settings dialog is not available yet.');
+      });
+
+      return false;
+    };
+  })();
+</script>
+
+<div class="sticky top-0 z-50" id="ananas-header" dir="rtl">
+
+  {% include 'components/header-announcement-bar.jinja' %}
+
+  {# Shared: region visibility (used in both desktop + mobile) #}
+  {% set show_region = ((store.countries | length > 1) and not settings.header_hide_country) or ((store.languages | length > 1) and not settings.header_hide_language) %}
+
+  {# ── Main Navbar ── #}
+  <header class="ananas-nav">
+
+    {# ════════════════════════════════════════════
+       DESKTOP NAV INNER  (hidden on mobile)
+    ════════════════════════════════════════════ #}
+    <div class="ananas-nav__inner ananas-nav__inner--desk">
+
+      {# Logo (rightmost in RTL) #}
+      <a href="/" class="ananas-nav__logo" aria-label="{{ store.name }}">
+        {% if settings.logo_desktop or settings.logo_mobile %}
+          {% if settings.logo_desktop %}
+            <img src="{{ image_url(settings.logo_desktop, w=200, q=90, f='auto') }}"
+                 style="max-height: {{ s_logo_height }}px;" class="w-auto object-contain" alt="{{ store.name }}" />
+          {% elif settings.logo_mobile %}
+            <img src="{{ image_url(settings.logo_mobile, w=150, q=90, f='auto') }}"
+                 style="max-height: {{ s_logo_height }}px;" class="w-auto object-contain" alt="{{ store.name }}" />
+          {% endif %}
+        {% elif store.logo %}
+          <img src="{{ image_url(store.logo, w=200, q=90, f='auto') }}"
+               style="max-height: {{ s_logo_height }}px;" class="w-auto object-contain" alt="{{ store.name }}" />
+        {% else %}
+          <span class="ananas-nav__logo-text">{{ store.name }}</span>
+        {% endif %}
+      </a>
+
+      {# Center Nav Links #}
+      <nav class="ananas-nav__links" aria-label="{{ _('Main navigation') }}">
+
+        {# ── STATIC MEGA TRIGGER ── #}
+        {% if settings.nav_enable_mega_menu != false and settings.nav_mega_mode == 'static' %}
+          <button class="ananas-nav__link ananas-nav__link--has-sub"
+                  data-mega-trigger="static" aria-expanded="false" aria-controls="mega-static">
+            <span>{{ settings.nav_mega_trigger_label if settings.nav_mega_trigger_label else _('Menu') }}</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        {% endif %}
+
+        {# ── REGULAR MENU ITEMS ── #}
+        {% for item in store.settings.menus.main_menu.items %}
+          {% if item.items | length > 0 %}
+            {% set is_mega = namespace(value=false) %}
+            {% for child in item.items %}
+              {% if child.items | length > 0 %}{% set is_mega.value = true %}{% endif %}
+            {% endfor %}
+
+            {% if is_mega.value and settings.nav_enable_mega_menu != false %}
+              {% if settings.nav_mega_mode != 'static' %}
+                <button class="ananas-nav__link ananas-nav__link--has-sub"
+                        data-mega-trigger="{{ loop.index }}" aria-expanded="false" aria-controls="mega-{{ loop.index }}">
+                  <span>{{ item.label }}</span>
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              {% endif %}
+            {% else %}
+              <div class="ananas-nav__sub-wrap">
+                <a href="{{ item.url | localized_url if item.resource_type != 'url' else item.url }}"
+                   class="ananas-nav__link ananas-nav__link--has-sub"
+                   data-sub-trigger="{{ loop.index }}" aria-expanded="false" aria-controls="sub-{{ loop.index }}">
+                  <span>{{ item.label }}</span>
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+                <div class="ananas-sub" id="sub-{{ loop.index }}" aria-hidden="true">
+                  {% for child in item.items %}
+                    <a href="{{ child.url | localized_url if child.resource_type != 'url' else child.url }}" class="ananas-sub__link">
+                      {{ child.label }}
+                    </a>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          {% else %}
+            <a href="{{ item.url | localized_url if item.resource_type != 'url' else item.url }}" class="ananas-nav__link">
+              {{ item.label }}
+            </a>
+          {% endif %}
+        {% endfor %}
+      </nav>
+
+      {# Desktop Icons #}
+      <div class="ananas-nav__icons">
+        {# Cart #}
+        <a href="{{ url_for('cart_page') }}" class="ananas-nav__icon-btn" aria-label="{{ _('Cart') }}" {% if settings.header_enable_side_cart %}onclick="event.preventDefault(); if(window.openSideCart) window.openSideCart();"{% endif %}>
+	          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+	            <path d="M16.7505 4.24995L0.751039 4.24972L0.75 4.25M16.7505 4.24995L16.75 15.3467C16.75 16.3978 15.8817 17.25 14.8106 17.25H2.68939C1.6183 17.25 0.75 16.3978 0.75 15.3467V4.25M16.7505 4.24995L13.5429 1.04289C13.3554 0.855357 13.101 0.75 12.8358 0.75H4.66421C4.399 0.75 4.14464 0.855357 3.95711 1.04289L0.75 4.25M11.75 7.25C11.75 8.90686 10.4069 10.25 8.75 10.25C7.09315 10.25 5.75 8.90686 5.75 7.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+	          </svg>
+          <span data-cart-badge hidden class="ananas-nav__cart-badge">0</span>
+        </a>
+        {# Wishlist #}
+  <a
+    href="/pages/wishlist"
+    class="ananas-nav__icon-btn"
+    aria-label="{{ _('Wishlist') }}"
+  >
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <path d="M11 19.25S2.75 14.25 2.75 8.25A4.25 4.25 0 0 1 11 5.79 4.25 4.25 0 0 1 19.25 8.25C19.25 14.25 11 19.25 11 19.25Z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        {# Region #}
+        {% if show_region %}
+	          <button type="button" onclick="return window.openAnanasRegionSettings(event)" class="ananas-nav__icon-btn" aria-label="{{ _('Region') }}">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <circle cx="11" cy="11" r="9" stroke="currentColor" stroke-width="1.4"/>
+              <path d="M11 2C11 2 8 6.5 8 11C8 15.5 11 20 11 20M11 2C11 2 14 6.5 14 11C14 15.5 11 20 11 20M2 11H20" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+          </button>
+        {% endif %}
+        {# Account #}
+        <button id="header-login-btn" type="button" onclick="handleLoginAction()" class="ananas-nav__icon-btn" aria-label="{{ _('Login') }}">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <circle cx="11" cy="7.5" r="3.5" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M3 19c0-3.31 3.58-6 8-6s8 2.69 8 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <a id="header-profile-btn" href="{{ url_for('profile') }}" class="ananas-nav__icon-btn" style="display:none" aria-label="{{ _('Profile') }}">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <circle cx="11" cy="7.5" r="3.5" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M3 19c0-3.31 3.58-6 8-6s8 2.69 8 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </a>
+        {# Search #}
+        {% if settings.nav_enable_search != false %}
+          <button class="ananas-nav__icon-btn" id="nav-search-btn" aria-label="{{ _('Search') }}" aria-expanded="false" aria-controls="nav-search-panel">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M17.5 17.5L13.875 13.875M15.83 9.17C15.83 12.85 12.85 15.83 9.17 15.83C5.48 15.83 2.5 12.85 2.5 9.17C2.5 5.48 5.48 2.5 9.17 2.5C12.85 2.5 15.83 5.48 15.83 9.17Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+        {% endif %}
+      </div>
+    </div>
+
+    {# ════════════════════════════════════════════
+       MOBILE NAV INNER  (hidden on desktop)
+       Layout (LTR): [cart+fav+globe] | [logo] | [search+menu]
+    ════════════════════════════════════════════ #}
+    <div class="ananas-nav__inner ananas-nav__inner--mob">
+
+      {# Left: cart + wishlist + region #}
+      <div class="ananas-mob__left">
+        <a href="{{ url_for('cart_page') }}" class="ananas-nav__icon-btn" aria-label="{{ _('Cart') }}" {% if settings.header_enable_side_cart %}onclick="event.preventDefault(); if(window.openSideCart) window.openSideCart();"{% endif %}>
+	          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+	            <path d="M16.7505 4.24995L0.751039 4.24972L0.75 4.25M16.7505 4.24995L16.75 15.3467C16.75 16.3978 15.8817 17.25 14.8106 17.25H2.68939C1.6183 17.25 0.75 16.3978 0.75 15.3467V4.25M16.7505 4.24995L13.5429 1.04289C13.3554 0.855357 13.101 0.75 12.8358 0.75H4.66421C4.399 0.75 4.14464 0.855357 3.95711 1.04289L0.75 4.25M11.75 7.25C11.75 8.90686 10.4069 10.25 8.75 10.25C7.09315 10.25 5.75 8.90686 5.75 7.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+	          </svg>
+          <span data-cart-badge hidden class="ananas-nav__cart-badge">0</span>
+        </a>
+        <a
+          href="/pages/wishlist"
+          class="ananas-nav__icon-btn"
+          aria-label="{{ _('Wishlist') }}"
+        >
+          <svg width="20" height="20" viewBox="0 0 22 22" fill="none">
+            <path d="M11 19.25S2.75 14.25 2.75 8.25A4.25 4.25 0 0 1 11 5.79 4.25 4.25 0 0 1 19.25 8.25C19.25 14.25 11 19.25 11 19.25Z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        {% if show_region %}
+	          <button type="button" onclick="return window.openAnanasRegionSettings(event)" class="ananas-nav__icon-btn" aria-label="{{ _('Region') }}">
+            <svg width="20" height="20" viewBox="0 0 22 22" fill="none">
+              <circle cx="11" cy="11" r="9" stroke="currentColor" stroke-width="1.4"/>
+              <path d="M11 2C11 2 8 6.5 8 11C8 15.5 11 20 11 20M11 2C11 2 14 6.5 14 11C14 15.5 11 20 11 20M2 11H20" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+          </button>
+        {% endif %}
+      </div>
+
+      {# Center: logo #}
+      <a href="/" class="ananas-nav__logo" aria-label="{{ store.name }}">
+        {% if settings.logo_mobile %}
+          <img src="{{ image_url(settings.logo_mobile, w=150, q=90, f='auto') }}"
+               style="max-height: 32px;" class="w-auto object-contain" alt="{{ store.name }}" />
+        {% elif settings.logo_desktop %}
+          <img src="{{ image_url(settings.logo_desktop, w=150, q=90, f='auto') }}"
+               style="max-height: 32px;" class="w-auto object-contain" alt="{{ store.name }}" />
+        {% elif store.logo %}
+          <img src="{{ image_url(store.logo, w=150, q=90, f='auto') }}"
+               style="max-height: 32px;" class="w-auto object-contain" alt="{{ store.name }}" />
+        {% else %}
+          <span class="ananas-nav__logo-text">{{ store.name }}</span>
+        {% endif %}
+      </a>
+
+      {# Right: search + hamburger #}
+      <div class="ananas-mob__right">
+        {% if settings.nav_enable_search != false %}
+          <button class="ananas-nav__icon-btn" id="nav-search-btn-mob"
+                  aria-label="{{ _('Search') }}" aria-expanded="false" aria-controls="nav-search-panel">
+            <span class="mob-search-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M17.5 17.5L13.875 13.875M15.83 9.17C15.83 12.85 12.85 15.83 9.17 15.83C5.48 15.83 2.5 12.85 2.5 9.17C2.5 5.48 5.48 2.5 9.17 2.5C12.85 2.5 15.83 5.48 15.83 9.17Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span class="mob-close-icon" aria-hidden="true" hidden>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </button>
+        {% endif %}
+        {% set mobile_drawer_part = 'button' %}
+        {% include 'components/header/mobile-drawer.jinja' %}
+      </div>
+
+    </div>
+
+  </header>
+
+  {# ─────────────────────────────────────────────────
+     MEGA MENU PANELS
+  ───────────────────────────────────────────────── #}
+  {% if settings.nav_enable_mega_menu != false %}
+
+    {# ── STATIC MODE: one shared panel ───────────── #}
+    {% if settings.nav_mega_mode == 'static' %}
+      <div class="ananas-mega ananas-mega--static" id="mega-static" aria-hidden="true" data-mega-panel="static" style="display:none">
+
+        {% if settings.nav_mega_decor %}
+          <div class="ananas-mega__decor" aria-hidden="true">
+            <img src="{{ image_url(settings.nav_mega_decor, w=480, f='auto') }}" alt="" />
+          </div>
+        {% endif %}
+
+        <div class="ananas-mega__static-inner">
+
+          {% if settings.nav_mega_image %}
+            {% if settings.nav_mega_link %}
+              <a href="{{ settings.nav_mega_link }}" class="ananas-mega__static-img">
+            {% else %}
+              <div class="ananas-mega__static-img">
+            {% endif %}
+              <img
+                src="{{ image_url(settings.nav_mega_image, w=280, h=330, f='auto') }}"
+                alt="{{ settings.nav_mega_label | default('') }}"
+                class="ananas-mega__img"
+              />
+              {% if settings.nav_mega_label %}
+                <span class="ananas-mega__img-label ananas-mega__img-label--static">{{ settings.nav_mega_label }}</span>
+              {% endif %}
+            {% if settings.nav_mega_link %}</a>{% else %}</div>{% endif %}
+          {% endif %}
+
+          <div class="ananas-mega__static-cols">
+            {% if settings.nav_mega_standalone_links %}
+              <div class="ananas-mega__col ananas-mega__col--solo">
+                {% for link in settings.nav_mega_standalone_links %}
+                  <a href="{{ link.url | default('#') }}" class="ananas-mega__link">{{ link.label }}</a>
+                {% endfor %}
+              </div>
+            {% endif %}
+            {% for col in settings.nav_mega_columns or [] %}
+              <div class="ananas-mega__col">
+                {% if col.title %}<p class="ananas-mega__col-head">{{ col.title }}</p>{% endif %}
+                {% for link in col.links or [] %}
+                  <a href="{{ link.url | default('#') }}" class="ananas-mega__link">{{ link.label }}</a>
+                {% endfor %}
+              </div>
+            {% endfor %}
+          </div>
+
+        </div>
+      </div>
+    {% endif %}
+
+    {# ── DYNAMIC MODE: one panel per 3-level menu item ─ #}
+    {% if settings.nav_mega_mode != 'static' %}
+    {% for item in store.settings.menus.main_menu.items %}
+      {% if item.items | length > 0 %}
+        {% set is_mega = namespace(value=false) %}
+        {% for child in item.items %}
+          {% if child.items | length > 0 %}{% set is_mega.value = true %}{% endif %}
+        {% endfor %}
+
+        {% if is_mega.value %}
+          <div class="ananas-mega" id="mega-{{ loop.index }}" aria-hidden="true" data-mega-panel="{{ loop.index }}" style="display:none">
+            <div class="ananas-mega__inner">
+
+                {# ── DYNAMIC MODE: columns built from menu tree ──────────── #}
+                <div class="ananas-mega__cols">
+
+                  {# Standalone level-2 links (no grandchildren) — no header, offset down #}
+                  {% set standalone = [] %}
+                  {% for child in item.items %}
+                    {% if child.items | length == 0 %}{% set _ = standalone.append(child) %}{% endif %}
+                  {% endfor %}
+                  {% if standalone | length > 0 %}
+                    <div class="ananas-mega__col ananas-mega__col--solo">
+                      {% for child in standalone %}
+                        <a
+                          href="{{ child.url | localized_url if child.resource_type != 'url' else child.url }}"
+                          class="ananas-mega__link"
+                        >{{ child.label }}</a>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+
+                  {# Level-2 items with level-3 children → columns with header + links #}
+                  {% for child in item.items %}
+                    {% if child.items | length > 0 %}
+                      <div class="ananas-mega__col">
+                        <p class="ananas-mega__col-head">{{ child.label }}</p>
+                        {% for gc in child.items %}
+                          <a
+                            href="{{ gc.url | localized_url if gc.resource_type != 'url' else gc.url }}"
+                            class="ananas-mega__link"
+                          >{{ gc.label }}</a>
+                        {% endfor %}
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+
+                </div>{# /.ananas-mega__cols #}
+
+              {# Featured image — LAST in DOM → LEFT side in RTL flex #}
+              {% if settings.nav_mega_image %}
+                {% if settings.nav_mega_link %}
+                  <a href="{{ settings.nav_mega_link }}" class="ananas-mega__img-wrap">
+                {% else %}
+                  <div class="ananas-mega__img-wrap">
+                {% endif %}
+                  <img
+                    src="{{ image_url(settings.nav_mega_image, w=280, h=330, f='auto') }}"
+                    alt="{{ settings.nav_mega_label | default('') }}"
+                    class="ananas-mega__img"
+                  />
+                  {% if settings.nav_mega_label %}
+                    <span class="ananas-mega__img-label">{{ settings.nav_mega_label }}</span>
+                  {% endif %}
+                {% if settings.nav_mega_link %}
+                  </a>
+                {% else %}
+                  </div>
+                {% endif %}
+              {% endif %}
+
+            </div>{# /.ananas-mega__inner #}
+          </div>{# /.ananas-mega #}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+    {% endif %}{# /dynamic mode #}
+
+  {% endif %}{# /nav_enable_mega_menu #}
+
+  {# ─────────────────────────────────────────────────
+     ADVANCED SEARCH PANEL
+     Shown when search button is clicked.
+     Featured products slider + popular searches.
+  ───────────────────────────────────────────────── #}
+  {% if settings.nav_enable_search != false %}
+    <div class="ananas-search" id="nav-search-panel" aria-hidden="true" style="display:none">
+      <div class="ananas-search__inner">
+
+        {# Input row #}
+        <div class="ananas-search__top">
+          <div class="ananas-search__field">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="ananas-search__field-icon" aria-hidden="true">
+              <path d="M21 21L16.65 16.65M19 11C19 15.42 15.42 19 11 19C6.58 19 3 15.42 3 11C3 6.58 6.58 3 11 3C15.42 3 19 6.58 19 11Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <input
+              type="text"
+              id="nav-search-input"
+              class="ananas-search__input"
+              placeholder="{{ settings.nav_search_placeholder if settings.nav_search_placeholder else _('Search') + '…' }}"
+              autocomplete="off"
+              dir="auto"
+            />
+          </div>
+          <div class="ananas-search__sep" aria-hidden="true"></div>
+          <button class="ananas-search__close-btn" id="nav-search-close" aria-label="{{ _('Close') }}">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+
+        {# Body: products slider + popular searches #}
+        <div class="ananas-search__body">
+
+          {# Products slider — shown/hidden from settings #}
+          {% if settings.nav_show_products != false %}
+            <div class="ananas-search__slider-wrap" data-search-featured-wrap>
+              <button class="ananas-search__slider-arrow ananas-search__slider-arrow--prev" id="search-slider-prev" aria-label="{{ _('Previous') }}" hidden>
+                <svg width="6" height="10" viewBox="0 0 6 10" fill="none">
+                  <path d="M5 1L1 5L5 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <button class="ananas-search__slider-arrow ananas-search__slider-arrow--next" id="search-slider-next" aria-label="{{ _('Next') }}" hidden>
+                <svg width="6" height="10" viewBox="0 0 6 10" fill="none">
+                  <path d="M5 1L1 5L5 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="ananas-search__track-viewport">
+                <div class="ananas-search__track" id="search-track">
+                  {% set search_products = settings.nav_search_products.results if settings.nav_search_products and settings.nav_search_products.results else [] %}
+                  {% if search_products %}
+                    {% for product in search_products %}
+                      {% set product_img = product.main_image.image.medium if product.main_image and product.main_image.image else (image_url(product.images[0].image.full_size, w=360, q=85, f='auto') if product.images and product.images|length > 0 else '') %}
+                      {% set product_url = url_for('product_details', slug=product.slug) %}
+                      {% set has_options = product.has_options or product.has_fields %}
+                      <div class="ananas-pcard" data-search-product-card>
+                        <div class="ananas-pcard__img-wrap">
+                          <a href="{{ product_url }}" class="ananas-pcard__link" tabindex="-1" aria-hidden="true">
+                            {% if product_img %}
+                              <img src="{{ product_img }}" alt="{{ product.name }}" class="ananas-pcard__img" loading="lazy">
+                            {% endif %}
+                          </a>
+                        </div>
+                        <div class="ananas-pcard__body">
+                          <div class="ananas-pcard__info">
+                            <a href="{{ product_url }}" class="ananas-pcard__name">{{ product.name }}</a>
+                            <div class="ananas-pcard__price">
+                              {{ product.formatted_sale_price if product.formatted_sale_price is not none else product.formatted_price }}
+                            </div>
+                          </div>
+                          <div class="ananas-pcard__actions">
+                            <button class="ananas-pcard__btn ananas-pcard__btn--cart" type="button" {% if has_options %}data-open-quick-view="true"{% else %}data-add-to-cart="{{ product.id }}"{% endif %} data-product-id="{{ product.id }}" aria-label="{{ _('Add to cart') }}">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                                <path d="M16.7505 4.24995L0.751039 4.24972L0.75 4.25M16.7505 4.24995L16.75 15.3467C16.75 16.3978 15.8817 17.25 14.8106 17.25H2.68939C1.6183 17.25 0.75 16.3978 0.75 15.3467V4.25M16.7505 4.24995L13.5429 1.04289C13.3554 0.855357 13.101 0.75 12.8358 0.75H4.66421C4.399 0.75 4.14464 0.855357 3.95711 1.04289L0.75 4.25M11.75 7.25C11.75 8.90686 10.4069 10.25 8.75 10.25C7.09315 10.25 5.75 8.90686 5.75 7.25" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                            </button>
+                            <button class="ananas-pcard__btn ananas-pcard__btn--wishlist" type="button" data-wishlist-btn data-product-id="{{ product.id }}" aria-label="{{ _('Add to wishlist') }}">
+                              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 17.5S2.5 13 2.5 7.5A3.75 3.75 0 0 1 10 5.26 3.75 3.75 0 0 1 17.5 7.5C17.5 13 10 17.5 10 17.5Z" stroke="white" stroke-width="1.3"/></svg>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    {% endfor %}
+                  {% endif %}
+                </div>{# /.ananas-search__track #}
+              </div>{# /.ananas-search__track-viewport #}
+            </div>
+          {% endif %}
+
+          {# Popular searches — shown/hidden from settings #}
+          {% if settings.nav_show_popular != false and settings.nav_popular_searches %}
+            <div class="ananas-search__popular" id="search-popular">
+              <p class="ananas-search__pop-title">
+                {{ settings.nav_popular_title if settings.nav_popular_title else _('Popular searches') }}
+              </p>
+              <ul class="ananas-search__pop-list">
+                {% for entry in settings.nav_popular_searches %}
+                  <li>
+                    <a href="/products?q={{ entry.term | urlencode }}" class="ananas-search__pop-link">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <path d="M14 14L11.07 11.07M12.67 7.33C12.67 10.28 10.28 12.67 7.33 12.67C4.38 12.67 2 7.33 2 7.33C2 4.38 4.38 2 7.33 2C10.28 2 12.67 4.38 12.67 7.33Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                      </svg>
+                      {{ entry.term }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+
+        </div>{# /.ananas-search__body #}
+
+      </div>{# /.ananas-search__inner #}
+    </div>{# /.ananas-search #}
+  {% endif %}
+
+</div>{# /#ananas-header #}
+
+{% set mobile_drawer_part = 'drawer' %}
+{% include 'components/header/mobile-drawer.jinja' %}
+
+{# Backdrop #}
+<div class="ananas-backdrop" id="ananas-backdrop" aria-hidden="true"></div>
+
+{% if settings.header_enable_side_cart %}
+  {% include 'components/header/side-cart.jinja' %}
+{% endif %}
+
+{# ══════════════════════════════════════════════════
+   STYLES
+══════════════════════════════════════════════════ #}
+<style>
+  /* ─── CSS Variables (from theme settings) ────── */
+  :root {
+    --ananas-nav-bg:          {{ s_nav_bg }};
+    --ananas-nav-border:      {{ s_nav_border }};
+    --ananas-nav-height:      {{ s_nav_height }}px;
+    --ananas-logo-h:          {{ s_logo_height }}px;
+    --ananas-link-color:      {{ s_link_color }};
+    --ananas-icon-color:      {{ s_icon_color }};
+    --ananas-icon-color-mobile: {{ s_icon_color_mobile }};
+    --ananas-badge-color:     {{ s_badge_color }};
+    --ananas-dd-bg:           {{ s_dd_bg }};
+    --ananas-dd-border:       {{ s_dd_border }};
+    --ananas-mega-bg:         {{ s_mega_bg }};
+    --ananas-mega-link:       {{ s_mega_link }};
+    --ananas-mega-head:       {{ s_mega_head }};
+    --ananas-search-bg:         {{ s_search_bg }};
+    --ananas-search-border:     {{ s_search_border }};
+    --ananas-search-input:      {{ s_search_input }};
+    --ananas-search-results:    {{ s_search_results }};
+    --ananas-search-card-border:{{ s_search_card_border }};
+    /* Used by mobile drawer for correct top offset */
+    --header-h:               {{ s_nav_height }}px;
+  }
+
+  /* ─── Reset / base ──────────────────────────── */
+  #ananas-header, #ananas-header *, .ananas-backdrop {
+    box-sizing: border-box;
+  }
+  #ananas-header {
+    font-family: 'GE SS Two', 'Expo Arabic', sans-serif;
+  }
+
+  /* ─── Navbar ─────────────────────────────────── */
+  .ananas-nav {
+    background: var(--ananas-nav-bg);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    border-bottom: 1px solid var(--ananas-nav-border);
+    height: var(--ananas-nav-height);
+  }
+  /* Desktop inner */
+  .ananas-nav__inner--desk {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 80px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    direction: rtl;
+  }
+  /* Mobile inner — CSS Grid: [left-icons 1fr] [logo auto] [right-icons 1fr]
+     hidden on desktop, shown on mobile via media query */
+	  .ananas-nav__inner--mob {
+	    display: none;
+	    height: 56px;
+	    padding: 0 16px;
+	    align-items: center;
+	    grid-template-columns: 1fr auto 1fr;
+	    direction: ltr;
+	    width: 100%;
+	  }
+  .ananas-mob__left  { display: flex; align-items: center; justify-content: flex-start; }
+  .ananas-mob__right { display: flex; align-items: center; justify-content: flex-end; }
+  /* Center logo inside its grid cell */
+  .ananas-nav__inner--mob .ananas-nav__logo { justify-self: center; }
+  .ananas-nav__logo {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+  .ananas-nav__logo-text { color: var(--ananas-link-color); font-size: 18px; font-weight: 600; }
+
+  /* Nav links */
+  .ananas-nav__links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    direction: rtl;
+  }
+  .ananas-nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    height: 32px;
+    padding: 4px 8px;
+    color: var(--ananas-link-color);
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity .15s;
+  }
+  .ananas-nav__link:hover { opacity: .7; }
+  .ananas-nav__link--has-sub svg { transition: transform .2s; }
+  .ananas-nav__link--has-sub.is-open svg { transform: rotate(180deg); }
+
+  /* Simple 2-level sub-dropdown */
+  .ananas-nav__sub-wrap { position: relative; }
+  .ananas-sub {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    background: var(--ananas-dd-bg);
+    border: 1px solid var(--ananas-dd-border);
+    min-width: 160px;
+    padding: 4px 0;
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-4px);
+    transition: opacity .2s, transform .2s;
+    direction: rtl;
+  }
+  .ananas-sub.is-open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .ananas-sub__link {
+    display: block;
+    color: var(--ananas-link-color);
+    font-size: 14px;
+    font-family: inherit;
+    text-decoration: none;
+    padding: 8px 16px;
+    text-align: right;
+    transition: background .15s;
+    white-space: nowrap;
+  }
+  .ananas-sub__link:hover { background: color-mix(in srgb, var(--ananas-dd-bg) 60%, white 40%); }
+
+  /* Icons */
+	  .ananas-nav__icons { display: flex; align-items: center; direction: ltr; }
+  .ananas-nav__icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    flex-shrink: 0;
+    color: var(--ananas-icon-color);
+  }
+  .ananas-nav__cart-badge {
+    position: absolute;
+    top: 4px;
+    left: 20px;
+    background: var(--ananas-badge-color);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ─── MEGA MENU ──────────────────────────────── */
+  /* Hide the dynamic inner when static mode is active */
+  .ananas-mega--static .ananas-mega__inner { display: none; }
+
+  .ananas-mega {
+    background: var(--ananas-mega-bg);
+    border-bottom: 1px solid var(--ananas-nav-border);
+    overflow: hidden;
+    direction: rtl;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out, visibility 0.8s ease-out;
+  }
+  .ananas-mega.is-open { 
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .ananas-mega__inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    min-height: 352px;
+    padding: 32px 56px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 104px;
+    direction: rtl;
+    position: relative;
+  }
+
+  /* Featured image box */
+  .ananas-mega__img-wrap {
+    width: 280px;
+    height: 280px;
+    flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
+    display: block;
+    text-decoration: none;
+  }
+  .ananas-mega__img {
+    width: 100%;
+    height: 117.9%;
+    object-fit: cover;
+    position: absolute;
+    top: -0.02%;
+    left: 0;
+  }
+  .ananas-mega__img-label {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--ananas-mega-link);
+    font-size: 18px;
+    font-weight: 500;
+    font-family: 'Expo Arabic', sans-serif;
+    white-space: nowrap;
+    direction: rtl;
+    pointer-events: none;
+  }
+
+  /* Columns */
+  .ananas-mega__cols {
+    flex: 1;
+    display: flex;
+    gap: 64px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    direction: rtl;
+  }
+  .ananas-mega__col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-end;
+    flex-shrink: 0;
+    width: 142px;
+  }
+  .ananas-mega__col--solo {
+    gap: 24px;
+    padding-top: 44px;
+  }
+  .ananas-mega__col-head {
+    color: var(--ananas-mega-head);
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'Expo Arabic', sans-serif;
+    margin: 0;
+    text-align: right;
+    white-space: nowrap;
+    line-height: 20px;
+    width: 100%;
+  }
+  .ananas-mega__link {
+    color: var(--ananas-mega-link);
+    font-size: 16px;
+    font-weight: 400;
+    font-family: 'Expo Arabic', sans-serif;
+    text-decoration: none;
+    text-align: right;
+    white-space: nowrap;
+    line-height: 24px;
+    transition: opacity .15s;
+    display: block;
+    width: 100%;
+  }
+  .ananas-mega__link:hover { opacity: .65; }
+
+  /* ─── MEGA MENU: STATIC MODE ─────────────────── */
+  /* Removed .ananas-mega--static.is-open max-height as it is now handled by opacity/visibility */
+
+  /* Decorative element — positioned from panel left edge (full-width) */
+  .ananas-mega__decor {
+    position: absolute;
+    left: calc(91.67% - 42px);
+    top: 168px;
+    width: 237px;
+    height: 237px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .ananas-mega__decor img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0.55;
+  }
+
+  /* Centered content container (matches 1440px inner max-width) */
+  .ananas-mega__static-inner {
+    position: relative;
+    max-width: 1440px;
+    margin: 0 auto;
+    height: 352px;
+    z-index: 1;
+  }
+
+  /* Featured image — left absolute */
+  .ananas-mega__static-img {
+    position: absolute;
+    left: 56px;
+    top: 32px;
+    width: 280px;
+    height: 280px;
+    overflow: hidden;
+    display: block;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  .ananas-mega__static-img .ananas-mega__img {
+    width: 100%;
+    height: 117.9%;
+    object-fit: cover;
+    position: absolute;
+    top: -0.02%;
+    left: 0;
+  }
+  .ananas-mega__img-label--static {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--ananas-mega-link);
+    font-size: 18px;
+    font-weight: 500;
+    font-family: 'Expo Arabic', sans-serif;
+    white-space: nowrap;
+    direction: rtl;
+    pointer-events: none;
+  }
+
+  /* Columns — positioned right of image, RTL flow */
+  .ananas-mega__static-cols {
+    position: absolute;
+    left: calc(25% + 23px);
+    top: 32px;
+    display: flex;
+    gap: 64px;
+    align-items: flex-start;
+    direction: rtl;
+    flex-direction: row-reverse;
+  }
+  /* Standalone col in static mode uses pt-36px (matches Figma) */
+  .ananas-mega__static-cols .ananas-mega__col--solo {
+    padding-top: 36px;
+  }
+
+  /* ─── SEARCH PANEL ───────────────────────────── */
+  .ananas-search {
+    background: var(--ananas-search-bg);
+    border-top: 1px solid var(--ananas-search-border);
+    border-bottom: 1px solid var(--ananas-search-border);
+    overflow: hidden;
+    direction: rtl;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    box-shadow: 0 4px 40px rgba(0,0,0,0.15);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out, visibility 0.8s ease-out;
+  }
+  .ananas-search.is-open { 
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .ananas-search__inner {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 80px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  /* Input row */
+  .ananas-search__top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-top: 16px;
+  }
+  .ananas-search__field {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid var(--ananas-search-border);
+    height: 48px;
+    direction: rtl;
+  }
+  .ananas-search__field-icon { flex-shrink: 0; color: var(--ananas-search-input); }
+  .ananas-search__input {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--ananas-search-input);
+    font-size: 18px;
+    font-family: 'Expo Arabic', sans-serif;
+    text-align: right;
+    direction: rtl;
+    width: 100%;
+  }
+  .ananas-search__input::placeholder { color: var(--ananas-search-input); }
+  .ananas-search__input:focus { color: var(--ananas-icon-color); }
+  .ananas-search__sep {
+    width: 0;
+    height: 26px;
+    border-left: 1px solid var(--ananas-search-border);
+    flex-shrink: 0;
+  }
+  .ananas-search__close-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    color: var(--ananas-icon-color);
+  }
+
+  /* Body */
+  .ananas-search__body {
+    width: min(100%, 1184px);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  /* Slider wrapper */
+  .ananas-search__slider-wrap {
+    width: 694px;
+    flex: 0 0 694px;
+    position: relative;
+    min-width: 0;
+  }
+
+  /* Viewport: clips the sliding track */
+  .ananas-search__track-viewport {
+    overflow: hidden;
+    width: 100%;
+    max-width: 694px;
+  }
+
+  /* Slider arrow */
+  .ananas-search__slider-arrow {
+    position: absolute;
+    left: -40px;
+    top: 144px;
+    width: 32px;
+    height: 32px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    border: none;
+    border-radius: 99px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    flex-shrink: 0;
+    color: var(--ananas-icon-color);
+    transition: opacity .2s;
+  }
+  .ananas-search__slider-arrow--next {
+    display: none !important;
+  }
+  .ananas-search__slider-arrow:hover { opacity: .8; }
+  .ananas-search__slider-arrow svg { pointer-events: none; }
+
+  /* Track */
+  .ananas-search__track {
+    display: flex;
+    gap: 14px;
+    padding: 1px;
+    direction: ltr;
+    transition: transform 0.35s ease;
+    will-change: transform;
+  }
+
+  /* Loading skeleton */
+  .ananas-search__skel {
+    width: 163px;
+    height: 260px;
+    flex-shrink: 0;
+    background: color-mix(in srgb, var(--ananas-search-bg) 70%, var(--ananas-search-results) 30%);
+    animation: skelPulse 1.4s ease-in-out infinite;
+  }
+  @keyframes skelPulse {
+    0%,100% { opacity: .4; }
+    50% { opacity: .8; }
+  }
+
+  /* Product card */
+  .ananas-pcard {
+    width: 163px;
+    min-height: 260px;
+    flex-shrink: 0;
+    border: 1px solid #3F3F46;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    text-decoration: none;
+    direction: rtl;
+    transition: border-color .15s;
+    cursor: pointer;
+    background: transparent;
+  }
+  .ananas-pcard:hover { border-color: var(--ananas-search-results); }
+  .ananas-pcard__img-wrap {
+    width: 163px;
+    height: 163px;
+    flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .ananas-pcard__link {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+  .ananas-pcard__img {
+    position: absolute;
+    width: 100%;
+    height: 137.47%;
+    top: -12.41%;
+    left: 0;
+    object-fit: cover;
+  }
+  .ananas-pcard__body {
+    width: 100%;
+    padding: 0 8px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+  }
+  .ananas-pcard__info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .ananas-pcard__name {
+    color: #FFFFFF;
+    font-family: 'Expo Arabic', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    margin: 0;
+    text-decoration: none;
+    width: 100%;
+    min-height: 32px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .ananas-pcard__price {
+    color: #FFFFFF;
+    font-family: 'Expo Arabic', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .ananas-pcard__price .riyal-svg {
+    color: currentColor;
+  }
+  .ananas-pcard__sar {
+    width: 14px;
+    height: 16px;
+    display: inline-flex;
+    flex-shrink: 0;
+  }
+  .ananas-pcard__actions {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .ananas-pcard__btn {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--ananas-search-card-border);
+    border-radius: 99px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    cursor: pointer;
+    transition: border-color .15s;
+    flex-shrink: 0;
+    color: var(--ananas-search-results);
+  }
+  .ananas-pcard__btn:hover { border-color: var(--ananas-search-results); }
+  .ananas-pcard__btn--wishlist,
+  .ananas-pcard__btn--wishlist svg {
+    color: #fff !important;
+  }
+
+  /* Popular searches */
+  .ananas-search__popular {
+    width: 342px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
+  }
+  .ananas-search__pop-title {
+    color: var(--ananas-search-results);
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Expo Arabic', sans-serif;
+    text-align: start;
+    margin: 0;
+    width: 100%;
+  }
+  .ananas-search__pop-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .ananas-search__pop-link {
+    color: var(--ananas-search-results);
+    font-size: 14px;
+    font-family: 'Expo Arabic', sans-serif;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    direction: rtl;
+    transition: opacity .15s;
+    white-space: nowrap;
+  }
+  .ananas-search__pop-link:hover { opacity: .7; }
+
+  /* ─── Backdrop ───────────────────────────────── */
+  .ananas-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 40;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s;
+  }
+  .ananas-backdrop.is-active { opacity: 1; pointer-events: auto; }
+
+  /* ─── Responsive ─────────────────────────────── */
+  @media (max-width: 1024px) {
+    /* Switch to mobile nav */
+    .ananas-nav { height: 56px; }
+    .ananas-nav__inner--desk { display: none !important; }
+    .ananas-nav__inner--mob  { display: grid; }
+    .ananas-nav__icon-btn, .ananas-mobile-btn { color: var(--ananas-icon-color-mobile); }
+    .ananas-mega { display: none; }
+    /* Search panel: narrower padding on tablet */
+    .ananas-search__inner { padding: 0 20px 20px; }
+  }
+
+  @media (max-width: 767px) {
+    .ananas-search {
+      box-shadow: 0 4px 75px rgba(0,0,0,0.4);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+    .ananas-search__inner {
+      padding: 0 0 20px;
+      gap: 24px;
+    }
+    .ananas-search__top {
+      padding: 16px 20px 0;
+      width: 100%;
+    }
+    /* Search panel: stack popular above products */
+    .ananas-search__body {
+      flex-direction: column;
+      gap: 24px;
+      width: 100%;
+      padding: 0 24px;
+      overflow: hidden;
+    }
+    .ananas-search__popular {
+      order: -1;          /* show popular searches FIRST on mobile */
+      display: flex;
+      width: 342px;
+      max-width: 100%;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .ananas-search__pop-list {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px 4px;
+    }
+    .ananas-search__pop-list li {
+      width: calc(50% - 8px);
+    }
+    .ananas-search__slider-wrap {
+      width: 100%;
+      flex: 0 0 auto;
+      order: 1;
+    }
+    .ananas-search__track-viewport {
+      max-width: none;
+      width: 100%;
+      overflow: hidden;
+    }
+    .ananas-search__slider-arrow {
+      left: 8px;
+      top: 130px;
+      background: rgba(255,255,255,0.65);
+      color: #000;
+    }
+    .ananas-pcard {
+      width: 163px;
+      flex-shrink: 0;
+    }
+    .ananas-search.is-open { max-height: 640px; }
+    .ananas-search__field { height: 40px; }
+    .ananas-search__input { font-size: 16px; }
+    .ananas-search__pop-title { font-size: 14px; }
+    .ananas-pcard__img-wrap { aspect-ratio: 1; }
+    /* Announcement bar: desktop version hidden on mobile (handled in its own CSS) */
+  }
+</style>
+
+{# ══════════════════════════════════════════════════
+   SCRIPTS
+══════════════════════════════════════════════════ #}
+<script>
+(function () {
+  'use strict';
+
+  /* ── Helpers ── */
+  function qs(sel, ctx) { return (ctx || document).querySelector(sel); }
+
+  var backdrop      = qs('#ananas-backdrop');
+  var searchPanel   = qs('#nav-search-panel');
+  var searchBtn     = qs('#nav-search-btn');
+  var searchBtnMob  = qs('#nav-search-btn-mob');
+  var searchClose   = qs('#nav-search-close');
+  var searchInput   = qs('#nav-search-input');
+  var searchPopular = qs('#search-popular');
+
+  /* Mobile search icon swap helpers */
+  var mobSearchIcon = searchBtnMob ? qs('.mob-search-icon', searchBtnMob) : null;
+  var mobCloseIcon  = searchBtnMob ? qs('.mob-close-icon',  searchBtnMob) : null;
+  function setMobSearchState(open) {
+    if (!searchBtnMob) return;
+    searchBtnMob.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (mobSearchIcon) mobSearchIcon.hidden =  open;
+    if (mobCloseIcon)  mobCloseIcon.hidden  = !open;
+  }
+
+  /* ── Collect all triggers / panels ── */
+  var megaTriggers = document.querySelectorAll('[data-mega-trigger]');
+  var subTriggers  = document.querySelectorAll('[data-sub-trigger]');
+
+  /* Remove inline display:none added to prevent flash before JS loads */
+  document.querySelectorAll('[data-mega-panel]').forEach(function(p) { p.style.display = ''; });
+  if (searchPanel) searchPanel.style.display = '';
+
+  /* ────────────────────────────────────────────────
+     Close everything
+  ──────────────────────────────────────────────── */
+  function closeAll() {
+    megaTriggers.forEach(function (btn) {
+      btn.classList.remove('is-open');
+      btn.setAttribute('aria-expanded', 'false');
+      var panel = qs('#mega-' + btn.dataset.megaTrigger);
+      if (panel) { panel.classList.remove('is-open'); panel.setAttribute('aria-hidden', 'true'); }
+    });
+    subTriggers.forEach(function (btn) {
+      btn.classList.remove('is-open');
+      btn.setAttribute('aria-expanded', 'false');
+      var panel = qs('#sub-' + btn.dataset.subTrigger);
+      if (panel) { panel.classList.remove('is-open'); }
+    });
+    if (searchPanel) {
+      searchPanel.classList.remove('is-open');
+      searchPanel.setAttribute('aria-hidden', 'true');
+    }
+    if (searchBtn) searchBtn.setAttribute('aria-expanded', 'false');
+    setMobSearchState(false);
+    backdrop.classList.remove('is-active');
+  }
+
+  /* ── Mega triggers ── */
+  megaTriggers.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var idx   = btn.dataset.megaTrigger;
+      var panel = qs('#mega-' + idx);
+      var open  = panel && panel.classList.contains('is-open');
+      closeAll();
+      if (!open && panel) {
+        btn.classList.add('is-open');
+        btn.setAttribute('aria-expanded', 'true');
+        panel.classList.add('is-open');
+        panel.setAttribute('aria-hidden', 'false');
+        backdrop.classList.add('is-active');
+      }
+    });
+  });
+
+  /* ── Simple sub-dropdown triggers: open on hover, navigate on click ── */
+  subTriggers.forEach(function (btn) {
+    var idx   = btn.dataset.subTrigger;
+    var panel = qs('#sub-' + idx);
+    var wrap  = btn.closest('.ananas-nav__sub-wrap');
+    var leaveTimer = null;
+
+    function openSub() {
+      if (leaveTimer) { clearTimeout(leaveTimer); leaveTimer = null; }
+      closeAll();
+      btn.classList.add('is-open');
+      btn.setAttribute('aria-expanded', 'true');
+      if (panel) panel.classList.add('is-open');
+    }
+
+    function scheduleSub() {
+      if (leaveTimer) { clearTimeout(leaveTimer); leaveTimer = null; }
+      leaveTimer = setTimeout(function () {
+        btn.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+        if (panel) panel.classList.remove('is-open');
+      }, 120);
+    }
+
+    if (wrap) {
+      wrap.addEventListener('mouseenter', openSub);
+      wrap.addEventListener('mouseleave', scheduleSub);
+    } else {
+      btn.addEventListener('mouseenter', openSub);
+      btn.addEventListener('mouseleave', scheduleSub);
+      if (panel) {
+        panel.addEventListener('mouseenter', function () {
+          if (leaveTimer) { clearTimeout(leaveTimer); leaveTimer = null; }
+        });
+        panel.addEventListener('mouseleave', scheduleSub);
+      }
+    }
+  });
+
+  /* ── Search toggle ── */
+  if (searchBtn) {
+    searchBtn.addEventListener('click', function () {
+      var open = searchPanel && searchPanel.classList.contains('is-open');
+      closeAll();
+      if (!open) {
+        searchPanel.classList.add('is-open');
+        searchPanel.setAttribute('aria-hidden', 'false');
+        searchBtn.setAttribute('aria-expanded', 'true');
+        backdrop.classList.add('is-active');
+        setTimeout(function () { if (searchInput) searchInput.focus(); }, 160);
+      }
+    });
+  }
+  /* Mobile search button */
+  if (searchBtnMob) {
+    searchBtnMob.addEventListener('click', function () {
+      var open = searchPanel && searchPanel.classList.contains('is-open');
+      closeAll();
+      if (!open) {
+        searchPanel.classList.add('is-open');
+        searchPanel.setAttribute('aria-hidden', 'false');
+        setMobSearchState(true);
+        backdrop.classList.add('is-active');
+        setTimeout(function () { if (searchInput) searchInput.focus(); }, 160);
+      }
+    });
+  }
+
+  if (searchClose) searchClose.addEventListener('click', closeAll);
+  backdrop.addEventListener('click', closeAll);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(); });
+
+  /* ────────────────────────────────────────────────
+     AUTH STATE
+  ──────────────────────────────────────────────── */
+  var loginBtn     = qs('#header-login-btn');
+  var profileBtn   = qs('#header-profile-btn');
+  var mLoginBtn    = qs('#mobile-login-btn');
+	  var mLoggedIn    = qs('#mobile-logged-in-links');
+
+	  function setAuthState(loggedIn) {
+	    if (loginBtn)   loginBtn.style.display   = loggedIn ? 'none' : '';
+	    if (profileBtn) profileBtn.style.display = loggedIn ? '' : 'none';
+	    if (mLoginBtn)  mLoginBtn.style.display  = loggedIn  ? 'none'         : '';
+	    if (mLoggedIn)  mLoggedIn.style.display  = loggedIn  ? 'flex'         : 'none';
+	  }
+
+	  /* handleLoginAction — called by both desktop and mobile login buttons */
+	  window.handleLoginAction = function () {
+	    try {
+	      if (typeof zid !== 'undefined' && zid.customer && zid.customer.isLoggedIn && zid.customer.isLoggedIn()) {
+	        window.location.href = "{{ url_for('profile') }}";
+	        return;
+	      }
+	    } catch (e) {}
+	    if (typeof zid !== 'undefined' && zid.customer && zid.customer.login) {
+	      zid.customer.login();
+	    } else if (typeof zidLogin === 'function') {
+      zidLogin();
+    }
+  };
+
+  /* Listen for Zid auth events */
+  document.addEventListener('zid:customer:loggedIn',  function () { setAuthState(true); });
+  document.addEventListener('zid:customer:loggedOut', function () { setAuthState(false); });
+
+  /* Initial state from cookie / global */
+  (function checkInitialAuth() {
+    if (typeof zid !== 'undefined' && zid.customer) {
+      try {
+        var isLogged = zid.customer.isLoggedIn ? zid.customer.isLoggedIn() : false;
+        setAuthState(isLogged);
+      } catch (e) {}
+    }
+  })();
+
+  /* ────────────────────────────────────────────────
+     CART BADGE
+  ──────────────────────────────────────────────── */
+  var cartBadges = document.querySelectorAll('[data-cart-badge]');
+  function updateCartBadge(count) {
+    cartBadges.forEach(function (badge) {
+      if (count > 0) {
+        badge.textContent = count > 99 ? '99+' : count;
+        badge.removeAttribute('hidden');
+      } else {
+        badge.setAttribute('hidden', '');
+      }
+    });
+  }
+
+  document.addEventListener('zid:cart:updated', function (e) {
+    var count = e.detail && e.detail.items_count != null ? e.detail.items_count : 0;
+    updateCartBadge(count);
+  });
+
+  /* Fetch cart count on load */
+  if (window.zid && window.zid.cart) {
+    window.zid.cart.get()
+      .then(function (d) {
+        var count = d && (d.cart_items_quantity ?? d.products_count ?? d.items_count ?? 0);
+        if (count) updateCartBadge(count);
+      })
+      .catch(function () {});
+  }
+
+  /* ────────────────────────────────────────────────
+     SEARCH PRODUCTS
+  ──────────────────────────────────────────────── */
+  var track     = qs('#search-track');
+  var initialSearchTrackHTML = track ? track.innerHTML : '';
+
+  /* SAR icon SVG (Arabic Riyal symbol) */
+  var sarSvg = '<svg class="ananas-pcard__sar" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+      '<path d="M0 12.1v-1.6l5.2-2V7L0 8.9V7.3l5.2-2V3.5H6.8v1.3L14 2v1.6L6.8 6.5v1.5L14 5.1v1.6l-7.2 2.9v1L14 7.7v1.6l-7.2 2.9v1.9H5.2v-1.4L0 14v-1.9z" fill="white"/>' +
+    '</svg>';
+  var searchCartIconSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">' +
+      '<path d="M16.7505 4.24995L0.751039 4.24972L0.75 4.25M16.7505 4.24995L16.75 15.3467C16.75 16.3978 15.8817 17.25 14.8106 17.25H2.68939C1.6183 17.25 0.75 16.3978 0.75 15.3467V4.25M16.7505 4.24995L13.5429 1.04289C13.3554 0.855357 13.101 0.75 12.8358 0.75H4.66421C4.399 0.75 4.14464 0.855357 3.95711 1.04289L0.75 4.25M11.75 7.25C11.75 8.90686 10.4069 10.25 8.75 10.25C7.09315 10.25 5.75 8.90686 5.75 7.25" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+    '</svg>';
+
+  function escapeHtml(value) {
+    return String(value || '').replace(/[&<>"']/g, function (char) {
+      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char];
+    });
+  }
+
+  function searchProductImage(p) {
+    return (
+      (p.featured_image && (p.featured_image.url || p.featured_image.src)) ||
+      (p.image && (p.image.url || p.image.src || p.image.medium || p.image.full_size)) ||
+      (p.images && p.images[0] && (p.images[0].url || p.images[0].src || (p.images[0].image && (p.images[0].image.medium || p.images[0].image.full_size || p.images[0].image.url)))) ||
+      ''
+    );
+  }
+
+  function searchProductPrice(p) {
+    if (p.formatted_sale_price) return p.formatted_sale_price;
+    if (p.formatted_price) return p.formatted_price;
+    if (p.price_string) return p.price_string;
+    if (p.price_formatted) return p.price_formatted;
+    if (p.price) {
+      var amount = Number(p.price);
+      if (amount > 9999) amount = amount / 100;
+      return sarSvg + amount.toFixed(2);
+    }
+    return '';
+  }
+
+  function createSearchCard(p) {
+    var url   = p.url || p.html_url || (p.handle ? '/products/' + p.handle : '#');
+    var img   = searchProductImage(p);
+    var name  = escapeHtml(p.title || p.name || '');
+    var price = searchProductPrice(p);
+    var id    = p.id || p.product_id || '';
+
+    var card = document.createElement('div');
+    card.className = 'ananas-pcard';
+    card.setAttribute('data-search-product-card', '');
+
+    var imageWrap = document.createElement('div');
+    imageWrap.className = 'ananas-pcard__img-wrap';
+    var imageLink = document.createElement('a');
+    imageLink.className = 'ananas-pcard__link';
+    imageLink.href = url;
+    imageLink.tabIndex = -1;
+    imageLink.setAttribute('aria-hidden', 'true');
+    if (img) {
+      var image = document.createElement('img');
+      image.src = img;
+      image.alt = name;
+      image.className = 'ananas-pcard__img';
+      image.loading = 'lazy';
+      imageLink.appendChild(image);
+    }
+    imageWrap.appendChild(imageLink);
+
+    var body = document.createElement('div');
+    body.className = 'ananas-pcard__body';
+    var info = document.createElement('div');
+    info.className = 'ananas-pcard__info';
+    var title = document.createElement('a');
+    title.className = 'ananas-pcard__name';
+    title.href = url;
+    title.innerHTML = name;
+    info.appendChild(title);
+    if (price) {
+      var priceNode = document.createElement('div');
+      priceNode.className = 'ananas-pcard__price';
+      priceNode.innerHTML = price;
+      info.appendChild(priceNode);
+    }
+
+    var actions = document.createElement('div');
+    actions.className = 'ananas-pcard__actions';
+    var wishButton = document.createElement('button');
+    wishButton.className = 'ananas-pcard__btn ananas-pcard__btn--wishlist';
+    wishButton.type = 'button';
+    wishButton.setAttribute('data-wishlist-btn', '');
+    wishButton.setAttribute('data-product-id', id);
+    wishButton.setAttribute('aria-label', 'wishlist');
+    wishButton.innerHTML = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 17.5S2.5 13 2.5 7.5A3.75 3.75 0 0 1 10 5.26 3.75 3.75 0 0 1 17.5 7.5C17.5 13 10 17.5 10 17.5Z" stroke="white" stroke-width="1.3"/></svg>';
+
+    var cartButton = document.createElement('button');
+    cartButton.className = 'ananas-pcard__btn ananas-pcard__btn--cart';
+    cartButton.type = 'button';
+    cartButton.setAttribute('data-add-to-cart', id);
+    cartButton.setAttribute('aria-label', 'add to cart');
+    cartButton.innerHTML = searchCartIconSvg;
+
+    actions.appendChild(cartButton);
+    actions.appendChild(wishButton);
+    body.appendChild(info);
+    body.appendChild(actions);
+    card.appendChild(imageWrap);
+    card.appendChild(body);
+
+    return card;
+  }
+
+  function renderSearchProducts(items) {
+    if (!track) return;
+    track.innerHTML = '';
+    var fragment = document.createDocumentFragment();
+    items.forEach(function (item) {
+      fragment.appendChild(createSearchCard(item));
+    });
+    track.appendChild(fragment);
+    currentOffset = 0;
+    applySlider();
+    if (window.initWishlistButtons) window.initWishlistButtons();
+    window.dispatchEvent(new CustomEvent('content:loaded'));
+  }
+  window.renderSearchProducts = renderSearchProducts;
+
+  /* ────────────────────────────────────────────────
+     SLIDER NAVIGATION (1-card-per-click, LTR track)
+  ──────────────────────────────────────────────── */
+  var currentOffset = 0;
+  var CARD_GAP = 14;
+
+  function getPerPage() {
+    return window.innerWidth < 768 ? 2 : 4;
+  }
+
+  function getCardW() {
+    var first = track ? track.querySelector('.ananas-pcard') : null;
+    return first ? first.offsetWidth : 163;
+  }
+
+  function getMaxOffset() {
+    if (!track) return 0;
+    var total = track.querySelectorAll('.ananas-pcard').length;
+    var pp    = getPerPage();
+    return Math.max(0, (total - pp) * (getCardW() + CARD_GAP));
+  }
+
+  function applySlider() {
+    if (!track) return;
+    var total     = track.querySelectorAll('.ananas-pcard').length;
+    var pp        = getPerPage();
+    var maxOffset = getMaxOffset();
+
+    if (currentOffset < 0)         currentOffset = 0;
+    if (currentOffset > maxOffset) currentOffset = maxOffset;
+
+    track.style.transform = 'translateX(-' + currentOffset + 'px)';
+
+    var prevArrow = qs('#search-slider-prev');
+    var nextArrow = qs('#search-slider-next');
+    var hasMore   = total > pp;
+
+    if (prevArrow) prevArrow.hidden = !hasMore || currentOffset >= maxOffset;
+    if (nextArrow) nextArrow.hidden = true;
+  }
+
+  function updateSearchSliderArrow() { applySlider(); }
+
+  /* Start at offset 0 — first cards visible */
+  currentOffset = 0;
+  applySlider();
+
+  var sliderPrevArrow = qs('#search-slider-prev');
+  if (sliderPrevArrow && track) {
+    sliderPrevArrow.addEventListener('click', function () {
+      currentOffset = Math.min(getMaxOffset(), currentOffset + getCardW() + CARD_GAP);
+      applySlider();
+    });
+  }
+
+  var sliderNextArrow = qs('#search-slider-next');
+  if (sliderNextArrow && track) {
+    sliderNextArrow.addEventListener('click', function () {
+      currentOffset = Math.min(getMaxOffset(), currentOffset + getCardW() + CARD_GAP);
+      applySlider();
+    });
+  }
+
+  window.addEventListener('resize', function () {
+    currentOffset = 0;
+    applySlider();
+  });
+
+  /* ────────────────────────────────────────────────
+     LIVE SEARCH
+  ──────────────────────────────────────────────── */
+  var searchTimer;
+  if (searchInput) {
+    searchInput.addEventListener('input', function () {
+      clearTimeout(searchTimer);
+      var q = this.value.trim();
+
+      /* Show popular back when input cleared */
+      if (!q) {
+        if (track) {
+          track.innerHTML = window.featuredSearchHTML || initialSearchTrackHTML;
+          currentOffset = 0;
+          applySlider();
+          if (window.initWishlistButtons) window.initWishlistButtons();
+        }
+        if (searchPopular) searchPopular.style.display = '';
+        return;
+      }
+
+      if (searchPopular) searchPopular.style.display = 'none';
+
+      searchTimer = setTimeout(function () {
+        fetch(
+          '/search/suggest.json?q=' + encodeURIComponent(q) +
+          '&resources[type]=product&resources[limit]=8'
+        )
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          var items = (data.resources && data.resources.results && data.resources.results.products) || [];
+          if (!track) return;
+          if (!items.length) {
+            var emptyMessage = document.createElement('p');
+            emptyMessage.style.cssText = 'color:#a1a1a1;font-family:inherit;font-size:14px;direction:rtl;padding:8px 0;';
+            emptyMessage.textContent = '{{ _("No results") }}';
+            track.innerHTML = '';
+            track.appendChild(emptyMessage);
+            updateSearchSliderArrow();
+            return;
+          }
+          renderSearchProducts(items);
+          updateSearchSliderArrow();
+          if (window.initWishlistButtons) window.initWishlistButtons();
+        })
+        .catch(function () {});
+      }, 280);
+    });
+  }
+
+  /* Cart buttons handled by add-to-cart.js via content:loaded event */
+
+})();
+</script>

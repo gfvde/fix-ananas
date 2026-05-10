@@ -1,0 +1,265 @@
+{% macro format_price(value) -%}
+  {%- set text = (value|string)|trim -%}
+  {%- if text.startswith('﷼ ') -%}
+    {{- text[2:] ~ ' ﷼' -}}
+  {%- elif text.startswith('- ﷼ ') or text.startswith('-﷼ ') -%}
+    {{- '-' ~ text.lstrip('-').lstrip('﷼').strip() ~ ' ﷼' -}}
+  {%- else -%}
+    {{- text -}}
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro cart_product_image(item) -%}
+  {%- set product_image = '' -%}
+  {%- if item.product and item.product.images and item.product.images[0] -%}
+    {%- set product_image = item.product.images[0].image.full_size | default(item.product.images[0].image.medium | default(item.product.images[0].image.thumbnail | default(item.product.images[0].image.url | default(item.product.images[0].url | default(item.product.images[0].image_url | default('')))))) -%}
+  {%- endif -%}
+  {%- if not product_image -%}
+    {%- set product_image = item.image_url | default('') -%}
+  {%- endif -%}
+  {%- if not product_image and item.image is string -%}
+    {%- set product_image = item.image -%}
+  {%- endif -%}
+  {%- if not product_image -%}
+    {%- set product_image = item.image.full_size | default(item.image.medium | default(item.image.thumbnail | default(item.image.url | default('')))) -%}
+  {%- endif -%}
+  {%- if not product_image and item.images and item.images[0] -%}
+    {%- set product_image = item.images[0].url | default(item.images[0].image.url | default(item.images[0].image.full_size | default(item.images[0].image.medium | default('')))) -%}
+  {%- endif -%}
+  {%- if not product_image -%}
+    {%- set product_image = item.product.image.full_size | default(item.product.image.medium | default(item.product.image.thumbnail | default(item.product.image.url | default(item.product.image_url | default(''))))) -%}
+  {%- endif -%}
+  {%- if not product_image and item.product.image is string -%}
+    {%- set product_image = item.product.image -%}
+  {%- endif -%}
+  {%- if not product_image -%}
+    {%- set product_image = item.product.main_image.url | default(item.product.main_image.full_size | default(item.product.thumbnail | default(''))) -%}
+  {%- endif -%}
+  {%- if not product_image and item.product.main_image is string -%}
+    {%- set product_image = item.product.main_image -%}
+  {%- endif -%}
+  {%- if not product_image and item.product.thumbnail is string -%}
+    {%- set product_image = item.product.thumbnail -%}
+  {%- endif -%}
+  {%- if not product_image and item.product.selected_product and item.product.selected_product.images and item.product.selected_product.images[0] -%}
+    {%- set product_image = item.product.selected_product.images[0].image.url | default(item.product.selected_product.images[0].url | default('')) -%}
+  {%- endif -%}
+  {%- if not product_image and item.product.selected_product and item.product.selected_product.media and item.product.selected_product.media[0] -%}
+    {%- set product_image = item.product.selected_product.media[0].url | default(item.product.selected_product.media[0].image.url | default('')) -%}
+  {%- endif -%}
+  {%- if not product_image -%}
+    {%- set product_image = item.thumbnail | default('') -%}
+  {%- endif -%}
+  {{- product_image -}}
+{%- endmacro %}
+
+{% macro option_value(option) -%}
+  {{- option.value.name | default(option.value.label | default(option.value.title | default(option.value | default(option.name | default(''))))) -}}
+{%- endmacro %}
+
+{% macro option_label(option) -%}
+  {{- option.name | default(option.title | default(option.label | default(''))) -}}
+{%- endmacro %}
+
+{% macro color_from_value(value, index) -%}
+  {%- set normalized = (value|string)|lower -%}
+  {%- if '#' in normalized -%}
+    {{- value -}}
+  {%- elif 'black' in normalized or 'اسود' in normalized or 'أسود' in normalized -%}
+    #3c3528
+  {%- elif 'gray' in normalized or 'grey' in normalized or 'رمادي' in normalized or 'رصاص' in normalized -%}
+    #9d9d9d
+  {%- elif 'beige' in normalized or 'بيج' in normalized -%}
+    #a89e86
+  {%- elif 'green' in normalized or 'اخضر' in normalized or 'أخضر' in normalized -%}
+    #0d7a44
+  {%- elif 'red' in normalized or 'احمر' in normalized or 'أحمر' in normalized -%}
+    #c70036
+  {%- else -%}
+    {{- ['#a89e86', '#3c3528', '#9d9d9d', '#0d7a44'][(index|int) % 4] -}}
+  {%- endif -%}
+{%- endmacro %}
+
+{% if cart.products and cart.products | length > 0 %}
+  <div class="ananas-cart-products">
+    {% for item in cart.products %}
+      {% set product = item.product %}
+      {% set product_id = product.id | default(item.product_id | default(item.id)) %}
+      {% set cart_item_id = item.id | default(product_id) %}
+      {% set product_name = product.name | default(item.name | default('')) %}
+      {% set product_url = product.html_url | default(product.url | default(item.url | default('#'))) %}
+      {% set product_image = cart_product_image(item) | trim %}
+      {% set product_meta = product.categories[0].name if product and product.categories else (product.category.name if product and product.category else (item.category.name | default(item.category | default(product.type.name | default(''))))) %}
+      {% set current_price = item.price_string | default(item.price_formatted | default(product.selected_product.formatted_sale_price | default(product.formatted_sale_price | default(item.total_string | default(item.price | default(product.selected_product.formatted_price | default(product.formatted_price | default('')))))))) %}
+      {% set compare_price = item.compare_at_price_string | default(item.compare_at_price_formatted | default(product.selected_product.formatted_price if product.selected_product and product.selected_product.formatted_sale_price else (product.formatted_price if product.formatted_sale_price else ''))) %}
+      {% set discount_percent = item.discount_percentage | default(item.discount_percent | default(product.selected_product.discount_percentage | default(product.discount_percentage | default('')))) %}
+      {% if not discount_percent and item.compare_at_price and item.price and (item.compare_at_price | float) > (item.price | float) %}
+        {% set compare_value = item.compare_at_price | float %}
+        {% set price_value = item.price | float %}
+        {% set discount_percent = (((compare_value - price_value) / compare_value) * 100) | round(0, 'floor') | int %}
+      {% endif %}
+      {% set selected_options = item.options | default(item.product_options | default(item.selected_options | default(item.variant_options | default(product.selected_product.options | default(product.selected_product.option_values | default([])))))) %}
+
+      <article
+        class="ananas-cart-item"
+        data-cart-product-id="{{ cart_item_id }}"
+        data-cart-item-product-id="{{ product_id }}"
+      >
+        <div class="ananas-cart-item__body">
+          <div class="ananas-cart-item__controls">
+            <div class="ananas-cart-item__actions">
+              <button
+                type="button"
+                class="ananas-cart-item__icon"
+                data-cart-item-remove
+                data-cart-id="{{ cart_item_id }}"
+                data-product-id="{{ product_id }}"
+                aria-label="{{ _('Remove') }}"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+              <button
+                type="button"
+                class="ananas-cart-item__icon"
+                data-wishlist-btn
+                data-product-id="{{ product_id }}"
+                aria-label="{{ _('Add to wishlist') }}"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3c2.09 0 3.96 1.15 4.9 2.87"
+                  />
+                  <path d="M11 16h10" />
+                  <path d="M14 13l-3 3 3 3" />
+                </svg>
+              </button>
+            </div>
+
+            {% with id='cart-qty-' ~ cart_item_id, quantity=item.quantity, cart_product_id=cart_item_id, product_id=product_id, show_delete=false %}
+              {% include 'components/ui/quantity-input.jinja' %}
+            {% endwith %}
+          </div>
+
+          <div class="ananas-cart-item__details">
+            <div class="ananas-cart-item__main">
+              <div>
+                <p class="ananas-cart-item__meta{% if not product_meta %} hidden{% endif %}" data-cart-item-meta>{{ product_meta }}</p>
+                <a
+                  href="{{ product_url }}"
+                  class="ananas-cart-item__title"
+                  data-cart-item-title
+                >
+                  {{ product_name }}
+                </a>
+              </div>
+
+              <div
+                class="ananas-cart-item__options{% if not selected_options or selected_options | length == 0 %}hidden{% endif %}"
+                data-cart-item-options
+              >
+                {% if selected_options and selected_options | length > 0 %}
+                  {% for option in selected_options %}
+                    {% set label = option_label(option) | trim %}
+                    {% set value = option_value(option) | trim %}
+                    {% set is_color = 'color' in (label|string)|lower or 'لون' in label %}
+                    {% set is_size = 'size' in (label|string)|lower or 'مقاس' in label %}
+                    {% if value %}
+                      <div class="ananas-cart-item__option">
+                        {% if is_size %}
+                          <span class="ananas-cart-item__select-value">
+                            <svg
+                              width="20"
+                              height="20"
+                              viewBox="0 0 20 20"
+                              fill="none"
+                              aria-hidden="true"
+                            >
+                              <path
+                                d="M5 7.5L10 12.5L15 7.5"
+                                stroke="currentColor"
+                                stroke-width="1.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                            </svg>
+                            {{ value }}
+                          </span>
+                        {% elif is_color %}
+                          <div class="ananas-cart-item__swatch-wrap">
+                            <span class="ananas-cart-item__swatch-item">
+                              <span
+                                class="ananas-cart-item__swatch"
+                                style="background-color: {{ color_from_value(value, loop.index0) }}"
+                              ></span>
+                              <span class="ananas-cart-item__option-value">{{ value }}</span>
+                            </span>
+                          </div>
+                        {% else %}
+                          <span class="ananas-cart-item__option-value">{{ value }}</span>
+                        {% endif %}
+                        {% if label %}
+                          <span class="ananas-cart-item__option-label">{{ label }}:</span>
+                        {% endif %}
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="ananas-cart-item__price-row">
+              <span class="ananas-cart-item__price{{ ' is-sale' if compare_price else '' }}" data-cart-item-price>{{ format_price(current_price) }}</span>
+              {% if compare_price %}
+                <span class="ananas-cart-item__compare" data-cart-item-compare>{{ format_price(compare_price) }}</span>
+              {% endif %}
+              {% if discount_percent %}
+                <span class="ananas-cart-item__discount" data-cart-item-discount>{{ _('%(percent)s discount') | format(percent=(discount_percent ~ '%')) }}</span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <a
+          href="{{ product_url }}"
+          class="ananas-cart-item__image-link"
+          data-cart-item-image-wrap
+          aria-label="{{ product_name }}"
+        >
+          {% if product_image %}
+            <img
+              src="{{ product_image }}"
+              alt="{{ product_name }}"
+              class="ananas-cart-item__image"
+              data-cart-item-image
+              loading="lazy"
+            />
+          {% endif %}
+        </a>
+      </article>
+    {% endfor %}
+  </div>
+{% endif %}

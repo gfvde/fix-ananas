@@ -1,0 +1,574 @@
+{% set products = settings.products.results if settings.products and settings.products.results else [] %}
+
+{% if products %}
+  {% set layout = settings.layout | default('carousel') %}
+  {% set products_url = settings.products.url if settings.products and settings.products.url else '' %}
+  {% set more_fallback_url = products_url or url_for('list_products') %}
+  {% set more_url = settings.more_url | default(more_fallback_url, true) %}
+  {% set more_text = settings.more_text | default(_('View all'), true) %}
+  {% set title = settings.title | default(_('What we recommend for you'), true) %}
+  {% set subtitle = settings.subtitle | default(_('A variety of flavors to suit your taste'), true) %}
+
+  <section
+    section-id="{{ sectionId }}"
+  data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
+    class="section-products section-products-normal fp-section fp-section--{{ layout }} fp-section--single-source"
+    dir="rtl"
+    style="
+      --fp-bg: {{ settings.background_color | default('#FCFAF7', true) }};
+      --fp-text: {{ settings.text_color | default('#000000', true) }};
+      --fp-muted: {{ settings.muted_color | default('#737373', true) }};
+      --fp-chip-bg: {{ settings.chip_bg_color | default('#F0F0F0', true) }};
+      --fp-border: {{ settings.border_color | default('#000000', true) }};
+      --fp-badge-bg: {{ settings.badge_bg_color | default('#F7512B', true) }};
+      --fp-badge-text: {{ settings.badge_text_color | default('#FFFFFF', true) }};
+      --fp-button-bg: {{ settings.button_bg_color | default('transparent', true) }};
+      --fp-button-text: {{ settings.button_text_color | default('#000000', true) }};
+      --fp-progress-bg: {{ settings.progress_bg_color | default('#E5E5E5', true) }};
+      --fp-progress-fill: {{ settings.progress_fill_color | default('#737373', true) }};
+    "
+    data-fp-section
+  >
+    <div class="fp-inner">
+      <div class="fp-header fp-header--desktop">
+        <div class="fp-header__top">
+          {% if settings.display_more and more_text %}
+            <a
+              href="{{ more_url }}"
+              class="fp-cta"
+            >{{ more_text }}</a
+            >
+          {% endif %}
+          <div class="fp-title-wrap">
+            <h2 class="fp-title">{{ title }}</h2>
+            {% if subtitle %}
+              <p class="fp-subtitle fp-subtitle--desktop">{{ subtitle }}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      {% if layout == 'grid' %}
+        <div class="fp-header fp-header--mobile-grid">
+          <div class="fp-mobile-copy">
+            <h2 class="fp-title">{{ title }}</h2>
+            {% if subtitle %}
+              <p class="fp-subtitle">{{ subtitle }}</p>
+            {% endif %}
+          </div>
+        </div>
+      {% else %}
+        <div class="fp-header fp-header--mobile-carousel">
+          <div class="fp-mobile-copy">
+            <h2 class="fp-title">{{ title }}</h2>
+            {% if subtitle %}
+              <p class="fp-subtitle">{{ subtitle }}</p>
+            {% endif %}
+          </div>
+          <div class="fp-mobile-link-row">
+            <button
+              type="button"
+              class="fp-mobile-arrow"
+              aria-label="{{ _('Previous') }}"
+              data-fp-mobile-prev
+            >
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path d="M15.2 18.1 9.1 12l6.1-6.1-1.4-1.4L6.3 12l7.5 7.5 1.4-1.4Z" />
+              </svg>
+            </button>
+            <a
+              class="fp-explore"
+              href="{{ more_url }}"
+            >
+              {{ more_text }}
+            </a>
+            <button
+              type="button"
+              class="fp-mobile-arrow"
+              aria-label="{{ _('Next') }}"
+              data-fp-mobile-next
+            >
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path d="m8.8 18.1 6.1-6.1-6.1-6.1 1.4-1.4 7.5 7.5-7.5 7.5-1.4-1.4Z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if layout == 'grid' %}
+        <div
+          class="fp-panel"
+          data-fp-panel="products"
+        >
+          <div
+            class="fp-grid"
+            data-grid-root="true"
+            data-grid="grid"
+          >
+            {% for product in products %}
+              {% with index=loop.index0, is_priority=(loop.first and settings.order <= 2) %}
+                {% include 'components/products/product-card.jinja' %}
+              {% endwith %}
+            {% endfor %}
+          </div>
+        </div>
+      {% else %}
+        <div
+          class="fp-panel"
+          data-fp-panel="products"
+        >
+          <div class="fp-carousel">
+            <div class="fp-carousel__viewport">
+              <div class="fp-carousel__container">
+                {% for product in products %}
+                  <div class="fp-carousel__slide">
+                    {% with index=loop.index0, is_priority=(loop.first and settings.order <= 2) %}
+                      {% include 'components/products/product-card.jinja' %}
+                    {% endwith %}
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="fp-progress">
+              <div class="fp-progress__bar"></div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <style>
+    [section-id="{{ sectionId }}"].fp-section {
+      background: var(--fp-bg);
+      color: var(--fp-text);
+      direction: rtl;
+      overflow: hidden;
+    }
+
+    [section-id="{{ sectionId }}"] .fp-inner {
+      width: 100%;
+      max-width: 1440px;
+      margin: 32px auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    [section-id="{{ sectionId }}"].fp-section--carousel .fp-inner {
+      padding-block: 0;
+    }
+
+    [section-id="{{ sectionId }}"] .fp-header {
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+    [section-id="{{ sectionId }}"] .fp-header--desktop {
+      display: none;
+    }
+
+    [section-id="{{ sectionId }}"] .fp-header--mobile-carousel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      min-height: 80px;
+    }
+
+    [section-id="{{ sectionId }}"] .fp-header--mobile-grid {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      min-height: 96px;
+    }
+
+    [section-id="{{ sectionId }}"] .fp-mobile-copy {
+      width: 327px;
+      max-width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+      text-align: center;
+    }
+
+    [section-id="{{ sectionId }}"] .fp-title,
+    [section-id="{{ sectionId }}"] .fp-subtitle {
+      margin: 0;
+      color: var(--fp-text);
+      letter-spacing: 0;
+      text-align: right;
+    }
+
+    [section-id="{{ sectionId }}"] .fp-title {
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 32px;
+    }
+
+    [section-id="{{ sectionId }}"] .fp-subtitle {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+    }
+
+    [section-id="{{ sectionId }}"] .fp-cta,
+    [section-id="{{ sectionId }}"] .fp-explore {
+      color: var(--fp-text);
+      text-decoration: none;
+    }
+
+    [section-id="{{ sectionId }}"] .fp-panel {
+      width: 100%;
+    }
+
+    [section-id="{{ sectionId }}"] .fp-panel.is-hidden {
+      display: none;
+    }
+
+    [section-id="{{ sectionId }}"] .fp-mobile-link-row {
+      width: 100%;
+      min-height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      direction: ltr;
+    }
+
+    [section-id="{{ sectionId }}"] .fp-mobile-arrow {
+      width: 24px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border: 0;
+      background: #f5f5f5;
+      color: var(--fp-text);
+      cursor: pointer;
+    }
+
+    [section-id="{{ sectionId }}"] .fp-mobile-arrow svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    [section-id="{{ sectionId }}"] .fp-explore {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      text-align: center;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      white-space: nowrap;
+      direction: rtl;
+      border: 0;
+      background: transparent;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    [section-id="{{ sectionId }}"] .fp-carousel {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    [section-id="{{ sectionId }}"] .fp-carousel__viewport {
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-x pan-y;
+      direction: ltr;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    [section-id="{{ sectionId }}"] .fp-carousel__viewport.is-ready {
+      opacity: 1;
+    }
+
+    [section-id="{{ sectionId }}"] .fp-carousel__viewport::-webkit-scrollbar {
+      display: none;
+    }
+
+    [section-id="{{ sectionId }}"] .fp-carousel__container {
+      width: max-content;
+      min-width: 100%;
+      display: flex;
+      gap: 16px;
+      justify-content: flex-end;
+      padding-bottom: 1px;
+      direction: ltr;
+    }
+
+    [section-id="{{ sectionId }}"] .fp-carousel__slide {
+      flex: 0 0 299px;
+      min-width: 0;
+      scroll-snap-align: end;
+      direction: rtl;
+    }
+
+    [section-id="{{ sectionId }}"] .fp-grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(var(--cols-mobile, 2), minmax(0, 1fr));
+      gap: 16px 8px;
+    }
+
+    [section-id="{{ sectionId }}"] .fp-progress {
+      width: 180px;
+      height: 2px;
+      position: relative;
+      overflow: hidden;
+      background: var(--fp-progress-bg);
+      flex-shrink: 0;
+    }
+
+    [section-id="{{ sectionId }}"] .fp-progress__bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 2px;
+      width: 78px;
+      background: var(--fp-progress-fill);
+      transform: translateX(0);
+      transition:
+        transform 0.18s ease,
+        width 0.18s ease;
+      will-change: transform, width;
+    }
+
+    @media (min-width: 768px) {
+      [section-id="{{ sectionId }}"].fp-section--carousel .fp-inner {
+        padding: 24px 56px;
+      }
+
+      [section-id="{{ sectionId }}"] .fp-inner {
+        padding: 24px 56px;
+        gap: 24px;
+      }
+
+      [section-id="{{ sectionId }}"] .fp-header--desktop {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        min-height: 96px;
+      }
+
+      [section-id="{{ sectionId }}"] .fp-header--mobile-carousel,
+      [section-id="{{ sectionId }}"] .fp-header--mobile-grid {
+        display: none;
+      }
+
+      [section-id="{{ sectionId }}"] .fp-header__top {
+        width: 100%;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        direction: ltr;
+      }
+
+      [section-id="{{ sectionId }}"] .fp-title {
+        width: 327px;
+        font-size: 30px;
+        line-height: 36px;
+        text-align: right;
+      }
+
+      [section-id="{{ sectionId }}"] .fp-cta {
+        min-width: 84px;
+        height: 40px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 24px;
+        border: 1px solid var(--fp-border);
+        color: var(--fp-text);
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+        white-space: nowrap;
+        direction: rtl;
+      }
+
+      [section-id="{{ sectionId }}"] .fp-carousel__slide {
+        flex: 0 0 320px;
+      }
+
+      [section-id="{{ sectionId }}"] .fp-carousel {
+        gap: 24px;
+      }
+
+      [section-id="{{ sectionId }}"] .fp-carousel__viewport,
+      [section-id="{{ sectionId }}"] .fp-grid {
+        max-width: 1328px;
+      }
+
+      [section-id="{{ sectionId }}"] .fp-grid,
+      [section-id="{{ sectionId }}"] .fp-carousel__container {
+        display: flex;
+        gap: 16px;
+        justify-content: flex-end;
+      }
+
+      [section-id="{{ sectionId }}"].fp-section--grid .fp-grid {
+        display: grid;
+        grid-template-columns: repeat(var(--cols-desktop, 4), minmax(0, 1fr));
+      }
+
+      [section-id="{{ sectionId }}"] .fp-progress {
+        width: 416px;
+      }
+
+    [section-id="{{ sectionId }}"] .fp-progress__bar {
+        width: 207px;
+      }
+    }
+
+    @media (min-width: 600px) and (max-width: 1023px) {
+      [section-id="{{ sectionId }}"].fp-section--grid .fp-grid {
+        grid-template-columns: repeat(var(--cols-tablet, 3), minmax(0, 1fr)) !important;
+      }
+    }
+
+    @media (min-width: 1024px) and (max-width: 1439px) {
+      [section-id="{{ sectionId }}"].fp-section--grid .fp-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      }
+    }
+  </style>
+
+  <script>
+    (function () {
+      var section = document.querySelector('[section-id="{{ sectionId }}"][data-fp-section]');
+      if (!section) return;
+
+      var panels = section.querySelectorAll("[data-fp-panel]");
+      var mobilePrev = section.querySelector("[data-fp-mobile-prev]");
+      var mobileNext = section.querySelector("[data-fp-mobile-next]");
+
+      function alignCarousel(panel) {
+        var viewport = panel && panel.querySelector(".fp-carousel__viewport");
+        if (!viewport) return;
+
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            viewport.scrollLeft = viewport.scrollWidth;
+            updateProgress(panel);
+            viewport.classList.add("is-ready");
+          });
+        });
+      }
+
+      function updateProgress(panel) {
+        var currentPanel = panel || section.querySelector("[data-fp-panel]:not(.is-hidden)");
+        if (!currentPanel) return;
+
+        var viewport = currentPanel.querySelector(".fp-carousel__viewport");
+        var progress = currentPanel.querySelector(".fp-progress");
+        var bar = progress && progress.querySelector(".fp-progress__bar");
+        if (!viewport || !progress || !bar) return;
+
+        var maxScroll = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
+        var trackWidth = progress.clientWidth;
+
+        if (maxScroll <= 1) {
+          progress.style.display = "none";
+          return;
+        } else {
+          progress.style.display = "block";
+        }
+
+        var visibleRatio = Math.max(0, Math.min(1, viewport.clientWidth / viewport.scrollWidth));
+        var barWidth = Math.max(32, Math.round(trackWidth * visibleRatio));
+        var scrollRatio = Math.max(0, Math.min(1, viewport.scrollLeft / maxScroll));
+        var maxTravel = Math.max(0, trackWidth - barWidth);
+
+        bar.style.width = barWidth + "px";
+        bar.style.transform = "translateX(" + Math.round(maxTravel * scrollRatio) + "px)";
+      }
+
+      function bindCarouselProgress(panel) {
+        var viewport = panel && panel.querySelector(".fp-carousel__viewport");
+        if (!viewport || viewport.dataset.fpProgressBound === "true") return;
+
+        viewport.dataset.fpProgressBound = "true";
+        viewport.addEventListener(
+          "scroll",
+          function () {
+            updateProgress(panel);
+          },
+          { passive: true }
+        );
+      }
+
+      panels.forEach(function (panel) {
+        bindCarouselProgress(panel);
+        if (!panel.classList.contains("is-hidden")) {
+          alignCarousel(panel);
+          updateProgress(panel);
+        }
+      });
+
+      function moveMobileCarousel(step) {
+        var currentPanel = section.querySelector("[data-fp-panel]:not(.is-hidden)");
+        var viewport = currentPanel && currentPanel.querySelector(".fp-carousel__viewport");
+        if (!viewport) return;
+
+        var slide = viewport.querySelector(".fp-carousel__slide");
+        var slideWidth = slide ? slide.getBoundingClientRect().width : viewport.clientWidth * 0.8;
+        var amount = Math.max(120, Math.round(slideWidth + 16));
+
+        viewport.scrollBy({
+          left: step * amount,
+          behavior: "smooth",
+        });
+      }
+
+      if (mobilePrev) {
+        mobilePrev.addEventListener("click", function () {
+          moveMobileCarousel(-1);
+        });
+      }
+
+      if (mobileNext) {
+        mobileNext.addEventListener("click", function () {
+          moveMobileCarousel(1);
+        });
+      }
+
+      window.addEventListener(
+        "resize",
+        function () {
+          updateProgress();
+        },
+        { passive: true }
+      );
+
+      setTimeout(function () {
+        section.querySelectorAll(".fp-carousel__viewport").forEach(function (v) {
+          v.classList.add("is-ready");
+        });
+      }, 600);
+    })();
+  </script>
+{% endif %}

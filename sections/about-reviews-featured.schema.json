@@ -1,0 +1,121 @@
+{
+  "template": "sections/about-reviews-featured.jinja",
+  "name": {
+    "ar": "تقييمات مميزة (About)",
+    "en": "Featured Reviews (About)"
+  },
+  "settings": [
+    {
+      "id": "title",
+      "type": "text",
+      "label": {
+        "ar": "العنوان",
+        "en": "Title"
+      },
+      "default": "تجربة القهوة بعيون عملائنا"
+    },
+    {
+      "id": "title_color",
+      "type": "color",
+      "label": {
+        "ar": "لون العنوان",
+        "en": "Title Color"
+      },
+      "default": "#000000"
+    },
+    {
+      "id": "image_card_bg",
+      "type": "image",
+      "label": {
+        "ar": "صورة بطاقة الخلفية",
+        "en": "Background Image Card"
+      }
+    },
+    {
+      "id": "show_arrows",
+      "type": "checkbox",
+      "label": {
+        "ar": "إظهار أسهم السلايدر",
+        "en": "Show Slider Arrows"
+      },
+      "default": true
+    },
+    {
+      "id": "reviews",
+      "type": "list",
+      "label": {
+        "ar": "التعليقات",
+        "en": "Reviews"
+      },
+      "max_items": 6,
+      "settings": [
+        {
+          "id": "name",
+          "type": "text",
+          "label": {
+            "ar": "اسم العميل",
+            "en": "Customer Name"
+          },
+          "default": "Ahmed Seif"
+        },
+        {
+          "id": "avatar",
+          "type": "image",
+          "label": {
+            "ar": "صورة العميل",
+            "en": "Customer Avatar"
+          }
+        },
+        {
+          "id": "text",
+          "type": "textarea",
+          "label": {
+            "ar": "نص التعليق",
+            "en": "Review Text"
+          },
+          "default": "\"Ananas is an amazing coffee shop! The healthy breakfast options and refreshing acai bowls make it my go-to place in Walnut Creek. Highly recommend!\""
+        },
+        {
+          "id": "stars",
+          "type": "range",
+          "label": {
+            "ar": "عدد النجوم",
+            "en": "Star Rating"
+          },
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "id": "background_color",
+          "type": "color",
+          "label": {
+            "ar": "لون خلفية التعليق",
+            "en": "Review Background Color"
+          },
+          "default": "#E2E899"
+        },
+        {
+          "id": "text_color",
+          "type": "color",
+          "label": {
+            "ar": "لون نص التعليق",
+            "en": "Review Text Color"
+          },
+          "default": "#000000"
+        }
+      ],
+      "default": []
+    },
+    {
+      "id": "remove_bottom_margin",
+      "type": "checkbox",
+      "label": {
+        "ar": "إزالة المسافة السفلية",
+        "en": "Remove Bottom Margin"
+      },
+      "default": false
+    }
+  ]
+}

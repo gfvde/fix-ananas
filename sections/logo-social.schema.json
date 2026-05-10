@@ -1,0 +1,44 @@
+{
+  "template": "sections/logo-social.jinja",
+  "name": {
+    "ar": "الشعار والتواصل الاجتماعي",
+    "en": "Logo & Social Media"
+  },
+  "settings": [
+    {
+      "id": "min_height_mobile",
+      "type": "range",
+      "label": {
+        "ar": "الحد الأدنى للارتفاع (موبايل)",
+        "en": "Minimum Height (Mobile)"
+      },
+      "min": 100,
+      "max": 400,
+      "step": 20,
+      "unit": "px",
+      "default": 200
+    },
+    {
+      "id": "min_height_desktop",
+      "type": "range",
+      "label": {
+        "ar": "الحد الأدنى للارتفاع (سطح المكتب)",
+        "en": "Minimum Height (Desktop)"
+      },
+      "min": 150,
+      "max": 500,
+      "step": 20,
+      "unit": "px",
+      "default": 280
+    },
+    {
+      "id": "remove_bottom_margin",
+      "type": "checkbox",
+      "label": {
+        "ar": "إزالة المسافة السفلية",
+        "en": "Remove Bottom Margin"
+      },
+      "default": false
+    }
+  ]
+}

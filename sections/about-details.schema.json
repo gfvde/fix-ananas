@@ -1,0 +1,211 @@
+{
+  "template": "sections/about-details.jinja",
+  "name": {
+    "ar": "تفاصيل تكمل يومك (About)",
+    "en": "About Details"
+  },
+  "settings": [
+    {
+      "id": "title",
+      "type": "text",
+      "label": {
+        "ar": "العنوان",
+        "en": "Title"
+      },
+      "default": "تفاصيل تكمل يومك"
+    },
+    {
+      "id": "subtitle",
+      "type": "text",
+      "label": {
+        "ar": "الوصف",
+        "en": "Subtitle"
+      },
+      "default": "قطع مختارة بعناية عملية، أنيقة، وتعيش معك"
+    },
+    {
+      "id": "hero_image",
+      "type": "image",
+      "label": {
+        "ar": "صورة الجهة اليسرى",
+        "en": "Left Hero Image"
+      }
+    },
+    {
+      "id": "mobile_hero_image",
+      "type": "image",
+      "label": {
+        "ar": "صورة الموبايل العلوية",
+        "en": "Mobile Top Image"
+      }
+    },
+    {
+      "id": "hero_alt",
+      "type": "text",
+      "label": {
+        "ar": "نص بديل للصورة",
+        "en": "Hero Image Alt Text"
+      },
+      "default": "About details image"
+    },
+    {
+      "id": "products",
+      "type": "products",
+      "label": {
+        "ar": "اختيار المنتجات",
+        "en": "Select products"
+      }
+    },
+    {
+      "id": "mobile_nav_text",
+      "type": "text",
+      "label": {
+        "ar": "نص تصفح المنتجات في الموبايل",
+        "en": "Mobile Browse Text"
+      },
+      "default": "تصفّح المنتجات"
+    },
+    {
+      "id": "show_cta",
+      "type": "checkbox",
+      "label": {
+        "ar": "إظهار زر عرض الكل",
+        "en": "Show View All Button"
+      },
+      "default": true
+    },
+    {
+      "id": "cta_text",
+      "type": "text",
+      "label": {
+        "ar": "نص الزر",
+        "en": "Button Text"
+      },
+      "default": "عرض الكل"
+    },
+    {
+      "id": "cta_url",
+      "type": "url",
+      "label": {
+        "ar": "رابط الزر",
+        "en": "Button URL"
+      },
+      "default": "/collections/all"
+    },
+    {
+      "id": "section_bg",
+      "type": "color",
+      "label": {
+        "ar": "لون الخلفية",
+        "en": "Section Background"
+      },
+      "default": "#FCFAF7"
+    },
+    {
+      "id": "mobile_bg",
+      "type": "color",
+      "label": {
+        "ar": "لون خلفية الموبايل",
+        "en": "Mobile Background"
+      },
+      "default": "#000000"
+    },
+    {
+      "id": "title_color",
+      "type": "color",
+      "label": {
+        "ar": "لون العنوان",
+        "en": "Title Color"
+      },
+      "default": "#F7512B"
+    },
+    {
+      "id": "mobile_title_color",
+      "type": "color",
+      "label": {
+        "ar": "لون عنوان الموبايل",
+        "en": "Mobile Title Color"
+      },
+      "default": "#000000"
+    },
+    {
+      "id": "text_color",
+      "type": "color",
+      "label": {
+        "ar": "لون النص",
+        "en": "Text Color"
+      },
+      "default": "#000000"
+    },
+    {
+      "id": "mobile_product_text_color",
+      "type": "color",
+      "label": {
+        "ar": "لون بيانات المنتجات في الموبايل",
+        "en": "Mobile Product Text Color"
+      },
+      "default": "#FFFFFF"
+    },
+    {
+      "id": "sticky_top",
+      "type": "range",
+      "label": {
+        "ar": "مسافة التثبيت من أعلى",
+        "en": "Sticky Top Offset"
+      },
+      "min": 0,
+      "max": 200,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "id": "desktop_height",
+      "type": "range",
+      "label": {
+        "ar": "ارتفاع السكشن ديسكتوب",
+        "en": "Desktop Section Height"
+      },
+      "min": 520,
+      "max": 900,
+      "step": 1,
+      "unit": "px",
+      "default": 650
+    },
+    {
+      "id": "desktop_card_size",
+      "type": "range",
+      "label": {
+        "ar": "مقاس كارت المنتج ديسكتوب",
+        "en": "Desktop Product Card Size"
+      },
+      "min": 260,
+      "max": 420,
+      "step": 1,
+      "unit": "px",
+      "default": 344
+    },
+    {
+      "id": "mobile_card_size",
+      "type": "range",
+      "label": {
+        "ar": "مقاس كارت المنتج موبايل",
+        "en": "Mobile Product Card Size"
+      },
+      "min": 260,
+      "max": 360,
+      "step": 1,
+      "unit": "px",
+      "default": 325
+    },
+    {
+      "id": "remove_bottom_margin",
+      "type": "checkbox",
+      "label": {
+        "ar": "إزالة المسافة السفلية",
+        "en": "Remove Bottom Margin"
+      },
+      "default": false
+    }
+  ]
+}

@@ -1,0 +1,322 @@
+{
+  "icon": "fa fa-square",
+  "name": {
+    "ar": "أسفل الصفحة",
+    "en": "Footer"
+  },
+  "groups": [
+    {
+      "id": "style",
+      "icon": "fa fa-paint-brush",
+      "name": {
+        "ar": "المظهر",
+        "en": "Appearance"
+      },
+      "settings": [
+        {
+          "id": "bg_color",
+          "type": "color",
+          "label": {
+            "ar": "لون الخلفية",
+            "en": "Background Color"
+          },
+          "default": "#0e0d0d"
+        },
+        {
+          "id": "bg_image",
+          "type": "image",
+          "label": {
+            "ar": "صورة / نقش الخلفية",
+            "en": "Background Image / Pattern"
+          }
+        },
+        {
+          "id": "bg_image_style",
+          "type": "select",
+          "label": {
+            "ar": "تنسيق صورة الخلفية",
+            "en": "Background Image Style"
+          },
+          "options": [
+            {
+              "value": "cover",
+              "label": {
+                "ar": "تغطية كاملة (صورة)",
+                "en": "Cover (Image)"
+              }
+            },
+            {
+              "value": "repeat",
+              "label": {
+                "ar": "تكرار (نقش / Pattern)",
+                "en": "Repeat (Pattern)"
+              }
+            }
+          ],
+          "default": "cover"
+        },
+        {
+          "id": "desktop_height",
+          "type": "range",
+          "label": {
+            "ar": "الحد الأدنى لارتفاع الفوتر (سطح المكتب)",
+            "en": "Minimum Height (Desktop)"
+          },
+          "min": 50,
+          "max": 800,
+          "step": 10,
+          "unit": "px",
+          "default": 300
+        },
+        {
+          "id": "mobile_height",
+          "type": "range",
+          "label": {
+            "ar": "الحد الأدنى لارتفاع الفوتر (الجوال)",
+            "en": "Minimum Height (Mobile)"
+          },
+          "min": 50,
+          "max": 800,
+          "step": 10,
+          "unit": "px",
+          "default": 300
+        },
+        {
+          "id": "text_color",
+          "type": "color",
+          "label": {
+            "ar": "لون النص",
+            "en": "Text Color"
+          },
+          "default": "#a3a3a3"
+        },
+        {
+          "id": "heading_color",
+          "type": "color",
+          "label": {
+            "ar": "لون العناوين",
+            "en": "Headings Color"
+          },
+          "default": "#ffffff"
+        },
+        {
+          "id": "divider_color",
+          "type": "color",
+          "label": {
+            "ar": "لون الفواصل",
+            "en": "Divider Color"
+          },
+          "default": "#ffffff26"
+        },
+        {
+          "id": "icon_bg_color",
+          "type": "color",
+          "label": {
+            "ar": "خلفية أيقونات السوشيال",
+            "en": "Social Icon Background"
+          },
+          "default": "#1a1a1a"
+        },
+        {
+          "id": "icon_border_color",
+          "type": "color",
+          "label": {
+            "ar": "حدود أيقونات السوشيال",
+            "en": "Social Icon Border"
+          },
+          "default": "#ffffff1a"
+        },
+        {
+          "id": "noise_opacity",
+          "type": "range",
+          "label": {
+            "ar": "شدة تأثير الـ Noise",
+            "en": "Noise Intensity"
+          },
+          "min": 0,
+          "max": 1,
+          "step": 0.05,
+          "default": 0.2
+        }
+      ]
+    },
+    {
+      "id": "logo",
+      "icon": "fa fa-image",
+      "name": {
+        "ar": "الشعار",
+        "en": "Logo"
+      },
+      "settings": [
+        {
+          "id": "logo_desktop",
+          "type": "image",
+          "label": {
+            "ar": "شعار سطح المكتب",
+            "en": "Desktop Logo"
+          },
+          "info": {
+            "ar": "سيتم عرضه على الشاشات الكبيرة",
+            "en": "Will be displayed on large screens"
+          }
+        },
+        {
+          "id": "logo_mobile",
+          "type": "image",
+          "label": {
+            "ar": "شعار الجوال",
+            "en": "Mobile Logo"
+          },
+          "info": {
+            "ar": "سيتم عرضه على الشاشات الصغيرة",
+            "en": "Will be displayed on small screens"
+          }
+        },
+        {
+          "id": "logo_height",
+          "type": "range",
+          "label": {
+            "ar": "ارتفاع الشعار",
+            "en": "Logo Height"
+          },
+          "min": 24,
+          "max": 80,
+          "step": 4,
+          "unit": "px",
+          "default": 40
+        }
+      ]
+    },
+    {
+      "id": "about_us",
+      "icon": "fa fa-info-circle",
+      "name": {
+        "ar": "عن المتجر",
+        "en": "About us"
+      },
+      "settings": [
+        {
+          "id": "about_us",
+          "type": "richtext",
+          "label": {
+            "ar": "النص",
+            "en": "Description"
+          }
+        }
+      ]
+    },
+    {
+      "id": "link_groups",
+      "icon": "fa fa-link",
+      "name": {
+        "ar": "مجموعات الروابط",
+        "en": "Link Groups"
+      },
+      "settings": [
+        {
+          "id": "items",
+          "type": "list",
+          "label": {
+            "ar": "مجموعات الروابط",
+            "en": "Link Groups"
+          },
+          "settings": [
+            {
+              "id": "hide",
+              "type": "checkbox",
+              "label": {
+                "ar": "إخفاء",
+                "en": "Hide"
+              }
+            },
+            {
+              "id": "title",
+              "type": "text",
+              "label": {
+                "ar": "العنوان",
+                "en": "Title"
+              }
+            },
+            {
+              "id": "links",
+              "type": "list",
+              "label": {
+                "ar": "الروابط",
+                "en": "Links"
+              },
+              "settings": [
+                {
+                  "id": "title",
+                  "type": "text",
+                  "label": {
+                    "ar": "العنوان",
+                    "en": "Title"
+                  }
+                },
+                {
+                  "id": "url",
+                  "type": "url",
+                  "label": {
+                    "ar": "الرابط",
+                    "en": "URL"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "contact_info",
+      "icon": "fa fa-address-book",
+      "name": {
+        "ar": "معلومات الاتصال",
+        "en": "Contact Information"
+      },
+      "settings": [
+        {
+          "id": "contact_info_title",
+          "type": "text",
+          "label": {
+            "ar": "عنوان القسم",
+            "en": "Section Title"
+          },
+          "default": "Contact us"
+        }
+      ]
+    },
+    {
+      "id": "bottom_bar",
+      "icon": "fa fa-bars",
+      "name": {
+        "ar": "الشريط السفلي",
+        "en": "Bottom Bar"
+      },
+      "settings": [
+        {
+          "id": "show_language_selector",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار محدد اللغة والدولة",
+            "en": "Show Language & Country Selector"
+          },
+          "default": true
+        },
+        {
+          "id": "copyright_text",
+          "type": "text",
+          "label": {
+            "ar": "نص حقوق النشر",
+            "en": "Copyright Text"
+          },
+          "info": {
+            "ar": "اتركه فارغاً لاستخدام النص الافتراضي من إعدادات المتجر",
+            "en": "Leave empty to use the default text from store settings"
+          },
+          "default": ""
+        }
+      ]
+    }
+  ]
+}

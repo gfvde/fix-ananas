@@ -1,0 +1,942 @@
+{% set fallback_text = '"Ananas is an amazing coffee shop! The healthy breakfast options and refreshing acai bowls make it my go-to place in Walnut Creek. Highly recommend!"' %}
+{% set title_color = settings.title_color | default('#000000') %}
+{% set show_arrows = settings.show_arrows | default(true) %}
+{% set reviews = safeget(settings, "reviews", []) %}
+{% if not reviews or reviews | length == 0 %}
+  {% set reviews = [
+    {'name': settings.review1_name | default('Ahmed Seif'), 'text': settings.review1_text | default(fallback_text), 'avatar': safeget(settings, 'review1_avatar', none), 'stars': settings.review1_stars | default(5), 'card_style': 'dark', 'background_color': '#E2E899', 'text_color': '#000000'},
+    {'name': settings.review2_name | default('Ahmed Seif'), 'text': settings.review2_text | default(fallback_text), 'avatar': safeget(settings, 'review2_avatar', none), 'stars': settings.review2_stars | default(5), 'card_style': 'light', 'background_color': '#239C5C', 'text_color': '#FFFFFF'},
+    {'name': settings.review3_name | default('Sara Mohamed'), 'text': settings.review3_text | default(fallback_text), 'avatar': safeget(settings, 'review3_avatar', none), 'stars': settings.review3_stars | default(5), 'card_style': 'dark', 'background_color': '#171717', 'text_color': '#FFFFFF'},
+    {'name': settings.review4_name | default('Ahmed Seif'), 'text': settings.review4_text | default(fallback_text), 'avatar': safeget(settings, 'review4_avatar', none), 'stars': settings.review4_stars | default(5), 'card_style': 'light', 'background_color': '#EEEEEE', 'text_color': '#000000'},
+    {'name': settings.review5_name | default('Ahmed Seif'), 'text': settings.review5_text | default(fallback_text), 'avatar': safeget(settings, 'review5_avatar', none), 'stars': settings.review5_stars | default(5), 'card_style': 'dark', 'background_color': '#171717', 'text_color': '#FFFFFF'}
+  ] %}
+{% endif %}
+
+{% set review_count = reviews | length %}
+{% set has_multiple = review_count > 1 %}
+{% set bg1 = reviews[0] %}
+{% set bg2 = reviews[1] if review_count > 1 else reviews[0] %}
+{% set bg3 = reviews[2] if review_count > 2 else reviews[0] %}
+{% set bg4 = reviews[3] if review_count > 3 else bg2 %}
+{% set bg5 = reviews[4] if review_count > 4 else bg1 %}
+
+{% set avatar_fallbacks = [
+  'https://www.figma.com/api/mcp/asset/587f88b3-1a79-4b1e-9a24-c8df451e5d86',
+  'https://www.figma.com/api/mcp/asset/393ca874-98f3-413f-9f56-dc6781d5f73c',
+  'https://www.figma.com/api/mcp/asset/3adaba70-8762-45d5-a7d9-eed7fc2301d6',
+  'https://www.figma.com/api/mcp/asset/65af8839-faed-4d41-b39b-12bbb9c8501e',
+  'https://www.figma.com/api/mcp/asset/e38ca4ad-fda6-40a1-9e28-8ce093aef927'
+] %}
+
+{% macro star_icons(size=18, count=5) %}
+  <span class="arf-stars" aria-hidden="true">
+    {% for i in range(count) %}
+      <svg width="{{ size }}" height="{{ size }}" viewBox="0 0 20 20" fill="#F7A52D" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+      </svg>
+    {% endfor %}
+  </span>
+{% endmacro %}
+
+{% macro verified_badge() %}
+  <span class="arf-verified">
+    <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="7.5" cy="7" r="7" fill="#25A562"/>
+      <path d="M4.5 7L6.5 9L10.5 5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    {{ _('Verified Purchase') }}
+  </span>
+{% endmacro %}
+
+{% macro avatar_img(review, size=92, fallback='', class_name='arf-avatar') %}
+  <img class="{{ class_name }}" src="{{ image_url(review.avatar, w=size, h=size, f='auto') if review.avatar else fallback }}" alt="{{ review.name | default('') }}">
+{% endmacro %}
+
+{% macro background_review_card(review, style='dark', fallback='') %}
+  {% set fallback_bg = '#171717' if style == 'dark' else '#EEEEEE' %}
+  {% set fallback_color = '#FFFFFF' if style == 'dark' else '#000000' %}
+  {% set bg_color = review.background_color | default(fallback_bg) %}
+  {% set text_color = review.text_color | default(fallback_color) %}
+  {% set star_count = review.stars | default(5) | int %}
+  <article class="arf-bg-card arf-bg-card--{{ style }}" style="--arf-card-bg: {{ bg_color }}; --arf-card-color: {{ text_color }};">
+    <div class="arf-bg-card__body">
+      {{ star_icons(18, star_count) }}
+      <p class="arf-bg-card__text">{{ review.text | default(fallback_text) }}</p>
+    </div>
+    <div class="arf-bg-card__author">
+      {{ avatar_img(review, 92, fallback, 'arf-bg-card__avatar') }}
+      <div class="arf-bg-card__meta">
+        <p class="arf-bg-card__name">{{ review.name | default('Ahmed Seif') }}</p>
+        {{ verified_badge() }}
+      </div>
+    </div>
+  </article>
+{% endmacro %}
+
+{% macro background_image_card(review, fallback='') %}
+  {% set star_count = review.stars | default(5) | int %}
+  <article class="arf-bg-card arf-bg-card--image">
+    {% if settings.image_card_bg %}
+      <img class="arf-bg-card__image" src="{{ image_url(settings.image_card_bg, w=800, f='auto') }}" alt="">
+    {% else %}
+      <img class="arf-bg-card__image" src="https://www.figma.com/api/mcp/asset/08891877-df65-4214-8b1b-4ea06c8de476" alt="">
+    {% endif %}
+    <div class="arf-bg-card__overlay">
+      <div class="arf-bg-card__body">
+        {{ star_icons(18, star_count) }}
+        <p class="arf-bg-card__text">{{ review.text | default(fallback_text) }}</p>
+      </div>
+      <div class="arf-bg-card__author">
+        {{ avatar_img(review, 92, fallback, 'arf-bg-card__avatar') }}
+        <div class="arf-bg-card__meta">
+          <p class="arf-bg-card__name">{{ review.name | default('Sara Mohamed') }}</p>
+          {{ verified_badge() }}
+        </div>
+      </div>
+    </div>
+  </article>
+{% endmacro %}
+
+{% macro featured_deck(is_mobile=false) %}
+  {% set first_review = reviews[0] %}
+  {% set second_review = reviews[1] if review_count > 1 else first_review %}
+  {% set third_review = reviews[2] if review_count > 2 else first_review %}
+  {% set front_bg = first_review.background_color | default('#E2E899') %}
+  {% set front_color = first_review.text_color | default('#000000') %}
+  {% set back_one_bg = second_review.background_color | default('#239C5C') %}
+  {% set back_two_bg = third_review.background_color | default('#E2E899') %}
+  {% set first_stars = first_review.stars | default(5) | int %}
+  <div class="arf-carousel{% if is_mobile %} arf-carousel--mobile{% endif %}" data-arf-carousel tabindex="0" role="region" aria-label="{{ _('Customer reviews') }}">
+    {% if has_multiple and show_arrows %}
+      <button class="arf-arrow arf-arrow--prev" type="button" data-arf-arrow="prev" aria-label="{{ _('Previous review') }}">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M15 18L9 12L15 6" />
+        </svg>
+      </button>
+      <button class="arf-arrow arf-arrow--next" type="button" data-arf-arrow="next" aria-label="{{ _('Next review') }}">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M9 18L15 12L9 6" />
+        </svg>
+      </button>
+    {% endif %}
+    <div class="arf-deck{% if has_multiple %} arf-deck--multiple{% else %} arf-deck--single{% endif %}" style="--arf-front-bg: {{ front_bg }}; --arf-front-color: {{ front_color }}; --arf-back-one-bg: {{ back_one_bg }}; --arf-back-two-bg: {{ back_two_bg }};">
+      {% if has_multiple %}
+        <div class="arf-deck__back arf-deck__back--green"></div>
+        <div class="arf-deck__back arf-deck__back--yellow"></div>
+      {% endif %}
+      <article class="arf-featured-card" aria-live="polite">
+        <div class="arf-featured-card__body">
+          {{ star_icons(18, first_stars) }}
+          <p class="arf-featured-card__text" data-arf-text>{{ first_review.text | default(fallback_text) }}</p>
+        </div>
+        <div class="arf-featured-card__footer">
+          <div class="arf-featured-card__author">
+            {{ avatar_img(first_review, 92, avatar_fallbacks[0], 'arf-featured-card__avatar') }}
+            <div>
+              <p class="arf-featured-card__name" data-arf-name>{{ first_review.name | default('Ahmed Seif') }}</p>
+              {{ verified_badge() }}
+            </div>
+          </div>
+        </div>
+        {% if has_multiple %}
+          <div class="arf-dots" data-arf-dots aria-label="{{ _('Customer reviews') }}">
+            {% for review in reviews %}
+              <button class="arf-dot{% if loop.first %} arf-dot--active{% endif %}" type="button" data-arf-dot="{{ loop.index0 }}" aria-label="{{ _('Review') }} {{ loop.index }}"></button>
+            {% endfor %}
+          </div>
+        {% endif %}
+        </div>
+      </article>
+    </div>
+  </div>
+{% endmacro %}
+
+<section section-id="{{ sectionId }}"
+  data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}" class="section-arf" dir="rtl" style="--arf-title-color: {{ title_color }};">
+  <div class="arf-desktop">
+    <div class="arf-header">
+      <h2 class="arf-title">{{ settings.title | default('تجربة القهوة بعيون عملائنا') }}</h2>
+    </div>
+
+    <div class="arf-stage">
+      <div class="arf-bg-grid" aria-hidden="true">
+        <div class="arf-bg-grid__col">
+          {{ background_review_card(bg1, bg1.card_style | default('dark'), avatar_fallbacks[0]) }}
+          {{ background_review_card(bg2, bg2.card_style | default('light'), avatar_fallbacks[1]) }}
+        </div>
+        <div class="arf-bg-grid__col">
+          {{ background_image_card(bg3, avatar_fallbacks[2]) }}
+        </div>
+        <div class="arf-bg-grid__col">
+          {{ background_review_card(bg4, bg4.card_style | default('light'), avatar_fallbacks[3]) }}
+          {{ background_review_card(bg5, bg5.card_style | default('dark'), avatar_fallbacks[4]) }}
+        </div>
+      </div>
+
+      {{ featured_deck(false) }}
+    </div>
+  </div>
+
+  <div class="arf-mobile">
+    <h2 class="arf-title arf-title--mobile">{{ settings.title | default('تجربة القهوة بعيون عملائنا') }}</h2>
+
+    <div class="arf-stage arf-stage--mobile">
+      <div class="arf-bg-grid arf-bg-grid--mobile" aria-hidden="true">
+        <div class="arf-bg-grid__col">
+          {{ background_review_card(bg1, 'dark', avatar_fallbacks[0]) }}
+          {{ background_review_card(bg2, 'light', avatar_fallbacks[1]) }}
+        </div>
+        <div class="arf-bg-grid__col">
+          {{ background_review_card(bg4, 'light', avatar_fallbacks[3]) }}
+          {{ background_review_card(bg5, 'dark', avatar_fallbacks[4]) }}
+        </div>
+      </div>
+
+      {{ featured_deck(true) }}
+    </div>
+  </div>
+
+  <script type="application/json" data-arf-data>
+    [
+      {% for review in reviews %}
+        {% set fallback_avatar_index = loop.index0 if loop.index0 < (avatar_fallbacks | length) else 0 %}
+        {
+          "text": {{ (review.text | default(fallback_text)) | tojson }},
+          "name": {{ (review.name | default('Ahmed Seif')) | tojson }},
+          "avatar": {{ (image_url(review.avatar, w=92, h=92, f='auto') if review.avatar else avatar_fallbacks[fallback_avatar_index]) | tojson }},
+          "backgroundColor": {{ (review.background_color | default('#E2E899')) | tojson }},
+          "textColor": {{ (review.text_color | default('#000000')) | tojson }},
+          "stars": {{ (review.stars | default(5) | int) | tojson }}
+        }{% if not loop.last %},{% endif %}
+      {% endfor %}
+    ]
+  </script>
+</section>
+
+<script>
+(function() {
+  var root = document.querySelector('[section-id="{{ sectionId }}"].section-arf');
+  if (!root) return;
+
+  var dataNode = root.querySelector('[data-arf-data]');
+  var reviews = [];
+  try {
+    reviews = JSON.parse(dataNode ? dataNode.textContent : '[]');
+  } catch (error) {
+    reviews = [];
+  }
+
+  if (!reviews.length) return;
+
+  var active = 0;
+  var carousels = root.querySelectorAll('[data-arf-carousel]');
+  var isAnimating = false;
+  var swapTimer = null;
+  var cleanupTimer = null;
+
+  function renderStars(count) {
+    var total = Math.max(1, Math.min(5, parseInt(count, 10) || 5));
+    return Array.from({ length: total }).map(function() {
+      return '<svg width="18" height="18" viewBox="0 0 20 20" fill="#F7A52D" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>';
+    }).join('');
+  }
+
+  function updateCarousel(carousel, animate) {
+    var review = reviews[active];
+    var nextOne = reviews[(active + 1) % reviews.length] || review;
+    var nextTwo = reviews[(active + 2) % reviews.length] || review;
+    var text = carousel.querySelector('[data-arf-text]');
+    var name = carousel.querySelector('[data-arf-name]');
+    var avatar = carousel.querySelector('.arf-featured-card__avatar');
+    var dots = carousel.querySelectorAll('[data-arf-dot]');
+    var stars = carousel.querySelector('.arf-featured-card__body .arf-stars');
+    var deck = carousel.querySelector('.arf-deck');
+
+    if (text) text.textContent = review.text;
+    if (name) name.textContent = review.name;
+    if (avatar) avatar.src = review.avatar;
+    if (deck) {
+      deck.style.setProperty('--arf-front-bg', review.backgroundColor || '#E2E899');
+      deck.style.setProperty('--arf-front-color', review.textColor || '#000000');
+      deck.style.setProperty('--arf-back-one-bg', nextOne.backgroundColor || '#239C5C');
+      deck.style.setProperty('--arf-back-two-bg', nextTwo.backgroundColor || '#E2E899');
+    }
+    if (stars) stars.innerHTML = renderStars(review.stars);
+
+    dots.forEach(function(dot, index) {
+      var isActive = index === active;
+      dot.classList.toggle('arf-dot--active', isActive);
+      dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+    });
+
+    if (animate && deck) {
+      deck.classList.remove('arf-deck--animate');
+      void deck.offsetWidth;
+      deck.classList.add('arf-deck--animate');
+    }
+  }
+
+  function addClickRipple(carousel, event) {
+    if (!event) return;
+    var rect = carousel.getBoundingClientRect();
+    var point = event.changedTouches ? event.changedTouches[0] : event;
+    var x = typeof point.clientX === 'number' ? point.clientX - rect.left : rect.width / 2;
+    var y = typeof point.clientY === 'number' ? point.clientY - rect.top : rect.height / 2;
+    var ripple = document.createElement('span');
+    ripple.className = 'arf-click-ripple';
+    ripple.style.left = x + 'px';
+    ripple.style.top = y + 'px';
+    carousel.appendChild(ripple);
+    window.setTimeout(function() {
+      ripple.remove();
+    }, 560);
+  }
+
+  function setActive(next, animate, event) {
+    if (reviews.length <= 1) return;
+
+    var nextIndex = (next + reviews.length) % reviews.length;
+
+    if (!animate) {
+      active = nextIndex;
+      carousels.forEach(function(carousel) {
+        updateCarousel(carousel, false);
+      });
+      return;
+    }
+
+    isAnimating = true;
+    window.clearTimeout(swapTimer);
+    window.clearTimeout(cleanupTimer);
+
+    carousels.forEach(function(carousel) {
+      var deck = carousel.querySelector('.arf-deck');
+      if (deck) {
+        deck.classList.remove('arf-deck--animate');
+        void deck.offsetWidth;
+        deck.classList.add('arf-deck--animate');
+      }
+    });
+
+    addClickRipple(event && event.currentTarget ? event.currentTarget : null, event);
+    active = nextIndex;
+
+    swapTimer = window.setTimeout(function() {
+      carousels.forEach(function(carousel) {
+        updateCarousel(carousel, false);
+      });
+    }, 145);
+
+    cleanupTimer = window.setTimeout(function() {
+      carousels.forEach(function(carousel) {
+        var deck = carousel.querySelector('.arf-deck');
+        if (deck) deck.classList.remove('arf-deck--animate');
+      });
+      isAnimating = false;
+    }, 440);
+  }
+
+  carousels.forEach(function(carousel) {
+    var startX = 0;
+
+    carousel.querySelectorAll('[data-arf-arrow]').forEach(function(arrow) {
+      arrow.addEventListener('click', function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        var direction = arrow.getAttribute('data-arf-arrow');
+        setActive(active + (direction === 'next' ? 1 : -1), true, event);
+      });
+    });
+
+    carousel.addEventListener('click', function(event) {
+      var dot = event.target && event.target.closest ? event.target.closest('[data-arf-dot]') : null;
+      if (dot) {
+        setActive(parseInt(dot.getAttribute('data-arf-dot'), 10), true, event);
+        return;
+      }
+      setActive(active + 1, true, event);
+    });
+
+    carousel.addEventListener('keydown', function(event) {
+      var control = event.target && event.target.closest ? event.target.closest('[data-arf-arrow], [data-arf-dot]') : null;
+      if (control) return;
+
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        setActive(active + 1, true, event);
+      }
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        setActive(active - 1, true, event);
+      }
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        setActive(active + 1, true, event);
+      }
+    });
+
+    carousel.addEventListener('touchstart', function(event) {
+      startX = event.changedTouches[0].clientX;
+    }, { passive: true });
+
+    carousel.addEventListener('touchend', function(event) {
+      var delta = event.changedTouches[0].clientX - startX;
+      if (Math.abs(delta) < 32) return;
+      setActive(active + (delta < 0 ? 1 : -1), true, event);
+    }, { passive: true });
+
+    updateCarousel(carousel, false);
+  });
+})();
+</script>
+
+<style>
+  [section-id="{{ sectionId }}"].section-arf {
+    background: #FCFAF7;
+    direction: rtl;
+  }
+
+  .arf-desktop {
+    padding: 40px 56px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .arf-header {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .arf-title {
+    color: var(--arf-title-color, #000);
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 36px;
+    margin: 0;
+    text-align: right;
+  }
+
+  .arf-stage {
+    position: relative;
+    min-height: 540px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .arf-bg-grid {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    opacity: 0.12;
+    filter: blur(2px);
+    pointer-events: none;
+  }
+
+  .arf-bg-grid__col {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .arf-bg-card {
+    min-width: 0;
+    flex: 1;
+    border-radius: 4px;
+    padding: 24px;
+    background: var(--arf-card-bg, #171717);
+    color: var(--arf-card-color, #fff);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 40px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .arf-bg-card--dark {
+    --arf-card-bg: #171717;
+    --arf-card-color: #fff;
+  }
+
+  .arf-bg-card--light {
+    --arf-card-bg: #EEEEEE;
+    --arf-card-color: #000;
+    gap: 56px;
+  }
+
+  .arf-bg-card--image {
+    background: #171717;
+    color: #fff;
+    min-height: 540px;
+    padding: 0;
+  }
+
+  .arf-bg-card__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .arf-bg-card__overlay {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 30px;
+    background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.42) 56%, rgba(102,102,102,0) 100%);
+  }
+
+  .arf-bg-card__body,
+  .arf-featured-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .arf-bg-card__body {
+    gap: 8px;
+  }
+
+  .arf-stars {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .arf-bg-card__text,
+  .arf-featured-card__text {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+  }
+
+  .arf-featured-card__text {
+    color: inherit;
+
+  }
+
+  .arf-bg-card__author,
+  .arf-featured-card__author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .arf-bg-card__avatar,
+  .arf-featured-card__avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 4px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: #e4e4e7;
+  }
+
+  .arf-bg-card__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .arf-bg-card__name,
+  .arf-featured-card__name {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+  }
+
+  .arf-verified {
+    color: #25A562;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    white-space: nowrap;
+  }
+
+  .arf-carousel {
+    position: relative;
+    z-index: 2;
+    width: min(650px, 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    outline: none;
+    overflow: visible;
+  }
+
+  .arf-carousel:focus-visible .arf-featured-card {
+    box-shadow: 0 0 0 3px rgba(37, 165, 98, 0.22), 0 12px 36px rgba(0, 0, 0, 0.12);
+  }
+
+  .arf-arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 6;
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 999px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.86);
+    color: #171717;
+    cursor: pointer;
+    touch-action: manipulation;
+    user-select: none;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+    transform: translateY(-50%);
+    transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+  }
+
+  .arf-arrow:hover {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.2);
+    transform: translateY(-50%) scale(1.04);
+  }
+
+  .arf-arrow:focus-visible {
+    outline: 2px solid rgba(37, 165, 98, 0.45);
+    outline-offset: 3px;
+  }
+
+  .arf-arrow svg {
+    width: 22px;
+    height: 22px;
+    display: block;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .arf-arrow--prev {
+    left: -92px;
+  }
+
+  .arf-arrow--next {
+    right: -92px;
+  }
+
+  .arf-deck {
+    position: relative;
+    width: min(630px, 100%);
+    height: 316px;
+  }
+
+  .arf-deck__back {
+    position: absolute;
+    inset: 8% 1.5% 6% 2%;
+    border-radius: 24px;
+    transform-origin: center;
+  }
+
+  .arf-deck__back--green {
+    background: var(--arf-back-one-bg, #239C5C);
+    transform: rotate(4deg);
+    z-index: 1;
+  }
+
+  .arf-deck__back--yellow {
+    background: var(--arf-back-two-bg, #E2E899);
+    transform: rotate(-4deg);
+    z-index: 2;
+  }
+
+  [section-id="{{ sectionId }}"] .arf-featured-card {
+    position: absolute;
+    inset: 7% 1% 5%;
+    z-index: 3;
+    background: var(--arf-front-bg, #E2E899);
+    color: var(--arf-front-color, #000);
+    border-radius: 24px;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.10);
+    transform: rotate(-0.6deg);
+    transform-origin: center;
+    transition: background 120ms linear, color 120ms linear;
+  }
+
+  .arf-deck--single .arf-featured-card {
+    inset: 0;
+  }
+
+  .arf-deck--animate .arf-featured-card {
+    animation: arf-front-click-swap 440ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .arf-deck--animate .arf-deck__back--green {
+    animation: arf-back-one-click 440ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .arf-deck--animate .arf-deck__back--yellow {
+    animation: arf-back-two-click 440ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .arf-featured-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .arf-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    gap: 3px;
+    flex-shrink: 0;
+  }
+
+  .arf-dot {
+    width: 30px;
+    height: 2px;
+    border: 0;
+    border-radius: 999px;
+    padding: 0;
+    background: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background 180ms ease, width 180ms ease;
+  }
+
+  .arf-dot--active {
+    background: #004F3B;
+  }
+
+  .arf-mobile {
+    display: none;
+  }
+
+  .arf-click-ripple {
+    position: absolute;
+    z-index: 5;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(0, 0, 0, 0.42);
+    border-radius: 999px;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(0.35);
+    animation: arf-click-ripple 520ms ease-out forwards;
+  }
+
+  @keyframes arf-front-click-swap {
+    0% {
+      transform: translate3d(0, 0, 0) rotate(-0.6deg) scale(1);
+      opacity: 1;
+    }
+    34% {
+      transform: translate3d(-28px, -8px, 0) rotate(-5.5deg) scale(0.985);
+      opacity: 0.38;
+    }
+    35% {
+      transform: translate3d(22px, 10px, 0) rotate(4deg) scale(0.985);
+      opacity: 0.28;
+    }
+    66% {
+      transform: translate3d(4px, 2px, 0) rotate(1deg) scale(1.01);
+      opacity: 1;
+    }
+    100% {
+      transform: translate3d(0, 0, 0) rotate(-0.6deg) scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes arf-back-one-click {
+    0% {
+      transform: rotate(4deg) translate3d(0, 0, 0) scale(1);
+    }
+    36% {
+      transform: rotate(-0.6deg) translate3d(-4px, -3px, 0) scale(1.02);
+    }
+    100% {
+      transform: rotate(4deg) translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  @keyframes arf-back-two-click {
+    0% {
+      transform: rotate(-4deg) translate3d(0, 0, 0) scale(1);
+    }
+    36% {
+      transform: rotate(4deg) translate3d(7px, 4px, 0) scale(1.01);
+    }
+    100% {
+      transform: rotate(-4deg) translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  @keyframes arf-click-ripple {
+    0% {
+      opacity: 0.78;
+      transform: translate(-50%, -50%) scale(0.35);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(2.5);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .arf-desktop {
+      display: none;
+    }
+
+    .arf-mobile {
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .arf-title--mobile {
+      font-size: 24px;
+      line-height: 32px;
+      text-align: center;
+    }
+
+    .arf-stage--mobile {
+      min-height: 380px;
+    }
+
+    .arf-bg-grid--mobile {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      opacity: 0.12;
+    }
+
+    .arf-bg-grid--mobile .arf-bg-grid__col {
+      gap: 8px;
+    }
+
+    .arf-bg-grid--mobile .arf-bg-card {
+      padding: 12px;
+      gap: 16px;
+    }
+
+    .arf-bg-grid--mobile .arf-stars {
+      gap: 2px;
+    }
+
+    .arf-bg-grid--mobile .arf-stars svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .arf-bg-grid--mobile .arf-bg-card__text {
+      font-size: 12px;
+      line-height: 18px;
+    }
+
+    .arf-bg-grid--mobile .arf-bg-card__author {
+      gap: 6px;
+    }
+
+    .arf-bg-grid--mobile .arf-bg-card__avatar {
+      width: 32px;
+      height: 32px;
+    }
+
+    .arf-bg-grid--mobile .arf-bg-card__name {
+      font-size: 12px;
+      line-height: 16px;
+    }
+
+    .arf-bg-grid--mobile .arf-verified {
+      display: none;
+    }
+
+    .arf-carousel--mobile {
+      width: 100%;
+      max-width: 340px;
+    }
+
+    .arf-carousel--mobile .arf-arrow {
+      width: 36px;
+      height: 36px;
+    }
+
+    .arf-carousel--mobile .arf-arrow svg {
+      width: 19px;
+      height: 19px;
+    }
+
+    .arf-carousel--mobile .arf-arrow--prev {
+      left: -8px;
+    }
+
+    .arf-carousel--mobile .arf-arrow--next {
+      right: -8px;
+    }
+
+    .arf-carousel--mobile .arf-deck {
+      width: 100%;
+      height: 260px;
+    }
+
+    .arf-carousel--mobile .arf-featured-card {
+      padding: 16px 20px;
+    }
+
+    .arf-carousel--mobile .arf-featured-card__text {
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .arf-carousel--mobile .arf-featured-card__footer {
+      gap: 10px;
+    }
+
+    .arf-carousel--mobile .arf-featured-card__author {
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .arf-carousel--mobile .arf-featured-card__avatar {
+      width: 32px;
+      height: 32px;
+    }
+
+    .arf-carousel--mobile .arf-featured-card__name {
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .arf-carousel--mobile .arf-verified {
+      font-size: 12px;
+      line-height: 16px;
+    }
+
+    .arf-carousel--mobile .arf-dots {
+      max-width: 116px;
+      overflow: hidden;
+    }
+
+    .arf-carousel--mobile .arf-dot {
+      width: 22px;
+    }
+  }
+</style>

@@ -1,0 +1,271 @@
+{% set bg_color = settings.bg_color | default('#D3DB6F') %}
+{% set text_color = settings.text_color | default('#000000') %}
+{% set mobile_text_color = settings.mobile_text_color | default('#404040') %}
+{% set icon_color = settings.icon_color | default(text_color) %}
+{% set separator_color = settings.separator_color | default(text_color) %}
+{% set speed = settings.speed | default(18) %}
+{% set items = safeget(settings, "items", []) %}
+
+{% if not items or items | length == 0 %}
+  {% set items = [
+    { 'text': 'تحميص مظبوط', 'icon_image': none },
+    { 'text': 'تغليف مميز', 'icon_image': none },
+    { 'text': 'شحن سريع', 'icon_image': none },
+    { 'text': 'دفع امن', 'icon_image': none }
+  ] %}
+{% endif %}
+
+{% macro fallback_icon(index=0) %}
+  {% set variant = index % 4 %}
+  <svg class="snake-bar__icon-svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    {% if variant == 1 %}
+      <path d="M4 10H20V20H4V10Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M4 7H20V10H4V7Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M12 7V20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M8.3 7C7.2 6.2 6.8 5 7.5 4.2C8.4 3.2 10.3 4.5 12 7C13.7 4.5 15.6 3.2 16.5 4.2C17.2 5 16.8 6.2 15.7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    {% elif variant == 2 %}
+      <path d="M3 7H14V16H3V7Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M14 11H18L21 14V16H14V11Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M6.5 18.5C7.32843 18.5 8 17.8284 8 17C8 16.1716 7.32843 15.5 6.5 15.5C5.67157 15.5 5 16.1716 5 17C5 17.8284 5.67157 18.5 6.5 18.5Z" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M17.5 18.5C18.3284 18.5 19 17.8284 19 17C19 16.1716 18.3284 15.5 17.5 15.5C16.6716 15.5 16 16.1716 16 17C16 17.8284 16.6716 18.5 17.5 18.5Z" stroke="currentColor" stroke-width="1.6"/>
+    {% elif variant == 3 %}
+      <path d="M4 7H20V17H4V7Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M4 10H20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M15 14L17 16L21 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    {% else %}
+      <path d="M7.5 6.1C9.7 3.6 13.5 3.4 16 5.6C18.7 8 18.4 12.5 15.5 16.1C13.4 18.8 10.2 20.1 7.9 18.1C5.4 15.9 4.9 9.1 7.5 6.1Z" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M10 7.5C11.1 10.2 12.8 12.7 15 14.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    {% endif %}
+  </svg>
+{% endmacro %}
+
+{% macro render_icon(item, index=0) %}
+  {% if item.icon_image %}
+    <img class="snake-bar__icon-img" src="{{ image_url(item.icon_image, w=64, h=64, f='auto') }}" alt="">
+  {% else %}
+    {{ fallback_icon(index) }}
+  {% endif %}
+{% endmacro %}
+
+{% macro render_group(hidden=false) %}
+  <div class="snake-bar__group"{% if hidden %} aria-hidden="true"{% endif %}>
+    {% for item in items %}
+      <div class="snake-bar__item">
+        {{ render_icon(item, loop.index0) }}
+        <span class="snake-bar__text">{{ item.text | default('تحميص مظبوط') }}</span>
+      </div>
+      <span class="snake-bar__sep"></span>
+    {% endfor %}
+  </div>
+{% endmacro %}
+
+<div
+  section-id="{{ sectionId }}"
+  data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
+  class="snake-bar"
+  data-snake-speed="{{ speed }}"
+  style="
+    --snake-bg: {{ bg_color }};
+    --snake-text: {{ text_color }};
+    --snake-mobile-text: {{ mobile_text_color }};
+    --snake-icon: {{ icon_color }};
+    --snake-separator: {{ separator_color }};
+    --snake-duration: {{ speed }}s;
+  "
+>
+  <div class="snake-bar__viewport">
+    <div class="snake-bar__track" data-snake-track>
+      <div class="snake-bar__sequence" data-snake-sequence>
+        {{ render_group(false) }}
+      </div>
+      <div class="snake-bar__sequence" data-snake-clone aria-hidden="true"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var root = document.querySelector('[section-id="{{ sectionId }}"].snake-bar');
+  if (!root) return;
+
+  var viewport = root.querySelector('.snake-bar__viewport');
+  var track = root.querySelector('.snake-bar__track');
+  var sequence = root.querySelector('[data-snake-sequence]');
+  var clone = root.querySelector('[data-snake-clone]');
+  if (!viewport || !track || !sequence || !clone) return;
+
+  var original = sequence.innerHTML;
+  var speedSeconds = parseFloat(root.getAttribute('data-snake-speed')) || 18;
+  var speed = 0;
+  var x = 0;
+  var lastTime = 0;
+  var sequenceWidth = 0;
+  var rafId = null;
+
+  function setup() {
+    // READ before any DOM mutations to avoid forced reflow
+    var viewportWidth = viewport.offsetWidth;
+    if (!viewportWidth) return;
+
+    // Reset to original for accurate base measurement
+    sequence.innerHTML = original;
+    clone.innerHTML = '';
+    track.style.transform = 'translate3d(0,0,0)';
+
+    // One forced reflow here — unavoidable for accurate baseWidth
+    var baseWidth = sequence.scrollWidth || 1;
+
+    var copiesNeeded = Math.ceil((viewportWidth + baseWidth) / baseWidth);
+    copiesNeeded = Math.max(2, copiesNeeded + 1);
+    copiesNeeded = Math.min(24, copiesNeeded);
+
+    // Build full HTML as a string, then write once (no more reflows)
+    var html = original;
+    for (var i = 1; i < copiesNeeded; i += 1) html += original;
+    sequence.innerHTML = html;
+    clone.innerHTML = html;
+
+    sequenceWidth = baseWidth * copiesNeeded;
+    speed = baseWidth / speedSeconds;
+    x = 0;
+  }
+
+  function tick(time) {
+    if (!lastTime) lastTime = time;
+    var delta = (time - lastTime) / 1000;
+    lastTime = time;
+
+    if (sequenceWidth > 0) {
+      x += speed * delta;
+      if (x >= sequenceWidth) {
+        x -= sequenceWidth;
+      }
+      track.style.transform = 'translate3d(' + x + 'px,0,0)';
+    }
+
+    rafId = window.requestAnimationFrame(tick);
+  }
+
+  function restart() {
+    if (rafId) window.cancelAnimationFrame(rafId);
+    lastTime = 0;
+    setup();
+    rafId = window.requestAnimationFrame(tick);
+  }
+
+  restart();
+
+  var resizeTimer = null;
+  window.addEventListener('resize', function() {
+    window.clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(restart, 150);
+  });
+
+  window.addEventListener('load', restart);
+})();
+</script>
+
+<style>
+  [section-id="{{ sectionId }}"].snake-bar {
+    background: var(--snake-bg, #D3DB6F);
+    min-height: 40px;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    direction: rtl;
+  }
+
+  [section-id="{{ sectionId }}"] .snake-bar__viewport {
+    width: 100%;
+    overflow: hidden;
+    padding-block: 8px;
+  }
+
+  [section-id="{{ sectionId }}"] .snake-bar__track {
+    width: max-content;
+    display: flex;
+    align-items: center;
+    will-change: transform;
+    contain: layout style;
+  }
+
+  [section-id="{{ sectionId }}"] .snake-bar__sequence {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  [section-id="{{ sectionId }}"] .snake-bar__group {
+    display: flex;
+    align-items: center;
+    gap: 72px;
+    flex: 0 0 auto;
+    padding-inline: 80px 72px;
+    white-space: nowrap;
+  }
+
+  [section-id="{{ sectionId }}"] .snake-bar__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--snake-icon, #000);
+    flex-shrink: 0;
+  }
+
+  [section-id="{{ sectionId }}"] .snake-bar__text {
+    color: var(--snake-text, #000);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0;
+  }
+
+  [section-id="{{ sectionId }}"] .snake-bar__icon-svg,
+  [section-id="{{ sectionId }}"] .snake-bar__icon-img {
+    width: 24px;
+    height: 24px;
+    flex: 0 0 auto;
+  }
+
+  [section-id="{{ sectionId }}"] .snake-bar__icon-img {
+    object-fit: contain;
+  }
+
+  [section-id="{{ sectionId }}"] .snake-bar__sep {
+    width: 2px;
+    height: 19px;
+    background: var(--snake-separator, #000);
+    flex: 0 0 auto;
+  }
+
+  @media (max-width: 767px) {
+    [section-id="{{ sectionId }}"].snake-bar {
+      min-height: 40px;
+    }
+
+    [section-id="{{ sectionId }}"] .snake-bar__group {
+      gap: 20px;
+      padding-inline: 16px 20px;
+    }
+
+    [section-id="{{ sectionId }}"] .snake-bar__text {
+      color: var(--snake-mobile-text, #404040);
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 20px;
+    }
+
+    [section-id="{{ sectionId }}"] .snake-bar__icon-svg,
+    [section-id="{{ sectionId }}"] .snake-bar__icon-img {
+      width: 20px;
+      height: 20px;
+    }
+
+    [section-id="{{ sectionId }}"] .snake-bar__sep {
+      width: 1px;
+      height: 11px;
+    }
+  }
+</style>

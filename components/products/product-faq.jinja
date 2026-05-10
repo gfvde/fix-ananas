@@ -1,0 +1,244 @@
+{#
+  ============================================================
+  Product FAQ Accordion Section
+  ============================================================
+  Variables expected from settings (layout.schema.json):
+    settings.single_product_section_enable_faq_section        → bool
+    settings.single_product_section_faq_section_title         → string
+    settings.single_product_section_faq_section_subtitle      → string
+    settings.single_product_section_faq_section_background_color
+    settings.single_product_section_faq_section_title_color
+    settings.single_product_section_faq_section_subtitle_color
+    settings.single_product_section_faq_item_border_color
+    settings.single_product_section_faq_question_text_color
+    settings.single_product_section_faq_answer_text_color
+    settings.single_product_section_faq_icon_color
+    settings.single_product_section_faq_items               → list[{faq_question, faq_answer, faq_item_opened}]
+  ============================================================
+#}
+
+{% if settings.single_product_section_enable_faq_section != false and
+      settings.single_product_section_faq_items and
+      settings.single_product_section_faq_items | length > 0 %}
+
+  {# ── Color tokens (with sane defaults) ── #}
+  {% set bg_color        = settings.single_product_section_faq_section_background_color | default('#FFFFFF') %}
+  {% set title_color     = settings.single_product_section_faq_section_title_color       | default('#171717') %}
+  {% set subtitle_color  = settings.single_product_section_faq_section_subtitle_color    | default('#737373') %}
+  {% set border_color    = settings.single_product_section_faq_item_border_color         | default('#E5E5E5') %}
+  {% set q_color         = settings.single_product_section_faq_question_text_color       | default('#171717') %}
+  {% set a_color         = settings.single_product_section_faq_answer_text_color         | default('#525252') %}
+  {% set icon_color      = settings.single_product_section_faq_icon_color                | default('#171717') %}
+
+  {# ── Text tokens (one field serves both languages) ── #}
+  {% set section_title    = settings.single_product_section_faq_section_title    | default('الأسئلة الشائعة' if session.lang == 'ar' else 'Frequently Asked Questions') %}
+  {% set section_subtitle = settings.single_product_section_faq_section_subtitle | default('نقدم لك إجابات شاملة على أكثر الاستفسارات شيوعًا لمساعدتك على اختيار المنتج المناسب وتجربة استخدام سلسة' if session.lang == 'ar' else 'We provide comprehensive answers to the most common questions to help you choose the right product.') %}
+
+  <section
+    id="product-faq-section"
+    class="py-10 md:py-16"
+    style="background-color: {{ bg_color }};"
+    aria-label="{{ section_title }}"
+  >
+    <div class="theme-container">
+
+      {# ── Two-column layout: Info (right in RTL) + Accordion (left in RTL) ── #}
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-12 lg:gap-16">
+
+        {# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+           Column 1 – Section title & description
+           (right column in RTL / left column in LTR)
+           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ #}
+        <div class="faq-info-col col-span-1 flex flex-col justify-start gap-4 md:sticky md:top-24 md:self-start">
+          <h2
+            class="text-2xl font-bold leading-tight md:text-3xl lg:text-4xl"
+            style="color: {{ title_color }};"
+          >
+            {{ section_title }}
+          </h2>
+
+          <p
+            class="text-sm leading-relaxed md:text-base"
+            style="color: {{ subtitle_color }};"
+          >
+            {{ section_subtitle }}
+          </p>
+
+          
+        </div>
+
+        {# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+           Column 2 – FAQ Accordion list
+           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ #}
+        <div
+          class="faq-accordion-col col-span-1 md:col-span-2 flex flex-col"
+          role="list"
+          aria-label="{{ section_title }}"
+        >
+          {% for item in settings.single_product_section_faq_items %}
+            {% set faq_id = 'faq-item-' ~ loop.index %}
+            {% set is_open = item.faq_item_opened | default(false) %}
+
+            <div
+              class="faq-accordion-item"
+              role="listitem"
+              style="border-bottom: 1px solid {{ border_color }};"
+            >
+              {# ── Question (trigger) button ── #}
+              <button
+                id="{{ faq_id }}-btn"
+                type="button"
+                class="faq-trigger group flex w-full items-center justify-between gap-4 py-4 text-start focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                aria-expanded="{{ 'true' if is_open else 'false' }}"
+                aria-controls="{{ faq_id }}-panel"
+                data-faq-trigger="{{ faq_id }}"
+                style="color: {{ q_color }};"
+              >
+                <span class="faq-question text-sm font-semibold leading-snug transition-colors duration-200 md:text-base group-hover:opacity-75">
+                  {{ item.faq_question }}
+                </span>
+
+                {# Chevron arrow icon – rotates 180° when open #}
+                <span
+                  class="faq-icon-wrapper flex-shrink-0 transition-transform duration-300 ease-out {{ 'rotate-180' if is_open else 'rotate-0' }}"
+                  aria-hidden="true"
+                >
+                  <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1L6.00081 5.58L11 1" stroke="{{ icon_color }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </button>
+
+              {# ── Answer panel ── #}
+              <div
+                id="{{ faq_id }}-panel"
+                class="faq-panel overflow-hidden transition-all duration-300 ease-out"
+                style="max-height: {{ 'none' if is_open else '0' }}; {{ 'display: block;' if is_open else '' }}"
+                role="region"
+                aria-labelledby="{{ faq_id }}-btn"
+                data-faq-panel="{{ faq_id }}"
+              >
+                <div
+                  class="pb-4 text-sm leading-relaxed md:text-base"
+                  style="color: {{ a_color }};"
+                >
+                  {{ item.faq_answer }}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        {# /Column 2 #}
+
+      </div>
+      {# /grid #}
+
+    </div>
+  </section>
+
+  {# ── FAQ Accordion Script (scoped, self-contained) ── #}
+  <script>
+  (function () {
+    'use strict';
+
+    /**
+     * Smoothly open a panel by animating max-height.
+     */
+    function openPanel(panel, iconWrapper, vLine) {
+      panel.style.display   = 'block';
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+      iconWrapper.classList.add('rotate-180');
+      if (vLine) vLine.classList.add('opacity-0');
+    }
+
+    /**
+     * Smoothly close a panel by collapsing max-height to 0.
+     * Hides element after transition ends.
+     */
+    function closePanel(panel, iconWrapper, vLine) {
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+      // Force reflow so the transition starts from the current height
+      // eslint-disable-next-line no-unused-expressions
+      panel.offsetHeight;
+      panel.style.maxHeight = '0px';
+      iconWrapper.classList.remove('rotate-180');
+      if (vLine) vLine.classList.remove('opacity-0');
+
+      panel.addEventListener('transitionend', function handler(e) {
+        if (e.propertyName === 'max-height') {
+          panel.style.display = 'none';
+          panel.removeEventListener('transitionend', handler);
+        }
+      });
+    }
+
+    /**
+     * Bootstrap all FAQ triggers on the page.
+     * Uses data attributes to stay decoupled from class names.
+     */
+    function initFaqAccordion() {
+      var triggers = document.querySelectorAll('[data-faq-trigger]');
+      if (!triggers.length) return;
+
+      // Set initial display state for closed items
+      triggers.forEach(function (btn) {
+        var id    = btn.getAttribute('data-faq-trigger');
+        var panel = document.querySelector('[data-faq-panel="' + id + '"]');
+        if (!panel) return;
+
+        var isOpen = btn.getAttribute('aria-expanded') === 'true';
+        if (!isOpen) {
+          panel.style.display   = 'none';
+          panel.style.maxHeight = '0px';
+        } else {
+          panel.style.display   = 'block';
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+        }
+      });
+
+      // Attach click listeners
+      triggers.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var id          = btn.getAttribute('data-faq-trigger');
+          var panel       = document.querySelector('[data-faq-panel="' + id + '"]');
+          var iconWrapper = btn.querySelector('.faq-icon-wrapper');
+          var vLine       = btn.querySelector('.faq-icon-v-line');
+          if (!panel) return;
+
+          var isCurrentlyOpen = btn.getAttribute('aria-expanded') === 'true';
+
+          // Close all other open items
+          triggers.forEach(function (other) {
+            if (other === btn) return;
+            var otherId = other.getAttribute('data-faq-trigger');
+            var otherPanel       = document.querySelector('[data-faq-panel="' + otherId + '"]');
+            var otherIconWrapper = other.querySelector('.faq-icon-wrapper');
+            var otherVLine       = other.querySelector('.faq-icon-v-line');
+            if (other.getAttribute('aria-expanded') === 'true') {
+              other.setAttribute('aria-expanded', 'false');
+              closePanel(otherPanel, otherIconWrapper, otherVLine);
+            }
+          });
+
+          // Toggle current item
+          if (isCurrentlyOpen) {
+            btn.setAttribute('aria-expanded', 'false');
+            closePanel(panel, iconWrapper, vLine);
+          } else {
+            btn.setAttribute('aria-expanded', 'true');
+            openPanel(panel, iconWrapper, vLine);
+          }
+        });
+      });
+    }
+
+    // Run after DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initFaqAccordion);
+    } else {
+      initFaqAccordion();
+    }
+  })();
+  </script>
+
+{% endif %}

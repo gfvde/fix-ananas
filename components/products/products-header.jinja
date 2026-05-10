@@ -1,0 +1,108 @@
+{% set filters=products.filters %}
+
+{% set ns = namespace(has_custom_filters=false) %}
+{% if filters and filters.attributes %}
+  {% for attribute in filters.attributes %}
+    {% if attribute.is_enabled and attribute.data|length > 0 %}
+      {% set ns.has_custom_filters = true %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+{% set category_page_settings = settings.category_page if settings.category_page is defined and settings.category_page else {} %}
+{% if category_page_settings.filter_layout is defined %}
+  {% set product_filters_layout = category_page_settings.filter_layout %}
+{% elif settings.filter_layout is defined %}
+  {% set product_filters_layout = settings.filter_layout %}
+{% elif settings.category_page_filter_layout is defined %}
+  {% set product_filters_layout = settings.category_page_filter_layout %}
+{% elif settings.category_page_category_page_filter_layout is defined %}
+  {% set product_filters_layout = settings.category_page_category_page_filter_layout %}
+{% else %}
+  {% set product_filters_layout = 'drawer' %}
+{% endif %}
+{% set product_filters_sidebar = product_filters_layout == 'sidebar' %}
+
+<div class="products-header {% if product_filters_sidebar %}products-header--sidebar{% endif %} flex flex-col gap-4">
+  {% if product_filters_sidebar %}
+    <div class="products-header__drawer-source lg:hidden">
+      {% include 'components/products/filters/advanced-filters.jinja' %}
+    </div>
+  {% else %}
+    <div class="products-header__bar flex flex-wrap items-center justify-between">
+      {# Filters Drawer - Show based on conditions #}
+      {% if ns.has_custom_filters %}
+        {# Store WITH custom filters: Always show drawer #}
+        {% include 'components/products/filters/advanced-filters.jinja' %}
+      {% else %}
+        {# Store WITHOUT custom filters: Show drawer only on mobile #}
+        <div class="products-header__mobile-drawer-filters md:hidden">
+          {% include 'components/products/filters/advanced-filters.jinja' %}
+        </div>
+      {% endif %}
+
+      {# Simple Filters (Availability & Price popovers) - Only for stores WITHOUT custom filters on desktop #}
+      {% if not ns.has_custom_filters %}
+        <div class="products-header__desktop-default-filters hidden md:block">
+          {% include 'components/products/filters/default-filters.jinja' %}
+        </div>
+      {% endif %}
+
+      <div class="flex items-center gap-3">
+        <span class="text-muted-foreground hidden text-sm md:block">
+          {% trans current=products.results|length, total=products.count %}
+            {{ current }}
+            out of {{ total }} products
+          {% endtrans %}
+        </span>
+        {% include 'components/products/grid-control-buttons.jinja' %}
+      </div>
+
+      {# Sort dropdown - Always show on desktop, hide on mobile (it's in drawer) #}
+      <div class="products-header__desktop-sort hidden md:block">
+        {% include 'components/products/filters/sort-filter.jinja' %}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if product_filters_sidebar %}
+    {% include 'components/products/filters/mobile-inline-filters.jinja' %}
+  {% endif %}
+  {% include 'components/products/filters/applied-filters.jinja' %}
+</div>
+
+<style>
+  .products-header__drawer-source > button {
+    display: none;
+  }
+
+  .products-header__drawer-source,
+  .products-header__mobile-drawer-filters {
+    display: block;
+  }
+
+  .products-header__desktop-default-filters,
+  .products-header__desktop-sort {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .products-header__mobile-drawer-filters {
+      display: none !important;
+    }
+
+    .products-header__desktop-default-filters,
+    .products-header__desktop-sort {
+      display: block !important;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .products-header__drawer-source {
+      display: none !important;
+    }
+  }
+
+  .products-header--sidebar .products-header__bar {
+    display: none;
+  }
+</style>

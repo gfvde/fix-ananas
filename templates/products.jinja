@@ -1,0 +1,226 @@
+{% extends "layout.jinja" %}
+
+{% block title %}{{ store.name }} – {{ _('All Products') }}{% endblock %}
+
+{% block content %}
+  {% set category_page_settings = settings.category_page if settings.category_page is defined and settings.category_page else {} %}
+  {% if category_page_settings.enabled is defined %}
+    {% set category_page_enabled = category_page_settings.enabled %}
+  {% elif settings.enabled is defined %}
+    {% set category_page_enabled = settings.enabled %}
+  {% elif settings.category_page_enabled is defined %}
+    {% set category_page_enabled = settings.category_page_enabled %}
+  {% elif settings.category_page_category_page_enabled is defined %}
+    {% set category_page_enabled = settings.category_page_category_page_enabled %}
+  {% else %}
+    {% set category_page_enabled = false %}
+  {% endif %}
+  {% set category_page_enabled_value = category_page_enabled|string|lower|trim %}
+  {% if category_page_settings.filter_layout is defined %}
+    {% set category_filter_layout = category_page_settings.filter_layout %}
+  {% elif settings.filter_layout is defined %}
+    {% set category_filter_layout = settings.filter_layout %}
+  {% elif settings.category_page_filter_layout is defined %}
+    {% set category_filter_layout = settings.category_page_filter_layout %}
+  {% elif settings.category_page_category_page_filter_layout is defined %}
+    {% set category_filter_layout = settings.category_page_category_page_filter_layout %}
+  {% else %}
+    {% set category_filter_layout = 'drawer' %}
+  {% endif %}
+  {% set category_filters_sidebar = category_filter_layout == 'sidebar' %}
+  {% if category_page_settings.infinite_scroll_enabled is defined %}
+    {% set category_infinite_scroll_enabled = category_page_settings.infinite_scroll_enabled %}
+  {% elif settings.infinite_scroll_enabled is defined %}
+    {% set category_infinite_scroll_enabled = settings.infinite_scroll_enabled %}
+  {% elif settings.category_page_infinite_scroll_enabled is defined %}
+    {% set category_infinite_scroll_enabled = settings.category_page_infinite_scroll_enabled %}
+  {% elif settings.category_page_category_page_infinite_scroll_enabled is defined %}
+    {% set category_infinite_scroll_enabled = settings.category_page_category_page_infinite_scroll_enabled %}
+  {% else %}
+    {% set category_infinite_scroll_enabled = true %}
+  {% endif %}
+  {% set category_infinite_scroll_enabled_value = category_infinite_scroll_enabled|string|lower|trim %}
+  {% set category_infinite_scroll_enabled_bool = category_infinite_scroll_enabled_value in ['true', '1', 'on', 'yes'] %}
+  {% set category_products_shell_class = 'products-with-sidebar products-with-sidebar--ready' if category_filters_sidebar else 'flex items-center gap-2' %}
+  {% if category_page_enabled_value in ['true', '1', 'on', 'yes'] %}
+    {% include 'components/categories/category-page-banner.jinja' %}
+  {% endif %}
+
+  <section class="px-4 py-6 md:px-16">
+    <div class="theme-container">
+      {# Products Content - This entire container is swapped during AJAX filtering #}
+      <div
+        id="products-content"
+        class="flex flex-col gap-6 transition-opacity duration-200"
+      >
+        <div
+          class="{{ category_products_shell_class }}"
+          {% if category_filters_sidebar %}dir="ltr"{% endif %}
+        >
+          {% if category_filters_sidebar %}
+            {% include 'components/products/filters/sidebar-topbar.jinja' %}
+          {% endif %}
+          <div
+            class="min-w-0"
+            {% if category_filters_sidebar %}dir="rtl"{% endif %}
+          >
+            {% include 'components/products/products-header.jinja' %}
+            {% if products.results %}
+              <div
+                data-grid-root="true"
+                data-grid="four"
+                class="group/grid grid gap-x-4 gap-y-10"
+              >
+                {% for product in products.results %}
+                  {% include 'components/products/product-card.jinja' %}
+                {% endfor %}
+              </div>
+            {% else %}
+              {# No results state #}
+              <div class="flex flex-col items-center justify-center py-16 text-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="64"
+                  height="64"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  class="text-muted-foreground mb-6"
+                >
+                  <path
+                    d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M7 9H12V10H7V9Z"
+                    fill="currentColor"
+                  />
+                </svg>
+                <h3 class="text-foreground text-h6 mb-2">{{ _("No results found") }}</h3>
+                <p class="text-muted-foreground text-body2 mb-6">
+                  {{ _("We couldn't find any products matching your search. Try adjusting your filters or search terms.") }}
+                </p>
+                <a
+                  href="/products"
+                  class="bg-primary text-primary-foreground rounded-lg px-6 py-3 text-sm font-medium"
+                >
+                  {{ _("View all products") }}
+                </a>
+              </div>
+            {% endif %}
+            {% set totalPages = ((products.count / (session.query_params.get('page_size') or 24)|int) | round(0, 'ceil')) | int %}
+            {% set currentPage = products.page %}
+            {% if category_infinite_scroll_enabled_bool %}
+              {% include 'components/products/infinite-scroll.jinja' %}
+            {% else %}
+              {% include 'components/products/pagination.jinja' %}
+            {% endif %}
+          </div>
+          {% if category_filters_sidebar %}
+            {% include 'components/products/filters/sidebar-filters.jinja' %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {# Quick View Modal #}
+  {% include 'components/products/quick-view-modal.jinja' %}
+  {% if category_filters_sidebar %}
+    {% include 'components/products/filters/sidebar-layout-ready.jinja' %}
+  {% endif %}
+
+  <script>
+    (function () {
+      // Track grid mode separately for desktop and mobile
+      let desktopGridMode = "four";
+      let mobileGridMode = "{{ card_columns_mobile | default('1') }}" === "1" ? "one" : "four";
+
+      function isMobile() {
+        return window.matchMedia("(max-width: 767px)").matches;
+      }
+
+      function getCurrentMode() {
+        return isMobile() ? mobileGridMode : desktopGridMode;
+      }
+
+      function initGridControls() {
+        const gridRoot = document.querySelector("[data-grid-root]");
+
+        if (!gridRoot) return;
+
+        // Apply current mode to grid root
+        gridRoot.setAttribute("data-grid", getCurrentMode());
+
+        // Update button checked states
+        const allButtons = document.querySelectorAll("[data-grid-btn]");
+        allButtons.forEach((btn) => {
+          const mode = btn.dataset.gridBtn;
+          const isDesktopBtn = mode === "four";
+          const isMobileBtn = mode === "one";
+          const isListBtn = mode === "list";
+
+          let shouldCheck = false;
+          if (isDesktopBtn) {
+            shouldCheck = mode === desktopGridMode;
+          } else if (isMobileBtn) {
+            shouldCheck = mobileGridMode === "one";
+          } else if (isListBtn) {
+            // List button appears on both - check based on current context
+            shouldCheck = (isMobile() && mobileGridMode === "list") || (!isMobile() && desktopGridMode === "list");
+          }
+
+          btn.checked = shouldCheck;
+        });
+      }
+
+      function setGrid(mode) {
+        const gridRoot = document.querySelector("[data-grid-root]");
+
+        // Update the appropriate mode based on button type
+        if (mode === "one") {
+          mobileGridMode = mode;
+        } else if (mode === "four") {
+          desktopGridMode = mode;
+        } else if (mode === "list") {
+          // List mode updates based on current viewport
+          if (isMobile()) {
+            mobileGridMode = mode;
+          } else {
+            desktopGridMode = mode;
+          }
+        }
+
+        if (gridRoot) {
+          gridRoot.setAttribute("data-grid", mode);
+        }
+
+        // Update all button states
+        initGridControls();
+      }
+
+      // Event delegation for grid buttons (works after AJAX swap)
+      document.addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-grid-btn]");
+        if (btn) {
+          setGrid(btn.dataset.gridBtn);
+        }
+      });
+
+      // Handle viewport changes
+      const mediaQuery = window.matchMedia("(max-width: 767px)");
+      mediaQuery.addEventListener("change", () => {
+        const gridRoot = document.querySelector("[data-grid-root]");
+        if (gridRoot) {
+          gridRoot.setAttribute("data-grid", getCurrentMode());
+        }
+        initGridControls();
+      });
+
+      // Re-initialize after AJAX swap
+      window.addEventListener("products-updated", initGridControls);
+
+      // Initial setup
+      initGridControls();
+    })();
+  </script>
+{% endblock %}

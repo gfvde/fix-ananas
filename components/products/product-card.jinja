@@ -1,0 +1,1000 @@
+{# Image aspect ratio: adapt (natural), square (1/1), portrait (3/4), landscape (4/3) #}
+{% set aspect_ratio = card_image_aspect_ratio | default('') %}
+{% set product_card_variant = product_card_variant | default('') %}
+{% set show_static_cta = show_static_cta | default(false) %}
+{% set show_card_options_above_title = show_card_options_above_title | default(false) %}
+{% set wishlist_card_mode = wishlist_card_mode | default(false) %}
+
+{% set is_out_of_stock = product.in_stock == false or (product.is_infinite == false and product.quantity is not none and product.quantity <= 0) %}
+{% set has_options = product.has_options or product.has_fields %}
+{# ************************** Card Options **************************************** #}
+{# All product card display settings come from body data attributes set in layout.jinja #}
+
+<div
+  class="pc-card group {{ product_card_variant }}"
+  data-product-card="{{ product.id }}"
+>
+  {# ── Image ── #}
+  <div class="pc-img-wrap"{% if aspect_ratio %} data-aspect="{{ aspect_ratio }}"{% endif %}>
+    <a
+      href="{{ url_for('product_details', slug=product.slug) }}"
+      class="pc-img-link"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <img
+        {% if product.main_image and product.main_image.image %}
+          src="{{ product.main_image.image.medium }}"
+        {% elif product.images and product.images|length > 0 %}
+          src="{{ image_url(product.images[0].image.full_size, w=600, q=80, f='auto') }}"
+        {% else %}
+          src="{{ image_url(('images/product-img.svg' | asset_url), w=600, q=100, f='auto') }}"
+        {% endif %}
+        alt="{{ product.name }}"
+        class="pc-img"
+        {% set img_index = index if index is defined else (loop.index0 if loop is defined else 0) %}
+        {% if img_index > 3 %}loading="lazy"{% elif img_index == 0 and is_priority | default(false) %}fetchpriority="high"{% endif %}
+      />
+    </a>
+
+    {# Badge: top-right #}
+    <div class="pc-badges">
+      {% if product.badge %}
+        {% with product=product %}
+          {% include 'components/products/merchant-badge.jinja' %}
+        {% endwith %}
+      {% endif %}
+      {% if is_out_of_stock %}
+        <span class="pc-badge-pill">{{ _("OUT OF STOCK") }}</span>
+      {% endif %}
+      {% if product.is_taxable == false %}
+        <span class="pc-badge-pill">{{ _("Tax free") }}</span>
+      {% endif %}
+      <span
+        class="bundle-offer-badge hidden"
+        data-bundle-offer-product-id="{{ product.id }}"
+      ></span>
+    </div>
+
+    {# Actions: top-left — wishlist + quick-view #}
+    <div class="pc-actions">
+      {% if wishlist_card_mode %}
+        <button
+          type="button"
+          class="pc-action-btn pc-action-btn--wishlist-remove"
+          data-wishlist-remove-id="{{ product.id }}"
+          aria-label="{{ _('Remove from wishlist') }}"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="black"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M6 6L18 18M18 6L6 18" />
+          </svg>
+        </button>
+      {% elif store.settings.products.wishlist_enabled %}
+        <button
+          type="button"
+          class="pc-action-btn"
+          data-wishlist-btn
+          data-product-id="{{ product.id }}"
+          aria-label="{{ _('Add to wishlist') }}"
+          onclick="event.preventDefault(); event.stopPropagation(); if(window.wishlistManager && window.wishlistManager.handleProductCardWishlist){ window.wishlistManager.handleProductCardWishlist('{{ product.id }}'); }"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="black"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
+            />
+          </svg>
+        </button>
+      {% endif %}
+      <button
+        type="button"
+        class="pc-action-btn"
+        data-open-quick-view="true"
+        data-product-id="{{ product.id }}"
+        aria-label="{{ _('Quick view') }}"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path
+            d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
+          />
+          <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+        </svg>
+      </button>
+    </div>
+
+    {# CTA overlay — hidden, slides in on hover (desktop) #}
+    {% if not is_out_of_stock %}
+      <div class="pc-cta-wrap">
+        {% if has_options %}
+          <a
+            href="{{ url_for('product_details', slug=product.slug) }}"
+            class="pc-cta"
+          >
+            {{ _("Select options") }}
+          </a>
+        {% else %}
+          <button
+            type="button"
+            class="pc-cta"
+            data-add-to-cart="{{ product.id }}"
+          >
+            {{ _("Add to cart") }}
+          </button>
+        {% endif %}
+      </div>
+    {% else %}
+      <div class="pc-cta-wrap">
+        <button
+          type="button"
+          class="pc-cta pc-notify-btn"
+          data-notify-me-trigger="{{ product.id }}"
+        >
+          {{ _("Notify me when available") }}
+        </button>
+      </div>
+    {% endif %}
+
+    {# ── Mobile icon CTA — shown via CSS when body[data-pc-mobile-cta="icon"] ── #}
+    {% if not is_out_of_stock %}
+      {% if has_options %}
+        <a
+          href="{{ url_for('product_details', slug=product.slug) }}"
+          class="pc-img-icon-cta"
+          aria-label="{{ _('Select options') }}"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+        </a>
+      {% else %}
+        <button
+          type="button"
+          class="pc-img-icon-cta"
+          data-add-to-cart="{{ product.id }}"
+          aria-label="{{ _('Add to cart') }}"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+        </button>
+      {% endif %}
+    {% else %}
+      {# Out of stock: notify me icon button #}
+      <button
+        type="button"
+        class="pc-img-icon-cta pc-img-icon-cta--notify"
+        data-notify-me-trigger="{{ product.id }}"
+        aria-label="{{ _('Notify me when available') }}"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
+      </button>
+    {% endif %}
+  </div>
+
+  {# ── Info ── #}
+   <div
+  class="pc-info group-data-[grid=list]/grid:col-span-1 group-data-[grid=list]/grid:row-span-1 group-data-[grid=list]/grid:min-w-0 group-data-[grid=list]/grid:self-start"
+>
+
+    <h3 class="pc-name">
+      <a href="{{ url_for('product_details', slug=product.slug) }}" title="{{ product.name }}">{{ product.name }}</a>
+    </h3>
+    {% if product.keywords %}
+{% set tags_loop = settings.product_card_tags_infinite_loop | default(true) %}
+
+<div class="pc-tags-wrapper">
+  <div class="pc-tags-track" data-loop="{{ 'true' if tags_loop != false else 'false' }}">
+    <span class="pc-tags-set">
+      {% for tag in product.keywords %}
+        <span class="pc-tag">{{ tag }}</span>
+      {% endfor %}
+    </span>
+
+    {# الـ duplicate sets — اظهرهم بس لو loop مفعل #}
+    {% if tags_loop != false %}
+      <span class="pc-tags-set" aria-hidden="true">
+        {% for tag in product.keywords %}
+          <span class="pc-tag">{{ tag }}</span>
+        {% endfor %}
+      </span>
+      <span class="pc-tags-set" aria-hidden="true">
+        {% for tag in product.keywords %}
+          <span class="pc-tag">{{ tag }}</span>
+        {% endfor %}
+      </span>
+      <span class="pc-tags-set" aria-hidden="true">
+        {% for tag in product.keywords %}
+          <span class="pc-tag">{{ tag }}</span>
+        {% endfor %}
+      </span>
+    {% endif %}
+  </div>
+</div>
+    {% endif %}
+
+
+    {# Coffee flavor tags (product.tags) #}
+    {# {% if product.tags and product.tags | length > 0 %}
+      <div class="pc-tags">
+        {% for tag in product.tags %}
+          <span class="pc-tag">{{ tag }}</span>
+        {% endfor %}
+      </div>
+    {% endif %} #} 
+
+    {# Rating #}
+      {% if store.settings.products.reviews_enabled and product.rating and product.rating.average > 0 %}
+          <div class="pc-rating">
+            <span class="pc-rating__score">{{ product.rating.average }}</span>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="#f7a52d"
+              stroke="none"
+            >
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2Z" />
+            </svg>
+            {% if product.rating.total_count > 0 %}
+              <span class="pc-rating__count">( {{ product.rating.total_count }} {{ _("review") }} )</span>
+            {% endif %}
+          </div>
+        {% endif %}
+
+    {# ── Stock Info ── #}
+    {% if not is_out_of_stock %}
+      {%
+        set has_qty = (
+          product.is_infinite == false
+          and product.stocks is defined
+          and product.stocks | length > 0
+          and product.stocks[0].available_quantity is not none
+        )
+      %}
+      {%
+        set qty_display = product.stocks[0].available_quantity if has_qty else none
+      %}
+      {%
+        set has_sold = product.sold_products_count is defined
+                       and product.sold_products_count is not none
+                       and product.sold_products_count > 0
+      %}
+      {% if has_qty or has_sold %}
+        <div class="pc-stock" data-product-id="{{ product.id }}">
+          {# Real sold count (from platform) #}
+          {% if has_sold %}
+            <span class="pc-stock-sold">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.03666 4.01755C1.97432 4.68255 1.93057 5.85942 2.32323 6.36036C2.32323 6.36036 2.13838 5.06755 3.79541 3.44552C4.4626 2.79255 4.61682 1.90442 4.38385 1.23833C4.25151 0.860984 4.00979 0.549265 3.79979 0.331609C3.67729 0.20364 3.77135 -0.00745363 3.94963 0.000202624C5.02807 0.0483276 6.77588 0.348015 7.51854 2.21177C7.84447 3.02989 7.86854 3.87536 7.71322 4.73505C7.61479 5.28411 7.26479 6.50473 8.06322 6.65458C8.63307 6.76177 8.90869 6.30895 9.03229 5.98302C9.08369 5.84739 9.26198 5.81348 9.35822 5.92177C10.3207 7.01661 10.4028 8.30614 10.2037 9.4163C9.81869 11.5622 7.64541 13.1241 5.48635 13.1241C2.78916 13.1241 0.642131 11.5808 0.0854127 8.78739C-0.138806 7.65973 -0.0250559 5.42848 1.71401 3.85348C1.84307 3.73536 2.05416 3.84036 2.03666 4.01755Z" fill="url(#pc-fire-grad-{{ product.id }})"/><defs><radialGradient id="pc-fire-grad-{{ product.id }}" cx="0" cy="0" r="1" gradientTransform="matrix(-7.72045 -0.0335068 -0.0550468 12.6677 4.95214 13.1581)" gradientUnits="userSpaceOnUse"><stop offset="0.314" stop-color="#FF9800"/><stop offset="0.662" stop-color="#FF6D00"/><stop offset="0.972" stop-color="#F44336"/></radialGradient></defs></svg>
+              {{ _("Sold %s pieces this month") | format(product.sold_products_count) }}
+            </span>
+          {% else %}
+            {# Fake sold count — always rendered, JS fills text & shows when setting enabled #}
+            <span class="pc-stock-sold pc-stock-sold--fake" data-fake-sold="{{ product.id }}">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.03666 4.01755C1.97432 4.68255 1.93057 5.85942 2.32323 6.36036C2.32323 6.36036 2.13838 5.06755 3.79541 3.44552C4.4626 2.79255 4.61682 1.90442 4.38385 1.23833C4.25151 0.860984 4.00979 0.549265 3.79979 0.331609C3.67729 0.20364 3.77135 -0.00745363 3.94963 0.000202624C5.02807 0.0483276 6.77588 0.348015 7.51854 2.21177C7.84447 3.02989 7.86854 3.87536 7.71322 4.73505C7.61479 5.28411 7.26479 6.50473 8.06322 6.65458C8.63307 6.76177 8.90869 6.30895 9.03229 5.98302C9.08369 5.84739 9.26198 5.81348 9.35822 5.92177C10.3207 7.01661 10.4028 8.30614 10.2037 9.4163C9.81869 11.5622 7.64541 13.1241 5.48635 13.1241C2.78916 13.1241 0.642131 11.5808 0.0854127 8.78739C-0.138806 7.65973 -0.0250559 5.42848 1.71401 3.85348C1.84307 3.73536 2.05416 3.84036 2.03666 4.01755Z" fill="url(#pc-fire-grad-f-{{ product.id }})"/><defs><radialGradient id="pc-fire-grad-f-{{ product.id }}" cx="0" cy="0" r="1" gradientTransform="matrix(-7.72045 -0.0335068 -0.0550468 12.6677 4.95214 13.1581)" gradientUnits="userSpaceOnUse"><stop offset="0.314" stop-color="#FF9800"/><stop offset="0.662" stop-color="#FF6D00"/><stop offset="0.972" stop-color="#F44336"/></radialGradient></defs></svg>
+              <span data-fake-sold-text></span>
+            </span>
+          {% endif %}
+          {% if has_qty %}
+            <span class="pc-stock-qty">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="#F7512B"/></svg>
+              {{ _("Remaining %s only") | format(qty_display) }}
+            </span>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endif %}
+
+
+    {# Price #}
+    {% if product.formatted_sale_price is not none %}
+      <div class="pc-price-wrap">
+        <span class="pc-price">{{ product.formatted_sale_price }}</span>
+        <span class="pc-price--old">{{ product.formatted_price }}</span>
+        {% if product.discount_percentage and product.discount_percentage > 0 %}
+          <span class="pc-discount">{{ product.discount_percentage }}%</span>
+        {% endif %}
+      </div>
+    {% else %}
+      <div class="pc-price-wrap">
+        <span class="pc-price">{{ product.formatted_price }}</span>
+      </div>
+    {% endif %}
+
+    {# Description - list view only #}
+    {% if product.short_description or product.description %}
+      <p
+        class="pc-desc hidden group-data-[grid=list]/grid:line-clamp-1 group-data-[grid=list]/grid:[display:-webkit-box] md:group-data-[grid=list]/grid:line-clamp-3"
+      >
+        {{ product.short_description|striptags|truncate(200) or product.description|striptags|truncate(200) }}
+      </p>
+    {% endif %}
+    {% if not is_out_of_stock %}
+      <div class="pc-cta-wrap-mb">
+        {% if has_options %}
+          <a
+            href="{{ url_for('product_details', slug=product.slug) }}"
+            class="pc-cta"
+            aria-label="{{ _('Select options') }}"
+          >
+            {{ _("Select options") }}
+          </a>
+        {% else %}
+          <button
+            type="button"
+            class="pc-cta"
+            data-add-to-cart="{{ product.id }}"
+            aria-label="{{ _('Add to cart') }}"
+          >
+            {{ _("Add to cart") }}
+          </button>
+        {% endif %}
+      </div>
+    {% else %}
+      <div class="pc-cta-wrap-mb">
+        <button
+          type="button"
+          class="pc-cta pc-notify-btn"
+          data-notify-me-trigger="{{ product.id }}"
+        >
+          {{ _("Notify me when available") }}
+        </button>
+      </div>
+    {% endif %}
+  </div>
+
+  {% if show_static_cta and not is_out_of_stock %}
+    {% if has_options %}
+      <a
+        href="{{ url_for('product_details', slug=product.slug) }}"
+        class="pc-static-cta"
+      >
+        {{ _("Add to cart") }}
+      </a>
+    {% else %}
+      <button
+        type="button"
+        class="pc-static-cta"
+        data-add-to-cart="{{ product.id }}"
+      >
+        {{ _("Add to cart") }}
+      </button>
+    {% endif %}
+  {% endif %}
+
+  {# ── Quantity input (shown after add-to-cart) ── #}
+  {% if not is_out_of_stock %}
+    <div
+      class="mt-auto qty_mob  group-data-[grid=list]/grid:col-span-2"
+      data-quantity-section
+      hidden
+    >
+      {% with id='card-qty-' ~ product.id, product_id=product.id, quantity=1, show_delete=true, full_width=true %}
+        {% include 'components/ui/quantity-input.jinja' %}
+      {% endwith %}
+    </div>
+  {% endif %}
+</div>
+
+<style>
+  .pc-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    direction: rtl;
+    overflow: hidden;
+    min-width: 0;
+  }
+
+  /* ── Image ── */
+  .pc-img-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  /* adapt = natural image ratio */
+  body[data-pc-aspect="adapt"] .pc-img-wrap,
+  .pc-img-wrap[data-aspect="adapt"] {
+    aspect-ratio: auto;
+    min-height: 160px;
+  }
+  .pc-img-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .pc-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.35s ease;
+  }
+  .pc-card:hover .pc-img {
+    transform: scale(1.04);
+  }
+
+  /* ── Badges (top-right) ── */
+  .pc-badges {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 1;
+  }
+  .pc-badge-pill {
+    background: #d3db6f;
+    color: #000;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    padding: 3px 6px;
+    white-space: nowrap;
+  }
+  @media (min-width: 768px) {
+    .pc-badge-pill {
+      font-size: 12px;
+      line-height: 16px;
+    }
+  }
+
+  /* ── Actions (top-left) ── */
+  .pc-actions {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    display: flex;
+    gap: 6px;
+    z-index: 1;
+  }
+  .pc-action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 90px;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(2px);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .pc-action-btn:hover {
+    background: rgba(255, 255, 255, 0.55);
+  }
+  .pc-action-btn[data-wishlist-active] svg {
+    fill: currentColor;
+    width: 17px !important;
+
+  }
+
+  /* ── CTA overlay (desktop hover, button-mode only) ── */
+  .pc-cta-wrap {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 44px);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 2;
+  }
+  .pc-card:hover .pc-cta-wrap,
+  .pc-img-wrap:hover .pc-cta-wrap {
+    opacity: 1;
+  }
+  /* ── Image-pinned circular icon CTA ── */
+  /* display controlled globally from layout.jinja — do NOT set display here */
+  .pc-img-icon-cta {
+    position: absolute;
+    bottom: 10px;
+    left: 5px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: #f7502bc9;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+    cursor: pointer;
+    z-index: 3;
+    color: #000;
+    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    align-items: center;
+    justify-content: center;
+  }
+  .pc-img-icon-cta:hover,
+  .pc-img-icon-cta:active {
+    background: #000;
+    color: #fff;
+    transform: scale(1.08);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
+  }
+  .pc-img-icon-cta:hover svg,
+  .pc-img-icon-cta:active svg {
+    stroke: #fff;
+  }
+  .pc-img-icon-cta--notify {
+    background: rgba(30, 30, 30, 0.75) !important;
+  }
+  .pc-img-icon-cta--notify:hover,
+  .pc-img-icon-cta--notify:active {
+    background: #000 !important;
+  }
+
+  /* ── Mobile CTA wrapper ── */
+  .pc-cta-wrap-mb {
+    width: 100%;
+    margin-top: 8px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  /* ── Base CTA button ── */
+  .pc-cta[hidden] {
+  display: flex !important;
+}
+  .pc-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    background: #F7512B !important;
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+    white-space: nowrap;
+    line-height: 24px;
+    transition: background 0.2s ease, transform 0.15s ease;
+    text-decoration: none;
+  }
+  .pc-cta:hover {
+    background: #D64625 !important;
+  }
+
+  /* Hide icon/label sub-elements by default (desktop shows plain text) */
+  .pc-cta__icon  { display: none; }
+  .pc-cta__label { display: inline; }
+
+  /* ── Mobile CTA button inside wrapper ── */
+  .pc-cta-wrap-mb .pc-cta {
+    background: transparent;
+    border: 1px solid #000;
+  }
+
+  /* ── Static CTA ── */
+  .pc-static-cta {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 175px;
+    min-height: 40px;
+    padding: 8px 12px;
+    border: 1px solid #000;
+    background: transparent;
+    color: #000;
+    font-size: clamp(0.75rem, 0.6735rem + 0.3265vw, 1rem);
+    font-weight: 500;
+    line-height: 24px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .pc-card--figma-products .pc-static-cta {
+    display: inline-flex;
+  }
+
+  /* DESKTOP (min-width: 768px)
+     Hover overlay visible, mobile wrapper hidden */
+  @media (min-width: 768px) {
+    .pc-cta-wrap    { display: block; }
+    .pc-cta-wrap-mb { display: none !important; }
+
+    /* Desktop button is always full-width inside its parent */
+    .pc-cta-wrap-mb .pc-cta {
+      width: 100%;
+    }
+
+    /* Restore icon/label for desktop — only text matters */
+    .pc-cta__icon  { display: none; }
+    .pc-cta__label { display: inline; }
+  }
+
+  /* MOBILE (max-width: 767px)
+     Hover overlay hidden, mobile wrapper visible */
+  @media (max-width: 767px) {
+    .pc-cta-wrap { display: none !important; }
+    .pc-cta-wrap-mb { display: flex; }
+  }
+
+
+  /* ── Info ── */
+.pc-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+  .pc-name {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    color: #000;
+    margin: 0;
+    width: 100%;
+  }
+  @media (min-width: 768px) {
+    .pc-name {
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+  .pc-name--truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .pc-name a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .pc-name a:hover {
+    text-decoration: underline;
+  }
+
+  /* Flavor tags */
+
+  .pc-tag {
+    background: #f0f0f0;
+    color: #737373;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 16px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  /* Rating */
+  .pc-rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    justify-content: center;
+  }
+  .pc-rating__score {
+    font-size: 16px;
+    font-weight: 500;
+    color: #000;
+    line-height: 24px;
+  }
+  .pc-rating__count {
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+    line-height: 20px;
+  }
+
+  /* Price */
+  .pc-price-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: center;
+  }
+  .pc-price {
+    font-size: 20px;
+    font-weight: 500;
+    color: #000;
+    line-height: 28px;
+  }
+  .pc-price--old {
+    font-size: 14px;
+    color: #737373;
+    text-decoration: line-through;
+    line-height: 20px;
+  }
+  .pc-discount {
+    font-size: 12px;
+    font-weight: 500;
+    color: #e63b2e;
+    background: rgba(230, 59, 46, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  /* Description (list view) */
+  .pc-desc {
+    font-size: 14px;
+    color: #737373;
+    line-height: 20px;
+    margin: 0;
+    
+    -webkit-box-orient: vertical;
+  }
+
+  /* Notify button */
+  .pc-notify-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    background: #F7512B !important;
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+    white-space: nowrap;
+    line-height: 24px;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+  .pc-notify-btn:hover {
+    background: #D64625 !important;
+  }
+  .pc-cta-wrap-mb .pc-notify-btn {
+    border: none;
+  }
+  /* ── List view overrides ── */
+  [data-grid="list"] .pc-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: 1fr auto;
+    gap: 16px;
+  }
+  [data-grid="list"] .pc-img-wrap {
+    aspect-ratio: 1/1;
+    width: 160px;
+    grid-row: 1 / 3;
+  }
+  [data-grid="list"] .pc-info {
+    align-items: flex-start;
+    text-align: right;
+    padding: 0;
+  }
+  [data-grid="list"] .pc-name,
+  [data-grid="list"] .pc-rating,
+  [data-grid="list"] .pc-price-wrap,
+  [data-grid="list"] .pc-tags {
+    justify-content: flex-start;
+    text-align: right;
+  }
+
+  /* ────────────────────────────────────────────────
+   Stock info component
+──────────────────────────────────────────────── */
+
+/* ── Stock info: flip between sold & qty ── */
+.pc-stock {
+  position: relative;
+  height: 20px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.pc-stock-sold,
+.pc-stock-qty {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+.pc-stock-sold,
+.pc-stock-qty {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+  pointer-events: none;
+}
+
+.pc-stock-sold {
+  color: #737373;
+}
+
+.pc-stock-qty {
+  color: #F7512B;
+}
+
+.pc-stock-sold.active,
+.pc-stock-qty.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+body[data-pc-align="center"] .pc-stock-sold,
+body[data-pc-align="center"] .pc-stock-qty { justify-content: center; }
+
+body[data-pc-align="start"] .pc-stock-sold,
+body[data-pc-align="start"] .pc-stock-qty { justify-content: flex-start; }
+
+[dir="ltr"] .pc-stock-sold,
+[dir="ltr"] .pc-stock-qty { justify-content: flex-start; }
+
+/* ── Tags infinite loop ── */
+.pc-tags-wrapper {
+  width: 100%;
+  overflow: hidden;
+  /* fade edges */
+  -webkit-mask-image: linear-gradient(to left, transparent 0%, black 12%, black 88%, transparent 100%);
+  mask-image: linear-gradient(to left, transparent 0%, black 12%, black 88%, transparent 100%);
+}
+
+.pc-tags-track {
+  display: flex;
+  gap: 0;
+  width: max-content;
+  /* مفيش animation هنا خالص */
+}
+
+/* الـ animation يشتغل بس لما الـ loop مفعل والـ hover على الكارد */
+.pc-card:hover .pc-tags-track[data-loop="true"] {
+  animation: pc-tags-scroll 12s linear infinite;
+}
+
+/* لو مش hover — واقف حتى لو loop مفعل */
+.pc-tags-track[data-loop="true"] {
+  animation: none;
+}
+
+.pc-card:hover .pc-tags-track[data-loop="true"] {
+  animation: pc-tags-scroll 12s linear infinite;
+}
+
+/* لو loop مش مفعل — مفيش animation خالص */
+.pc-tags-track[data-loop="false"] {
+  animation: none;
+}
+
+@keyframes pc-tags-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-25%); }
+}
+
+.pc-tag {
+  background: #f0f0f0;
+  color: #737373;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 16px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+@media (max-width:768px) {
+  .qty_mob{
+    display: none;
+  }
+}
+
+/* Aspect ratio per-section override (hardcoded on specific sections) */
+.pc-img-wrap[data-aspect="square"]   { aspect-ratio: 1 / 1 !important; }
+.pc-img-wrap[data-aspect="portrait"] { aspect-ratio: 3 / 4 !important; }
+.pc-img-wrap[data-aspect="landscape"]{ aspect-ratio: 4 / 3 !important; }
+.pc-img-wrap[data-aspect="adapt"]    { aspect-ratio: auto !important; }
+</style>
+
+<script>
+window.productcard  = {{ product | tojson | safe }};
+console.log('window.productcard',window.productcard);
+(function () {
+  // Fake sold count: stable hash from product id string
+  function hashId(str) {
+    var h = 0;
+    for (var i = 0; i < str.length; i++) {
+      h = (h * 31 + str.charCodeAt(i)) >>> 0;
+    }
+    return h;
+  }
+
+  function initFakeSold() {
+    if (document.body.dataset.pcFakeSold !== 'true') return;
+    var soldLabel = (window.productTranslations && window.productTranslations.soldThisMonth) || 'Sold %s pieces this month';
+    var min = parseInt(document.body.dataset.pcFakeMin) || 100;
+    var max = parseInt(document.body.dataset.pcFakeMax) || 1000;
+    if (max < min) { var temp = min; min = max; max = temp; }
+
+    document.querySelectorAll('[data-fake-sold]').forEach(function (el) {
+      var id = el.dataset.fakeSold;
+      var num = (hashId(id) % (max - min + 1)) + min;
+      var text = el.querySelector('[data-fake-sold-text]');
+      if (text) text.textContent = soldLabel.replace('%s', num.toLocaleString());
+      el.classList.add('pc-stock-sold--ready');
+    });
+  }
+
+  function initStockFlip(container) {
+    var soldEl = container.querySelector(".pc-stock-sold");
+    // Skip fake sold spans that haven't been populated (setting disabled)
+    var sold = (soldEl && (!soldEl.classList.contains('pc-stock-sold--fake') || soldEl.classList.contains('pc-stock-sold--ready'))) ? soldEl : null;
+    var qty  = container.querySelector(".pc-stock-qty");
+    var items = [sold, qty].filter(Boolean);
+    if (items.length === 0) { container.hidden = true; return; }
+    if (items.length === 1) { items[0].classList.add("active"); return; }
+
+    var current = 0;
+    items[0].classList.add("active");
+    setInterval(function () {
+      items[current].classList.remove("active");
+      current = (current + 1) % items.length;
+      items[current].classList.add("active");
+    }, 2500);
+  }
+
+  function initAll() {
+    initFakeSold();
+    document.querySelectorAll(".pc-stock:not([data-flip-init])").forEach(function(c) {
+      c.dataset.flipInit = '1';
+      initStockFlip(c);
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initAll);
+  } else {
+    initAll();
+  }
+
+  window.addEventListener("content:loaded", initAll);
+})();
+</script>
+

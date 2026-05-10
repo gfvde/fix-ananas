@@ -1,0 +1,229 @@
+{% if settings.announcement_bar_display %}
+  {% set _show_home = settings.announcement_bar_page_display == 'home' %}
+  {% set _show_all  = not settings.announcement_bar_page_display or settings.announcement_bar_page_display == 'all' %}
+  {% if _show_all or (_show_home and session.template == 'home') %}
+
+    {# Collect texts #}
+    {% set ns = namespace(texts=[]) %}
+    {% for item in settings.announcement_bar_texts or [] %}
+      {% if item.text %}{% set ns.texts = ns.texts + [item.text] %}{% endif %}
+    {% endfor %}
+
+    {% if ns.texts | length > 0 %}
+
+      {% set _bg   = settings.announcement_bar_bar_bg_color   | default('#d3db6f') %}
+      {% set _text = settings.announcement_bar_bar_text_color  | default('#000000') %}
+      {% set _spd  = settings.announcement_bar_marquee_speed   | default(30) %}
+      {% set _marquee = settings.announcement_bar_enable_marquee | default(false) %}
+      {% set _url  = settings.announcement_bar_url | default('') %}
+
+      {# Icon: custom image from settings OR fallback to default star SVG #}
+      {% set _icon_size = settings.announcement_bar_bar_icon_size | default(20) %}
+      {% set _star %}
+        {% if settings.announcement_bar_bar_icon %}
+          <img src="{{ image_url(settings.announcement_bar_bar_icon, w=40, f='auto') }}"
+               alt="" aria-hidden="true"
+               style="width:{{ _icon_size }}px; height:{{ _icon_size }}px; object-fit:contain; flex-shrink:0;" />
+        {% else %}
+          <svg width="{{ _icon_size }}" height="{{ _icon_size }}" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="flex-shrink:0;">
+            <path d="M10 1.5 12.3 7.1H18.2L13.5 10.6 15.8 16.2 10 12.7 4.2 16.2 6.5 10.6 1.8 7.1H7.7Z"/>
+          </svg>
+        {% endif %}
+      {% endset %}
+
+      {% if _marquee and ns.texts | length > 0 %}
+        {# ── MARQUEE announcement bar (Both Mobile & Desktop) ── #}
+        <div class="ananas-abar" style="background: {{ _bg }}; color: {{ _text }}; box-shadow: 0 0 4px rgba(0,0,0,.25);">
+          <div class="ananas-abar__marquee-wrap">
+            {% set _repeats = 10 %}
+            <div class="ananas-abar__marquee" style="--abar-spd: {{ _spd * _repeats }}s;">
+              {% for _ in range(2) %}
+                <div class="ananas-abar__marquee-group" {% if loop.index0 == 1 %}aria-hidden="true"{% endif %}>
+                  {% for _rep in range(_repeats) %}
+                    {% for t in ns.texts %}
+                      {% if _url %}
+                        <a href="{{ _url }}" class="ananas-abar__marquee-item" style="color:{{ _text }};">
+                          {{ _star }} {{ t }}
+                        </a>
+                      {% else %}
+                        <span class="ananas-abar__marquee-item">{{ _star }} {{ t }}</span>
+                      {% endif %}
+                    {% endfor %}
+                  {% endfor %}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      {% else %}
+        {# ── CAROUSEL announcement bar (Both Mobile & Desktop) ── #}
+        <div class="ananas-abar ananas-abar--carousel"
+             style="background: {{ _bg }}; color: {{ _text }}; box-shadow: 0 0 4px rgba(0,0,0,.25);"
+             data-abar-texts='[{% for t in ns.texts %}"{{ t | replace('"', '\\"') }}"{% if not loop.last %},{% endif %}{% endfor %}]'
+             data-abar-url="{{ _url }}"
+        >
+          {% if ns.texts | length > 1 %}
+            <button class="ananas-abar__arrow" data-abar-prev aria-label="{{ _('Previous') }}">
+              <svg width="12" height="12" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+                <path d="M4 2L7 5L4 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          {% endif %}
+          <div class="ananas-abar__content">
+            {% if _url %}
+              <a href="{{ _url }}" class="ananas-abar__link" style="color:{{ _text }};">
+                {{ _star }}
+                <span class="ananas-abar__text">{{ ns.texts[0] }}</span>
+              </a>
+            {% else %}
+              <span class="ananas-abar__link">
+                {{ _star }}
+                <span class="ananas-abar__text">{{ ns.texts[0] }}</span>
+              </span>
+            {% endif %}
+          </div>
+          {% if ns.texts | length > 1 %}
+            <button class="ananas-abar__arrow" data-abar-next aria-label="{{ _('Next') }}">
+              <svg width="12" height="12" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+                <path d="M6 2L3 5L6 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          {% endif %}
+        </div>
+      {% endif %}
+
+    {% endif %}
+  {% endif %}
+{% endif %}
+
+<style>
+  /* ── Announcement bar ──────────────────────────── */
+  .ananas-abar {
+    width: 100%;
+    font-size: 14px;
+    font-weight: 500;
+    box-sizing: border-box;
+    direction: rtl;
+  }
+
+  /* Carousel bar */
+  .ananas-abar--carousel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    gap: 16px;
+  }
+
+  .ananas-abar__content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+  }
+  .ananas-abar__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-decoration: none;
+    color: inherit;
+    direction: rtl;
+    text-align: center;
+  }
+  @keyframes abarFadeSlide {
+    0% { opacity: 0; transform: translateY(4px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  .abar-anim {
+    animation: abarFadeSlide 0.3s ease forwards;
+  }
+  .ananas-abar__arrow {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    flex-shrink: 0;
+    opacity: .7;
+    padding: 0;
+  }
+  .ananas-abar__arrow:hover { opacity: 1; }
+
+
+
+  /* Marquee */
+  .ananas-abar__marquee-wrap {
+    overflow: hidden;
+    padding: 10px 0 8px;
+  }
+  .ananas-abar__marquee {
+    display: flex;
+    width: max-content;
+    animation: abarScroll var(--abar-spd, 30s) linear infinite;
+  }
+  .ananas-abar__marquee-group {
+    display: flex;
+    gap: 64px;
+    padding-left: 64px; /* Space between groups */
+    flex-shrink: 0;
+  }
+  .ananas-abar__marquee:hover { animation-play-state: paused; }
+  .ananas-abar__marquee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    text-decoration: none;
+    color: inherit;
+    direction: rtl;
+  }
+  @keyframes abarScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(50%); }
+  }
+
+
+</style>
+
+<script>
+(function () {
+  var bar = document.querySelector('[data-abar-texts]');
+  if (!bar) return;
+
+  var textsRaw = bar.getAttribute('data-abar-texts');
+  var url      = bar.getAttribute('data-abar-url') || '';
+  var texts;
+  try { texts = JSON.parse(textsRaw); } catch(e) { return; }
+  if (!texts.length) return;
+
+  var idx     = 0;
+  var textEl  = bar.querySelector('.ananas-abar__text');
+  var linkEl  = bar.querySelector('.ananas-abar__link');
+  var wrapper = bar.querySelector('.ananas-abar__content');
+  var prevBtn = bar.querySelector('[data-abar-prev]');
+  var nextBtn = bar.querySelector('[data-abar-next]');
+
+  function show(i) {
+    idx = (i + texts.length) % texts.length;
+    
+    // trigger reflow for animation
+    if (wrapper) {
+      wrapper.classList.remove('abar-anim');
+      void wrapper.offsetWidth;
+      wrapper.classList.add('abar-anim');
+    }
+
+    if (textEl) textEl.textContent = texts[idx];
+    if (linkEl && url) linkEl.href = url;
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', function () { show(idx - 1); });
+  if (nextBtn) nextBtn.addEventListener('click', function () { show(idx + 1); });
+})();
+</script>

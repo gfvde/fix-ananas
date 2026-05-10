@@ -1,0 +1,418 @@
+{% set desktop_bg = settings.bg_desktop %}
+{% set mobile_bg = settings.bg_mobile or settings.bg_desktop %}
+
+{% if mobile_bg %}
+<link rel="preload" as="image" href="{{ image_url(mobile_bg, w=900, q=85, f='auto') }}" media="(max-width: 767px)" fetchpriority="high">
+{% endif %}
+{% if desktop_bg %}
+<link rel="preload" as="image" href="{{ image_url(desktop_bg, w=1920, q=90, f='auto') }}" media="(min-width: 768px)" fetchpriority="high">
+{% endif %}
+{% set desktop_bg_fallback = 'https://www.figma.com/api/mcp/asset/c6c69e01-3f07-4ed3-9e50-06772bd8db74' %}
+{% set mobile_bg_fallback = 'https://www.figma.com/api/mcp/asset/297e3655-2f98-4e05-8004-7f6a6640e017' %}
+{% set heading = settings.heading | default('قهوة تضبط يومك', true) %}
+{% set subheading = settings.subheading | default('تجربة جريئة محمصة بعناية لتجربة تفهم جوك', true) %}
+{% set rating_value = settings.rating | default('4.8', true) %}
+{% set star_count = settings.rating_stars | default(5, true) %}
+{% set rating_scroll_target = settings.rating_scroll_target | default('about_reviews_featured', true) %}
+{% set avatar_items = settings.avatars if settings.avatars else [] %}
+{% set cta_text = settings.cta_text | default('تسوّق قهوتك الآن', true) %}
+{% set cta_url = settings.cta_url | default('/collections/all', true) %}
+
+<section
+  section-id="{{ sectionId }}"
+  data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
+  class="about-hero-banner {% if settings.show_desktop_content %}about-hero-banner--desktop-content{% endif %}"
+  dir="rtl"
+  style="
+    --ahb-desktop-height: {{ settings.desktop_height | default(468, true) }}px;
+    --ahb-mobile-height: {{ settings.mobile_height | default(460, true) }}px;
+    --ahb-desktop-content-top: {{ settings.desktop_content_offset_y | default(0, true) }}px;
+    --ahb-mobile-content-top: {{ settings.mobile_content_offset_y | default(252, true) }}px;
+    --ahb-overlay: {{ (settings.overlay_opacity | default(100, true)) / 100 }};
+    --ahb-desktop-overlay: {{ (settings.desktop_overlay_opacity | default(0, true)) / 100 }};
+    --ahb-heading-color: {{ settings.heading_color | default('#ffffff', true) }};
+    --ahb-subheading-color: {{ settings.subheading_color | default('#ffffff', true) }};
+    --ahb-button-color: {{ settings.cta_text_color | default('#ffffff', true) }};
+    --ahb-button-border: {{ settings.cta_border_color | default('#ffffff', true) }};
+    --ahb-button-bg: {{ settings.cta_bg_color | default('rgba(255,255,255,0)', true) }};
+    --ahb-button-hover-bg: {{ settings.cta_hover_bg_color | default('rgba(255,255,255,0.10)', true) }};
+    --ahb-button-radius: {{ settings.cta_radius | default(6, true) }}px;
+  "
+>
+  <div
+    class="about-hero-banner__media"
+    aria-hidden="true"
+  >
+    <picture>
+      <source
+        media="(min-width: 768px)"
+        srcset="{{ image_url(desktop_bg, w=1920, q=90, f='auto') if desktop_bg else desktop_bg_fallback }}"
+      />
+      <img
+        src="{{ image_url(mobile_bg, w=900, q=85, f='auto') if mobile_bg else mobile_bg_fallback }}"
+        alt=""
+        class="about-hero-banner__image"
+        fetchpriority="high"
+      />
+    </picture>
+    <div class="about-hero-banner__overlay"></div>
+  </div>
+
+  <div class="about-hero-banner__inner">
+    <div class="about-hero-banner__content">
+      <div class="about-hero-banner__copy">
+        <h1 class="about-hero-banner__title">{{ heading }}</h1>
+        <p class="about-hero-banner__subtitle">{{ subheading }}</p>
+
+        <div
+          class="about-hero-banner__rating"
+          role="button"
+          tabindex="0"
+          aria-label="{{ _('Scroll to reviews') }} {{ rating_value }}"
+          data-ahb-rating-scroll-target="{{ rating_scroll_target }}"
+        >
+          <div
+            class="about-hero-banner__avatars"
+            aria-hidden="true"
+          >
+            {% if avatar_items and (avatar_items | length > 0) %}
+              {% for item in avatar_items[:3] %}
+                {% if item.image %}
+                  <img
+                    class="about-hero-banner__avatar"
+                    src="{{ image_url(item.image, w=64, h=64, q=85, f='auto') }}"
+                    alt=""
+                    loading="lazy"
+                  />
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          </div>
+
+          <span class="about-hero-banner__rating-value">({{ rating_value }})</span>
+
+          <div
+            class="about-hero-banner__stars"
+            aria-hidden="true"
+          >
+            {% for i in range(star_count) %}
+              <svg
+                viewBox="0 0 20 20"
+                focusable="false"
+                aria-hidden="true"
+              >
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                />
+              </svg>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      {% if cta_text %}
+        <a
+          href="{{ cta_url }}"
+          class="about-hero-banner__button"
+        >
+          {{ cta_text }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+  [section-id="{{ sectionId }}"].about-hero-banner {
+    position: relative;
+    display: flex;
+    min-height: var(--ahb-mobile-height);
+    overflow: hidden;
+    background: #171717;
+    isolation: isolate;
+  }
+
+  [section-id="{{ sectionId }}"] .about-hero-banner__media,
+  [section-id="{{ sectionId }}"] .about-hero-banner__media picture,
+  [section-id="{{ sectionId }}"] .about-hero-banner__overlay {
+    position: absolute;
+    inset: 0;
+  }
+
+  [section-id="{{ sectionId }}"] .about-hero-banner__media {
+    z-index: -1;
+  }
+
+  [section-id="{{ sectionId }}"] .about-hero-banner__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  [section-id="{{ sectionId }}"] .about-hero-banner__overlay {
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.63) 0%,
+      rgba(0, 0, 0, 0.5) 45.286%,
+      rgba(0, 0, 0, 0.13) 59.783%,
+      rgba(0, 0, 0, 0.13) 100%
+    );
+    opacity: var(--ahb-overlay);
+  }
+
+  [section-id="{{ sectionId }}"] .about-hero-banner__inner {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 16px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  [section-id="{{ sectionId }}"] .about-hero-banner__content {
+    width: 100%;
+    max-width: 327px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    text-align: center;
+    margin-top: var(--ahb-mobile-content-top);
+  }
+
+  [section-id="{{ sectionId }}"] .about-hero-banner__copy {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+  @media (min-width:768px){
+    [section-id="{{ sectionId }}"] .about-hero-banner__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+    text-align: right;
+  }
+  }
+
+  [section-id="{{ sectionId }}"] .about-hero-banner__title,
+  [section-id="{{ sectionId }}"] .about-hero-banner__subtitle {
+    margin: 0;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  [section-id="{{ sectionId }}"] .about-hero-banner__title {
+    color: var(--ahb-heading-color);
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 32px;
+  }
+
+  [section-id="{{ sectionId }}"] .about-hero-banner__subtitle {
+    color: var(--ahb-subheading-color);
+    font-size: 16px;
+    line-height: 28px;
+  }
+
+  [section-id="{{ sectionId }}"] .about-hero-banner__rating {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: fit-content;
+    min-width: 251px;
+    min-height: 44px;
+    padding: 8px 12px 8px 24px;
+    border-radius: 99px;
+    
+    /* Advanced Glassmorphism: Base + Light (-135deg) */
+    background: 
+      linear-gradient(-135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 100%),
+      rgba(250, 250, 250, 0.05);
+      
+    /* Depth (Blur) */
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    
+    /* Refraction & Edge highlights */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.15),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+      
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  [section-id="{{ sectionId }}"] .about-hero-banner__rating:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.9);
+    outline-offset: 3px;
+  }
+
+  [section-id="{{ sectionId }}"] .about-hero-banner__avatars {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 60px;
+    height: 26px;
+    box-sizing: border-box;
+    padding-right: 9.15px;
+    direction: ltr;
+    overflow: visible;
+  }
+
+  [section-id="{{ sectionId }}"] .about-hero-banner__avatar {
+    position: relative;
+    flex: 0 0 26px;
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    object-fit: cover;
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  [section-id="{{ sectionId }}"] .about-hero-banner__avatar + .about-hero-banner__avatar {
+    margin-left: -9.15px;
+  }
+
+  [section-id="{{ sectionId }}"] .about-hero-banner__rating-value {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  [section-id="{{ sectionId }}"] .about-hero-banner__stars {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    color: #F7A52D;
+  }
+
+  [section-id="{{ sectionId }}"] .about-hero-banner__stars svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+    fill: currentColor;
+  }
+
+  [section-id="{{ sectionId }}"] .about-hero-banner__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    width: 175px;
+    padding: 8px 12px;
+    border: 1px solid var(--ahb-button-border);
+    border-radius: var(--ahb-button-radius);
+    background: var(--ahb-button-bg);
+    color: var(--ahb-button-color);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-decoration: none;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  [section-id="{{ sectionId }}"] .about-hero-banner__button:hover {
+    background: var(--ahb-button-hover-bg);
+  }
+
+  @media (min-width: 768px) {
+    [section-id="{{ sectionId }}"].about-hero-banner {
+      min-height: var(--ahb-desktop-height);
+    }
+
+    [section-id="{{ sectionId }}"] .about-hero-banner__inner {
+      padding: 0 64px;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    [section-id="{{ sectionId }}"] .about-hero-banner__content {
+      display: none;
+    }
+
+    [section-id="{{ sectionId }}"].about-hero-banner--desktop-content .about-hero-banner__content {
+      display: flex;
+    }
+
+    [section-id="{{ sectionId }}"] .about-hero-banner__image {
+      object-position: center;
+    }
+
+    [section-id="{{ sectionId }}"] .about-hero-banner__overlay {
+      background: #000;
+      opacity: var(--ahb-desktop-overlay);
+    }
+
+    [section-id="{{ sectionId }}"] .about-hero-banner__content {
+      max-width: 374px;
+      align-items: flex-start;
+      gap: 23px;
+      text-align: right;
+      margin-top: 0;
+      transform: translateY(var(--ahb-desktop-content-top));
+    }
+
+    [section-id="{{ sectionId }}"] .about-hero-banner__copy {
+      gap: 14px;
+    }
+
+    [section-id="{{ sectionId }}"] .about-hero-banner__title {
+      font-size: 28px;
+      font-weight: 400;
+      line-height: 36px;
+    }
+
+    [section-id="{{ sectionId }}"] .about-hero-banner__subtitle {
+      font-size: 18px;
+      line-height: 28px;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    var section = document.querySelector('[section-id="{{ sectionId }}"].about-hero-banner');
+    if (!section || section.dataset.ahbRatingScrollBound === 'true') return;
+
+    var rating = section.querySelector('[data-ahb-rating-scroll-target]');
+    if (!rating) return;
+
+    section.dataset.ahbRatingScrollBound = 'true';
+
+    var targets = {
+      about_reviews_featured: '.section-arf',
+      star_reviews: '.section-star-reviews'
+    };
+
+    function scrollToSelectedSection() {
+      var selector = targets[rating.dataset.ahbRatingScrollTarget] || targets.about_reviews_featured;
+      var target = document.querySelector(selector);
+      if (!target) return;
+
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+
+    rating.addEventListener('click', scrollToSelectedSection);
+    rating.addEventListener('keydown', function (event) {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      scrollToSelectedSection();
+    });
+  })();
+</script>

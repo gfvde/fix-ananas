@@ -1,0 +1,288 @@
+{% set filters=products.filters %}
+{% set availability_values = session.query_params.getlist('availability') if session and session.query_params else [] %}
+{% set sort_by = session.query_params.get('sort_by') or 'popularity_order' %}
+{% set order = session.query_params.get('order') or 'asc' %}
+{% set page_size = (session.query_params.get('page_size') or 24)|int %}
+{% set current_page = products.page|default(1)|int %}
+{% set products_total = products.count|default(0)|int %}
+{% set products_current = products.results|length if products and products.results else 0 %}
+{% set products_start = ((current_page - 1) * page_size) + 1 if products_total > 0 else 0 %}
+{% set products_end = products_start + products_current - 1 if products_current > 0 else 0 %}
+
+<div class="mobile-inline-filters lg:hidden" dir="rtl">
+  <div class="mobile-inline-filters__bar">
+    <button
+      type="button"
+      command="show-modal"
+      commandfor="filters-drawer"
+      class="mobile-inline-filters__bar-btn"
+    >
+      <span>{{ _('Filter') }}</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 7h16M8 12h8M11 17h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <form class="mobile-inline-filters__sort" method="get" onsubmit="return false">
+      <label>
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M6 3v14m0 0 3-3m-3 3-3-3M14 17V3m0 0 3 3m-3-3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <select onchange="window.productFilter.handleSortChange(this.value)" aria-label="{{ _('Sort by') }}">
+          <option value="popularity_order-asc" {% if sort_by == 'popularity_order' and order == 'asc' %}selected{% endif %}>{{ _('Sort: Most requested') }}</option>
+          <option value="created_at-desc" {% if sort_by == 'created_at' and order == 'desc' %}selected{% endif %}>{{ _('Sort: Newest') }}</option>
+          <option value="price-asc" {% if sort_by == 'price' and order == 'asc' %}selected{% endif %}>{{ _('Sort: Price low to high') }}</option>
+          <option value="price-desc" {% if sort_by == 'price' and order == 'desc' %}selected{% endif %}>{{ _('Sort: Price high to low') }}</option>
+        </select>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </label>
+    </form>
+  </div>
+
+  <div class="mobile-inline-filters__chips" aria-label="{{ _('Filters') }}">
+    {% if filters and filters.attributes %}
+      {% for attribute in filters.attributes %}
+        {% if attribute.is_enabled and attribute.data | length > 0 %}
+          {% set attr_key = 'attributes[' ~ attribute.slug ~ '][]' %}
+          {% set selected_values = session.query_params.getlist(attr_key) if session and session.query_params else [] %}
+          <details class="mobile-inline-filter">
+            <summary>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>{{ attribute.name }}</span>
+            </summary>
+            <form
+              class="mobile-inline-filter__panel"
+              method="get"
+              data-clear-empty-param="attributes[{{ attribute.slug }}][]"
+              onsubmit="return window.productFilter.submitDrawerForm(event)"
+            >
+              <div class="mobile-inline-filter__options">
+                {% for option in attribute.data %}
+                  <label>
+                    <input
+                      type="checkbox"
+                      name="attributes[{{ attribute.slug }}][]"
+                      value="{{ option.value }}"
+                      {% if option.value in selected_values %}checked{% endif %}
+                    >
+                    <span>{{ option.value }}</span>
+                  </label>
+                {% endfor %}
+              </div>
+              <div class="mobile-inline-filter__actions">
+                <button type="submit">{{ _("Apply") }}</button>
+              </div>
+            </form>
+          </details>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+    <details class="mobile-inline-filter">
+      <summary>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>{{ _("Price") }}</span>
+      </summary>
+      <form class="mobile-inline-filter__panel" method="get" onsubmit="return window.productFilter.handlePriceSubmit(event, 'price_min_mobile_inline', 'price_max_mobile_inline')">
+        {%
+          with
+          slider_id='price-slider-mobile-inline',
+          min_input_id='price_min_mobile_inline',
+          max_input_id='price_max_mobile_inline'
+        %}
+          {% include 'components/products/filters/price-filter.jinja' %}
+        {% endwith %}
+        <div class="mobile-inline-filter__actions">
+          <button type="submit">{{ _("Apply") }}</button>
+        </div>
+      </form>
+    </details>
+  </div>
+
+  <div class="mobile-inline-filters__result-count" data-products-total-count>
+    {{ _('%(count)s results') | format(count=products_total) }}
+  </div>
+</div>
+
+<style>
+  .mobile-inline-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  @media (max-width: 1023px) {
+    .mobile-inline-filters {
+      display: flex !important;
+    }
+  }
+
+  .mobile-inline-filters__bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 36px;
+    width: 100%;
+    border: 1px solid var(--border);
+    background: var(--background);
+    color: var(--foreground);
+  }
+
+  .mobile-inline-filters__bar-btn,
+  .mobile-inline-filters__sort label {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 12px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    white-space: nowrap;
+  }
+
+  .mobile-inline-filters__bar-btn {
+    flex-direction: row-reverse;
+    grid-column: 1;
+    border-inline-start: 1px solid var(--border);
+  }
+
+  .mobile-inline-filters__sort {
+    grid-column: 2;
+    min-width: 0;
+    border-inline-start: 1px solid var(--border);
+  }
+
+  .mobile-inline-filters__sort select {
+    max-width: 132px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    outline: none;
+    appearance: none;
+    font: inherit;
+  }
+
+  .mobile-inline-filters__chips {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: visible;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+  }
+
+  .mobile-inline-filters__chips::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mobile-inline-filters__result-count {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 20px;
+    text-align: right;
+  }
+
+  @media (min-width: 1024px) {
+    .mobile-inline-filters {
+      display: none !important;
+    }
+
+    .mobile-inline-filters__chips {
+      display: none;
+    }
+  }
+
+  .mobile-inline-filter {
+    position: static;
+    flex: 0 0 auto;
+  }
+
+  .mobile-inline-filter summary {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 24px;
+    min-height: 40px;
+    padding: 8px 10px;
+    border-radius: 4px;
+    background: var(--secondary);
+    color: var(--foreground);
+    list-style: none;
+    font-size: 16px;
+    line-height: 24px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .mobile-inline-filter summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .mobile-inline-filter[open] summary svg {
+    transform: rotate(180deg);
+  }
+
+  .mobile-inline-filter__panel {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    z-index: 40;
+    margin-top: 8px;
+    max-height: 55vh;
+    overflow: auto;
+    border: 1px solid var(--border);
+    background: var(--background);
+    color: var(--foreground);
+    padding: 16px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+  }
+
+  .mobile-inline-filter__options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .mobile-inline-filter__options label {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .mobile-inline-filter__options input {
+    width: 18px;
+    height: 18px;
+    accent-color: #000;
+  }
+
+  .mobile-inline-filter__actions {
+    display: flex;
+    justify-content: stretch;
+    margin-top: 16px;
+  }
+
+  .mobile-inline-filter__actions button {
+    width: 100%;
+    min-height: 40px;
+    border: 1px solid var(--primary);
+    background: var(--primary);
+    color: var(--primary-foreground);
+    font-size: 14px;
+  }
+</style>

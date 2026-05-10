@@ -1,0 +1,660 @@
+{# Global Product Card Settings #}
+{% set card_columns_desktop = settings.product_card_columns_desktop | default('4') %}
+{% set card_columns_mobile = settings.product_card_columns_mobile | default('1') %}
+{% set card_image_aspect_ratio = settings.product_card_image_aspect_ratio | default('adapt') %}
+
+<!DOCTYPE html>
+<html
+  class="no-js no-js-init"
+  lang="{{ session.lang }}"
+  dir="{{ session.locale.language.direction }}"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="x-ua-compatible"
+      content="ie=edge"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <style>.no-js-init dialog,.no-js-init el-dialog,.no-js-init .ananas-mega,.no-js-init .ananas-search{visibility:hidden!important;pointer-events:none!important}</style>
+    {% vitrin_head %}
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ 'css/product-gallery.css' | asset_url }}"
+    />
+
+
+    {% if settings.font_family == 'Expo+Arabic' %}
+      <!-- prettier-ignore-start -->
+      <style>
+        /* Note: onlinewebfonts URLs are blocked by CORS. You must upload the font files to the assets/fonts/ directory and reference them locally to fix the console errors. */
+        @font-face {
+          font-family: 'Expo Arabic';
+          /* src: url('https://db.onlinewebfonts.com/t/1b047c9f13e477c4e2e04ced6f65e5e8.woff2') format('woff2'),
+               url('https://db.onlinewebfonts.com/t/1b047c9f13e477c4e2e04ced6f65e5e8.woff') format('woff'); */
+          font-weight: 400;
+          font-style: normal;
+          font-display: swap;
+        }
+        @font-face {
+          font-family: 'Expo Arabic';
+          /* src: url('https://db.onlinewebfonts.com/t/fc1db5810ac27f4ab57ff5ed6c190a1a.woff2') format('woff2'),
+               url('https://db.onlinewebfonts.com/t/fc1db5810ac27f4ab57ff5ed6c190a1a.woff') format('woff'); */
+          font-weight: 500;
+          font-style: normal;
+          font-display: swap;
+        }
+        @font-face {
+          font-family: 'Expo Arabic';
+          /* src: url('https://db.onlinewebfonts.com/t/4cac2b67059c10c8df5e2779c7ca42af.woff2') format('woff2'),
+               url('https://db.onlinewebfonts.com/t/4cac2b67059c10c8df5e2779c7ca42af.woff') format('woff'); */
+          font-weight: 700;
+          font-style: normal;
+          font-display: swap;
+        }
+      </style>
+      <!-- prettier-ignore-end -->
+    {% else %}
+      <link
+        rel="stylesheet"
+        media="print"
+        onload="this.onload=null;this.media='all'"
+        href="https://fonts.googleapis.com/css2?family={{ settings.font_family | default('Roboto') }}:wght@300;400;500;700&display=swap"
+      />
+    {% endif %}
+    {#
+      Prettier ignore is needed here because the CSS contains Jinja template variables
+      which cause Prettier's PostCSS parser to fail with "Cannot read properties of undefined (reading 'raw')"
+    #}
+    <!-- prettier-ignore-start -->
+    <style>
+      :root {
+        /* Font */
+        --font-family: {{ (settings.font_family | default('Roboto')).replace('+', ' ') }}, sans-serif;
+
+        /* ========== LIGHT MODE COLORS (Default) ========== */
+        --background: {{ settings.theme_background | default('#FFFFFF') }};
+        --foreground: {{ settings.theme_foreground | default('#0B0A09') }};
+        --primary: {{ settings.theme_primary | default('#0B0A09') }};
+        --primary-foreground: {{ settings.theme_primary_foreground | default('#FFFFFF') }};
+        --secondary: {{ settings.theme_secondary | default('#F6F5F4') }};
+        --muted: {{ settings.theme_muted | default('#545352') }};
+        --accent: {{ settings.theme_accent | default('#A89C90') }};
+        --border: {{ settings.theme_border | default('#B5B5B5') }};
+        --input: {{ settings.theme_input | default('#545352') }};
+        --ring: {{ settings.theme_ring | default('#0B0A09') }};
+
+        /* ========== RADIUS ========== */
+        --radius: {{ settings.theme_radius | default(4) }}px;
+        --cols-mobile: {{ card_columns_mobile }};
+        --cols-desktop: {{ card_columns_desktop }};
+        --cols-tablet: {{ [((card_columns_desktop | int) / 2) | round(0, 'ceil') | int, 2] | max }};
+
+        /* ========== PRODUCT CARD ========== */
+        --pc-truncate-name: {{ '1' if settings.product_card_truncate_product_name else '0' }};
+        --pc-aligned-content: {{ settings.product_card_card_aligned_content | default('center') }};
+        --pc-show-tags: {{ '1' if settings.product_card_show_c_tags != false else '0' }};
+        --pc-show-color-options: {{ '1' if settings.product_card_show_color_options != false else '0' }};
+        --pc-show-rating: {{ '1' if settings.product_card_show_rating != false else '0' }};
+        --pc-show-stock-info: {{ '1' if settings.product_card_show_stock_info != false else '0' }};
+        --pc-show-breadcrumb: {{ '1' if settings.general_show_breadcrumb != false else '0' }};
+
+        /* ========== SECTION SPACING ========== */
+        --section-mb: {{ settings.spacing_section_margin_bottom_desktop | default(0) }}px;
+        --section-mb-mobile: {{ settings.spacing_section_margin_bottom_mobile | default(0) }}px;
+      }
+
+      [section-id] {
+        margin-bottom: var(--section-mb);
+      }
+
+      /* breadcrumb visibility */
+      body[data-show-breadcrumb="false"] .pc-breadcrumb-section nav {
+        visibility: hidden;
+      }
+
+      /* Prevent flash of open dialogs before JS initializes */
+      dialog:not([open]) { display: none !important; }
+
+      /* PRODUCT CARD - global rules (single instance)
+         Controlled by body data-pc-* set from theme settings */
+
+      /* Tags */
+      body[data-pc-tags="false"] .pc-tags-wrapper { display: none !important; }
+      body[data-pc-tags-loop="false"] .pc-tags-track { animation: none !important; }
+      body[data-pc-tags-loop="false"] .pc-tags-set[aria-hidden="true"] { display: none !important; }
+      body[data-pc-tags-loop="false"] .pc-tags-set { padding-inline-end: 0 !important; }
+      body[data-pc-tags-loop="false"] .pc-tags-wrapper {
+        -webkit-mask-image: none !important;
+        mask-image: none !important;
+        overflow: visible;
+      }
+
+      /* Color options */
+      body[data-pc-colors="false"] .pc-color-options { display: none !important; }
+
+      /* Rating */
+      body[data-pc-rating="false"] .pc-rating { display: none !important; }
+
+      /* Stock info */
+      body[data-pc-stock="false"] .pc-stock { display: none !important; }
+
+      /* Truncate name */
+      body[data-pc-truncate="true"] .pc-name a {
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      /* Content alignment — override hardcoded center defaults */
+      body[data-pc-align="start"] .pc-info  { align-items: flex-start !important; text-align: start !important; }
+      body[data-pc-align="start"] .pc-name  { width: auto !important; text-align: start !important; }
+      body[data-pc-align="start"] .pc-rating,
+      body[data-pc-align="start"] .pc-price-wrap { justify-content: flex-start !important; }
+
+      body[data-pc-align="end"] .pc-info    { align-items: flex-end !important; text-align: end !important; }
+      body[data-pc-align="end"] .pc-name    { width: auto !important; text-align: end !important; }
+      body[data-pc-align="end"] .pc-rating,
+      body[data-pc-align="end"] .pc-price-wrap { justify-content: flex-end !important; }
+
+      body[data-pc-align="center"] .pc-info { align-items: center !important; text-align: center !important; }
+      body[data-pc-align="center"] .pc-rating,
+      body[data-pc-align="center"] .pc-price-wrap { justify-content: center !important; }
+
+      /* Aspect ratio */
+      body[data-pc-aspect="square"]   .pc-img-wrap:not([data-aspect]) { aspect-ratio: 1 / 1 !important; }
+      body[data-pc-aspect="portrait"] .pc-img-wrap:not([data-aspect]) { aspect-ratio: 3 / 4 !important; }
+      body[data-pc-aspect="landscape"].pc-img-wrap:not([data-aspect]) { aspect-ratio: 4 / 3 !important; }
+      body[data-pc-aspect="adapt"]    .pc-img-wrap:not([data-aspect]) { aspect-ratio: auto !important; min-height: 160px; }
+
+      /* Icon CTA — hidden by default, shown on mobile when icon mode active */
+      .pc-img-icon-cta { display: none !important; }
+
+      @media (max-width: 767px) {
+        /* icon mode */
+        body[data-pc-mobile-cta="icon"] .pc-img-icon-cta {
+          display: flex !important;
+          align-items: center;
+          justify-content: center;
+        }
+        body[data-pc-mobile-cta="icon"] .pc-cta-wrap-mb { display: none !important; }
+
+        /* alignment: center button */
+        body[data-pc-align="center"] .pc-cta-wrap-mb { justify-content: center; padding: 0 5%; }
+        body[data-pc-align="center"] .pc-cta-wrap-mb .pc-cta { width: 90%; }
+
+        /* alignment: start button */
+        body[data-pc-align="start"] .pc-cta-wrap-mb { justify-content: flex-start; padding: 0; }
+        body[data-pc-align="start"] .pc-cta-wrap-mb .pc-cta { width: 100%; }
+
+        /* center + icon mode: pin icon to center bottom */
+        body[data-pc-align="center"][data-pc-mobile-cta="icon"] .pc-img-icon-cta {
+          left: 50% !important;
+          transform: translateX(-50%);
+        }
+        body[data-pc-align="center"][data-pc-mobile-cta="icon"] .pc-img-icon-cta:hover,
+        body[data-pc-align="center"][data-pc-mobile-cta="icon"] .pc-img-icon-cta:active {
+          transform: translateX(-50%) scale(1.08);
+        }
+
+        /* quantity section alignment */
+        body[data-pc-align="center"] [data-quantity-section] { width: 90%; margin-inline: auto; }
+        body[data-pc-align="start"]  [data-quantity-section] { width: 100%; padding: 0; }
+      }
+
+      /* quantity section: hide in icon mode */
+      body[data-pc-mobile-cta="icon"] [data-quantity-section] { display: none !important; }
+
+      [section-id][data-no-mb="true"] {
+        margin-bottom: 0 !important;
+      }
+      @media (max-width: 767px) {
+        [section-id] {
+          margin-bottom: var(--section-mb-mobile);
+        }
+        [section-id][data-no-mb="true"] {
+          margin-bottom: 0 !important;
+        }
+      }
+
+      {% if settings.general_enable_theme_loader | default(true) %}
+      .ananas-theme-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 2147483000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--background, #ffffff);
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transition:
+          opacity 0.35s ease,
+          visibility 0.35s ease;
+      }
+
+      .ananas-theme-loader[data-hidden="true"] {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      .coffee-loader {
+        position: relative;
+        display: flex;
+        width: 74px;
+        height: 64px;
+        align-items: flex-end;
+        justify-content: center;
+      }
+
+      .coffee-loader__cup {
+        position: relative;
+        display: block;
+        width: 42px;
+        height: 30px;
+        border: 2px solid #282828;
+        border-top: 0;
+        border-radius: 0 0 12px 12px;
+        background: #ffffff;
+        overflow: visible;
+        animation: coffee-loader-bob 1.6s ease-in-out infinite;
+      }
+
+      .coffee-loader__cup::before {
+        content: "";
+        position: absolute;
+        inset-inline-end: -13px;
+        top: 7px;
+        width: 14px;
+        height: 14px;
+        border: 2px solid #282828;
+        border-inline-start: 0;
+        border-radius: 0 12px 12px 0;
+      }
+
+      .coffee-loader__coffee {
+        position: absolute;
+        left: 4px;
+        right: 4px;
+        top: 5px;
+        height: 5px;
+        border-radius: 999px;
+        background: #f7512b;
+        transform-origin: center;
+        animation: coffee-loader-surface 1.2s ease-in-out infinite;
+      }
+
+      .coffee-loader__plate {
+        position: absolute;
+        bottom: 0;
+        width: 58px;
+        height: 7px;
+        border-radius: 999px;
+        background: #d3db6f;
+        animation: coffee-loader-shadow 1.6s ease-in-out infinite;
+      }
+
+      .coffee-loader__steam {
+        position: absolute;
+        bottom: 42px;
+        display: block;
+        width: 8px;
+        height: 20px;
+        border-inline-start: 2px solid #f7512b;
+        border-radius: 999px;
+        opacity: 0;
+        animation: coffee-loader-steam 1.7s ease-in-out infinite;
+      }
+
+      .coffee-loader__steam--1 {
+        inset-inline-start: 23px;
+        animation-delay: 0s;
+      }
+
+      .coffee-loader__steam--2 {
+        inset-inline-start: 34px;
+        height: 24px;
+        animation-delay: 0.2s;
+      }
+
+      .coffee-loader__steam--3 {
+        inset-inline-start: 45px;
+        animation-delay: 0.4s;
+      }
+
+      @keyframes coffee-loader-bob {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-3px);
+        }
+      }
+
+      @keyframes coffee-loader-surface {
+        0%,
+        100% {
+          transform: scaleX(1);
+        }
+        50% {
+          transform: scaleX(0.78);
+        }
+      }
+
+      @keyframes coffee-loader-shadow {
+        0%,
+        100% {
+          transform: scaleX(1);
+          opacity: 0.95;
+        }
+        50% {
+          transform: scaleX(0.86);
+          opacity: 0.55;
+        }
+      }
+
+      @keyframes coffee-loader-steam {
+        0% {
+          transform: translateY(8px) scale(0.82);
+          opacity: 0;
+        }
+        35% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-15px) scale(1);
+          opacity: 0;
+        }
+      }
+      {% endif %}
+    </style>
+    <!-- prettier-ignore-end -->
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ 'styles.css' | asset_url }}"
+    />
+
+    {# TailwindPlus Elements - pinned version for better caching #}
+    <script
+      src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1.0.22"
+      type="module"
+    ></script>
+
+    {% if user_custom_css %}
+      <link
+        rel="stylesheet"
+        href="{{ user_custom_css }}"
+      />
+    {% endif %}
+  </head>
+  <body
+    data-template="{{ session.template }}"
+    data-pc-truncate="{{ 'true' if settings.product_card_truncate_product_name else 'false' }}"
+    data-pc-align="{{ settings.product_card_card_aligned_content | default('center') }}"
+    data-pc-tags="{{ 'true' if settings.product_card_show_c_tags != false else 'false' }}"
+    data-pc-tags-loop="{{ 'true' if settings.product_card_tags_infinite_loop != false else 'false' }}"
+    data-pc-colors="{{ 'true' if settings.product_card_show_color_options != false else 'false' }}"
+    data-pc-rating="{{ 'true' if settings.product_card_show_rating != false else 'false' }}"
+    data-pc-stock="{{ 'true' if settings.product_card_show_stock_info != false else 'false' }}"
+    data-pc-fake-sold="{{ 'false' if (settings.product_card_show_fake_sold_count == false or settings.product_card_show_fake_sold_count is not defined) else 'true' }}"
+    data-pc-fake-min="{{ settings.product_card_fake_sold_min | default('100') }}"
+    data-pc-fake-max="{{ settings.product_card_fake_sold_max | default('1000') }}"
+    data-pc-aspect="{{ settings.product_card_image_aspect_ratio | default('adapt') }}"
+    data-pc-mobile-cta="{{ settings.product_card_mobile_add_to_cart_style | default('button') }}"
+    data-show-breadcrumb="{{ 'true' if settings.general_show_breadcrumb != false else 'false' }}"
+    class="min-h-dvh font-sans antialiased"
+  >
+    {% if settings.general_enable_theme_loader | default(true) %}
+    <div
+      id="ananas-theme-loader"
+      class="ananas-theme-loader"
+      role="status"
+      aria-label="{{ _('Loading') }}"
+      aria-live="polite"
+    >
+      <div class="coffee-loader">
+        <span class="coffee-loader__steam coffee-loader__steam--1"></span>
+        <span class="coffee-loader__steam coffee-loader__steam--2"></span>
+        <span class="coffee-loader__steam coffee-loader__steam--3"></span>
+        <span class="coffee-loader__cup">
+          <span class="coffee-loader__coffee"></span>
+        </span>
+        <span class="coffee-loader__plate"></span>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var loader = document.getElementById("ananas-theme-loader");
+        var done = false;
+        function removeLoader() {
+          if (loader && loader.parentNode) {
+            loader.parentNode.removeChild(loader);
+          }
+        }
+        function hideLoader() {
+          if (done || !loader) return;
+          done = true;
+          loader.addEventListener("transitionend", removeLoader, { once: true });
+          loader.dataset.hidden = "true";
+        }
+        if (document.readyState === "complete") {
+          window.requestAnimationFrame(hideLoader);
+        } else {
+          window.addEventListener("load", hideLoader, { once: true });
+        }
+      })();
+    </script>
+    {% endif %}
+    {% include 'header.jinja' %}
+    <main id="main">{% block content %}{% endblock %}</main>
+
+    {% include 'footer.jinja' %}
+    {# Global Notify Me Dialog - for product cards on any page #}
+    {% include 'components/products/notify-me-dialog.jinja' %}
+    {# Global Quick View Modal - for product cards on any page #}
+    {% include 'components/products/quick-view-modal.jinja' %}
+    {# Global config scripts (must run before theme bundle) #}
+    <!-- prettier-ignore-start -->
+    <script>
+      // Layout config for header functionality
+      window.layoutConfig = {
+        profileUrl: "{{ url_for('profile') }}",
+        defaultCountryCode: {{ (store.country_code | default(session.country.code, true)) | tojson }},
+        currentLanguage: {{ (session.lang | default('ar', true)) | tojson }},
+        currentCountry: {{ ((store.current_country.code if store.current_country and store.current_country.code else session.country.code) | default('', true)) | tojson }}
+      };
+
+      window.ananasRegionSettingsConfig = {
+        customer_country_code: {{ ((store.current_country.code if store.current_country and store.current_country.code else session.country.code) | default('', true)) | tojson }},
+        session_country: {
+          code: {{ ((store.current_country.code if store.current_country and store.current_country.code else session.country.code) | default('', true)) | tojson }},
+          name: {{ (session.country.name | default('', true)) | tojson }}
+        },
+        session_language: {{ (session.lang | default('ar', true)) | tojson }},
+        session_city_id: {{ ((session.city.id if session.city and session.city.id else '') | default('', true)) | tojson }},
+        lang: {{ (session.lang | default('ar', true)) | tojson }},
+        direction: {{ (session.locale.language.direction | default('rtl', true)) | tojson }},
+        app_env: 'prod',
+        sdk_version: 'v2.10.7',
+        store_settings: {
+          id: {{ (store.id | default('', true)) | tojson }},
+          name: {{ (store.name | default('', true)) | tojson }},
+          countries: {{ (store.countries | default([], true)) | tojson }},
+          languages: {{ (store.languages | default([], true)) | tojson }},
+          settings: {
+            branding: {
+              colors: {
+                primary: {{ (settings.theme_primary | default('#0B0A09', true)) | tojson }}
+              }
+            },
+            products: {
+              filter_by_city: {{ 'true' if store.settings.products.filter_by_city else 'false' }},
+              filter_by_nearest_inventory: {{ 'true' if store.settings.products.filter_by_nearest_inventory else 'false' }}
+            },
+            checkout: {
+              show_pickup_option_stock_availability_for_checkout: {{ 'true' if store.settings.checkout.show_pickup_option_stock_availability_for_checkout else 'false' }}
+            }
+          }
+        }
+      };
+
+      window.zidOpenRegionSettingDialog = function () {
+        if (typeof window.openAnanasRegionSettings === "function") {
+          return window.openAnanasRegionSettings();
+        }
+
+        if (window.region_settings_dialog && typeof window.region_settings_dialog.open === "function") {
+          window.region_settings_dialog.open();
+        }
+
+        return false;
+      };
+
+      // Product translations (used by variants.js for variant changes)
+      window.productTranslations = {
+        discount: {{ _('Discount') | tojson }},
+        remaining: {{ _('Remaining %s only') | tojson }},
+        sold: {{ _('Sold more than %s times') | tojson }},
+        soldThisMonth: {{ _('Sold %s pieces this month') | tojson }},
+        lowStockPacks: {{ _('Only %(count)s packs left in stock!') | tojson }},
+        limitedStock: {{ _('Limited quantity in stock!') | tojson }}
+      };
+      window.themeSettings = {
+        showBreadcrumb: {{ 'true' if settings.general_show_breadcrumb != false else 'false' }},
+        productCard: {
+          truncateName: {{ 'true' if settings.product_card_truncate_product_name else 'false' }},
+          alignedContent: {{ (settings.product_card_card_aligned_content | default('center')) | tojson }},
+          showTags: {{ 'false' if settings.product_card_show_c_tags == false else 'true' }},
+          showColorOptions: {{ 'false' if settings.product_card_show_color_options == false else 'true' }},
+          showRating: {{ 'false' if settings.product_card_show_rating == false else 'true' }},
+          showStockInfo: {{ 'false' if settings.product_card_show_stock_info == false else 'true' }},
+          mobileAddToCartStyle: {{ (settings.product_card_mobile_add_to_cart_style | default('button')) | tojson }},
+          imageAspectRatio: {{ (settings.product_card_image_aspect_ratio | default('adapt')) | tojson }},
+          columnsDesktop: {{ (settings.product_card_columns_desktop | default('4')) | tojson }},
+          columnsMobile: {{ (settings.product_card_columns_mobile | default('2')) | tojson }}
+        }
+      };
+      window.storeLowStockEnabled = {{ 'true' if store.settings.products.low_stock_enabled else 'false' }};
+      window.storeLowStockThreshold = {{ store.settings.products.low_stock_threshold | default(5) }};
+
+      window.ananasTranslations = {
+        paymentMethods: {{ _('Payment methods') | tojson }},
+        tamara: {{ _('Tamara') | tojson }},
+        buyNow: {{ _('Buy now') | tojson }},
+        discountTemplate: {{ _('%(percent)s discount') | tojson }},
+        options: {{ _('Options') | tojson }},
+        showingRange: {{ _('Showing %(start)s - %(end)s of %(total)s') | tojson }},
+        resultsCount: {{ _('%(count)s results') | tojson }},
+        sale: {{ _('Sale') | tojson }},
+        outOfStock: {{ _('Out of stock') | tojson }},
+        from: {{ _('From') | tojson }}
+      };
+
+      window.cartToastTranslations = {
+        addedToCart: {{ _('Product added to cart') | tojson }},
+        removedFromCart: {{ _('Product removed from cart') | tojson }}
+      };
+
+      window.wishlistConfig = window.wishlistConfig || {};
+      window.wishlistConfig.pageUrl = window.wishlistConfig.pageUrl || "/pages/wishlist";
+      window.wishlistConfig.labels = Object.assign({
+        addToWishlist: {{ _('Add to wishlist') | tojson }},
+        removeFromWishlist: {{ _('Remove from wishlist') | tojson }},
+        loading: {{ _('Loading') | tojson }},
+        addedToWishlist: {{ _('Product added to wishlist') | tojson }},
+        removedFromWishlist: {{ _('Product removed from wishlist') | tojson }},
+        alreadyInWishlist: {{ _('Product is already in wishlist') | tojson }},
+        wishlistTitle: {{ _('My Wishlist') | tojson }},
+        products: {{ _('Products') | tojson }},
+        loginRequired: {{ _('Please log in to view your wishlist.') | tojson }},
+        login: {{ _('Login') | tojson }},
+        wishlistEmpty: {{ _('Your wishlist is empty.') | tojson }},
+        continueShopping: {{ _('Continue shopping') | tojson }},
+        remove: {{ _('Remove') | tojson }},
+        close: {{ _('Close') | tojson }},
+        quickView: {{ _('Quick view') | tojson }},
+        review: {{ _('Review') | tojson }},
+        addToCart: {{ _('Add to cart') | tojson }}
+      }, window.wishlistConfig.labels || {});
+
+      // Notify Me translations (used by notify-me.js for stock alerts)
+      window.notifyMeTranslations = {
+        success: {{ _('You will be notified when this product is back in stock!') | tojson }},
+        error: {{ _('Failed to submit. Please try again.') | tojson }},
+        required: {{ _('Please fill in all required fields') | tojson }},
+        phoneRequired: {{ _('Phone number is required') | tojson }},
+        phoneTooShort: {{ _('Phone number is too short') | tojson }},
+        phoneTooLong: {{ _('Phone number is too long') | tojson }},
+        phoneInvalid: {{ _('Invalid phone number') | tojson }}
+      };
+
+      // Custom styles for Vitrin Kit Components (bundle, gift, region dialogs)
+      // These override the default styles in platform widgets
+      window.zidCustomStyles = {
+        bundle_selection: {
+          fontFamily: "var(--font-family)",
+          fontSize: "14px"
+        },
+        gift_dialog: {
+          fontFamily: "var(--font-family)",
+          fontSize: "14px",
+          primaryColor: "var(--primary)",
+          primaryForeground: "var(--primary-foreground)",
+          backgroundColor: "var(--background)",
+          borderRadius: "var(--radius)"
+        },
+        region_settings_dialog: {
+          fontFamily: "var(--font-family)",
+          fontSize: "14px",
+          primaryColor: "var(--primary)",
+          primaryForeground: "var(--primary-foreground)",
+          backgroundColor: "var(--background)",
+          borderRadius: "var(--radius)"
+        }
+      };
+    </script>
+    <!-- prettier-ignore-end -->
+
+    {% include "vitrin:shared/region_settings_dialog.jinja" %}
+
+    {# Bundled theme JS (Vite output) - includes all feature modules #}
+    <script
+      defer
+      src="{{ 'dist/theme.js' | asset_url }}"
+    ></script>
+
+    {% vitrin_body %}
+
+    {# Loyalty Rewards - loaded AFTER vitrin_body so popup is in DOM #}
+    {% if session.template not in ['product_details', 'cart_page', 'page_details'] and store.settings.checkout.is_loyalty_enabled %}
+      <script>
+        var loyalty_button_direction = "{{ session.locale.language.direction }}";
+        var text_loyalty_rewards = '{{ _("Rewards") }}';
+        var text_loyalty_options = '{{ _("For {points} get a discount {percentage}") }}';
+        var store_currency_code = "{{ session.currency }}";
+      </script>
+      <script src="{{ 'js/layout-loyalty.js' | asset_url }}"></script>
+    {% endif %}
+    {% block footer_scripts %}
+    {% endblock %}
+  </body>
+</html>

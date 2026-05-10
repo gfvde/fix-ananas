@@ -1,0 +1,141 @@
+{% extends "layout.jinja" %}
+
+{% block title %}{{ store.name }} – {{ _('Cart') }}{% endblock %}
+
+{% block content %}
+  <link rel="stylesheet" type="text/css" href="{{ 'css/cart-page.css' | asset_url }}" />
+  <section class="pc-breadcrumb-section cart-page-bg cart-page-breadcrumb-section">
+    <div class="theme-container">
+      {%
+        with
+        items=[
+          {'href': url_for('home'), 'label': _("Home")},
+          {'label': _("Cart")}
+        ]
+      %}
+        {% include 'components/ui/breadcrumb.jinja' %}
+      {% endwith %}
+    </div>
+  </section>
+
+  <section class="cart-page-bg cart-page-main-section">
+    <div class="theme-container">
+      {% if cart.products_count > 0 %}
+        <div class="cart-with-products">
+          <div class="cart-page-header">
+            <h1 class="cart-page-header__title">{{ _('Cart') }}</h1>
+            <p class="cart-page-header__count">( {{ _('%(count)s products') | format(count=(cart.products_count | default(0))) }} )</p>
+          </div>
+
+          {# MOBILE: header + summary shown above products #}
+          <div class="cart-mobile-top cart-mobile-only">
+            {% include 'components/cart/mobile-header.jinja' %}
+            {% include 'components/cart/cart-summary.jinja' %}
+          </div>
+
+          {# DESKTOP sidebar + MOBILE products — flex layout on desktop #}
+          <div class="cart-page-layout">
+            <div class="cart-page-layout__sidebar">
+              {% include 'components/cart/cart-sidebar.jinja' %}
+            </div>
+
+            <div class="cart-page-layout__products">
+              <div data-cart-products-list>
+                {% include 'components/cart/products-list.jinja' %}
+                {% if store.settings.checkout.gift_order_settings.is_gift_order_enabled == '1' %}
+                  <div class="mt-4">{% include 'components/cart/gift-card-display.jinja' %}</div>
+                {% endif %}
+              </div>
+
+              <a
+                href="{{ url_for('home') }}"
+                class="cart-continue-shopping text-foreground mt-6 inline-flex items-center gap-2 rounded py-2.5 text-sm transition-opacity hover:opacity-70"
+              >
+                <svg
+                  class="size-4 rtl:rotate-180"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M10 12L6 8L10 4"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>
+                </svg>
+                {{ _("Continue shopping") }}
+              </a>
+            </div>
+          </div>
+
+          {# MOBILE benefits (loyalty + UVPs + payments) below products #}
+          <div class="cart-mobile-only">
+            {% include 'components/cart/cart-mobile-benefits.jinja' %}
+          </div>
+
+          {# MOBILE FIXED CHECKOUT BUTTON #}
+          <div class="cart-mobile-checkout-bar cart-mobile-only">
+            <a
+              href="/checkout"
+              class="cart-mobile-checkout-btn"
+              data-cart-mobile-checkout
+            >
+              <span class="cart-mobile-checkout-btn__prices">
+                <span class="cart-mobile-checkout-btn__compare" data-cart-mobile-compare></span>
+                <span class="cart-mobile-checkout-btn__total" data-cart-mobile-total>
+                  {%- for t in cart.totals if t.code == 'total' -%}{{ t.value_string }}{%- endfor -%}
+                </span>
+              </span>
+              <span class="cart-mobile-checkout-btn__label">{{ _('Complete your order') }}</span>
+            </a>
+          </div>
+        </div>
+      {% else %}
+        {% include 'components/cart/empty-state.jinja' %}
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}
+
+{% block footer_scripts %}
+  {# Cart Controller - Modular cart page functionality #}
+  <script
+    src="{{ 'dist/cart-controller.js' | asset_url }}"
+    defer
+  ></script>
+  <!-- prettier-ignore-start -->
+  <script>
+    // Initialize CartPage module after DOM is ready
+    document.addEventListener("DOMContentLoaded", function () {
+    // This must happen BEFORE any cart operations to prevent default HTML replacement
+    (function registerHandler() {
+      if (window.ZidCart && window.ZidCart.registerCustomHandler) {
+        window.ZidCart.registerCustomHandler();
+      } else {
+        // If ZidCart isn't ready yet, try again on next tick
+        setTimeout(registerHandler, 10);
+      }
+    })();
+      CartPage.init({
+        cart: {{ cart | tojson }},
+        loyaltyEnabled: {{ (store.settings.checkout.is_loyalty_enabled | default(false)) | tojson }},
+        cartTotalValue: {{ cart.total_value | default(0) }},
+        storeCurrencyCode: "{{ session.currency.code }}",
+        cartCurrencyCode: "{{ cart.currency.cart_currency.code if cart.currency else session.currency.code }}",
+        translations: {
+          forPointsGetDiscount: "{{ _('For %(points)s points get %(discount)s discount') }}",
+          itemsCount: "{{ _('%(count)s items') }}",
+          freeShippingApplied: "{{ _('Free shipping applied!') }}",
+          addMoreForFreeShipping: "{{ _('Add %(total)s more to get free shipping') }}",
+          discount: "{{ _('Discount') }}",
+          loyalty: "{{ _('Loyalty') }}",
+          options: "{{ _('Options') }}",
+          discountTemplate: "{{ _('%(percent)s discount') }}"
+        }
+      });
+    });
+  </script>
+  <!-- prettier-ignore-end -->
+{% endblock %}

@@ -1,0 +1,318 @@
+{% set title_color    = settings.title_color    | default('#000000') %}
+{% set section_bg     = settings.section_bg     | default('#ffffff') %}
+{% set star_color     = settings.star_color     | default('#F7A52D') %}
+{% set verified_color = settings.verified_color | default('#25A562') %}
+
+{% set reviews = safeget(settings, "star_reviews_items", []) %}
+{% if not reviews or reviews | length == 0 %}
+  {% set reviews = [
+    {'name': 'Ahmed Seif',   'stars': 5, 'card_bg': '#EEEEEE', 'text_color': '#000000', 'text': 'Ananas is an amazing coffee shop! The healthy breakfast options and refreshing acai bowls make it my go-to place. Highly recommend!'},
+    {'name': 'Sara Mohamed', 'stars': 5, 'card_bg': '#171717', 'text_color': '#ffffff',  'text': 'Ananas is an amazing coffee shop! The healthy breakfast options and refreshing acai bowls make it my go-to place. Highly recommend!'},
+    {'name': 'Layla Hassan', 'stars': 5, 'card_bg': '#171717', 'text_color': '#ffffff',  'text': 'Ananas is an amazing coffee shop! The healthy breakfast options and refreshing acai bowls make it my go-to place. Highly recommend!'},
+    {'name': 'Omar Khalid',  'stars': 5, 'card_bg': '#EEEEEE', 'text_color': '#000000', 'text': 'Ananas is an amazing coffee shop! The healthy breakfast options and refreshing acai bowls make it my go-to place. Highly recommend!'}
+  ] %}
+{% endif %}
+
+{% macro star_svg() %}
+<svg width="18" height="18" viewBox="0 0 20 20" fill="{{ star_color }}" xmlns="http://www.w3.org/2000/svg">
+  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+</svg>
+{% endmacro %}
+
+{% macro verified_badge() %}
+<span class="sr-verified" style="color: {{ verified_color }};">
+  <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="7.5" cy="7" r="7" fill="{{ verified_color }}"/>
+    <path d="M4.5 7L6.5 9L10.5 5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  {{ _('Verified Purchase') }}
+</span>
+{% endmacro %}
+
+{% macro review_card(review) %}
+  {% set bg    = review.card_bg    | default('#EEEEEE') %}
+  {% set color = review.text_color | default('#000000') %}
+  {% set num_stars = review.stars | default(5) | int %}
+  <div class="sr-card" style="background: {{ bg }};">
+    <div class="sr-card__body">
+      <span class="sr-verified-mobile">{{ verified_badge() }}</span>
+      <div class="sr-stars">
+        {% for i in range(num_stars) %}{{ star_svg() }}{% endfor %}
+      </div>
+      <p class="sr-text" style="color: {{ color }};">
+        "{{ review.text | default('Ananas is an amazing coffee shop! Highly recommend!') }}"
+      </p>
+    </div>
+    <div class="sr-author">
+      {% if review.avatar %}
+        <img class="sr-author__avatar" src="{{ image_url(review.avatar, w=92, h=92, f='auto') }}" alt="{{ review.name | default('') }}" />
+      {% else %}
+        <div class="sr-author__avatar sr-author__avatar--placeholder" style="background: #ccc;"></div>
+      {% endif %}
+      <div class="sr-author__info">
+        <span class="sr-author__name" style="color: {{ color }};">{{ review.name | default('Ahmed Seif') }}</span>
+        <span class="sr-verified-desktop">{{ verified_badge() }}</span>
+      </div>
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro image_review_card(extra_class='') %}
+  <div class="sr-card sr-card--image {{ extra_class }}">
+    {% if settings.image_card_bg %}
+      <img class="sr-card__bg" src="{{ image_url(settings.image_card_bg, w=800, f='auto') }}" alt="" />
+    {% else %}
+      <img class="sr-card__bg" src="https://www.figma.com/api/mcp/asset/5b558788-40bb-40db-a3e0-fe6d62e9c0af" alt="" />
+    {% endif %}
+    <div class="sr-card__content">
+      {% set mid = reviews[2] if reviews | length > 2 else reviews[0] %}
+      {% set num_stars_mid = mid.stars | default(5) | int %}
+      <div class="sr-card__body">
+        <div class="sr-stars">{% for i in range(num_stars_mid) %}{{ star_svg() }}{% endfor %}</div>
+        <p class="sr-text" style="color:#fff;">"{{ mid.text | default('') }}"</p>
+      </div>
+      <div class="sr-author">
+        {% if mid.avatar %}
+          <img class="sr-author__avatar" src="{{ image_url(mid.avatar, w=92, h=92, f='auto') }}" alt="{{ mid.name | default('') }}" />
+        {% else %}
+          <div class="sr-author__avatar sr-author__avatar--placeholder" style="background:#555;"></div>
+        {% endif %}
+        <div class="sr-author__info">
+          <span class="sr-author__name" style="color:#fff;">{{ mid.name | default('Sara Mohamed') }}</span>
+          {{ verified_badge() }}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endmacro %}
+
+<section section-id="{{ sectionId }}" class="section-star-reviews" style="background: {{ section_bg }};" dir="rtl">
+
+  <h2 class="sr-title" style="color: {{ title_color }};">
+    {{ settings.title | default(_('Coffee experience through our customers eyes')) }}
+  </h2>
+
+  {# Desktop: 3-column grid #}
+  <div class="sr-grid sr-desktop">
+
+    {# Right column – reviews 0 & 1 #}
+    <div class="sr-col">
+      {% if reviews | length > 0 %}{{ review_card(reviews[0]) }}{% endif %}
+      {% if reviews | length > 1 %}{{ review_card(reviews[1]) }}{% endif %}
+    </div>
+
+    {# Middle – image card #}
+    {{ image_review_card() }}
+
+    {# Left column – reviews 3 & 4 #}
+    <div class="sr-col">
+      {% if reviews | length > 3 %}{{ review_card(reviews[3]) }}{% endif %}
+      {% if reviews | length > 4 %}{{ review_card(reviews[4]) }}{% endif %}
+    </div>
+
+  </div>
+
+  {# Mobile: two cards, image card, two cards #}
+  <div class="sr-mobile">
+    <div class="sr-mobile__row">
+      {% if reviews | length > 0 %}{{ review_card(reviews[0]) }}{% endif %}
+      {% if reviews | length > 1 %}{{ review_card(reviews[1]) }}{% endif %}
+    </div>
+
+    {{ image_review_card('sr-card--mobile-image') }}
+
+    <div class="sr-mobile__row">
+      {% if reviews | length > 3 %}
+        {{ review_card(reviews[3]) }}
+      {% elif reviews | length > 2 %}
+        {{ review_card(reviews[2]) }}
+      {% endif %}
+      {% if reviews | length > 4 %}
+        {{ review_card(reviews[4]) }}
+      {% elif reviews | length > 2 %}
+        {{ review_card(reviews[2]) }}
+      {% endif %}
+    </div>
+  </div>
+
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var sr = document.querySelector('[section-id="{{ sectionId }}"].section-star-reviews');
+    if (!sr) return;
+
+    var prev = document.querySelector('.about-details');
+    if (!prev) return;
+
+    if (!(prev.compareDocumentPosition(sr) & Node.DOCUMENT_POSITION_FOLLOWING)) return;
+
+    function applyEffect() {
+      var isDesktop = window.innerWidth >= 992;
+
+      if (isDesktop) {
+        prev.style.position = 'sticky';
+        prev.style.top = '0';
+        prev.style.zIndex = '1';
+        prev.style.overflow = 'hidden';
+      } else {
+        prev.style.position = '';
+        prev.style.top = '';
+        prev.style.zIndex = '';
+        prev.style.overflow = '';
+      }
+
+      var allSections = document.querySelectorAll('[section-id]');
+      var found = false;
+      allSections.forEach(function(sec) {
+        if (found) {
+          sec.style.position = isDesktop ? 'relative' : '';
+          sec.style.zIndex = isDesktop ? '2' : '';
+        }
+        if (sec === sr) found = true;
+      });
+    }
+
+    applyEffect();
+    window.addEventListener('resize', applyEffect);
+  });
+</script>
+
+<style>
+  [section-id="{{ sectionId }}"].section-star-reviews {
+    padding: 40px 56px 24px;
+    direction: rtl;
+    position: relative;
+    z-index: 2;
+  }
+  .sr-title {
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 36px;
+    text-align: right;
+    margin-bottom: 24px;
+  }
+  .sr-desktop {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    align-items: stretch;
+  }
+  .sr-mobile { display: none; }
+  .sr-col { display: flex; flex-direction: column; gap: 10px; }
+  .sr-card {
+    flex: 1;
+    border-radius: 4px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 40px;
+  }
+  .sr-card--image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 400px;
+  }
+  .sr-card__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+  .sr-card--image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.42) 60%, rgba(0,0,0,0) 100%);
+    z-index: 1;
+  }
+  .sr-card__content { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 28px;}
+  .sr-card__body { display: flex; flex-direction: column; gap: 8px; }
+  .sr-stars { display: flex; align-items: center; gap: 4px; }
+  .sr-text { font-size: 16px; font-weight: 500; line-height: 24px; }
+  .sr-author { display: flex; align-items: center; gap: 12px; }
+  .sr-author__avatar {
+    width: 46px; height: 46px;
+    border-radius: 4px; object-fit: cover; flex-shrink: 0;
+  }
+  .sr-author__avatar--placeholder {
+    width: 46px; height: 46px;
+    border-radius: 4px; flex-shrink: 0;
+  }
+  .sr-author__info { display: flex; flex-direction: column; gap: 2px; }
+  .sr-author__name { font-size: 16px; font-weight: 500; line-height: 24px; }
+  .sr-verified-mobile { display: none; }
+  .sr-verified-desktop { display: inline-flex; }
+  .sr-verified {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 14px; font-weight: 500; line-height: 20px;
+  }
+  @media (max-width: 767px) {
+    [section-id="{{ sectionId }}"].section-star-reviews {
+      padding: 0 16px 24px;
+    }
+    .sr-title {
+      font-size: 20px;
+      line-height: 28px;
+      margin: 0 0 16px;
+      text-align: center;
+    }
+    .sr-desktop { display: none !important; }
+    .sr-mobile {
+      display: flex !important;
+      flex-direction: column;
+      gap: 16px;
+      width: 100%;
+      max-width: 358px;
+      margin: 0 auto;
+    }
+    .sr-mobile__row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 8px;
+      width: 100%;
+    }
+    .sr-card {
+      min-width: 0;
+      min-height: 231px;
+      padding: 12px;
+      gap: 24px;
+      border-radius: 4px;
+    }
+    .sr-card__body { gap: 8px; }
+    .sr-verified-mobile {
+      display: inline-flex;
+      width: fit-content;
+    }
+    .sr-verified-desktop { display: none; }
+    .sr-card--image {
+      min-height: 358px;
+      padding: 24px;
+      border-radius: 4px;
+    }
+    .sr-card--mobile-image { aspect-ratio: 358 / 358; }
+    .sr-card--image .sr-card__content { gap: 28px; }
+    .sr-card--image .sr-card__body { gap: 8px; }
+    .sr-stars svg { width: 18px; height: 18px; }
+    .sr-text {
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 20px;
+      overflow-wrap: anywhere;
+    }
+    .sr-author { gap: 8px; }
+    .sr-author__avatar,
+    .sr-author__avatar--placeholder { width: 32px; height: 32px; }
+    .sr-author__name { font-size: 14px; line-height: 20px; }
+    .sr-verified { font-size: 13px; line-height: 18px; }
+    .sr-verified svg { width: 14px; height: 14px; }
+  }
+</style>

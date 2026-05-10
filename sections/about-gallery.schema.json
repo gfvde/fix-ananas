@@ -1,0 +1,98 @@
+{
+  "template": "sections/about-gallery.jinja",
+  "name": {
+    "ar": "معرض الصور والفيديو",
+    "en": "Media Gallery"
+  },
+  "settings": [
+    {
+      "id": "title",
+      "type": "text",
+      "label": {
+        "ar": "العنوان",
+        "en": "Title"
+      },
+      "default": "لحظات من عالم أناناس"
+    },
+    {
+      "id": "subtitle",
+      "type": "text",
+      "label": {
+        "ar": "العنوان الفرعي",
+        "en": "Subtitle"
+      },
+      "default": "قهوة مو بس تُشرب… تنعاش"
+    },
+    {
+      "id": "title_color",
+      "type": "color",
+      "label": {
+        "ar": "لون العنوان",
+        "en": "Title Color"
+      },
+      "default": "#000000"
+    },
+    {
+      "id": "subtitle_color",
+      "type": "color",
+      "label": {
+        "ar": "لون الوصف",
+        "en": "Subtitle Color"
+      },
+      "default": "#000000"
+    },
+    {
+      "id": "border_radius",
+      "type": "range",
+      "label": {
+        "ar": "انحناء الحواف (Border Radius)",
+        "en": "Border Radius"
+      },
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "default": 8,
+      "unit": "px"
+    },
+    {
+      "id": "media_items",
+      "type": "list",
+      "label": {
+        "ar": "الوسائط",
+        "en": "Media Items"
+      },
+      "settings": [
+        {
+          "id": "image",
+          "type": "image",
+          "label": {
+            "ar": "الصورة",
+            "en": "Image"
+          }
+        },
+        {
+          "id": "video",
+          "type": "video",
+          "label": {
+            "ar": "الفيديو (اختياري)",
+            "en": "Video (Optional)"
+          },
+          "info": {
+            "ar": "سيتم عرضه بدلاً من الصورة عند الإضافة",
+            "en": "Will be shown instead of the image when added"
+          }
+        }
+      ],
+      "default": []
+    },
+    {
+      "id": "remove_bottom_margin",
+      "type": "checkbox",
+      "label": {
+        "ar": "إزالة المسافة السفلية",
+        "en": "Remove Bottom Margin"
+      },
+      "default": false
+    }
+  ]
+}

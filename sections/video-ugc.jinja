@@ -1,0 +1,294 @@
+{% set title_color = settings.title_color | default('#000000') %}
+{% set subtitle_color = settings.subtitle_color | default('#000000') %}
+{% set border_radius = settings.border_radius | default(12) %}
+{% set videos_list = safeget(settings, "videos", []) %}
+
+{% if not videos_list or videos_list | length == 0 %}
+  {% set videos_list = [
+    {'thumbnail': '', 'video': ''},
+    {'thumbnail': '', 'video': ''},
+    {'thumbnail': '', 'video': ''},
+    {'thumbnail': '', 'video': ''},
+    {'thumbnail': '', 'video': ''}
+  ] %}
+{% endif %}
+
+<section section-id="{{ sectionId }}"
+  data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}" class="section-video-ugc bg-white" dir="rtl">
+
+  {# Header #}
+  <div class="video-ugc__header">
+    <h2 class="video-ugc__title" style="color: {{ title_color }};">
+      {{ settings.title | default(_('Ananas in every shot')) }}
+    </h2>
+    <p class="video-ugc__subtitle" style="color: {{ subtitle_color }};">
+      {{ settings.subtitle | default(_('Coffee details as they are, from its look to its grind to the first sip')) }}
+    </p>
+  </div>
+
+  {# Desktop: 5 videos side by side #}
+  <div class="video-ugc__grid--desktop">
+    {% for i in range(5) %}
+      {% if videos_list | length > i %}
+        {% set vid = videos_list[i] %}
+        <div class="video-ugc__card" style="border-radius: {{ border_radius }}px;"
+             data-video-url="{{ vid.video | default('') }}">
+          <div class="video-ugc__thumb">
+            {% if vid.thumbnail %}
+              <img src="{{ image_url(vid.thumbnail, w=320, f='auto') }}" alt="" class="video-ugc__thumb-img" />
+            {% else %}
+              <div class="video-ugc__thumb-placeholder"></div>
+            {% endif %}
+            {% if vid.video %}
+              <button class="video-ugc__play-btn" aria-label="{{ _('Play video') }}">
+                <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" width="56" height="56">
+                  <circle cx="28" cy="28" r="28" fill="rgba(0,0,0,0.45)"/>
+                  <path d="M23 18L38 28L23 38V18Z" fill="white"/>
+                </svg>
+              </button>
+            {% endif %}
+          </div>
+          <div class="video-ugc__player" style="display:none; border-radius: {{ border_radius }}px;"></div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  {# Mobile: Slider showing 2 at a time #}
+  <div class="video-ugc__slider--mobile" data-carousel>
+    <div class="overflow-hidden" data-carousel-viewport>
+      <div class="flex gap-3">
+        {% for i in range(videos_list | length) %}
+          {% set vid = videos_list[i] %}
+          <div class="embla__slide video-ugc__slide-mobile"
+               data-video-url="{{ vid.video | default('') }}">
+            <div class="video-ugc__card" style="border-radius: {{ border_radius }}px;">
+              <div class="video-ugc__thumb">
+                {% if vid.thumbnail %}
+                  <img src="{{ image_url(vid.thumbnail, w=200, f='auto') }}" alt="" class="video-ugc__thumb-img" />
+                {% else %}
+                  <div class="video-ugc__thumb-placeholder"></div>
+                {% endif %}
+                {% if vid.video %}
+                  <button class="video-ugc__play-btn" aria-label="{{ _('Play video') }}">
+                    <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+                      <circle cx="28" cy="28" r="28" fill="rgba(0,0,0,0.45)"/>
+                      <path d="M23 18L38 28L23 38V18Z" fill="white"/>
+                    </svg>
+                  </button>
+                {% endif %}
+              </div>
+              <div class="video-ugc__player" style="display:none; border-radius: {{ border_radius }}px;"></div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    {# Progress bar #}
+    <div class="video-ugc__progress-wrap">
+      <div class="video-ugc__progress-track">
+        <div class="video-ugc__progress-fill" data-carousel-progress></div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<style>
+  [section-id="{{ sectionId }}"].section-video-ugc {
+    padding: 24px 56px 48px;
+    direction: rtl;
+    background: #fff;
+  }
+  .video-ugc__header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .video-ugc__title {
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin: 0;
+  }
+  .video-ugc__subtitle {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    margin: 0;
+  }
+  /* Desktop Grid */
+  .video-ugc__grid--desktop {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: stretch;
+  }
+  .video-ugc__grid--desktop .video-ugc__card {
+    flex: 1;
+    min-width: 0;
+    aspect-ratio: 9 / 16;
+  }
+  .video-ugc__slider--mobile { display: none; }
+
+  /* Card base */
+  .video-ugc__card {
+    position: relative;
+    overflow: hidden;
+    background: #e5e5e5;
+  }
+  .video-ugc__thumb,
+  .video-ugc__player {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .video-ugc__thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .video-ugc__thumb-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #e8e0d8 0%, #d4c9be 100%);
+  }
+  .video-ugc__play-btn {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.2s;
+  }
+  .video-ugc__play-btn:hover {
+    background: rgba(0,0,0,0.08);
+  }
+  .video-ugc__play-btn svg {
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+  .video-ugc__play-btn:hover svg { transform: scale(1.1); }
+  .video-ugc__player iframe,
+  .video-ugc__player video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Progress bar */
+  .video-ugc__progress-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+  }
+  .video-ugc__progress-track {
+    width: 180px;
+    height: 2px;
+    background: #E5E5E5;
+    overflow: hidden;
+    border-radius: 999px;
+    display: flex;
+    flex-direction: row-reverse;
+  }
+  .video-ugc__progress-fill {
+    height: 100%;
+    background: #737373;
+    transition: width 0.3s ease;
+  }
+
+  /* Mobile */
+  @media (max-width: 767px) {
+    .video-ugc__header {
+      align-items: center;
+    }
+    [section-id="{{ sectionId }}"].section-video-ugc {
+      padding: 16px 16px 0px;
+    }
+    .video-ugc__title { font-size: 22px; }
+    .video-ugc__subtitle { font-size: 14px; }
+    .video-ugc__grid--desktop { display: none !important; }
+    .video-ugc__slider--mobile { display: block; }
+    .video-ugc__slide-mobile {
+      flex: 0 0 calc(50% - 6px);
+      min-width: 0;
+    }
+    .video-ugc__slide-mobile .video-ugc__card {
+      aspect-ratio: 9 / 16;
+      width: 100%;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    function initVideoUGC(section) {
+      var cards = section.querySelectorAll('.video-ugc__card');
+      cards.forEach(function(card) {
+        var btn = card.querySelector('.video-ugc__play-btn');
+        if (!btn) return;
+
+        // Get the video URL from the closest slide or card container
+        var container = card.closest('[data-video-url]') || card;
+        var url = container.getAttribute('data-video-url') || '';
+        if (!url) url = card.getAttribute('data-video-url') || '';
+
+        btn.addEventListener('click', function() {
+          var thumb = card.querySelector('.video-ugc__thumb');
+          var player = card.querySelector('.video-ugc__player');
+          if (!thumb || !player || !url) return;
+
+          var existingVideo = player.querySelector('video');
+          if (existingVideo) {
+            if (existingVideo.paused) {
+              existingVideo.play();
+              btn.style.opacity = '0';
+            } else {
+              existingVideo.pause();
+              btn.style.opacity = '1';
+            }
+            return;
+          }
+
+          thumb.style.display = 'none';
+          player.style.display = 'block';
+          btn.style.opacity = '0';
+          player.innerHTML = '<video src="' + url + '" autoplay playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>';
+
+          var video = player.querySelector('video');
+          video.addEventListener('pause', function() { btn.style.opacity = '1'; });
+          video.addEventListener('play',  function() { btn.style.opacity = '0'; });
+          video.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (video.paused) { video.play(); } else { video.pause(); }
+          });
+        });
+      });
+    }
+
+    function tryInit() {
+      var sections = document.querySelectorAll('.section-video-ugc');
+      sections.forEach(initVideoUGC);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', tryInit);
+    } else {
+      tryInit();
+    }
+  })();
+</script>

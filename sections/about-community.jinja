@@ -1,0 +1,314 @@
+{% set section_bg_color = settings.section_bg_color | default('#FFF0EC') %}
+{% set title_color = settings.title_color | default('#F7512B') %}
+{% set lead_color = settings.lead_color | default('#000000') %}
+{% set body_color = settings.body_color | default('#000000') %}
+{% set cta_text_color = settings.cta_text_color | default('#000000') %}
+{% set cta_bg_color = settings.cta_bg_color | default(section_bg_color) %}
+{% set cta_border_color = settings.cta_border_color | default('#000000') %}
+{% set cta_text = settings.cta_text | default('تعرّف على عالم أناناس') %}
+{% set media_type = settings.media_type | default('image') %}
+{% set mobile_media_position = settings.mobile_media_position | default('after') %}
+
+{% macro community_media(is_mobile=false) %}
+  <div class="{% if is_mobile %}ac-mobile__media{% else %}ac-media{% endif %}">
+    {% if media_type == 'video' and settings.video %}
+      <button class="ac-video" type="button" aria-label="{{ _('Play video') }}" data-ac-video-trigger>
+        <video class="ac-video__player" playsinline preload="metadata" {% if settings.poster_image or settings.photo %}poster="{{ image_url(settings.poster_image if settings.poster_image else settings.photo, w=1440, f='auto') }}"{% endif %}>
+          <source src="{{ settings.video }}" type="video/mp4">
+        </video>
+        <span class="ac-video__overlay" data-ac-video-overlay>
+          <span class="ac-video__play">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 5V19L19 12L8 5Z" fill="currentColor"/>
+            </svg>
+          </span>
+        </span>
+      </button>
+    {% else %}
+      <div class="ac-image">
+        <img src="{{ image_url(settings.photo, w=1440, f='auto') if settings.photo else 'https://www.figma.com/api/mcp/asset/67196906-4176-4917-a681-116ad5548b06' }}" alt="{{ settings.image_alt | default('') }}" loading="lazy">
+      </div>
+    {% endif %}
+  </div>
+{% endmacro %}
+
+{% macro community_content(is_mobile=false) %}
+  <div class="{% if is_mobile %}ac-mobile__text{% else %}ac-text{% endif %}">
+    <div class="ac-text__inner">
+      <h2 class="ac-title">{{ settings.title | default('مجتمع أناناس') }}</h2>
+      <p class="ac-body ac-body--lead">
+        {{ settings.body1 | default('في أناناس، التجربة أكبر من كوب قهوة.') }}<br>
+        {{ settings.body2 | default('هي لحظات تعيشها وتفاصيل تختارها تعبّر عنك') }}
+      </p>
+      <p class="ac-body ac-body--normal">
+        {% if is_mobile and (settings.body3_mobile or settings.body4_mobile or settings.body5_mobile) %}
+          {{ settings.body3_mobile | default('من القهوة إلى كل ما يحيط يومك،') }}<br>
+          {{ settings.body4_mobile | default('نصمم تجربة تجمع ناس يشاركون نفس الذوق.') }}<br>
+          {{ settings.body5_mobile | default('أناناس… مجتمع تعيش فيه القهوة بأسلوبك.') }}
+        {% else %}
+          {{ settings.body3 | default('من القهوة إلى كل ما يحيط يومك، نصمم تجربة تجمع ناس يشاركون نفس الذوق. أناناس… مجتمع تعيش فيه القهوة بأسلوبك.') }}
+        {% endif %}
+      </p>
+    </div>
+    {% if cta_text %}
+      <a href="{{ settings.cta_url | default('/pages/about') }}" class="ac-cta">
+        {{ cta_text }}
+      </a>
+    {% endif %}
+  </div>
+{% endmacro %}
+
+<section
+  section-id="{{ sectionId }}"
+  data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
+  class="section-about-community"
+  dir="rtl"
+  style="
+    --ac-section-bg: {{ section_bg_color }};
+    --ac-title-color: {{ title_color }};
+    --ac-lead-color: {{ lead_color }};
+    --ac-body-color: {{ body_color }};
+    --ac-cta-text: {{ cta_text_color }};
+    --ac-cta-bg: {{ cta_bg_color }};
+    --ac-cta-border: {{ cta_border_color }};
+  "
+>
+
+  <div class="ac-desktop">
+    {{ community_content(false) }}
+    {{ community_media(false) }}
+  </div>
+
+  <div class="ac-mobile ac-mobile--media-{{ mobile_media_position }}">
+    {% if mobile_media_position == 'before' %}
+      {{ community_media(true) }}
+      {{ community_content(true) }}
+    {% else %}
+      {{ community_content(true) }}
+      {{ community_media(true) }}
+    {% endif %}
+  </div>
+
+</section>
+
+<script>
+(function() {
+  var section = document.querySelector('[section-id="{{ sectionId }}"].section-about-community');
+  if (!section) return;
+
+  section.querySelectorAll('[data-ac-video-trigger]').forEach(function(trigger) {
+    var video = trigger.querySelector('video');
+    var overlay = trigger.querySelector('[data-ac-video-overlay]');
+    if (!video) return;
+
+    trigger.addEventListener('click', function() {
+      if (video.paused) {
+        video.play();
+        trigger.classList.add('ac-video--playing');
+        if (overlay) overlay.style.opacity = '0';
+      } else {
+        video.pause();
+        trigger.classList.remove('ac-video--playing');
+        if (overlay) overlay.style.opacity = '1';
+      }
+    });
+
+    video.addEventListener('ended', function() {
+      trigger.classList.remove('ac-video--playing');
+      if (overlay) overlay.style.opacity = '1';
+    });
+  });
+})();
+</script>
+
+<style>
+  [section-id="{{ sectionId }}"].section-about-community {
+    background: var(--ac-section-bg, #FFF0EC);
+    direction: rtl;
+  }
+
+  .ac-desktop {
+    display: flex;
+    align-items: stretch;
+    flex-direction: row-reverse;
+    min-height: 400px;
+  }
+
+  .ac-text {
+    flex: 1 1 50%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding: 48px 56px;
+    align-items: flex-start;
+  }
+
+  .ac-text__inner {
+    width: 100%;
+    max-width: 502px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .ac-title {
+    width: 100%;
+    margin: 0;
+    color: var(--ac-title-color, #F7512B);
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 36px;
+    text-align: start;
+  }
+
+  .ac-body {
+    max-width: 502px;
+    margin: 0;
+    font-size: 18px;
+    line-height: 28px;
+    text-align: right;
+  }
+
+  .ac-body--lead {
+    color: var(--ac-lead-color, #000);
+    font-weight: 500;
+  }
+
+  .ac-body--normal {
+    color: var(--ac-body-color, #000);
+    font-weight: 400;
+  }
+
+  .ac-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    border: 1px solid var(--ac-cta-border, #000);
+    background: var(--ac-cta-bg, var(--ac-section-bg, #FFF0EC));
+    padding: 8px 16px;
+    color: var(--ac-cta-text, #000);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+
+  .ac-cta:hover {
+    transform: translateY(-1px);
+  }
+
+  .ac-media {
+    flex: 1 1 50%;
+    min-width: 0;
+    position: relative;
+    min-height: 504px;
+  }
+
+  .ac-image,
+  .ac-video {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 504px;
+    overflow: hidden;
+    border: 0;
+    padding: 0;
+    background: #111;
+  }
+
+  .ac-image img,
+  .ac-video__player {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ac-video {
+    cursor: pointer;
+  }
+
+  .ac-video__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.18);
+    transition: opacity 0.25s ease;
+  }
+
+  .ac-video__play {
+    width: 64px;
+    height: 64px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #111;
+    background: rgba(255, 255, 255, 0.86);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  }
+
+  .ac-mobile {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    .ac-desktop {
+      display: none;
+    }
+
+    .ac-mobile {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 24px 16px 16px;
+    }
+
+    .ac-mobile__text {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .ac-mobile__text .ac-text__inner {
+      max-width: 100%;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ac-mobile__text .ac-title {
+      font-size: 20px;
+      line-height: 28px;
+      text-align: center;
+    }
+
+    .ac-mobile__text .ac-body {
+      max-width: 100%;
+      font-size: 16px;
+      line-height: 24px;
+      text-align: center;
+    }
+
+    .ac-mobile__media {
+      width: 100%;
+    }
+
+    .ac-mobile__media .ac-image,
+    .ac-mobile__media .ac-video {
+      width: 100%;
+      min-height: 0;
+      aspect-ratio: 1 / 1;
+    }
+  }
+</style>

@@ -1,0 +1,376 @@
+{% set section_bg_color = settings.section_bg_color | default('#ffffff') %}
+{% set title_color = settings.title_color | default('#000000') %}
+{% set card_text_color = settings.card_text_color | default('#ffffff') %}
+{% set hover_text = settings.hover_text | default('VIEW THE COLLECTION') %}
+{% set hover_text_color = settings.hover_text_color | default('#ffffff') %}
+{% set mobile_text_color = settings.mobile_text_color | default('#000000') %}
+{% set overlay_color = settings.overlay_color | default('#000000') %}
+{% set overlay_opacity = settings.overlay_opacity | default(22) %}
+{% set mobile_overlay_bg_color = settings.mobile_overlay_bg_color | default('#ffffff') %}
+{% set mobile_layout = settings.mobile_layout | default('caption') %}
+{% set scroll_effect_enabled = settings.scroll_effect_enabled | default(false) %}
+{% set scroll_effect_strength = settings.scroll_effect_strength | default(18) %}
+
+<section
+  section-id="{{ sectionId }}"
+  data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
+  class="shop-by-category"
+  data-mobile-layout="{{ mobile_layout }}"
+  data-scroll-effect="{{ 'true' if scroll_effect_enabled else 'false' }}"
+  data-scroll-strength="{{ scroll_effect_strength }}"
+  style="
+    --sbc-bg: {{ section_bg_color }};
+    --sbc-title-color: {{ title_color }};
+    --sbc-card-text: {{ card_text_color }};
+    --sbc-hover-text: {{ hover_text_color }};
+    --sbc-mobile-text: {{ mobile_text_color }};
+    --sbc-overlay: {{ overlay_color }};
+    --sbc-overlay-opacity: {{ overlay_opacity / 100 }};
+    --sbc-mobile-overlay-bg: {{ mobile_overlay_bg_color }};
+  "
+>
+  <h2 class="shop-by-category__title">{{ settings.title | default('تسوّق حسب اختيارك') }}</h2>
+  <div class="sbc-grid">
+
+    {% set cats = [
+      { 'name': settings.cat1_name | default('أظرف القهوه'),   'url': settings.cat1_url | default('/collections/coffee-pods', true),    'img': settings.cat1_img, 'text_color': settings.cat1_text_color | default(card_text_color), 'fallback': 'https://www.figma.com/api/mcp/asset/07ccbeb4-7443-457e-accb-24075653cc69' },
+      { 'name': settings.cat2_name | default('محاصيل القهوه'), 'url': settings.cat2_url | default('/collections/coffee-origins', true),  'img': settings.cat2_img, 'text_color': settings.cat2_text_color | default(card_text_color), 'fallback': 'https://www.figma.com/api/mcp/asset/269f6b46-e012-4914-86b8-25f100f60a55' },
+      { 'name': settings.cat3_name | default('البكجــات'),     'url': settings.cat3_url | default('/collections/bundles', true),         'img': settings.cat3_img, 'text_color': settings.cat3_text_color | default(card_text_color), 'fallback': 'https://www.figma.com/api/mcp/asset/8ba664c6-8816-44d7-b424-c7ead398f29e' },
+      { 'name': settings.cat4_name | default('عروض الربيع'),   'url': settings.cat4_url | default('/collections/spring-offers', true),   'img': settings.cat4_img, 'text_color': settings.cat4_text_color | default(card_text_color), 'fallback': 'https://www.figma.com/api/mcp/asset/772d1ccf-fe08-4145-b952-10652d047a23' },
+      { 'name': settings.cat5_name | default('منتجات أناناس'), 'url': settings.cat5_url | default('/collections/ananas-products', true), 'img': settings.cat5_img, 'text_color': settings.cat5_text_color | default(card_text_color), 'fallback': 'https://www.figma.com/api/mcp/asset/3b01f2d6-1d92-48a4-8702-5c40e028923d' },
+      { 'name': settings.cat6_name | default('أدوات القهوة'),  'url': settings.cat6_url | default('/collections/coffee-tools', true),    'img': settings.cat6_img, 'text_color': settings.cat6_text_color | default(card_text_color), 'fallback': 'https://www.figma.com/api/mcp/asset/4f2427fb-b089-4775-932a-70029652fae9' }
+    ] %}
+
+    {% for cat in cats %}
+      <div class="category-card" style="--sbc-item-text: {{ cat.text_color }};">
+        <a href="{{ cat.url }}" class="category-card__media" aria-label="{{ cat.name }}" data-sbc-parallax-card>
+          <img
+            src="{{ image_url(cat.img, w=900, f='auto') if cat.img else cat.fallback }}"
+            alt="{{ cat.name }}"
+            loading="lazy"
+            data-sbc-parallax-img
+          />
+          <span class="category-card__name">{{ cat.name }}</span>
+          {% if hover_text %}
+            <span class="category-card__hover-cta">
+              <span>{{ hover_text }}</span>
+              <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+                <path d="M5.625 3.125L10 7.5L5.625 11.875" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          {% endif %}
+        </a>
+        <a href="{{ cat.url }}" class="category-card__mobile-name">{{ cat.name }}</a>
+      </div>
+    {% endfor %}
+
+  </div>
+</section>
+
+<style>
+  [section-id="{{ sectionId }}"].shop-by-category {
+    background: var(--sbc-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 56px;
+    direction: rtl;
+  }
+
+  [section-id="{{ sectionId }}"] .shop-by-category__title {
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--sbc-title-color);
+    line-height: 36px;
+    text-align: right;
+    margin: 0;
+    width: 100%;
+  }
+
+  [section-id="{{ sectionId }}"] .sbc-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  [section-id="{{ sectionId }}"] .category-card {
+    position: relative;
+    display: block;
+    color: inherit;
+  }
+
+  [section-id="{{ sectionId }}"] .category-card__media {
+    position: relative;
+    display: block;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #f5f2ed;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  [section-id="{{ sectionId }}"] .category-card__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--sbc-overlay);
+    opacity: var(--sbc-overlay-opacity);
+    z-index: 1;
+  }
+
+  [section-id="{{ sectionId }}"] .category-card img {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -8%;
+    width: 100%;
+    height: 116%;
+    object-fit: cover;
+    transform: translate3d(0, var(--sbc-parallax-y, 0px), 0);
+    transition: transform 160ms linear;
+    will-change: transform;
+  }
+
+  [section-id="{{ sectionId }}"][data-scroll-effect="false"] .category-card img,
+  [section-id="{{ sectionId }}"][data-scroll-effect="false"] .category-card:hover img {
+    height: 100%;
+    top: 0;
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [section-id="{{ sectionId }}"] .category-card img,
+    [section-id="{{ sectionId }}"] .category-card:hover img {
+      height: 100%;
+      top: 0;
+      transform: none;
+      transition: none;
+      will-change: auto;
+    }
+  }
+
+  [section-id="{{ sectionId }}"] .category-card__name {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--sbc-item-text, var(--sbc-card-text));
+    line-height: 32px;
+  }
+
+  [section-id="{{ sectionId }}"] .category-card__hover-cta {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    color: var(--sbc-hover-text);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    white-space: nowrap;
+    direction: ltr;
+    opacity: 0;
+    transform: translate(-50%, 8px);
+    transition: opacity 180ms ease, transform 180ms ease;
+  }
+
+  [section-id="{{ sectionId }}"] .category-card__hover-cta svg {
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+  }
+
+  [section-id="{{ sectionId }}"] .category-card:hover .category-card__hover-cta,
+  [section-id="{{ sectionId }}"] .category-card:focus-within .category-card__hover-cta {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  [section-id="{{ sectionId }}"] .category-card__mobile-name { display: none; }
+
+  @media (max-width: 767px) {
+    [section-id="{{ sectionId }}"].shop-by-category {
+      gap: 16px;
+      padding: 0 16px;
+    }
+
+    [section-id="{{ sectionId }}"] .shop-by-category__title {
+      font-size: 24px;
+      line-height: 32px;
+      text-align: center;
+      margin: 0;
+    }
+
+    [section-id="{{ sectionId }}"] .sbc-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      column-gap: 8px;
+      row-gap: 16px;
+    }
+
+    [section-id="{{ sectionId }}"] .category-card__media {
+      display: block !important;
+      width: 100%;
+      height: calc((100vw - 48px) / 3);
+      min-height: 96px;
+      max-height: 150px;
+      aspect-ratio: 1 / 1;
+      flex: 0 0 auto;
+      overflow: hidden;
+      background: #f5f2ed;
+    }
+
+    [section-id="{{ sectionId }}"] .category-card img {
+      display: block !important;
+      width: 100%;
+      height: 100%;
+      inset: 0;
+      object-fit: cover;
+      opacity: 1;
+      visibility: visible;
+    }
+
+    [section-id="{{ sectionId }}"] .category-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    [section-id="{{ sectionId }}"] .category-card__media::after,
+    [section-id="{{ sectionId }}"] .category-card__name,
+    [section-id="{{ sectionId }}"] .category-card__hover-cta {
+      display: none;
+    }
+
+    [section-id="{{ sectionId }}"] .category-card__mobile-name {
+      display: block;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--sbc-mobile-text);
+      line-height: 24px;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    [section-id="{{ sectionId }}"][data-mobile-layout="overlay"] .sbc-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    [section-id="{{ sectionId }}"][data-mobile-layout="overlay"] .category-card__media {
+      height: calc((100vw - 40px) / 2);
+      min-height: 160px;
+      max-height: 240px;
+    }
+
+    [section-id="{{ sectionId }}"][data-mobile-layout="overlay"] {
+      background: var(--sbc-mobile-overlay-bg);
+      padding: 0 16px;
+    }
+
+    [section-id="{{ sectionId }}"][data-mobile-layout="overlay"] .shop-by-category__title {
+      display: block;
+      color: var(--sbc-title-color);
+      margin: 0;
+    }
+
+    [section-id="{{ sectionId }}"][data-mobile-layout="overlay"] .category-card {
+      gap: 0;
+    }
+
+    [section-id="{{ sectionId }}"][data-mobile-layout="overlay"] .category-card__media::after,
+    [section-id="{{ sectionId }}"][data-mobile-layout="overlay"] .category-card__name {
+      display: flex;
+    }
+
+    [section-id="{{ sectionId }}"][data-mobile-layout="overlay"] .category-card__name {
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 28px;
+      padding: 0 8px;
+      color: var(--sbc-item-text, #ffffff);
+    }
+
+    [section-id="{{ sectionId }}"][data-mobile-layout="overlay"] .category-card__mobile-name {
+      display: none;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    [section-id="{{ sectionId }}"].shop-by-category {
+      padding: 32px 24px 24px;
+    }
+
+    [section-id="{{ sectionId }}"] .sbc-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    [section-id="{{ sectionId }}"] .category-card__name {
+      font-size: 20px;
+      line-height: 28px;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    var section = document.querySelector('[section-id="{{ sectionId }}"].shop-by-category');
+    if (!section || section.dataset.scrollEffect !== 'true') return;
+    if (section.dataset.sbcParallaxBound === 'true') return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    section.dataset.sbcParallaxBound = 'true';
+
+    var cards = Array.prototype.slice.call(section.querySelectorAll('[data-sbc-parallax-card]'));
+    var strength = parseFloat(section.dataset.scrollStrength || '18');
+    var ticking = false;
+
+    function update() {
+      var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
+      cards.forEach(function (card) {
+        var img = card.querySelector('[data-sbc-parallax-img]');
+        if (!img) return;
+
+        var rect = card.getBoundingClientRect();
+        if (rect.bottom < -120 || rect.top > viewportHeight + 120) return;
+
+        var cardCenter = rect.top + rect.height / 2;
+        var progress = (cardCenter - viewportHeight / 2) / (viewportHeight / 2 + rect.height / 2);
+        var clamped = Math.max(-1, Math.min(1, progress));
+        var y = clamped * strength * -1;
+
+        img.style.setProperty('--sbc-parallax-y', y.toFixed(2) + 'px');
+      });
+
+      ticking = false;
+    }
+
+    function requestUpdate() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(update);
+    }
+
+    update();
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate);
+    document.addEventListener('theme:resize', requestUpdate);
+  })();
+</script>

@@ -1,0 +1,100 @@
+{% set mobile_image = image_url(settings.background_image_mobile or settings.background_image, w=768, q=75, f='auto') %}
+{% set desktop_image = image_url(settings.background_image, w=1920, q=90, f='auto') %}
+
+<section
+  section-id="{{ sectionId }}"
+  data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
+  class="section-home-banner relative flex min-h-[500px] items-center overflow-hidden px-4 md:px-16 md:min-h-[468px] animate-fade-in"
+>
+  {# Background image #}
+  <div class="absolute inset-0 -z-10">
+    <picture>
+      <source media="(min-width: 768px)" srcset="{{ desktop_image }}" />
+      <img
+        src="{{ mobile_image }}"
+        alt="{{ settings.heading | default('') }}"
+        class="h-full w-full object-cover"
+        fetchpriority="high"
+      />
+    </picture>
+    <div
+      class="absolute inset-0 bg-black"
+      style="opacity: {{ settings.overlay_opacity | default(30) / 100 }}"
+    ></div>
+  </div>
+
+  <div class="theme-container w-full">
+    <div class="flex flex-col gap-6 items-center md:items-start">
+      
+      {# Text Content - Reordered to Top #}
+      <div class="flex max-w-[600px] flex-col gap-2 text-center md:text-right">
+        <h1 class="text-white text-4xl md:text-5xl font-black leading-tight tracking-tight">
+          {{ settings.heading }}
+        </h1>
+        <p class="text-white/80 text-lg md:text-xl font-medium">
+          {{ settings.description }}
+        </p>
+      </div>
+
+      {# Rating & Avatars Row - Reordered to Middle #}
+      <div class="flex flex-wrap items-center justify-center gap-4 py-2 px-6 rounded-full bg-white/5 backdrop-blur-md border border-white/10 md:flex-row-reverse md:justify-start">
+        <div class="flex items-center gap-2">
+          <span class="text-white font-bold text-sm">({{ settings.rating_value | default('4.8') }})</span>
+          {% set rating = settings.rating_stars | default(4.8) %}
+          {% set size = 18 %}
+          <div class="text-[#FFB800]">
+             {% include 'components/rating-stars.jinja' %}
+          </div>
+        </div>
+        
+        <div class="flex -space-x-2 rtl:space-x-reverse items-center border-r border-white/20 pr-4">
+          {% if settings.avatars and (settings.avatars | length > 0) %}
+            {% for item in settings.avatars %}
+              <img src="{{ image_url(item.image, w=32, h=32, f='auto') }}" class="h-8 w-8 rounded-full border-2 border-white/20 object-cover" alt="" />
+            {% endfor %}
+          {% else %}
+            <img src="https://i.pravatar.cc/100?u=1" class="h-8 w-8 rounded-full border-2 border-white/20 object-cover" alt="" />
+            <img src="https://i.pravatar.cc/100?u=2" class="h-8 w-8 rounded-full border-2 border-white/20 object-cover" alt="" />
+            <img src="https://i.pravatar.cc/100?u=3" class="h-8 w-8 rounded-full border-2 border-white/20 object-cover" alt="" />
+          {% endif %}
+        </div>
+      </div>
+
+      {# CTA Button - Reordered to Bottom #}
+      {% if settings.button_text %}
+        <div class="mt-2">
+          <a
+            href="{{ settings.button_url | default('#') }}"
+            class="banner-ghost-btn group relative block px-12 py-3.5 text-lg font-bold text-white transition-all border border-white/60 hover:border-white text-center"
+          >
+            <span class="relative z-10">{{ settings.button_text }}</span>
+            <div class="absolute inset-0 bg-white opacity-0 transition-opacity group-hover:opacity-10"></div>
+          </a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <style>
+    .section-home-banner {
+      direction: rtl;
+    }
+    .banner-ghost-btn {
+      border-radius: 2px;
+      backdrop-filter: blur(8px);
+      min-width: 220px;
+    }
+    
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fade-in 0.8s ease-out forwards;
+    }
+
+    [section-id="{{ sectionId }}"] .text-warning {
+       color: #FFB800 !important;
+    }
+  </style>
+</section>

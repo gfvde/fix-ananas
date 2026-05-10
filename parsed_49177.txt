@@ -1,0 +1,658 @@
+  name: Untitled
+      name: Footer responsive
+      name: Property 1=Default
+      name: variant=16
+      name: Property 1=Default
+      name: proicons:tiktok
+      name: Property 1=Default
+      name: variant=14
+      name: Property 1=Default
+      name: devicon:twitter
+      name: Property 1=Default
+      name: iconoir:facebook
+      name: Property 1=Default
+      name: variant=17
+      name: variant=20
+      name: Payment icon
+      name: 366974 1
+      name: heroicons-outline-medium/globe-alt
+      name: variant=3,:hover=false
+      name: Component 10
+      name: Component 1
+      name: tiktok-icon
+      name: Component 8
+      name: twitter-icon
+      name: facebook-icon
+      name: Component 7
+      name: Component 4
+    name: Footer responsive
+    type: INSTANCE
+    fills: fill_JLVRA9
+        name: Coffee tecture photo
+        type: RECTANGLE
+        fills: fill_8KAJQ8
+        name: Frame 1984078677
+        type: FRAME
+            name: Frame 1
+            type: FRAME
+                name: Frame 1984078672
+                type: FRAME
+                    name: Frame 1984078686
+                    type: IMAGE-SVG
+                    name: مو بس قهوة، إحنا معك في يومك، من أول رشفة لين آخر كوب، في اناناس نحرص علي تقديم أفضل جودة بسعر مناسب، أناناس تجربة تعيشها
+                    type: TEXT
+                    text: مو بس قهوة، إحنا معك في يومك، من أول رشفة لين آخر كوب، في اناناس نحرص علي تقديم أفضل جودة بسعر مناسب، أناناس تجربة تعيشها
+                    fills: fill_E0DSTL
+                name: Frame 1984078673
+                type: IMAGE-SVG
+            name: Auto Layout Horizontal
+            type: FRAME
+                name: Frame 1000003345
+                type: FRAME
+                    name: Frame 2
+                    type: FRAME
+                        name: تسوّق معنا
+                        type: TEXT
+                        text: تسوّق معنا
+                        fills: fill_9BZEMS
+                        name: Frame 1
+                        type: FRAME
+                            name: الأسئلة الشائعة
+                            type: TEXT
+                            text: الأسئلة الشائعة
+                            fills: fill_9BZEMS
+                            name: طلبات الجملة
+                            type: TEXT
+                            text: طلبات الجملة
+                            fills: fill_9BZEMS
+                            name: طرق الشحن
+                            type: TEXT
+                            text: طرق الشحن
+                            fills: fill_9BZEMS
+                            name: الشحن والتوصيل
+                            type: TEXT
+                            text: الشحن والتوصيل
+                            fills: fill_9BZEMS
+                    name: Frame 5
+                    type: FRAME
+                        name: عن أناناس
+                        type: TEXT
+                        text: عن أناناس
+                        fills: fill_9BZEMS
+                        name: Frame 1
+                        type: FRAME
+                            name: من نحن
+                            type: TEXT
+                            text: من نحن
+                            fills: fill_9BZEMS
+                            name: سياسة الخصوصية
+                            type: TEXT
+                            text: سياسة الخصوصية
+                            fills: fill_9BZEMS
+                            name: سياسة الاستبدال والاسترجاع
+                            type: TEXT
+                            text: سياسة الاستبدال والاسترجاع
+                            fills: fill_9BZEMS
+                name: Frame 2
+                type: FRAME
+                    name: تواصل معنا
+                    type: TEXT
+                    text: تواصل معنا
+                    fills: fill_9BZEMS
+                    name: Frame 1
+                    type: FRAME
+                        name: للأسئلة والاستفسارات
+                        type: TEXT
+                        text: للأسئلة والاستفسارات
+                        fills: fill_9BZEMS
+                        name: '+966573863884'
+                        type: TEXT
+                        text: '{ts1}+966573863884{/ts1}'
+                        fills: fill_9BZEMS
+                        name: info@ananasroastery.com
+                        type: TEXT
+                        text: '{ts1}info@ananasroastery.com{/ts1}'
+                        fills: fill_9BZEMS
+            name: Frame 1000003196
+            type: FRAME
+                name: Container
+                type: FRAME
+                    name: Frame 1984078865
+                    type: FRAME
+                        name: Frame 1000003204
+                        type: FRAME
+                            name: Container
+                            type: FRAME
+                                name: Container
+                                type: FRAME
+                                    name: 'Strong → الرقم الضريبي:'
+                                    type: TEXT
+                                    text: رقم السجل التجاري
+                                    fills: fill_E0DSTL
+                                name: Container
+                                type: FRAME
+                                    name: '310756505900003'
+                                    type: TEXT
+                                    text: '310756505900003'
+                                    fills: fill_E0DSTL
+                            name: Group 50
+                            type: IMAGE-SVG
+                        name: Frame 1000003204
+                        type: FRAME
+                            name: Container
+                            type: FRAME
+                                name: Container
+                                type: FRAME
+                                    name: 'Strong → الرقم الضريبي:'
+                                    type: TEXT
+                                    text: شهادة توثيق التجارة الالكترونية
+                                    fills: fill_E0DSTL
+                                name: Container
+                                type: FRAME
+                                    name: '310756505900003'
+                                    type: TEXT
+                                    text: '310756505900003'
+                                    fills: fill_E0DSTL
+                            name: ChatGPT Image Sep 8, 2025, 04_24_58 PM 2
+                            type: RECTANGLE
+                            fills: fill_VLXJVE
+                        name: Frame 1000003204
+                        type: FRAME
+                            name: Container
+                            type: FRAME
+                                name: Container
+                                type: FRAME
+                                    name: 'Strong → الرقم الضريبي:'
+                                    type: TEXT
+                                    text: الرقم الضريبي
+                                    fills: fill_E0DSTL
+                                name: Container
+                                type: FRAME
+                                    name: '310756505900003'
+                                    type: TEXT
+                                    text: '310756505900003'
+                                    fills: fill_E0DSTL
+                            name: Link
+                            type: IMAGE-SVG
+                name: Frame 1984080339
+                type: FRAME
+                    name: Payment icon
+                    type: IMAGE-SVG
+                    name: Payment icon
+                    type: IMAGE-SVG
+                    name: Payment icon
+                    type: INSTANCE
+                    fills: fill_A7WF0G
+                        name: Vector
+                        type: IMAGE-SVG
+                        fills: fill_E0DSTL
+                        name: Vector
+                        type: IMAGE-SVG
+                        fills: fill_E0DSTL
+                        name: Vector
+                        type: IMAGE-SVG
+                        fills: fill_OS3SXU
+                    name: Payment icon
+                    type: IMAGE-SVG
+                    fills: fill_A7WF0G
+                    name: Payment icon
+                    type: FRAME
+                    fills: fill_A7WF0G
+                        name: Vector
+                        type: IMAGE-SVG
+                        fills: fill_JFYCDH
+                        name: 387896 2
+                        type: FRAME
+                        fills: fill_A7WF0G
+                            name: Group
+                            type: GROUP
+                                name: Group
+                                type: GROUP
+                                    name: Clip path group
+                                    type: GROUP
+                                        name: SVGID_00000134936358941834244940000008386517694490054558_
+                                        type: IMAGE-SVG
+                                        name: Group
+                                        type: GROUP
+                                            name: Group
+                                            type: GROUP
+                                                name: Clip path group
+                                                type: GROUP
+                                                    name: SVGID_00000127016127573742401520000003518098090288676483_
+                                                    type: IMAGE-SVG
+                                                    name: Group
+                                                    type: GROUP
+                                                        name: Rectangle
+                                                        type: RECTANGLE
+                                                        fills: fill_WY2M0D
+                            name: Group
+                            type: IMAGE-SVG
+                    name: Payment icon
+                    type: FRAME
+                        name: Vector
+                        type: IMAGE-SVG
+                        fills: fill_E0DSTL
+                        name: Vector
+                        type: IMAGE-SVG
+                        fills: fill_EWY7I9
+                    name: Payment icon
+                    type: FRAME
+                        name: Vector
+                        type: IMAGE-SVG
+                        fills: fill_E0DSTL
+                        name: Vector
+                        type: IMAGE-SVG
+                        fills: fill_XQVN80
+                    name: Payment icon
+                    type: FRAME
+                        name: Vector
+                        type: IMAGE-SVG
+                        fills: fill_E0DSTL
+                        name: Vector
+                        type: IMAGE-SVG
+                        fills: fill_RAAJDY
+                    name: Payment icon
+                    type: FRAME
+                        name: Vector
+                        type: IMAGE-SVG
+                        fills: fill_E0DSTL
+                        name: Vector
+                        type: IMAGE-SVG
+                        fills: fill_O7G4KO
+                    name: 366974 1
+                    type: IMAGE-SVG
+                    fills: fill_E0DSTL
+        name: Container
+        type: FRAME
+            name: List
+            type: FRAME
+                name: Frame 1984078672
+                type: FRAME
+                    name: heroicons-outline-medium/globe-alt
+                    type: IMAGE-SVG
+                    name: Component 4
+                    type: FRAME
+                        name: Text
+                        type: TEXT
+                        text: Eg
+                        fills: fill_E0DSTL
+                name: Item
+                type: FRAME
+                    name: Component 4
+                    type: INSTANCE
+                        name: Text
+                        type: TEXT
+                        text: English
+                        fills: fill_E0DSTL
+                          text: Text
+        name: Frame 1984078678
+        type: FRAME
+            name: Line 101
+            type: IMAGE-SVG
+            name: Frame 1000003190
+            type: FRAME
+                name: الحقوق محفوظة محمصة اناناس - Ananas Roastery
+                type: TEXT
+                text: الحقوق محفوظة محمصة اناناس - Ananas Roastery
+                fills: fill_9BZEMS
+      mode: column
+      gap: 8px
+      padding: 16px 24px 24px
+        width: 390
+      mode: none
+        width: 390
+        height: 800
+      mode: column
+      gap: 8px
+      mode: column
+      gap: 16px
+      padding: 0px 0px 16px
+      mode: column
+      gap: 14px
+      mode: row
+      gap: 8px
+      mode: none
+        width: 144
+        height: 63
+      mode: none
+        width: 31.56
+        height: 35.48
+      mode: none
+        width: 26.19
+        height: 19.49
+      mode: none
+        width: 36.23
+        height: 20.51
+      mode: none
+        width: 16.38
+        height: 25.02
+      mode: none
+        width: 16.3
+        height: 24.98
+      mode: none
+        width: 3.82
+        height: 20.89
+      mode: none
+        width: 7.88
+        height: 7.93
+      mode: none
+        width: 4.72
+        height: 4.58
+      mode: none
+        width: 4.62
+        height: 4.59
+      mode: none
+      mode: row
+      gap: 8px
+      mode: row
+        width: 32
+        height: 32
+      mode: none
+        width: 18.66
+        height: 18.66
+      mode: column
+        width: 18.66
+        height: 18.66
+      mode: column
+        width: 18.66
+        height: 18.66
+      mode: none
+        width: 15.37
+        height: 16.55
+      mode: none
+        width: 18.66
+        height: 18.66
+      mode: none
+        width: 19
+        height: 19
+      mode: none
+        width: 12.98
+        height: 15.04
+      mode: none
+        width: 17.56
+        height: 17.56
+      mode: none
+        width: 17.56
+        height: 17.56
+      mode: none
+        width: 14.64
+        height: 14.64
+      mode: none
+        width: 14.64
+        height: 14.64
+      mode: none
+        width: 5.85
+        height: 5.85
+      mode: none
+        width: 15
+        height: 16
+      mode: none
+        width: 8.71
+        height: 15.83
+      mode: none
+        width: 14.64
+        height: 11.71
+      mode: none
+        width: 14.64
+        height: 5.12
+      mode: column
+      mode: row
+      gap: 24px
+      mode: column
+      gap: 16px
+      padding: 16px 0px
+        width: 159
+      mode: column
+      gap: 10px
+      mode: none
+      mode: column
+      gap: 16px
+      padding: 16px 0px
+      mode: column
+      gap: 10px
+      mode: column
+      gap: 16px
+      padding: 16px 0px
+      mode: column
+      gap: 20px
+      padding: 16px 0px
+      mode: column
+        height: 38
+      mode: row
+      gap: 10px
+      mode: row
+      gap: 4px
+      mode: column
+      padding: 6.153846263885498px 0px
+      mode: column
+      mode: none
+        width: 27.4
+        height: 27
+      mode: none
+        width: 27.4
+        height: 27
+      mode: none
+        width: 15.81
+        height: 13.23
+      mode: none
+        width: 10.04
+        height: 10.17
+      mode: none
+        width: 14.62
+        height: 6.27
+      mode: none
+        width: 14.62
+        height: 6.27
+      mode: none
+        width: 27
+        height: 27
+      - type: IMAGE
+      mode: column
+      mode: row
+        width: 21.54
+      mode: column
+        width: 21.54
+        height: 27.28
+      mode: none
+        width: 21.54
+        height: 27.28
+      mode: none
+        width: 20.77
+        height: 18.09
+      mode: none
+        width: 17.57
+        height: 4.83
+      mode: none
+        width: 17.58
+        height: 4.83
+      mode: none
+        width: 17.57
+        height: 4.29
+      mode: none
+        width: 20.77
+        height: 8.02
+      mode: none
+        width: 5.91
+        height: 5.56
+      mode: none
+        width: 5.86
+        height: 5.56
+      mode: none
+        width: 3.41
+        height: 3.92
+      mode: none
+        width: 4.75
+        height: 5.56
+      mode: none
+        width: 2.04
+        height: 2.49
+      mode: row
+      gap: 8px
+      mode: none
+        width: 44
+        height: 22
+      mode: none
+        width: 44
+        height: 22
+      mode: none
+        width: 41.68
+        height: 20.17
+      mode: none
+        width: 32
+        height: 20
+      mode: none
+        width: 8.89
+        height: 11.32
+      mode: none
+        width: 21.33
+        height: 13.27
+      mode: none
+        width: 21.33
+        height: 13.27
+      mode: none
+        width: 34.32
+        height: 22
+      mode: none
+        width: 34.32
+        height: 22
+      mode: none
+        width: 32.51
+        height: 20.17
+      mode: none
+        width: 25.94
+        height: 7.92
+      mode: none
+        width: 35.2
+        height: 22
+      mode: none
+        width: 35.2
+        height: 22
+      mode: none
+        width: 33.35
+        height: 20.17
+      mode: none
+        width: 29.96
+        height: 15.21
+      - type: IMAGE
+      mode: none
+        width: 35
+        height: 22
+      mode: none
+        width: 35
+        height: 22
+      mode: none
+        width: 33.16
+        height: 20.17
+      - type: GRADIENT_LINEAR
+      mode: none
+        width: 30
+        height: 12
+      mode: none
+        width: 29.14
+        height: 9.14
+      mode: none
+        width: 32.34
+        height: 7.34
+      mode: none
+        width: 40
+        height: 22
+      mode: none
+        width: 40
+        height: 22
+      mode: none
+        width: 49.14
+        height: 25.14
+      mode: none
+        width: 52.57
+        height: 25.14
+      mode: none
+        width: 52.57
+        height: 25.14
+      mode: none
+        width: 53.09
+        height: 25.93
+      mode: none
+        width: 53.09
+        height: 25.93
+      mode: none
+        width: 53.11
+        height: 25.95
+      mode: none
+        width: 53.11
+        height: 25.95
+      - type: IMAGE
+      mode: none
+        width: 31.46
+        height: 11.43
+      mode: none
+        width: 4.37
+        height: 7.85
+      mode: none
+        width: 1.91
+        height: 1.94
+      mode: none
+        width: 1.95
+        height: 1.9
+      mode: none
+        width: 26.53
+        height: 9.41
+      mode: none
+        width: 1.18
+        height: 8.28
+      - type: IMAGE
+      - type: IMAGE
+      - type: IMAGE
+      - type: IMAGE
+      mode: none
+        width: 41
+        height: 22
+      mode: none
+        width: 36.04
+        height: 12.25
+      mode: none
+        width: 15.24
+        height: 5.18
+      mode: none
+        width: 15.24
+        height: 5.18
+      mode: none
+        width: 3.81
+        height: 6.04
+      mode: none
+        width: 3.67
+        height: 4.29
+      mode: none
+        width: 3.67
+        height: 4.29
+      mode: none
+        width: 5.8
+        height: 4.16
+      mode: none
+        width: 9.74
+        height: 4.4
+      mode: none
+        width: 8.79
+        height: 4.77
+      mode: column
+      padding: 3px 6px
+      mode: row
+      gap: 6.674999713897705px
+      mode: row
+      gap: 3px
+      mode: none
+        width: 15
+        height: 15
+      mode: none
+        width: 11.25
+        height: 11.25
+      mode: row
+      mode: row
+      padding: 0px 3.75px 0px 4.5px
+      mode: column
+      gap: 16px
+        height: 33
+      mode: none
+        width: 326
+        height: 0.62
+      mode: column
+      gap: 16px

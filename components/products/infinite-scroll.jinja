@@ -1,0 +1,45 @@
+{% set products_total = products.count|default(0)|int %}
+{% set current_page = currentPage|default(products.page|default(1))|int %}
+{% set total_pages = totalPages|default(products.pages_count|default(1))|int %}
+{% set loaded_count = products.results|length if products and products.results else 0 %}
+{% set next_page = current_page + 1 %}
+
+<div
+  class="products-infinite-scroll"
+  data-infinite-scroll
+  data-current-page="{{ current_page }}"
+  data-total-pages="{{ total_pages }}"
+  data-loaded-count="{{ loaded_count }}"
+  data-total-count="{{ products_total }}"
+  {% if current_page < total_pages %}data-next-url="{{ session.url.include_query_params(page=next_page) }}"{% endif %}
+>
+  <div class="products-infinite-scroll__loader" data-infinite-loader hidden>
+    <div
+      class="coffee-loader"
+      role="status"
+      aria-label="{{ _('Loading') }}"
+    >
+      <span class="coffee-loader__steam coffee-loader__steam--1"></span>
+      <span class="coffee-loader__steam coffee-loader__steam--2"></span>
+      <span class="coffee-loader__steam coffee-loader__steam--3"></span>
+      <span class="coffee-loader__cup">
+        <span class="coffee-loader__coffee"></span>
+      </span>
+      <span class="coffee-loader__plate"></span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .products-infinite-scroll {
+    min-height: 1px;
+    width: 100%;
+  }
+
+  .products-infinite-scroll__loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 86px;
+  }
+</style>

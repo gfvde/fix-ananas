@@ -1,0 +1,137 @@
+{
+  "template": "sections/star-reviews.jinja",
+  "name": {
+    "ar": "تقييمات النجوم",
+    "en": "Star Reviews"
+  },
+  "settings": [
+    {
+      "id": "star_reviews_items",
+      "type": "list",
+      "label": {
+        "ar": "التقييمات",
+        "en": "Reviews"
+      },
+      "max_items": 5,
+      "settings": [
+        {
+          "id": "stars",
+          "type": "range",
+          "label": {
+            "ar": "عدد النجوم",
+            "en": "Star Rating"
+          },
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "id": "text",
+          "type": "textarea",
+          "label": {
+            "ar": "نص التقييم",
+            "en": "Review Text"
+          }
+        },
+        {
+          "id": "name",
+          "type": "text",
+          "label": {
+            "ar": "اسم العميل",
+            "en": "Customer Name"
+          }
+        },
+        {
+          "id": "avatar",
+          "type": "image",
+          "label": {
+            "ar": "صورة العميل",
+            "en": "Customer Avatar"
+          }
+        },
+        {
+          "id": "card_bg",
+          "type": "color",
+          "label": {
+            "ar": "لون خلفية البطاقة",
+            "en": "Card Background Color"
+          },
+          "default": "#EEEEEE"
+        },
+        {
+          "id": "text_color",
+          "type": "color",
+          "label": {
+            "ar": "لون النص",
+            "en": "Text Color"
+          },
+          "default": "#000000"
+        }
+      ],
+      "default": []
+    },
+    {
+      "id": "title",
+      "type": "text",
+      "label": {
+        "ar": "العنوان",
+        "en": "Title"
+      },
+      "default": "تجربة القهوة بعيون عملائنا"
+    },
+    {
+      "id": "image_card_bg",
+      "type": "image",
+      "label": {
+        "ar": "صورة البطاقة الوسطى",
+        "en": "Middle Card Background Image"
+      }
+    },
+    {
+      "id": "title_color",
+      "type": "color",
+      "label": {
+        "ar": "لون العنوان",
+        "en": "Title Color"
+      },
+      "default": "#000000"
+    },
+    {
+      "id": "section_bg",
+      "type": "color",
+      "label": {
+        "ar": "لون خلفية القسم",
+        "en": "Section Background"
+      },
+      "default": "#ffffff"
+    },
+    {
+      "id": "star_color",
+      "type": "color",
+      "label": {
+        "ar": "لون النجوم",
+        "en": "Star Color"
+      },
+      "default": "#F7A52D"
+    },
+    {
+      "id": "verified_color",
+      "type": "color",
+      "label": {
+        "ar": "لون نص التحقق",
+        "en": "Verified Badge Color"
+      },
+      "default": "#25A562"
+    },
+    {
+      "id": "remove_bottom_margin",
+      "type": "checkbox",
+      "label": {
+        "ar": "إزالة المسافة السفلية",
+        "en": "Remove Bottom Margin"
+      },
+      "default": false
+    }
+  ]
+}

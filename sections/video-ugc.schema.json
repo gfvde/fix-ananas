@@ -1,0 +1,94 @@
+{
+  "template": "sections/video-ugc.jinja",
+  "name": {
+    "ar": "معرض فيديو UGC",
+    "en": "Video UGC Gallery"
+  },
+  "settings": [
+    {
+      "id": "title",
+      "type": "text",
+      "label": {
+        "ar": "العنوان",
+        "en": "Title"
+      },
+      "default": "أناناس… في كل لقطة"
+    },
+    {
+      "id": "subtitle",
+      "type": "text",
+      "label": {
+        "ar": "العنوان الفرعي",
+        "en": "Subtitle"
+      },
+      "default": "تفاصيل القهوة كما هي من شكلها، لطحنها، إلى أول رشفة"
+    },
+    {
+      "id": "title_color",
+      "type": "color",
+      "label": {
+        "ar": "لون العنوان",
+        "en": "Title Color"
+      },
+      "default": "#000000"
+    },
+    {
+      "id": "subtitle_color",
+      "type": "color",
+      "label": {
+        "ar": "لون الوصف",
+        "en": "Subtitle Color"
+      },
+      "default": "#000000"
+    },
+    {
+      "id": "border_radius",
+      "type": "range",
+      "label": {
+        "ar": "انحناء الحواف",
+        "en": "Border Radius"
+      },
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "default": 12,
+      "unit": "px"
+    },
+    {
+      "id": "videos",
+      "type": "list",
+      "label": {
+        "ar": "الفيديوهات",
+        "en": "Videos"
+      },
+      "settings": [
+        {
+          "id": "thumbnail",
+          "type": "image",
+          "label": {
+            "ar": "صورة الغلاف",
+            "en": "Thumbnail"
+          }
+        },
+        {
+          "id": "video",
+          "type": "video",
+          "label": {
+            "ar": "الفيديو",
+            "en": "Video"
+          }
+        }
+      ],
+      "default": []
+    },
+    {
+      "id": "remove_bottom_margin",
+      "type": "checkbox",
+      "label": {
+        "ar": "إزالة المسافة السفلية",
+        "en": "Remove Bottom Margin"
+      },
+      "default": false
+    }
+  ]
+}

@@ -1,0 +1,434 @@
+{% set bg_color      = settings.style_bg_color      | default('#0e0d0d') %}
+{% set noise_opacity = settings.style_noise_opacity | default(0.2) | float %}
+{% set bg_image      = settings.style_bg_image %}
+{% set bg_style      = settings.style_bg_image_style | default('cover') %}
+{% set desktop_h     = settings.style_desktop_height | default(300) %}
+{% set mobile_h      = settings.style_mobile_height  | default(300) %}
+{% set text_color    = settings.style_text_color    | default('#a3a3a3') %}
+{% set heading_color = settings.style_heading_color | default('#ffffff') %}
+{% set divider_color = settings.style_divider_color | default('#ffffff26') %}
+{% set icon_bg       = settings.style_icon_bg_color     | default('#1a1a1a') %}
+{% set icon_border   = settings.style_icon_border_color | default('#ffffff1a') %}
+{% set logo_height   = settings.logo_logo_height | default(40) %}
+
+	<style>
+	  #footer {
+	    min-height: {{ mobile_h }}px;
+	    position: relative;
+	    --footer-noise-opacity: {{ noise_opacity }};
+	  }
+	  #footer::before {
+	    content: '';
+	    position: absolute;
+	    inset: 0;
+	    pointer-events: none;
+	    z-index: 0;
+	    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65 0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+	    background-repeat: repeat;
+	    background-size: 300px 300px;
+	    opacity: var(--footer-noise-opacity);
+	  }
+	  #footer .footer-brand,
+	  #footer .footer-links,
+	  #footer .footer-contact {
+	    text-align: right;
+	    align-items: flex-start;
+	  }
+	  #footer .footer-description {
+	    text-align: right !important;
+	  }
+	  #footer .footer-social {
+	    width: 100%;
+	    justify-content: flex-start;
+	  }
+	  #footer .footer-contact a {
+	    flex-direction: row;
+	  }
+	  #footer .footer-legal-strip {
+	    width: 100%;
+	  }
+	  #footer .footer-legal-item--tax { order: 1; }
+	  #footer .footer-legal-item--commerce { order: 2; }
+	  #footer .footer-legal-item--commercial { order: 3; }
+	  #footer .footer-payment-item {
+	    width: 48px;
+	    height: 30px;
+	  }
+	  @media (min-width: 768px) {
+	    #footer {
+	      min-height: {{ desktop_h }}px;
+	    }
+	    #footer .footer-brand {
+	      text-align: start;
+	      align-items: flex-start;
+	    }
+	    #footer .footer-description {
+	      text-align: start !important;
+	    }
+	    #footer .footer-social {
+	      justify-content: flex-start;
+	    }
+	    #footer .footer-links,
+	    #footer .footer-contact {
+	      text-align: start;
+	      align-items: flex-start;
+	    }
+	    #footer .footer-contact a {
+	      flex-direction: row;
+	    }
+	    #footer .footer-payment-item {
+	      width: 50px;
+	      height: 30px;
+	    }
+	  }
+	</style>
+
+<footer
+  id="footer"
+  dir="{{ 'rtl' if session.lang == 'ar' else 'ltr' }}"
+  class="flex flex-col px-6 pt-4 pb-6 gap-2 md:px-20 md:pt-8 md:pb-6 md:gap-8"
+  style="
+    background-color: {{ bg_color }}; 
+    color: {{ text_color }};
+    {% if bg_image %}
+      background-image: url('{{ image_url(bg_image) }}');
+      background-position: center;
+      {% if bg_style == 'cover' %}
+        background-size: cover;
+        background-repeat: no-repeat;
+      {% else %}
+        background-size: auto;
+        background-repeat: repeat;
+      {% endif %}
+    {% endif %}
+  "
+>
+
+  {# ── Main grid ─────────────────────────────────────────────────────────── #}
+  <div class="flex-grow w-full">
+    <div class="grid grid-cols-2 gap-x-6 gap-y-6 md:grid-cols-4 md:gap-8">
+
+      {# ── Brand column: Logo + description + social ────────────────────── #}
+	      <div class="footer-brand col-span-2 md:col-span-1 flex flex-col gap-4">
+
+        {# Logo #}
+        <a href="/">
+          {% if settings.logo_logo_desktop or settings.logo_logo_mobile %}
+            {% if settings.logo_logo_desktop %}
+              <img
+                src="{{ image_url(settings.logo_logo_desktop | default(settings.logo_logo_mobile) | default(store.logo), w=320, q=90, f='auto') }}"
+                style="height: {{ logo_height }}px;"
+                class="w-auto object-contain {% if settings.logo_logo_mobile %}hidden md:block{% endif %}"
+                alt="{{ store.name }}"
+              />
+            {% endif %}
+            {% if settings.logo_logo_mobile %}
+              <img
+                src="{{ image_url(settings.logo_logo_mobile | default(settings.logo_logo_desktop) | default(store.logo), w=320, q=90, f='auto') }}"
+                style="height: {{ logo_height }}px;"
+                class="w-auto object-contain {% if settings.logo_logo_desktop %}block md:hidden{% endif %}"
+                alt="{{ store.name }}"
+              />
+            {% endif %}
+          {% elif store.logo %}
+            <img
+              src="{{ image_url(store.logo, w=320, q=90, f='auto') }}"
+              style="height: {{ logo_height }}px;"
+              class="w-auto object-contain"
+              alt="{{ store.name }}"
+            />
+          {% else %}
+            <span class="text-lg font-semibold" style="color: {{ heading_color }};">{{ store.name }}</span>
+          {% endif %}
+        </a>
+
+        {# Description #}
+        {% if settings.about_us_about_us %}
+	          <p class="footer-description text-sm leading-relaxed" style="color: {{ text_color }};">{{ settings.about_us_about_us | striptags }}</p>
+        {% endif %}
+
+        {# Social icons #}
+        {% set has_social = store.settings.contact.snapchat or store.settings.contact.tiktok or store.settings.contact.instagram or store.settings.contact.twitter or store.settings.contact.facebook or store.settings.contact.email %}
+        {% if has_social %}
+	          <div class="footer-social flex items-center gap-2 flex-wrap">
+
+            {% if store.settings.contact.snapchat %}
+              <a
+                href="https://www.snapchat.com/add/{{ store.settings.contact.snapchat }}"
+                target="_blank" rel="noopener noreferrer" aria-label="Snapchat"
+                class="flex items-center justify-center w-8 h-8 rounded-[6px] transition-opacity hover:opacity-80"
+                style="background-color: {{ icon_bg }}; border: 1px solid {{ icon_border }}; color: {{ heading_color }};"
+              >
+                <svg viewBox="0 0 20 20" fill="currentColor" class="size-4">
+                  <path d="M10 1.5c1.8 0 3.3.6 4.5 1.9 1.1 1.1 1.7 2.6 1.7 4.2 0 .5-.1 1-.2 1.5l.5.1c.4.1.8.3 1 .6.2.3.2.7-.1 1-.3.3-.8.5-1.5.6-.1.4-.3.9-.5 1.2-.1.2-.2.3-.3.3.1.2.4.5.9.7.5.2 1.1.3 1.8.4.2 0 .3.2.3.4 0 .1 0 .2-.1.3-.3.7-1.4 1.1-3.5 1.4-.1.3-.2.7-.3 1-.1.4-.4.6-.8.6-.2 0-.5-.1-.8-.2-.4-.1-.9-.3-1.5-.3-.4 0-.8.1-1.2.2-.5.2-.9.5-1.4.8-.5.4-1.1.5-1.7.5-.6 0-1.2-.2-1.7-.5-.5-.3-.9-.6-1.4-.8-.4-.1-.8-.2-1.2-.2-.6 0-1.1.1-1.5.3-.3.1-.6.2-.8.2-.4 0-.7-.2-.8-.6-.1-.3-.2-.7-.3-1C2.4 15 1.3 14.6 1 13.9c-.1-.1-.1-.2-.1-.3 0-.2.1-.4.3-.4.7-.1 1.3-.2 1.8-.4.5-.2.8-.5.9-.7-.1-.1-.2-.2-.3-.3-.2-.3-.4-.8-.5-1.2-.7-.1-1.2-.3-1.5-.6-.3-.3-.3-.7-.1-1 .2-.3.6-.5 1-.6l.5-.1c-.1-.5-.2-1-.2-1.5 0-1.6.6-3.1 1.7-4.2C6.7 2.1 8.2 1.5 10 1.5z"/>
+                </svg>
+              </a>
+            {% endif %}
+
+            {% if store.settings.contact.tiktok %}
+              <a
+                href="https://www.tiktok.com/@{{ store.settings.contact.tiktok }}"
+                target="_blank" rel="noopener noreferrer" aria-label="TikTok"
+                class="flex items-center justify-center w-8 h-8 rounded-[6px] transition-opacity hover:opacity-80"
+                style="background-color: {{ icon_bg }}; border: 1px solid {{ icon_border }}; color: {{ heading_color }};"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" class="size-4">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                </svg>
+              </a>
+            {% endif %}
+
+            {% if store.settings.contact.instagram %}
+              <a
+                href="https://www.instagram.com/{{ store.settings.contact.instagram }}"
+                target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+                class="flex items-center justify-center w-8 h-8 rounded-[6px] transition-opacity hover:opacity-80"
+                style="background-color: {{ icon_bg }}; border: 1px solid {{ icon_border }}; color: {{ heading_color }};"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" class="size-4">
+                  <path d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"/>
+                </svg>
+              </a>
+            {% endif %}
+
+            {% if store.settings.contact.twitter %}
+              <a
+                href="https://twitter.com/{{ store.settings.contact.twitter }}"
+                target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"
+                class="flex items-center justify-center w-8 h-8 rounded-[6px] transition-opacity hover:opacity-80"
+                style="background-color: {{ icon_bg }}; border: 1px solid {{ icon_border }}; color: {{ heading_color }};"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" class="size-4">
+                  <path d="M13.6823 10.6218L20.2391 3H18.6854L12.9921 9.61788L8.44486 3H3.2002L10.0765 13.0074L3.2002 21H4.75404L10.7663 14.0113L15.5685 21H20.8131L13.6819 10.6218H13.6823ZM11.5541 13.0956L10.8574 12.0991L5.31391 4.16971H7.70053L12.1742 10.5689L12.8709 11.5655L18.6861 19.8835H16.2995L11.5541 13.096V13.0956Z"/>
+                </svg>
+              </a>
+            {% endif %}
+
+            {% if store.settings.contact.facebook %}
+              <a
+                href="https://www.facebook.com/{{ store.settings.contact.facebook }}"
+                target="_blank" rel="noopener noreferrer" aria-label="Facebook"
+                class="flex items-center justify-center w-8 h-8 rounded-[6px] transition-opacity hover:opacity-80"
+                style="background-color: {{ icon_bg }}; border: 1px solid {{ icon_border }}; color: {{ heading_color }};"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" class="size-4">
+                  <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/>
+                </svg>
+              </a>
+            {% endif %}
+
+            {% if store.settings.contact.email %}
+              <a
+                href="mailto:{{ store.settings.contact.email }}"
+                aria-label="Email"
+                class="flex items-center justify-center w-8 h-8 rounded-[6px] transition-opacity hover:opacity-80"
+                style="background-color: {{ icon_bg }}; border: 1px solid {{ icon_border }}; color: {{ heading_color }};"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="size-4">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/>
+                </svg>
+              </a>
+            {% endif %}
+
+          </div>
+        {% endif %}
+
+      </div>
+
+      {# ── Link group columns ────────────────────────────────────────────── #}
+      {% for group in settings.link_groups_items or [] %}
+        {% if not group.hide and group.links %}
+	          <div class="footer-links flex flex-col gap-[10px]">
+            {% if group.title %}
+              <h3 class="text-sm font-semibold mb-1" style="color: {{ heading_color }};">{{ group.title }}</h3>
+            {% endif %}
+            <ul class="flex flex-col gap-[10px]">
+              {% for link in group.links %}
+                <li>
+                  <a href="{{ link.url }}" class="text-xs hover:opacity-100 transition-opacity" style="color: {{ text_color }}; opacity: 0.85;">
+                    {{ link.title }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+      {% endfor %}
+
+      {# ── Contact column ────────────────────────────────────────────────── #}
+	      <div class="footer-contact flex flex-col gap-[10px]">
+        <h3 class="text-sm font-semibold mb-1" style="color: {{ heading_color }};">
+          {% if settings.contact_info_contact_info_title %}
+            {{ settings.contact_info_contact_info_title }}
+          {% else %}
+            {{ _("Contact us") }}
+          {% endif %}
+        </h3>
+
+        {% if store.settings.contact.phone %}
+          <a href="tel:{{ store.settings.contact.phone }}" class="flex items-center gap-2 text-xs transition-opacity hover:opacity-100" style="color: {{ text_color }}; opacity: 0.85;">
+            <svg viewBox="0 0 20 20" fill="currentColor" class="size-4 shrink-0">
+              <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+            </svg>
+            <span>{{ store.settings.contact.phone }}</span>
+          </a>
+        {% endif %}
+
+        {% if store.settings.contact.email %}
+          <a href="mailto:{{ store.settings.contact.email }}" class="flex items-center gap-2 text-xs transition-opacity hover:opacity-100" style="color: {{ text_color }}; opacity: 0.85;">
+            <svg viewBox="0 0 20 20" fill="currentColor" class="size-4 shrink-0">
+              <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+              <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+            </svg>
+            <span>{{ store.settings.contact.email }}</span>
+          </a>
+        {% endif %}
+
+      </div>
+
+    </div>
+  </div>
+
+  {# ── Payment methods + Legal badges ───────────────────────────────────── #}
+  {% set has_payment = store.settings.checkout.payment_methods | length > 0 or store.settings.checkout.shipping_methods | length > 0 %}
+  {% set has_legal = store.settings.contact.business_center or store.settings.general.tax_settings.is_certificate_visible or store.settings.general.tax_settings.tax_number or store.settings.general.commercial_registration_number %}
+  {% if has_payment or has_legal %}
+		    <div class="footer-legal-strip py-4 px-0 flex flex-col md:flex-row-reverse items-center justify-between gap-4 md:gap-4 w-full" >
+
+      {# Legal Badges #}
+		      <div class="order-1 md:order-2 flex flex-wrap justify-center md:justify-end items-center gap-4 md:gap-6" dir="rtl">
+	        {% if store.settings.general.commercial_registration_number %}
+		          <div class="footer-legal-item--commercial flex items-center gap-2 text-right">
+	            <div class="flex items-center justify-center w-7 h-7">
+	              <svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" aria-hidden="true">
+	                <path d="M27.2634 27C25.9462 19.0976 25.6828 11.722 27.3951 0C18.8331 0.921947 13.9599 1.9756 0 0C1.05273 7.90244 1.97468 13.4341 0 27C0.658418 26.8432 16.595 24.8927 27.2634 27Z" fill="#03534C"/>
+	                <path d="M15.9437 11.0616C16.9341 10.872 18.022 11.3224 18.7148 12.2233C18.5093 11.6148 18.1616 11.0959 17.7323 10.7086C17.3055 10.3214 16.7892 10.0817 16.2624 10.0264C16.8814 9.39946 17.7217 9.03595 18.5146 9.12814C17.7981 8.53546 16.8419 8.42483 16.0464 8.83575C16.2756 8.27205 16.6733 7.80844 17.1475 7.5819C16.4731 7.47127 15.7698 7.66619 15.193 8.11663C15.3299 7.55819 15.6566 7.08668 16.0859 6.84961C15.193 6.9339 14.3211 7.37907 13.6968 8.17985C13.0725 7.37907 12.2006 6.93654 11.3076 6.84961C11.737 7.08668 12.0636 7.55556 12.2006 8.11663C11.6237 7.66619 10.9204 7.47127 10.246 7.5819C10.7202 7.8058 11.1179 8.26941 11.3471 8.83575C10.5516 8.42483 9.59539 8.53546 8.8789 9.12814C9.67442 9.03858 10.5121 9.4021 11.1311 10.0264C10.6043 10.0817 10.0906 10.3214 9.66125 10.7086C9.23451 11.0959 8.88417 11.6148 8.67871 12.2233C9.37149 11.3224 10.462 10.872 11.4498 11.0616C10.8545 11.5726 10.4515 12.4261 10.4146 13.327C11.0494 12.2733 12.0978 11.6359 13.1541 11.6385L12.9012 13.3217H13.0435L12.8064 15.184H13.033L12.7643 17.0148H14.6187L14.35 15.184H14.5766L14.3395 13.3217H14.4817L14.2289 11.6385C15.2851 11.6332 16.3335 12.2733 16.9684 13.327C16.9289 12.4261 16.5285 11.5726 15.9331 11.0616H15.9437Z" fill="white"/>
+	                <path d="M20.4171 19.0696C20.4487 18.6192 20.1458 18.2346 19.7401 18.2056C19.3371 18.1793 18.9841 18.5217 18.9551 18.9696C18.9499 19.0591 18.9551 19.1434 18.9736 19.2251C18.1227 19.1618 17.314 18.9537 16.537 18.6324C16.5475 18.5981 16.5607 18.5665 16.5712 18.5323C16.6186 18.3874 16.6555 18.2425 16.6977 18.1161C16.7135 18.0634 16.7319 18.016 16.7503 17.9686C16.7899 18.066 16.8741 18.1345 16.9769 18.1424C17.127 18.153 17.2614 18.0239 17.2719 17.8553C17.2798 17.7526 17.2377 17.6577 17.1718 17.5972C17.1718 17.5972 17.1744 17.5972 17.1771 17.5972C17.1507 17.5682 17.1191 17.5471 17.0822 17.5313C17.0454 17.5155 17.0059 17.5076 16.9637 17.505C16.882 17.4997 16.7978 17.5234 16.7214 17.5629C16.5659 17.6446 16.4527 17.7868 16.3658 17.9264C16.2788 18.0687 16.2156 18.2083 16.155 18.3453C16.1392 18.3795 16.126 18.4137 16.1102 18.448C15.5202 18.1688 14.9459 17.8237 14.3901 17.4286C12.8623 16.3459 11.4109 15.0947 9.73034 14.3361C9.10077 14.0516 8.43434 13.8356 7.75209 13.8093C7.06985 13.7829 6.3639 13.9541 5.79492 14.3861C7.8759 13.9726 10.6022 15.3713 14.1057 17.9975C14.7141 18.4533 15.3095 18.7983 15.8732 19.0617C15.8126 19.2356 15.752 19.4015 15.6782 19.5438C15.6651 19.5675 15.6545 19.5886 15.6414 19.6096C15.6098 19.4674 15.4991 19.3594 15.3621 19.3515C15.1883 19.341 15.0381 19.4858 15.025 19.6781C15.0171 19.7756 15.0487 19.8652 15.1014 19.9336C15.1962 20.0574 15.3779 20.1049 15.5386 20.068C15.6993 20.0364 15.8547 19.9284 15.968 19.8019C16.0839 19.6755 16.1682 19.5306 16.2393 19.3857C16.263 19.3383 16.2841 19.2935 16.3025 19.2461C16.6055 19.3699 16.9137 19.4753 17.2298 19.5622C17.5011 19.6386 17.775 19.6992 18.0516 19.7466C18.2808 19.7861 18.5126 19.8151 18.747 19.8335C18.9156 19.8467 19.0842 19.8546 19.2528 19.8546C19.3371 19.8546 19.424 19.8546 19.5083 19.8494C19.5899 19.8441 19.6742 19.8441 19.7533 19.8283C19.8929 19.7967 20.0272 19.7493 20.1431 19.6465C20.2274 19.5701 20.2985 19.4727 20.3459 19.362C20.3855 19.2698 20.4092 19.1697 20.4144 19.0696H20.4171Z" fill="white"/>
+	                <path d="M6.98273 19.0696C6.95112 18.6192 7.25405 18.2346 7.65971 18.2056C8.06273 18.1793 8.41571 18.5217 8.44468 18.9696C8.44995 19.0591 8.44468 19.1434 8.42625 19.2251C9.27707 19.1618 10.0858 18.9537 10.8628 18.6324C10.8523 18.5981 10.8391 18.5665 10.8286 18.5323C10.7812 18.3874 10.7443 18.2425 10.7021 18.1161C10.6863 18.0634 10.6679 18.016 10.6495 17.9686C10.61 18.066 10.5257 18.1345 10.4229 18.1424C10.2728 18.153 10.1384 18.0239 10.1279 17.8553C10.12 17.7526 10.1621 17.6577 10.228 17.5972C10.228 17.5972 10.2254 17.5972 10.2227 17.5972C10.2491 17.5682 10.2807 17.5471 10.3176 17.5313C10.3544 17.5155 10.394 17.5076 10.4361 17.505C10.5178 17.4997 10.6021 17.5234 10.6784 17.5629C10.8339 17.6446 10.9471 17.7868 11.0341 17.9264C11.121 18.0687 11.1842 18.2083 11.2448 18.3453C11.2606 18.3795 11.2738 18.4137 11.2896 18.448C11.8796 18.1688 12.4539 17.8237 13.0097 17.4286C14.5375 16.3459 15.9889 15.0947 17.6695 14.3361C18.299 14.0516 18.9655 13.8356 19.6477 13.8093C20.33 13.7829 21.0359 13.9541 21.6049 14.3861C19.5239 13.9726 16.7976 15.3713 13.2941 17.9975C12.6857 18.4533 12.0903 18.7983 11.5266 19.0617C11.5872 19.2356 11.6478 19.4015 11.7216 19.5438C11.7347 19.5675 11.7453 19.5886 11.7584 19.6096C11.7901 19.4674 11.9007 19.3594 12.0377 19.3515C12.2115 19.341 12.3617 19.4858 12.3748 19.6781C12.3827 19.7756 12.3511 19.8652 12.2984 19.9336C12.2036 20.0574 12.0219 20.1049 11.8612 20.068C11.7005 20.0364 11.5451 19.9284 11.4318 19.8019C11.3159 19.6755 11.2316 19.5306 11.1605 19.3857C11.1368 19.3383 11.1157 19.2935 11.0973 19.2461C10.7943 19.3699 10.4835 19.4753 10.1701 19.5622C9.89874 19.6386 9.62478 19.6992 9.3482 19.7466C9.11903 19.7861 8.88722 19.8151 8.65278 19.8335C8.4842 19.8467 8.31561 19.8546 8.14703 19.8546C8.06273 19.8546 7.97581 19.8546 7.89151 19.8494C7.80986 19.8441 7.72556 19.8441 7.64654 19.8283C7.50693 19.7967 7.37259 19.7493 7.25669 19.6465C7.17239 19.5701 7.10127 19.4727 7.05385 19.362C7.01434 19.2698 6.99064 19.1697 6.98537 19.0696H6.98273Z" fill="white"/>
+	              </svg>
+	            </div>
+	            <div class="flex flex-col items-start gap-0.5">
+              <span class="text-[9px]" style="color: {{ text_color }};">{{ _('Commercial registration number') }}</span>
+              <span class="text-[11px] font-bold" style="color: {{ heading_color }};">{{ store.settings.general.commercial_registration_number }}</span>
+            </div>
+          </div>
+        {% endif %}
+
+        {% if store.settings.contact.business_center %}
+		          <a href="https://eauthenticate.saudibusiness.gov.sa/certificate-details/{{ store.settings.contact.business_center }}" target="_blank" rel="noopener noreferrer" class="footer-legal-item--commerce flex items-center gap-2 text-right transition-opacity hover:opacity-80">
+	            <div class="flex items-center justify-center w-7 h-7">
+	              <img src="{{ 'images/ecommerce-certificate.svg' | asset_url }}" alt="Business Center" class="w-7 h-7 object-contain" />
+	            </div>
+	            <div class="flex flex-col items-start gap-0.5">
+              <span class="text-[9px]" style="color: {{ text_color }};">{{ _('E-commerce authentication certificate') }}</span>
+              <span class="text-[11px] font-bold" style="color: {{ heading_color }};">{{ store.settings.contact.business_center }}</span>
+            </div>
+          </a>
+        {% endif %}
+
+        {% if store.settings.general.tax_settings.is_certificate_visible %}
+		          <a {% if store.settings.general.tax_settings.tax_registration_certificate %}href="{{ store.settings.general.tax_settings.tax_registration_certificate }}" target="_blank" rel="noopener noreferrer"{% endif %} class="footer-legal-item--tax flex items-center gap-2 text-right transition-opacity hover:opacity-80">
+            <div class="flex items-center justify-center w-7 h-7 rounded-full" >
+              <svg width="22" height="28" viewBox="0 0 22 28" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-6">
+<g clip-path="url(#clip0_364_35401)">
+<g clip-path="url(#clip1_364_35401)">
+<g clip-path="url(#clip2_364_35401)">
+<path d="M1.35931 18.1428H20.1443C20.5208 18.1428 20.8675 18.2782 21.1384 18.5061V1.56396C21.1384 0.933171 20.6232 0.417969 19.9924 0.417969H1.51122C0.880432 0.417969 0.365234 0.933171 0.365234 1.56396V18.5028C0.636042 18.2815 0.979514 18.1428 1.35931 18.1428Z" fill="#045C4D"/>
+<path d="M3.3646 5.45314C2.25824 5.45314 1.86523 4.74638 1.86523 4.13871C1.86523 3.36261 2.51584 2.82099 3.45047 2.82099H3.59908V2.58981H4.09447V4.95776H7.44655V2.82099H7.94193V4.95776H11.0662V2.82099H11.5516V5.45314H3.3646ZM3.29855 3.31637C2.8461 3.31637 2.36062 3.63012 2.36062 4.13871C2.36062 4.70345 2.83289 4.95776 3.29855 4.95776H3.59908V3.31637H3.29855ZM4.16052 1.94251C4.16052 1.77408 4.01851 1.63867 3.84017 1.63867C3.66183 1.63867 3.52312 1.77077 3.52312 1.94251C3.52312 2.11754 3.65853 2.24965 3.84017 2.24965C4.02181 2.24965 4.16052 2.11754 4.16052 1.94251ZM3.26552 1.94251C3.26552 1.77408 3.12681 1.63867 2.94848 1.63867C2.77014 1.63867 2.63143 1.77077 2.63143 1.94251C2.63143 2.11754 2.76683 2.24965 2.94848 2.24965C3.13012 2.24965 3.26552 2.11754 3.26552 1.94251ZM8.02119 6.10375C8.02119 5.93201 7.87918 5.79661 7.69424 5.79661C7.5093 5.79661 7.36729 5.93201 7.36729 6.10375C7.36729 6.28209 7.50599 6.41749 7.69424 6.41749C7.88249 6.41749 8.02119 6.28209 8.02119 6.10375ZM10.8053 6.11366C10.8053 5.94192 10.6665 5.80652 10.4882 5.80652C10.3099 5.80652 10.1712 5.94192 10.1712 6.11366C10.1712 6.28539 10.3066 6.41749 10.4882 6.41749C10.6699 6.41749 10.8053 6.28539 10.8053 6.11366ZM11.7003 6.11366C11.7003 5.94192 11.5582 5.80652 11.3799 5.80652C11.2016 5.80652 11.0629 5.94192 11.0629 6.11366C11.0629 6.28539 11.1983 6.41749 11.3799 6.41749C11.5648 6.41749 11.7003 6.28869 11.7003 6.11366ZM12.5127 6.46703C12.407 6.46703 12.3046 6.45382 12.1956 6.4241L12.1362 6.40758L12.265 5.93201L12.3244 5.94853C12.4103 5.97165 12.44 5.97495 12.4962 5.97495C12.7108 5.97495 12.7835 5.90229 12.7835 5.46966V2.82429H13.2789V4.96106H16.2446V2.82429H16.74V3.11492H18.3582C18.7347 3.11492 18.9857 3.214 19.1905 3.45178C19.3457 3.62682 19.4316 3.90423 19.4316 4.22788V5.45975H13.2227V5.48617C13.2425 5.86266 13.1732 6.13347 13.018 6.2953C12.8528 6.46703 12.6217 6.46703 12.5127 6.46703ZM16.7433 4.95776H18.9395V4.22128C18.9395 4.02312 18.8998 3.88772 18.814 3.78204C18.7182 3.66645 18.5663 3.607 18.3615 3.607H16.7433V4.95776ZM18.1369 2.36193C18.1369 2.1869 17.9949 2.05149 17.81 2.05149C17.6284 2.05149 17.483 2.1902 17.483 2.36193C17.483 2.54027 17.6217 2.67568 17.81 2.67568C17.9982 2.67568 18.1369 2.54027 18.1369 2.36193Z" fill="white"/>
+<path d="M3.8271 7.78626C3.64546 7.78626 3.51005 7.65416 3.51005 7.47912C3.51005 7.31069 3.64876 7.17528 3.8271 7.17528C4.00874 7.17528 4.14745 7.30739 4.14745 7.47912C4.15075 7.65416 4.01204 7.78626 3.8271 7.78626ZM3.25576 7.47582C3.25576 7.30739 3.11705 7.17198 2.93871 7.17198C2.76037 7.17198 2.62166 7.30408 2.62166 7.47582C2.62166 7.65085 2.75707 7.78296 2.93871 7.78296C3.12035 7.78296 3.25576 7.65416 3.25576 7.47582ZM10.9607 11.647C10.9607 11.4752 10.822 11.3398 10.6436 11.3398C10.4653 11.3398 10.3266 11.4752 10.3266 11.647C10.3266 11.8187 10.462 11.9508 10.6436 11.9508C10.8253 11.9508 10.9607 11.822 10.9607 11.647ZM11.8557 11.647C11.8557 11.4752 11.7136 11.3398 11.5353 11.3398C11.357 11.3398 11.2183 11.4752 11.2183 11.647C11.2183 11.8187 11.3537 11.9508 11.5353 11.9508C11.7203 11.9508 11.8557 11.822 11.8557 11.647ZM14.6199 7.65746C14.6199 7.48903 14.4812 7.35362 14.3029 7.35362C14.1245 7.35362 13.9858 7.48573 13.9858 7.65746C13.9858 7.83249 14.1212 7.9646 14.3029 7.9646C14.4845 7.9646 14.6199 7.83249 14.6199 7.65746ZM15.5149 7.65746C15.5149 7.48903 15.3729 7.35362 15.1946 7.35362C15.0162 7.35362 14.8775 7.48573 14.8775 7.65746C14.8775 7.83249 15.0129 7.9646 15.1946 7.9646C15.3762 7.9646 15.5149 7.83249 15.5149 7.65746ZM8.40117 10.993L8.40778 10.9864H18.0083V7.11914H17.513V10.4911H15.6404V8.3543H14.9535C14.0122 8.3543 13.4046 8.8695 13.4046 9.66872C13.4046 9.96925 13.5003 10.2335 13.6886 10.4514L13.7249 10.4944H11.3702V8.3543H10.8748V10.4911H8.71492L8.72483 10.458C8.77436 10.316 8.79748 10.1674 8.79748 10.0089C8.79748 9.20636 8.18981 8.59869 7.38729 8.59869C6.61449 8.59869 6.01012 9.21957 6.01012 10.0089C6.01012 10.1608 6.03324 10.3094 6.08277 10.458L6.09268 10.4911H4.0847V8.12312H3.58932V8.3543H3.4407C2.50607 8.3543 1.85547 8.89592 1.85547 9.67202C1.85547 10.3061 2.27159 10.9864 3.4407 10.9864H6.39982L6.40643 10.993C6.66733 11.2573 7.0174 11.4059 7.39059 11.4059C7.77369 11.4059 8.14357 11.2573 8.40117 10.993ZM8.3054 10.0056C8.3054 10.5208 7.9124 10.9072 7.39059 10.9072C6.89521 10.9072 6.50881 10.5109 6.50881 10.0056C6.50881 9.49368 6.89521 9.09407 7.39059 9.09407C7.919 9.09407 8.3054 9.47717 8.3054 10.0056ZM15.1483 8.84968V10.4911H14.4218L14.4151 10.4878C14.0915 10.2962 13.9032 9.99898 13.9032 9.66872C13.9032 9.13701 14.3689 8.84968 14.8048 8.84968H15.1483ZM3.58932 8.84968V10.4911H3.28878C2.82312 10.4911 2.35085 10.2368 2.35085 9.67202C2.35085 9.16343 2.83633 8.84968 3.28878 8.84968H3.58932ZM19.435 7.11914H18.9397V10.9864H19.435V7.11914Z" fill="white"/>
+<path d="M3.84077 13.3214C3.65913 13.3214 3.52373 13.1893 3.52373 13.0143C3.52373 12.8458 3.66243 12.7104 3.84077 12.7104C4.02241 12.7104 4.16112 12.8425 4.16112 13.0143C4.16112 13.1893 4.02241 13.3214 3.84077 13.3214ZM3.26613 13.0143C3.26613 12.8458 3.12742 12.7104 2.94908 12.7104C2.77074 12.7104 2.63203 12.8425 2.63203 13.0143C2.63203 13.1893 2.76744 13.3214 2.94908 13.3214C3.13072 13.3214 3.26613 13.1893 3.26613 13.0143ZM7.12684 16.5216V13.8895H6.43991C5.49868 13.8895 4.89101 14.4047 4.89101 15.2039C4.89101 15.5044 4.98678 15.7686 5.17503 15.9833L5.21135 16.0262H4.09837V13.6583H3.60299V13.8895H3.45437C2.51975 13.8895 1.86914 14.4311 1.86914 15.2072C1.86914 15.8413 2.28526 16.5216 3.45437 16.5216H7.12684ZM6.63146 14.3848V16.0262H5.90489L5.89829 16.0229C5.57464 15.8314 5.38639 15.5341 5.38639 15.2039C5.38639 14.8076 5.70344 14.3848 6.28799 14.3848H6.63146ZM3.59968 14.3848V16.0262H3.29915C2.83349 16.0262 2.36122 15.7719 2.36122 15.2072C2.36122 14.6986 2.8467 14.3848 3.29915 14.3848H3.59968ZM6.54889 13.1893C6.54889 13.0143 6.40688 12.8756 6.22194 12.8756C6.0403 12.8756 5.89499 13.0143 5.89499 13.1893C5.89499 13.3677 6.03369 13.5031 6.22194 13.5031C6.40688 13.4998 6.54889 13.3677 6.54889 13.1893ZM11.4004 13.4337C11.4004 13.2587 11.2584 13.12 11.0734 13.12C10.8918 13.12 10.7465 13.2587 10.7465 13.4337C10.7465 13.612 10.8852 13.7474 11.0734 13.7474C11.2617 13.7441 11.4004 13.612 11.4004 13.4337ZM15.9909 16.5282L15.9975 16.5216H18.0088V12.6543H17.5134V16.0262H16.308L16.3179 15.9932C16.3674 15.8512 16.3905 15.7026 16.3905 15.544C16.3905 14.7415 15.7829 14.1338 14.9803 14.1338C14.2075 14.1338 13.6032 14.7547 13.6032 15.544C13.6032 15.696 13.6263 15.8446 13.6758 15.9932L13.6857 16.0262H12.6983V15.2897C12.6983 14.9661 12.6124 14.692 12.4572 14.5136C12.2524 14.2792 12.0047 14.1768 11.6249 14.1768H10.0595V13.8862H9.56413V16.0229H8.37191V12.6543H7.87652V16.5216H13.9896L13.9962 16.5282C14.2571 16.7957 14.6072 16.941 14.9803 16.941C15.3667 16.941 15.7333 16.7924 15.9909 16.5282ZM15.8951 15.5407C15.8951 16.0559 15.5021 16.4423 14.9803 16.4423C14.485 16.4423 14.0986 16.046 14.0986 15.5407C14.0986 15.0288 14.485 14.6292 14.9803 14.6292C15.5121 14.6292 15.8951 15.0123 15.8951 15.5407ZM10.0562 14.6755H11.6216C11.8297 14.6755 11.9816 14.7349 12.0741 14.8505C12.16 14.9562 12.1996 15.0916 12.1996 15.2897V16.0262H10.0562V14.6755ZM19.4355 12.6543H18.9401V16.5216H19.4355V12.6543Z" fill="white"/>
+<path d="M20.2401 26.8461H1.26353C0.768145 26.8461 0.365234 26.4432 0.365234 25.9478V19.7225C0.365234 19.2271 0.768145 18.8242 1.26353 18.8242H20.2401C20.7354 18.8242 21.1384 19.2271 21.1384 19.7225V25.9478C21.1351 26.4432 20.7354 26.8461 20.2401 26.8461Z" fill="#C5992C"/>
+<path d="M4.91322 24.3366L3.65164 20.0664H1.88477C2.47262 21.8366 3.7276 25.6279 3.74411 25.6279H5.97004L7.79636 20.0664H6.0493L4.91322 24.3366Z" fill="white"/>
+<path d="M19.6133 20.0664H13.7578L14.1971 21.3412H16.0696V25.6279H17.7506V21.3412H19.6166L19.6133 20.0664Z" fill="white"/>
+<path d="M13.5444 21.7129L13.7227 22.1059C13.7227 22.1059 12.4545 23.1693 11.1104 25.6297C11.1104 25.6297 10.5258 24.5993 10.3145 24.2955L10.5225 23.4864L11.1005 24.1403C11.1005 24.137 12.6229 22.3173 13.5444 21.7129Z" fill="#045C4D"/>
+<path d="M11.457 23.369C11.8005 22.9859 12.2628 22.4938 12.7087 22.0876C12.3388 20.9911 12.0217 20.0664 12.0151 20.0664H9.78921L7.96289 25.6279H9.71325L10.846 21.143C10.846 21.1463 11.1499 22.256 11.457 23.369Z" fill="white"/>
+<path d="M11.8555 24.815C11.9909 25.2972 12.0833 25.6275 12.0866 25.6275H13.8998C13.8998 25.6275 13.4968 24.4253 13.0609 23.1406C12.724 23.5468 12.3046 24.1017 11.8555 24.815Z" fill="white"/>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_364_35401">
+<rect width="21.5385" height="27.28" fill="white"/>
+</clipPath>
+<clipPath id="clip1_364_35401">
+<rect width="21.5385" height="27.28" fill="white"/>
+</clipPath>
+<clipPath id="clip2_364_35401">
+<rect width="21.5385" height="27.2821" fill="white" transform="translate(0 -0.00195312)"/>
+</clipPath>
+</defs>
+</svg>
+            </div>
+	            <div class="flex flex-col items-start gap-0.5">
+              <span class="text-[9px]" style="color: {{ text_color }};">{{ _('Tax number') }}</span>
+              {% if store.settings.general.tax_settings.tax_number %}
+                <span class="text-[11px] font-bold" style="color: {{ heading_color }};">{{ store.settings.general.tax_settings.tax_number }}</span>
+              {% endif %}
+            </div>
+          </a>
+        {% endif %}
+      </div>
+
+      {# Payment Methods #}
+		      <div class="order-2 md:order-1 flex flex-wrap overflow-hidden justify-center md:justify-start items-center gap-2">
+		        {% for payment_method in store.settings.checkout.payment_methods %}
+		          <div class="footer-payment-item flex items-center justify-center bg-white rounded-[4px] px-1.5 md:px-2">
+		            <img src="{{ image_url(payment_method.icon, w=92, h=40, q=100) }}" alt="{{ payment_method.name }}" class="max-h-7 max-w-full object-contain" />
+		          </div>
+		        {% endfor %}
+		        {% for shipping_method in store.settings.checkout.shipping_methods %}
+		          <div class="footer-payment-item flex items-center justify-center bg-white rounded-[4px] px-1.5 md:px-2">
+		            <img src="{{ image_url(shipping_method.icon, w=92, h=40, q=100) }}" alt="{{ shipping_method.name }}" class="max-h-7 max-w-full object-contain" />
+		          </div>
+	        {% endfor %}
+	      </div>
+
+    </div>
+  {% endif %}
+
+  {# ── Divider ───────────────────────────────────────────────────────────── #}
+	  <div class="w-full" style="border-top: 1px solid {{ divider_color }};"></div>
+
+  {# ── Bottom bar ────────────────────────────────────────────────────────── #}
+	  <div class="py-4 px-4 flex flex-col md:grid md:grid-cols-3 items-center gap-4 md:gap-0 w-full ">
+
+    {% if settings.bottom_bar_show_language_selector != false %}
+      <button
+        type="button"
+        onclick="return window.openAnanasRegionSettings(event)"
+	        class="flex items-center gap-2 text-xs transition-opacity hover:opacity-100 md:justify-self-start"
+        style="color: {{ text_color }}; opacity: 0.8;"
+      >
+        <svg viewBox="0 0 20 20" fill="currentColor" class="size-4">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z" clip-rule="evenodd"/>
+        </svg>
+	        {% set footer_country_code = store.current_country.code if store.current_country and store.current_country.code else (session.country.code if session.country and session.country.code else '') %}
+	        {% if footer_country_code %}
+	          <span>{{ footer_country_code | title }}</span>
+	        {% endif %}
+	        {% if store.languages | length > 1 %}
+	          {% for lang in store.languages %}
+	            {% if lang.iso_code == session.lang %}
+	              <span class="h-5 w-px" style="background-color: {{ divider_color }};"></span>
+	              <span>{{ lang.name }}</span>
+	            {% endif %}
+	          {% endfor %}
+        {% endif %}
+      </button>
+    {% else %}
+      <span></span>
+    {% endif %}
+
+	    <p class="text-xs text-center md:col-start-2 md:justify-self-center" style="color: {{ text_color }}; opacity: 0.7;">
+      {% if settings.bottom_bar_copyright_text %}
+        {{ settings.bottom_bar_copyright_text }}
+      {% elif store.settings.branding.copyrights %}
+        {{ store.settings.branding.copyrights | safe }}
+      {% else %}
+        © {{ store.name }}
+      {% endif %}
+    </p>
+
+  </div>
+
+</footer>

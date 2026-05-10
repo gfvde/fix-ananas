@@ -1,0 +1,472 @@
+{#
+  Category/Product listing page banner.
+
+  Used by:
+  - templates/category.jinja when a category is present
+  - templates/products.jinja for the all-products listing
+#}
+
+{% macro normalize_cph_color(value, fallback) -%}
+  {% set raw = value if value else fallback %}
+  {% set color = raw|string|trim %}
+  {% if color|length == 7 and color.endswith('#') %}
+    #{{ color[:6] }}
+  {% elif color|length == 6 and '#' not in color %}
+    #{{ color }}
+  {% else %}
+    {{ color }}
+  {% endif %}
+{%- endmacro %}
+
+{% set cph_is_category = category is defined and category %}
+{% set cph_settings = settings.category_page if settings.category_page is defined and settings.category_page else {} %}
+{% set cph_subcategories = category.sub_categories if cph_is_category and category.sub_categories else [] %}
+{% set cph_has_subcategories = cph_subcategories and cph_subcategories|length > 0 %}
+{% set cph_title = category.name if cph_is_category else _('All Products') %}
+{% set cph_subtitle = (category.description | striptags) if cph_is_category and category.description else '' %}
+{% set cph_bg_raw = safeget(cph_settings, 'category_page_background_color', safeget(cph_settings, 'background_color', safeget(settings, 'category_page_background_color', safeget(settings, 'category_page_category_page_background_color', safeget(settings, 'background_color', 'rgba(247,81,43,0.11)'))))) %}
+{% set cph_title_color_raw = safeget(cph_settings, 'category_page_title_color', safeget(cph_settings, 'title_color', safeget(settings, 'category_page_title_color', safeget(settings, 'category_page_category_page_title_color', safeget(settings, 'title_color', '#F7512B'))))) %}
+{% set cph_subtitle_color_raw = safeget(cph_settings, 'category_page_subtitle_color', safeget(cph_settings, 'subtitle_color', safeget(settings, 'category_page_subtitle_color', safeget(settings, 'category_page_category_page_subtitle_color', safeget(settings, 'subtitle_color', '#000000'))))) %}
+{% set cph_breadcrumb_color_raw = safeget(cph_settings, 'category_page_breadcrumb_color', safeget(cph_settings, 'breadcrumb_color', safeget(settings, 'category_page_breadcrumb_color', safeget(settings, 'category_page_category_page_breadcrumb_color', safeget(settings, 'breadcrumb_color', '#525252'))))) %}
+{% set cph_card_title_color_raw = safeget(cph_settings, 'category_page_card_title_color', safeget(cph_settings, 'card_title_color', safeget(settings, 'category_page_card_title_color', safeget(settings, 'category_page_category_page_card_title_color', safeget(settings, 'card_title_color', '#262626'))))) %}
+{% set cph_card_meta_color_raw = safeget(cph_settings, 'category_page_card_meta_color', safeget(cph_settings, 'card_meta_color', safeget(settings, 'category_page_card_meta_color', safeget(settings, 'category_page_category_page_card_meta_color', safeget(settings, 'card_meta_color', '#737373'))))) %}
+{% set cph_card_active_color_raw = safeget(cph_settings, 'category_page_card_active_color', safeget(cph_settings, 'card_active_color', safeget(settings, 'category_page_card_active_color', safeget(settings, 'category_page_category_page_card_active_color', safeget(settings, 'card_active_color', '#F7512B'))))) %}
+{% set cph_card_hover_color_raw = safeget(cph_settings, 'category_page_card_hover_color', safeget(cph_settings, 'card_hover_color', safeget(settings, 'category_page_card_hover_color', safeget(settings, 'category_page_category_page_card_hover_color', safeget(settings, 'card_hover_color', '#F7512B'))))) %}
+{% set cph_bg = normalize_cph_color(cph_bg_raw, 'rgba(247,81,43,0.11)')|trim %}
+{% set cph_title_color = normalize_cph_color(cph_title_color_raw, '#F7512B')|trim %}
+{% set cph_subtitle_color = normalize_cph_color(cph_subtitle_color_raw, '#000000')|trim %}
+{% set cph_breadcrumb_color = normalize_cph_color(cph_breadcrumb_color_raw, '#525252')|trim %}
+{% set cph_card_title_color = normalize_cph_color(cph_card_title_color_raw, '#262626')|trim %}
+{% set cph_card_meta_color = normalize_cph_color(cph_card_meta_color_raw, '#737373')|trim %}
+{% set cph_card_active_color = normalize_cph_color(cph_card_active_color_raw, '#F7512B')|trim %}
+{% set cph_card_hover_color = normalize_cph_color(cph_card_hover_color_raw, '#F7512B')|trim %}
+{% set cph_variant_class = 'category-page-banner--with-subcategories' if cph_has_subcategories else 'category-page-banner--plain' %}
+
+<section
+  class="category-page-banner {{ cph_variant_class }}"
+  dir="rtl"
+  data-count-template="{{ _('%(count)s products') }}"
+  style="
+    --cph-bg: {{ cph_bg }};
+    --cph-title: {{ cph_title_color }};
+    --cph-subtitle: {{ cph_subtitle_color }};
+    --cph-breadcrumb: {{ cph_breadcrumb_color }};
+    --cph-card-title: {{ cph_card_title_color }};
+    --cph-card-meta: {{ cph_card_meta_color }};
+    --cph-active: {{ cph_card_active_color }};
+    --cph-hover: {{ cph_card_hover_color }};
+  "
+>
+  <div class="category-page-banner__inner">
+    <nav
+      class="category-page-banner__breadcrumb"
+      aria-label="{{ _('Breadcrumb') }}"
+    >
+      <a href="{{ url_for('home') }}">{{ _('Home') }}</a>
+      <span aria-hidden="true">/</span>
+      {% if cph_is_category %}
+        {% if category.parent_category %}
+          <a
+            href="{{ url_for('category_details', category_id=category.parent_category.id, slug=category.parent_category.slug) }}"
+            >{{ category.parent_category.name }}</a
+          >
+          <span aria-hidden="true">/</span>
+        {% endif %}
+        <span class="category-page-banner__breadcrumb-current">{{ category.name }}</span>
+      {% else %}
+        <span class="category-page-banner__breadcrumb-current">{{ _('All Products') }}</span>
+      {% endif %}
+    </nav>
+
+    <div class="category-page-banner__content">
+      <div class="category-page-banner__copy">
+        <h1>{{ cph_title }}</h1>
+        {% if cph_subtitle %}
+          <p>{{ cph_subtitle }}</p>
+        {% endif %}
+      </div>
+
+      {% if cph_has_subcategories %}
+        <div
+          class="category-page-banner__subcategories"
+          aria-label="{{ _('Subcategories') }}"
+        >
+          {% for subcategory in cph_subcategories %}
+            {% set subcategory_image = subcategory.image_full_size if subcategory.image_full_size else subcategory.image %}
+            {% set count_ns = namespace(value=none) %}
+            {% if subcategory.products_count is defined and subcategory.products_count is not none %}
+              {% set count_ns.value = subcategory.products_count %}
+            {% elif subcategory.productsCount is defined and subcategory.productsCount is not none %}
+              {% set count_ns.value = subcategory.productsCount %}
+            {% elif subcategory.product_count is defined and subcategory.product_count is not none %}
+              {% set count_ns.value = subcategory.product_count %}
+            {% elif subcategory.count is defined and subcategory.count is not none %}
+              {% set count_ns.value = subcategory.count %}
+            {% elif subcategory.products is defined and subcategory.products %}
+              {% set count_ns.value = subcategory.products|length %}
+            {% endif %}
+            {% set subcategory_count = count_ns.value %}
+            {% set subcategory_url = url_for('category_details', category_id=subcategory.id, slug=subcategory.slug) %}
+            <a
+              href="{{ subcategory_url }}"
+              class="category-page-banner__subcategory"
+              {% if cph_is_category and subcategory.id == category.id %}aria-current="page"{% endif %}
+            >
+              <span class="category-page-banner__subcategory-media">
+                {% if subcategory_image %}
+                  <img
+                    src="{{ image_url(subcategory_image, w=320, q=90, f='auto') }}"
+                    alt="{{ subcategory.name }}"
+                    loading="{% if loop.index > 3 %}lazy{% else %}eager{% endif %}"
+                  />
+                {% endif %}
+              </span>
+              <span class="category-page-banner__subcategory-text">
+                <span class="category-page-banner__subcategory-title">{{ subcategory.name }}</span>
+                <span
+                  class="category-page-banner__subcategory-count"
+                  data-category-page-count
+                  data-count-url="{{ subcategory_url }}"
+                  data-count-loaded="{% if subcategory_count is not none and subcategory_count|string != '0' %}true{% else %}false{% endif %}"
+                  >{{ _('%(count)s products') | format(count=(subcategory_count | default(0, true))) }}</span
+                >
+              </span>
+            </a>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+  .category-page-banner {
+    background: var(--cph-bg);
+    color: var(--cph-subtitle);
+    overflow: hidden;
+  }
+
+  .category-page-banner__inner {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 56px 24px;
+  }
+
+  .category-page-banner__breadcrumb {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    min-height: 40px;
+    padding: 16px 56px;
+    color: var(--cph-breadcrumb);
+    font-size: 12px;
+    line-height: 16px;
+    white-space: nowrap;
+  }
+
+  .category-page-banner__breadcrumb a,
+  .category-page-banner__breadcrumb span {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .category-page-banner__breadcrumb-current {
+    color: var(--cph-breadcrumb);
+    font-weight: 500;
+  }
+
+  .category-page-banner__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 48px;
+    width: 100%;
+  }
+
+  .category-page-banner--plain .category-page-banner__content {
+    justify-content: center;
+    min-height: 72px;
+    padding: 24px 0;
+  }
+
+  .category-page-banner__copy {
+    display: flex;
+    width: 418px;
+    max-width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 12px;
+    text-align: right;
+  }
+
+  .category-page-banner--plain .category-page-banner__copy {
+    align-items: center;
+    text-align: center;
+  }
+
+  .category-page-banner__copy h1,
+  .category-page-banner__copy p {
+    margin: 0;
+    letter-spacing: 0;
+  }
+
+  .category-page-banner__copy h1 {
+    color: var(--cph-title);
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 36px;
+  }
+
+  .category-page-banner__copy p {
+    width: 100%;
+    color: var(--cph-subtitle);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+  }
+
+  .category-page-banner__subcategories {
+    display: flex;
+    flex: 0 0 490px;
+    width: 490px;
+    max-width: 490px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 20px;
+    direction: rtl;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-padding-inline: 0;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .category-page-banner__subcategories::-webkit-scrollbar {
+    display: none;
+  }
+
+  .category-page-banner__subcategory {
+    display: flex;
+    width: 150px;
+    flex: 0 0 150px;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: inherit;
+    text-align: center;
+    text-decoration: none;
+    scroll-snap-align: start;
+  }
+
+  .category-page-banner__subcategory-media {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.42);
+  }
+
+  .category-page-banner__subcategory-media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition:
+      transform 180ms ease,
+      box-shadow 180ms ease,
+      border-color 180ms ease;
+  }
+
+  .category-page-banner__subcategory:hover .category-page-banner__subcategory-media img,
+  .category-page-banner__subcategory:focus-visible .category-page-banner__subcategory-media img {
+    transform: scale(1.02);
+  }
+
+  .category-page-banner__subcategory:hover .category-page-banner__subcategory-media {
+    border: 1px solid var(--cph-hover);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--cph-hover) 12%, transparent);
+  }
+
+  .category-page-banner__subcategory:hover .category-page-banner__subcategory-title {
+    color: var(--cph-hover);
+  }
+
+  .category-page-banner__subcategory-text {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .category-page-banner__subcategory-title {
+    color: var(--cph-card-title);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+  }
+
+  .category-page-banner__subcategory-count {
+    color: var(--cph-card-meta);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+  }
+
+  .category-page-banner__subcategory[aria-current="page"] .category-page-banner__subcategory-media {
+    border: 1.5px solid var(--cph-active);
+    box-shadow: 0 0 12px rgba(247, 81, 43, 0.2);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--cph-active) 24%, transparent);
+  }
+
+  .category-page-banner__subcategory[aria-current="page"] .category-page-banner__subcategory-title {
+    color: var(--cph-active);
+  }
+
+  @media (max-width: 767px) {
+    .category-page-banner__inner {
+      padding: 0;
+    }
+
+    .category-page-banner__breadcrumb {
+      display: none;
+    }
+
+    .category-page-banner__content {
+      display: block;
+    }
+
+    .category-page-banner--plain .category-page-banner__content {
+      min-height: 123px;
+      padding: 33px 16px 8px;
+    }
+
+    .category-page-banner--with-subcategories {
+      background: var(--cph-bg);
+    }
+
+    .category-page-banner--with-subcategories .category-page-banner__copy {
+      display: flex;
+      padding: 28px 16px 14px;
+      background: var(--cph-bg);
+    }
+
+    .category-page-banner__copy {
+      width: 100%;
+      align-items: center;
+      gap: 8px;
+      text-align: center;
+    }
+    .category-page-banner--with-subcategories .category-page-banner__copy {
+      background: var(--cph-bg);
+    }
+
+    .category-page-banner--plain .category-page-banner__copy {
+      padding: 0;
+    }
+
+    .category-page-banner__copy h1 {
+      font-size: 20px;
+      line-height: 28px;
+    }
+
+    .category-page-banner__copy p {
+      font-size: 16px;
+      line-height: 24px;
+    }
+
+    .category-page-banner__subcategories {
+      justify-content: flex-start;
+      gap: 8px;
+      width: 100%;
+      max-width: 100%;
+      flex-basis: auto;
+      min-height: 186px;
+      overflow-x: auto;
+      background: var(--cph-bg);
+      padding: 8px 16px 12px;
+      scroll-padding-inline: 16px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .category-page-banner__subcategories::-webkit-scrollbar {
+      display: none;
+    }
+
+    .category-page-banner__subcategory {
+      width: 114px;
+      flex-basis: 114px;
+    }
+
+    .category-page-banner__subcategory-title,
+    .category-page-banner__subcategory-count {
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    const root = document.querySelector(".category-page-banner");
+    if (!root) return;
+
+    const countNodes = root.querySelectorAll("[data-category-page-count][data-count-loaded='false']");
+    if (!countNodes.length || !window.DOMParser || !window.fetch) return;
+
+    const countTemplate = root.dataset.countTemplate || "%(count)s products";
+    const formatProductsCount = (value) => countTemplate.replace("%(count)s", value);
+    const toNumber = (value) => {
+      const normalized = String(value || "")
+        .replace(/[٠-٩]/g, (digit) => "٠١٢٣٤٥٦٧٨٩".indexOf(digit))
+        .replace(/[^\d]/g, "");
+      return normalized ? Number(normalized) : NaN;
+    };
+
+    const readCountFromDocument = (doc) => {
+      const infiniteScroll = doc.querySelector("[data-infinite-scroll][data-total-count]");
+      const infiniteCount = toNumber(infiniteScroll && infiniteScroll.dataset.totalCount);
+      if (Number.isFinite(infiniteCount)) return infiniteCount;
+
+      const rangeCount = doc.querySelector("[data-products-range-count]");
+      const rangeText = rangeCount ? rangeCount.textContent : "";
+      const rangeMatch = rangeText.match(/(?:من|of)\s*([\d٠-٩,]+)/i);
+      if (rangeMatch) {
+        const count = toNumber(rangeMatch[1]);
+        if (Number.isFinite(count)) return count;
+      }
+
+      return NaN;
+    };
+
+    countNodes.forEach(async (node) => {
+      const url = node.dataset.countUrl;
+      if (!url) return;
+
+      try {
+        const response = await fetch(url, {
+          headers: { "X-Requested-With": "XMLHttpRequest" },
+          credentials: "same-origin"
+        });
+
+        if (!response.ok) return;
+
+        const html = await response.text();
+        const doc = new DOMParser().parseFromString(html, "text/html");
+        const count = readCountFromDocument(doc);
+
+        if (Number.isFinite(count)) {
+          node.textContent = formatProductsCount(count);
+          node.dataset.countLoaded = "true";
+        }
+      } catch (error) {
+        node.dataset.countLoaded = "error";
+      }
+    });
+  })();
+</script>

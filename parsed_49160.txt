@@ -1,0 +1,86 @@
+  name: Untitled
+      name: chevron-left
+      name: chevron-right
+    name: Frame 2147207866
+    type: FRAME
+    fills: fill_UGMJS5
+        name: Frame 1984079891
+        type: FRAME
+            name: Frame 1984079584
+            type: FRAME
+                name: لحظات من عالم أناناس
+                type: TEXT
+                text: لحظات من عالم أناناس
+                fills: fill_U26Y9S
+                name: Frame 1984079897
+                type: FRAME
+                    name: chevron-left
+                    type: IMAGE-SVG
+                    fills: fill_GLXV1Y
+                    name: قهوة مو بس تُشرب… تنعاش
+                    type: TEXT
+                    text: قهوة مو بس تُشرب… تنعاش
+                    fills: fill_U26Y9S
+                    name: chevron-right
+                    type: IMAGE-SVG
+                    fills: fill_GLXV1Y
+        name: Frame 2147207865
+        type: FRAME
+            name: Frame 2147207860
+            type: FRAME
+                name: Frame 2147207860
+                type: FRAME
+                fills: fill_7PUPZN
+                name: Frame 2147207861
+                type: FRAME
+                fills: fill_ZRXLIQ
+            name: Frame 2147207862
+            type: FRAME
+                name: Frame 2147207864
+                type: FRAME
+                fills: fill_AW3LJG
+                name: Frame 2147207862
+                type: FRAME
+                fills: fill_JIOZIA
+        name: Frame 2147207401
+        type: FRAME
+        fills: fill_DC7J8O
+            name: Frame 2147207402
+            type: FRAME
+            fills: fill_R4D6E1
+      mode: column
+      gap: 16px
+      padding: 0px 16px
+        width: 390
+      mode: row
+      gap: 8px
+      mode: column
+      gap: 8px
+        width: 327
+      mode: none
+      mode: row
+      mode: none
+        width: 24
+        height: 24
+      mode: none
+        width: 5
+        height: 10
+      mode: none
+      mode: none
+        width: 5
+        height: 10
+      mode: column
+      gap: 8px
+      mode: row
+      gap: 8px
+      mode: none
+      - type: IMAGE
+      - type: IMAGE
+      - type: IMAGE
+      - type: IMAGE
+      mode: none
+        width: 180
+        height: 2
+      mode: none
+        width: 78
+        height: 2

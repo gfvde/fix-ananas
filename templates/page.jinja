@@ -1,0 +1,1578 @@
+{% extends "layout.jinja" %}
+
+{% block title %}{{ page.title }} – {{ store.name }}{% endblock %}
+
+{% block content %}
+  {% if page.slug == 'about-us' %}
+  <style>
+    /* ── Reviews Section ─────────────────────────────── */
+    .reviews-section {
+      background: #ffffff;
+      padding: 40px 56px 24px;
+      font-family: 'Expo Arabic', sans-serif;
+      direction: rtl;
+    }
+    .reviews-section__title {
+      font-size: 30px;
+      font-weight: 500;
+      color: #000000;
+      line-height: 36px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      align-items: stretch;
+    }
+    .reviews-col {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    /* ── Base card ── */
+    .review-card {
+      flex: 1;
+      border-radius: 4px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 40px;
+    }
+    .review-card--dark  { background: #171717; }
+    .review-card--light { background: #EEEEEE; }
+    .review-card--light2 { background: #EEEEEE; gap: 56px; }
+    /* ── Stars ── */
+    .review-stars { display: flex; align-items: center; gap: 4px; }
+    /* ── Review text ── */
+    .review-body { display: flex; flex-direction: column; gap: 8px; }
+    .review-text {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      font-family: 'Expo Arabic', sans-serif;
+    }
+    .review-text--white { color: #ffffff; }
+    .review-text--black { color: #000000; }
+    /* ── Author ── */
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .review-author__avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 4px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .review-author__info { display: flex; flex-direction: column; gap: 0; }
+    .review-author__name {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      font-family: 'Expo Arabic', sans-serif;
+    }
+    .review-author__name--white { color: #ffffff; }
+    .review-author__name--black { color: #000000; }
+    /* ── Verified badge ── */
+    .verified-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #25A562;
+      line-height: 20px;
+      font-family: 'Expo Arabic', sans-serif;
+    }
+    .verified-badge--sm {
+      font-size: 12px;
+      line-height: 16px;
+    }
+    /* ── Image card ── */
+    .review-card--image {
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .review-card--image .review-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    .review-card--image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top,
+        rgba(0,0,0,1.00) 0%,
+        rgba(0,0,0,0.42) 76%,
+        rgba(102,102,102,0) 100%);
+      z-index: 1;
+    }
+    .review-card--image .review-card__content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    /* ── Mobile overrides ── */
+    @media (max-width: 767px) {
+      .reviews-section {
+        padding: 24px 16px;
+      }
+      .reviews-section__title {
+        font-size: 24px;
+        line-height: 32px;
+        margin-bottom: 16px;
+      }
+      .reviews-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      .reviews-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .review-card {
+        padding: 12px;
+        gap: 24px;
+      }
+      .review-card--light2 { gap: 24px; }
+      .review-text {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+      }
+      .review-author__avatar {
+        width: 32px;
+        height: 32px;
+      }
+      .review-author__name {
+        font-size: 12px;
+        line-height: 16px;
+      }
+      .verified-badge {
+        font-size: 12px;
+        line-height: 16px;
+      }
+      .review-card--image {
+        aspect-ratio: 1 / 1;
+      }
+      .review-card--image .review-card__content {
+        gap: 24px;
+      }
+    }
+
+    .about-ananas-section {
+      padding-top: 5rem;
+      padding-bottom: 3rem;
+      background-color: #ffffff;
+      direction: rtl;
+    }
+
+    /* Journey Section */
+    .coffee-journey-section {
+      background-color: #FFF0EC;
+      padding: 6rem 0;
+      overflow: clip;
+      direction: rtl;
+    }
+    .journey-title {
+      color: #F7512B;
+      font-weight: 700;
+      font-size: 30px;
+      margin-bottom: 4rem;
+      text-align: center;
+    }
+    .timeline-wrapper {
+      position: relative;
+      max-width: 493px;
+      margin: 0 auto;
+      padding: 0;
+      direction: ltr;
+    }
+    .timeline-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      border-left: 2px dashed #895B2E;
+      transform: translateX(-50%);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .scrolling-bean {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 48px;
+      background: #FFF0EC;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+    }
+    .scrolling-bean svg {
+      width: 33px;
+      height: 37px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+    }
+    .timeline-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2.5rem;
+      position: relative;
+      z-index: 2;
+      flex-direction: row-reverse;
+    }
+    .timeline-item:nth-child(even) { flex-direction: row; }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-content {
+      width: 195px;
+      text-align: right;
+      direction: rtl;
+    }
+    .timeline-image {
+      width: 195px;
+      display: flex;
+    }
+    .timeline-item:nth-child(even) .timeline-image { justify-content: flex-end; }
+    .timeline-image img {
+      width: 190px;
+      height: 154px;
+      object-fit: cover;
+      border-radius: 0;
+    }
+    .timeline-content h4 {
+      color: #000;
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: 0;
+      line-height: 28px;
+    }
+    .timeline-content p {
+      color: #000;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 28px;
+      margin: 0;
+    }
+
+    /* Principles Section */
+    .principles-section {
+      padding: 6rem 0;
+      background-color: #FFFFFF;
+      direction: rtl;
+    }
+    .section-title {
+      color: #F7512B;
+      font-weight: 700;
+      font-size: 30px;
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+    .principles-carousel-wrapper {
+      margin: 0 auto;
+      max-width: 1328px;
+      padding: 0 15px;
+      direction: rtl;
+    }
+    .principles-carousel {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 24px;
+      scrollbar-width: thin;
+      scrollbar-color: #F7512B #FAF2EC;
+    }
+    .principle-card {
+      flex: 0 0 320px;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      text-align: right;
+    }
+    .principle-card img {
+      width: 320px;
+      height: 320px;
+      object-fit: cover;
+      margin-bottom: 16px;
+      background-color: #FAF2EC;
+    }
+    .principle-card h5 {
+      color: #363636;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .principle-card p {
+      color: #363636;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* Why Ananas Section */
+    .why-ananas-section {
+      padding: 5rem 0;
+      background-color: #FFFFFF;
+      direction: rtl;
+    }
+    .why-ananas-desktop {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 80px;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+    .why-side-col {
+      display: flex;
+      flex-direction: column;
+      gap: 68px;
+      align-items: center;
+      width: 194px;
+    }
+    .why-icon-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      text-align: center;
+      width: 100%;
+    }
+    .why-icon-item img { width: 100px; height: 100px; object-fit: contain; }
+    .why-icon-item p {
+      color: #404040;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 24px;
+      margin: 0;
+    }
+    .why-cup-center {
+      width: 251px;
+      height: 426px;
+      flex-shrink: 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .why-cup-center img, .why-cup-mobile img {
+      position: absolute;
+      width: 198%;
+      height: 117%;
+      top: -8.76%;
+      object-fit: cover;
+    }
+    /* Empty glass layer - desaturated and lightened */
+    .cup-bg {
+      z-index: 1;
+      filter: grayscale(1) brightness(1.7) opacity(0.5);
+    }
+    /* Liquid fill layer - full color, revealed via clip-path */
+    .cup-fill {
+      z-index: 2;
+      clip-path: inset(var(--cup-fill-percent, 100%) 0 0 0);
+      transition: none !important;
+    }
+    .why-ananas-mobile { display: none; }
+    .why-ananas-mobile-text {
+      direction: rtl;
+      text-align: center;
+      color: #363636;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 400;
+    }
+    .why-ananas-mobile-text p { margin-bottom: 0; }
+    .why-cup-mobile {
+      width: 250px;
+      height: 363px;
+      overflow: hidden;
+      position: relative;
+      margin: 0 auto;
+    }
+    .why-cup-mobile img {
+      position: absolute;
+      width: 198%;
+      height: 136%;
+      top: -14.36%;
+
+      object-fit: cover;
+    }
+
+    /* Partners Section */
+    .partners-section {
+      padding: 40px 0;
+      background: #fff;
+      direction: rtl;
+    }
+    .partners-inner {
+      display: flex;
+      flex-direction: row;
+      gap: 12px;
+      max-width: 1328px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+    .partner-card-new {
+      flex: 1;
+      background-color: rgba(211, 219, 111, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      min-height: 260px;
+      flex-direction: row-reverse;
+    }
+    .partner-card-new .card-img {
+      flex: 1;
+      min-width: 0;
+      height: 100%;
+      min-height: 260px;
+      position: relative;
+      overflow: hidden;
+    }
+    .partner-card-new .card-img img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .partner-card-new .card-text {
+      flex: 1;
+      min-width: 0;
+      padding: 16px;
+      text-align: right;
+    }
+    .partner-card-new .card-text h4 {
+      color: #F7512B;
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 32px;
+      margin-bottom: 12px;
+      white-space: nowrap;
+    }
+    .partner-card-new .card-text p {
+      color: #363636;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 28px;
+      margin: 0;
+    }
+
+    /* Grow Together */
+    .grow-together-section {
+      padding: 5rem 15px;
+      text-align: center;
+      direction: rtl;
+    }
+    .grow-together-section h2 {
+      color: #F7512B;
+      font-weight: 700;
+      font-size: 36px;
+      margin-bottom: 1.5rem;
+    }
+    .grow-together-section p {
+      color: #000;
+      font-size: 20px;
+      font-weight: 500;
+      max-width: 620px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .why-ananas-desktop { display: none; }
+      .why-ananas-mobile { display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 0 16px; }
+      .principles-carousel { gap: 12px; }
+      .principle-card { flex: 0 0 280px; }
+      .principle-card img { width: 280px; height: 280px; }
+      .partners-inner { flex-direction: column; }
+      .partner-card-new { flex-direction: column; }
+      .partner-card-new .card-img { width: 100%; min-height: 358px; height: 358px; flex: none; }
+      .grow-together-section h2 { font-size: 24px; }
+      .grow-together-section p { font-size: 18px; }
+    }
+
+    /* ── UGC Video Section ── */
+    .ugc-section {
+      background: #ffffff;
+      padding: 24px 56px 48px;
+      direction: rtl;
+      font-family: 'Expo Arabic', sans-serif;
+    }
+    .ugc-section__header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+      text-align: right;
+      margin-bottom: 16px;
+    }
+    .ugc-section__title {
+      font-size: 30px;
+      font-weight: 500;
+      line-height: 36px;
+      color: #000;
+    }
+    .ugc-section__subtitle {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      color: #000;
+    }
+    .ugc-videos {
+      display: flex;
+      gap: 16px;
+    }
+    .ugc-video {
+      flex: 1;
+      aspect-ratio: 309 / 522;
+      overflow: hidden;
+      border-radius: 8px;
+      position: relative;
+      min-width: 0;
+    }
+    .ugc-video img.video-thumb {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .ugc-play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 40px;
+      background: rgba(65, 65, 65, 0.4);
+      backdrop-filter: blur(2px);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    /* ── Photo Gallery Section ── */
+    .gallery-section {
+      background: #ffffff;
+      padding: 40px 56px;
+      direction: rtl;
+      font-family: 'Expo Arabic', sans-serif;
+    }
+    .gallery-section__header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .gallery-section__title {
+      font-size: 30px;
+      font-weight: 500;
+      line-height: 36px;
+      color: #000;
+    }
+    .gallery-section__subtitle {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      color: #000;
+    }
+    .gallery-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .gallery-row {
+      display: flex;
+      gap: 10px;
+      height: 257px;
+    }
+    .gallery-item {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+      min-width: 0;
+    }
+    .gallery-item img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .gallery-desktop { display: block; }
+    .gallery-mobile  { display: none; }
+
+    /* ── Pagination indicator ── */
+    .section-pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 16px;
+    }
+    .pagination-track {
+      width: 180px;
+      height: 2px;
+      background: #e5e5e5;
+      overflow: hidden;
+      position: relative;
+    }
+    .pagination-fill {
+      position: absolute;
+      right: -1px;
+      top: 0;
+      width: 78px;
+      height: 2px;
+      background: #737373;
+    }
+
+    /* ── Mobile UGC / Gallery overrides ── */
+    @media (max-width: 767px) {
+      /* reviews title */
+      .reviews-section__title { text-align: right; }
+
+      /* ugc */
+      .ugc-section { padding: 16px 16px 24px; }
+      .ugc-section__header { align-items: center; text-align: center; }
+      .ugc-section__title { font-size: 24px; line-height: 32px; text-align: center; }
+      .ugc-section__subtitle { text-align: center; max-width: 277px; }
+      .ugc-videos {
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+      .ugc-videos::-webkit-scrollbar { display: none; }
+      .ugc-video {
+        flex: 0 0 193px;
+        height: 326px;
+        aspect-ratio: unset;
+        scroll-snap-align: start;
+      }
+
+      /* gallery */
+      .gallery-section { padding: 16px 16px 24px; }
+      .gallery-section__title { font-size: 24px; line-height: 32px; }
+      .gallery-row { gap: 8px; height: 175px; }
+      .gallery-grid { gap: 8px; }
+      .gallery-desktop { display: none; }
+      .gallery-mobile  { display: block; }
+
+      /* gallery mobile nav row */
+      .gallery-mobile-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 8px;
+      }
+      .gallery-nav-btn {
+        width: 24px;
+        height: 24px;
+        background: #f5f5f5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+    }
+    @media (min-width: 768px) {
+      .reviews-section__title { text-align: right; }
+    }
+
+    /* About us page spacing aligned with Figma frame 364:25751 / 364:20762 */
+    .about-ananas-section {
+      padding: 32px 56px 0;
+      background: #FCFAF7;
+      font-family: 'Expo Arabic', sans-serif;
+    }
+    .about-ananas-section > .theme-container {
+      width: 100%;
+      max-width: none !important;
+      margin: 0 0 24px !important;
+      padding: 0 !important;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      text-align: center;
+    }
+    .about-ananas-section .ananas-title {
+      margin: 0 !important;
+      color: #F7512B !important;
+      font-size: 30px !important;
+      line-height: 36px !important;
+      font-weight: 700 !important;
+    }
+    .about-ananas-section .ananas-subtitle {
+      margin: 0 !important;
+      color: #000 !important;
+      font-size: 20px !important;
+      line-height: 32px !important;
+      font-weight: 500 !important;
+    }
+    .about-ananas-section .ananas-subtitle__lead,
+    .about-ananas-section .ananas-subtitle__body {
+      display: block;
+    }
+    .about-mobile-break {
+      display: none;
+    }
+    .about-ananas-section .ananas-img-wrapper img {
+      width: 100% !important;
+      height: 391px !important;
+      max-height: none !important;
+      object-fit: cover !important;
+      display: block;
+    }
+
+    .coffee-journey-section {
+      padding: 40px 56px;
+      background: #FFF0EC;
+    }
+    .coffee-journey-section > .theme-container {
+      width: 100%;
+      max-width: none;
+      padding: 0;
+    }
+    .journey-title {
+      margin: 0 0 24px;
+      font-size: 30px;
+      line-height: 36px;
+      font-weight: 700;
+    }
+    .timeline-wrapper {
+      width: 493px;
+      max-width: 100%;
+    }
+    .timeline-item {
+      min-height: 170px;
+      margin-bottom: 32px;
+    }
+    .timeline-content {
+      width: 190px;
+    }
+    .timeline-image {
+      width: 190px;
+    }
+    .timeline-image img {
+      width: 190px;
+      height: 170px;
+    }
+    .timeline-content h4,
+    .timeline-content p {
+      font-size: 18px;
+      line-height: 28px;
+    }
+    .timeline-content h4 {
+      font-weight: 400;
+    }
+    .timeline-content p {
+      font-weight: 400;
+    }
+    .timeline-mobile-copy {
+      display: none;
+    }
+
+    .principles-section {
+      padding: 40px 56px;
+      background: #FCFAF7;
+    }
+    .principles-section > .theme-container {
+      width: 100%;
+      max-width: none;
+      padding: 0;
+    }
+    .section-title {
+      margin: 0 0 24px;
+      color: #F7512B;
+      font-size: 30px;
+      line-height: 36px;
+      font-weight: 700;
+      text-align: center;
+    }
+    .principles-carousel-wrapper {
+      max-width: none;
+      padding: 0;
+    }
+    .principles-carousel {
+      gap: 16px;
+      padding-bottom: 0;
+      overflow: visible;
+      scrollbar-width: none;
+    }
+    .principles-carousel::-webkit-scrollbar {
+      display: none;
+    }
+    .principle-card {
+      flex: 1 1 0;
+      min-width: 0;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+    }
+    .principle-card img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      margin-bottom: 0;
+    }
+    .principle-card h5 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 28px;
+      color: #000;
+      text-align: center;
+    }
+    .principle-card p {
+      font-size: 16px;
+      line-height: 24px;
+      color: #404040;
+      text-align: center;
+    }
+    .principles-mobile-progress {
+      display: none;
+    }
+
+    .why-ananas-section {
+      padding: 32px 0 48px;
+      background: #FCFAF7;
+    }
+    .why-ananas-section > .theme-container {
+      padding: 0;
+    }
+    .why-ananas-desktop {
+      height: 427px;
+      max-width: none;
+      gap: 80px;
+      padding: 0;
+    }
+    .why-side-col {
+      gap: 68px;
+    }
+    .why-icon-item {
+      height: 156px;
+    }
+    .why-icon-item p {
+      font-size: 16px;
+      line-height: 24px;
+      color: #404040;
+    }
+
+    .partners-section {
+      padding: 24px 56px;
+      background: #FCFAF7;
+    }
+    .partners-inner {
+      max-width: none;
+      padding: 0;
+      gap: 16px;
+    }
+    .partner-card-new {
+      min-height: 320px;
+    }
+    .partner-card-new .card-img {
+      min-height: 320px;
+    }
+    .partner-card-new .card-text h4 {
+      margin: 0 0 12px;
+      font-size: 24px;
+      line-height: 32px;
+      font-weight: 700;
+    }
+    .partner-card-new .card-text p {
+      font-size: 18px;
+      line-height: 28px;
+      font-weight: 400;
+      color: #262626;
+    }
+
+    .grow-together-section {
+      padding: 32px 16px 48px;
+      background: #FCFAF7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .grow-together-section .theme-container {
+      padding: 0;
+    }
+    .grow-together-section h2 {
+      margin: 0 0 16px;
+      color: #F7512B;
+      font-size: 30px;
+      line-height: 36px;
+      font-weight: 500;
+    }
+    .grow-together-section p {
+      max-width: 590px;
+      font-size: 20px;
+      line-height: 28px;
+      font-weight: 500;
+    }
+
+    @media (max-width: 767px) {
+      .about-ananas-section {
+        padding: 16px 0 0;
+      }
+      .partners-inner {
+        flex-direction: column;
+      }
+      .about-ananas-section > .theme-container {
+        width: 358px;
+        max-width: calc(100% - 32px) !important;
+        gap: 8px;
+        margin-bottom: 16px !important;
+      }
+      .about-ananas-section .ananas-title {
+        font-size: 24px !important;
+        line-height: 32px !important;
+        font-weight: 500 !important;
+      }
+      .about-ananas-section .ananas-subtitle {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        font-size: 16px !important;
+        line-height: 24px !important;
+        font-weight: 400 !important;
+        text-align: center !important;
+        align-items: center;
+      }
+      .about-ananas-section .ananas-subtitle__lead {
+        font-size: 18px;
+        line-height: 28px;
+        font-weight: 500;
+        width: 100%;
+        text-align: center;
+      }
+      .about-mobile-break {
+        display: block;
+      }
+      .about-ananas-section .ananas-subtitle__body {
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 400;
+        width: 100%;
+        text-align: center;
+      }
+      .about-ananas-section .ananas-img-wrapper img {
+        height: 176px !important;
+      }
+
+      .coffee-journey-section {
+        padding: 32px 16px;
+      }
+      .journey-title {
+        width: 292px;
+        max-width: 100%;
+        margin: 0 auto 24px;
+        font-size: 24px;
+        line-height: 34px;
+        font-weight: 500;
+        white-space: normal;
+      }
+      .timeline-wrapper {
+        width: 358px;
+      }
+      .timeline-item {
+        min-height: 138px;
+        margin-bottom: 40px;
+      }
+      .timeline-content {
+        width: 154px;
+      }
+      .timeline-image {
+        width: 154px;
+      }
+      .timeline-image img {
+        width: 154px;
+        height: 138px;
+      }
+      .timeline-content h4,
+      .timeline-content p {
+        font-size: 16px;
+        line-height: 24px;
+      }
+      .timeline-desktop-copy {
+        display: none;
+      }
+      .timeline-mobile-copy {
+        display: inline;
+      }
+      .scrolling-bean {
+        width: 32px;
+        height: 32px;
+      }
+      .scrolling-bean svg {
+        width: 27px;
+        height: 31px;
+      }
+
+      .principles-section {
+        padding: 56px 16px 0;
+      }
+      .principles-section .section-title {
+        margin-bottom: 16px;
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: 500;
+      }
+      .principles-carousel {
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 16px;
+      }
+      .principle-card {
+        flex: 0 0 188px;
+        scroll-snap-align: start;
+      }
+      .principle-card img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+      }
+      .principle-card h5 {
+        font-size: 20px;
+        line-height: 28px;
+        font-weight: 500;
+      }
+      .principle-card p {
+        font-size: 16px;
+        line-height: 24px;
+        color: #000;
+      }
+      .principles-mobile-progress {
+        display: block;
+        width: 180px;
+        height: 2px;
+        margin: 32px auto 0;
+        background: #e5e5e5;
+        overflow: hidden;
+        position: relative;
+      }
+      .principles-mobile-progress__fill {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 78px;
+        height: 2px;
+        background: #737373;
+        transform: translateX(var(--principles-progress-offset, 0px));
+        transition: transform 0.15s ease;
+      }
+
+      .why-ananas-section {
+        padding: 32px 0 0;
+      }
+      .why-ananas-mobile {
+        gap: 16px;
+        padding: 0 16px;
+      }
+      .why-ananas-section .section-title {
+        margin-bottom: 24px;
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: 500;
+      }
+      .why-cup-mobile {
+        width: 186px;
+        height: 273px;
+        order: 1;
+      }
+      .why-ananas-mobile-text {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 157px));
+        justify-content: center;
+        gap: 16px 32px;
+        order: 2;
+      }
+      .why-mobile-icon-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
+        text-align: center;
+      }
+      .why-mobile-icon-item img {
+        width: 65px;
+        height: 65px;
+        object-fit: contain;
+        display: block;
+      }
+      .why-mobile-icon-item p {
+        margin: 0;
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 500;
+      }
+
+      .partners-section {
+        padding: 56px 16px 0;
+      }
+      .partners-inner {
+        gap: 16px;
+      }
+      .partner-card-new {
+        min-height: 0;
+        background: transparent;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .partner-card-new:nth-child(2) {
+        order: 2;
+      }
+      .partner-card-new:nth-child(1) {
+        order: 1;
+      }
+      .partner-card-new .card-img {
+        width: 100%;
+        height: 358px;
+        min-height: 358px;
+      }
+      .partner-card-new .card-text {
+        padding: 0;
+        text-align: center;
+        order: 1;
+      }
+      .partner-card-new .card-img {
+        order: 2;
+      }
+      .partner-card-new .card-text h4 {
+        margin-bottom: 12px;
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: 500;
+        text-align: center;
+      }
+      .partner-card-new .card-text p {
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 400;
+        text-align: center;
+      }
+
+      .grow-together-section {
+        margin-top: 56px;
+        margin-bottom: 56px;
+        padding: 16px;
+        background: #FFF0EC;
+      }
+      .grow-together-section h2 {
+        margin-bottom: 8px;
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: 500;
+      }
+      .grow-together-section p {
+        width: 316px;
+        max-width: 100%;
+        font-size: 18px;
+        line-height: 28px;
+      }
+    }
+  </style>
+{# 
+
+  {# About Content Section #}
+  <section class="about-ananas-section">
+    <div class="theme-container" style="max-width: 800px; text-align: center;">
+      <h3 class="ananas-title" style="color: #F85A3E; font-weight: 900; font-size: 2.5rem; margin-bottom: 1.5rem;">عن أناناس</h3>
+      <p class="ananas-subtitle" style="color: #222222; font-weight: 700; font-size: 1.4rem; line-height: 1.8; margin-bottom: 4rem;">
+        <span class="ananas-subtitle__lead">القهوة مو شيء تشربه وخلاص<br class="about-mobile-break"> هي مزاج، ووقت، ولحظة تضبط يومك من أولها</span>
+        <span class="ananas-subtitle__body">في أناناس، نشتغل على كل تفصيلة عشان تعيش هالتجربة كما تستحقها</span>
+      </p>
+    </div>
+    <div class="ananas-img-wrapper w-full">
+      <img src="{{ 'images/about-us/figma-d3380972-304b-40b5-8515-a02c0b0bb090.jpg' | asset_url }}" alt="عن أناناس" style="object-fit: cover; max-height: 50vh; width: 100%;" />
+    </div>
+  </section>
+
+  {# Coffee Journey #}
+  <section class="coffee-journey-section">
+    <div class="theme-container">
+      <h2 class="journey-title">رحلة القهوة من المصدر إلى كوبك</h2>
+      <div class="timeline-wrapper">
+        <div class="timeline-line"></div>
+        <div class="scrolling-bean">
+          <svg width="33" height="37" viewBox="0 0 33 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.61943 4.21244C9.22593 4.13121 9.83823 4.12079 10.4457 4.19842L10.4428 4.20453C9.9926 5.18754 9.72931 6.2658 9.54755 7.34729C9.16406 9.74965 9.39738 12.2472 10.0819 14.5562C10.8044 17.0121 12.1241 19.2042 12.7009 21.7186C13.008 23.1373 13.1895 24.6023 13.117 26.0637C13.078 27.3353 12.8437 28.5907 12.5124 29.8056C12.2404 30.7717 11.8437 31.6853 11.4257 32.5821C10.8369 32.687 10.2372 32.6698 9.64488 32.6184C10.601 30.1592 10.953 27.3989 10.5778 24.7457C10.3938 23.3562 10.0164 22.0062 9.5295 20.7126C9.09122 19.5862 8.57979 18.4975 8.15085 17.3664C7.68711 16.2052 7.33842 14.9871 7.13733 13.7345C6.63105 10.5033 7.18341 7.09714 8.60944 4.23401L8.61943 4.21244Z" fill="#4F2614"/>
+            <path d="M7.41008 4.52191C7.80131 4.3918 8.19802 4.26133 8.60762 4.23438C7.18191 7.0975 6.62923 10.5034 7.13551 13.7349C7.3366 14.9871 7.68529 16.2052 8.14903 17.3668C8.57797 18.4979 9.08908 19.5866 9.52769 20.713C10.0146 22.0062 10.392 23.3562 10.576 24.746C10.9511 27.3993 10.5992 30.1592 9.64306 32.6187C8.39299 32.452 7.189 31.9344 6.14841 31.148C4.4085 29.8329 3.13039 27.868 2.29443 25.7388C1.2548 23.0413 0.767861 20.0905 0.793964 17.1594C0.789775 15.6581 0.956708 14.1565 1.2851 12.7016C1.68084 11.0335 2.32118 9.4269 3.23384 8.02984C4.27927 6.44228 5.71818 5.13508 7.41008 4.52191Z" fill="#884C2E"/>
+            <path d="M9.54749 7.34686C9.72925 6.26537 9.99254 5.18711 10.4427 4.2041C11.8253 4.3795 13.1501 5.00848 14.2506 5.95267C15.8546 7.32134 17.0389 9.23812 17.7862 11.3174C18.7043 13.7679 19.1185 16.4272 19.1729 19.0743C19.2013 21.7818 18.7849 24.526 17.7437 26.9859C17.3579 27.8438 16.9093 28.6744 16.3528 29.4094C15.686 30.3371 14.8588 31.1256 13.9222 31.6957C13.1437 32.1417 12.3022 32.4914 11.4257 32.582C11.844 31.6853 12.2403 30.7713 12.5123 29.8055C12.8436 28.5907 13.0779 27.3352 13.1169 26.0636C13.1897 24.6022 13.008 23.1372 12.7009 21.7186C12.124 19.2041 10.804 17.012 10.0818 14.5561C9.39699 12.2468 9.164 9.74921 9.54749 7.34686Z" fill="#884B2E"/>
+            <path d="M21.4585 7.6398C23.0357 6.71717 24.9325 6.47456 26.647 7.02807C26.538 7.16932 26.4185 7.30051 26.2873 7.41552C24.7102 8.95312 23.4736 10.9317 22.7785 13.1389C22.1465 15.0744 22.0092 17.1633 22.1088 19.2063C22.1681 20.0847 22.1981 20.966 22.201 21.8462C22.1662 24.5213 21.5371 27.226 20.2042 29.4687C19.9174 29.973 19.5848 30.4428 19.2374 30.8967C19.0447 31.1573 18.8156 31.383 18.6429 31.6626C18.2542 31.4146 17.8868 31.126 17.543 30.8061C17.7524 30.4862 17.9867 30.1872 18.1901 29.8627C18.8372 28.7866 19.3857 27.6303 19.7637 26.4033C20.4311 24.5088 20.7447 22.482 20.8794 20.4595C20.8813 19.2745 20.9403 18.082 20.7995 16.9042C20.6261 14.7326 20.1675 12.5814 19.3896 10.5788C19.2813 10.2765 19.1566 9.98105 18.9925 9.71113C19.7108 8.88375 20.5384 8.16707 21.4585 7.6398Z" fill="#67351E"/>
+            <path d="M26.6451 7.02734C27.2035 7.20741 27.7353 7.48273 28.2377 7.80656C26.8729 9.27479 25.832 11.1157 25.2542 13.1314C24.802 14.6826 24.6045 16.3212 24.6193 17.9501C24.6058 19.184 24.763 20.4114 24.7401 21.646C24.7466 24.3093 24.0499 26.9704 22.7315 29.1938C22.1208 30.221 21.3986 31.1713 20.5671 31.9857C20.4434 32.1119 20.3245 32.2431 20.2084 32.3775C19.6606 32.2165 19.1369 31.9652 18.6406 31.6615C18.8134 31.3819 19.0425 31.1562 19.2352 30.8956C19.5826 30.4417 19.9149 29.9719 20.202 29.4676C21.5349 27.2249 22.164 24.5202 22.1988 21.8451C22.1959 20.9649 22.1656 20.0832 22.1066 19.2052C22.0073 17.1622 22.1443 15.0733 22.7763 13.1378C23.4714 10.9306 24.7079 8.95167 26.2851 7.41444C26.4169 7.29978 26.5361 7.1686 26.6451 7.02734Z" fill="#39170C"/>
+            <path d="M28.2399 7.80664C28.7275 8.16031 29.2005 8.54632 29.6072 9.01213C30.2469 9.75828 30.7758 10.622 31.1709 11.5557C31.7294 12.8748 32.0336 14.3157 32.1518 15.7649C32.2904 17.3754 32.1464 18.9982 31.8956 20.5865C31.4864 22.9878 30.7278 25.3355 29.5309 27.3921C28.5979 29.0159 27.372 30.4583 25.8757 31.442C24.9663 32.0484 23.9492 32.4642 22.8957 32.6058C21.9976 32.7187 21.0817 32.6493 20.2109 32.3776C20.327 32.2428 20.4459 32.1116 20.5696 31.9858C21.4007 31.1717 22.1233 30.2214 22.734 29.1939C24.052 26.9701 24.7491 24.309 24.7426 21.6461C24.7658 20.4115 24.6083 19.184 24.6218 17.9502C24.607 16.3209 24.8045 14.6827 25.2567 13.1314C25.8345 11.1158 26.8751 9.27487 28.2399 7.80664Z" fill="#67341F"/>
+            <path d="M17.7844 11.3175C18.143 10.7428 18.551 10.2084 18.9925 9.71094C19.1566 9.98086 19.2813 10.2763 19.3896 10.5786C20.1675 12.5813 20.6261 14.7324 20.7995 16.904C20.9403 18.0818 20.881 19.274 20.8794 20.4594C20.7444 22.4818 20.4308 24.5089 19.7637 26.4031C19.3857 27.6305 18.8372 28.7864 18.1901 29.8625C17.9864 30.187 17.7521 30.4861 17.543 30.8059C17.0941 30.3987 16.7051 29.9185 16.3516 29.4096C16.9084 28.6746 17.3567 27.844 17.7425 26.986C18.7837 24.5262 19.2004 21.782 19.1717 19.0745C19.1166 16.4274 18.7025 13.7681 17.7844 11.3175Z" fill="#572B18"/>
+          </svg>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <h4>من المزرعة… البداية</h4>
+            <p>
+              <span class="timeline-desktop-copy">نختار محاصيلنا بعناية من أفضل مناطق زراعة القهوة حول العالم</span>
+              <span class="timeline-mobile-copy">نختار محاصيلنا من مزارع نثق فيها لأن البداية هي الأساس</span>
+            </p>
+          </div>
+          <div class="timeline-image">
+            <img src="{{ 'images/about-us/figma-f0765ba7-3de1-4097-b091-f7840ab8af2e.webp' | asset_url }}" alt="من المزرعة">
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <h4>اختيار أدق</h4>
+            <p>
+              <span class="timeline-desktop-copy">نمرر كل محصول عبر مراحل اختيار دقيقة لضمان أعلى جودة</span>
+              <span class="timeline-mobile-copy">كل حبة تمر بمراحل فحص دقيقة، لأن الجودة ما فيها مجاملة</span>
+            </p>
+          </div>
+          <div class="timeline-image">
+            <img src="{{ 'images/about-us/figma-d99f4eee-c9ca-4540-b485-5a8b3cc67e96.webp' | asset_url }}" alt="اختيار أدق">
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <h4>
+              <span class="timeline-desktop-copy">تحميص بدقة</span>
+              <span class="timeline-mobile-copy">تحميص مضبوط</span>
+            </h4>
+            <p>
+              <span class="timeline-desktop-copy">نُحمّص كل دفعة وفق معايير دقيقة لضمان ثبات النكهة</span>
+              <span class="timeline-mobile-copy">نحمّص بدقة ليكون كل كوب يعطيك نفس الإحساس بكل مرة</span>
+            </p>
+          </div>
+          <div class="timeline-image">
+            <img src="{{ 'images/about-us/figma-3a6dd3ed-f70e-4758-8118-73d6e2190f64.webp' | asset_url }}" alt="تحميص بدقة">
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <h4>
+              <span class="timeline-desktop-copy">تجربة تناسبك</span>
+              <span class="timeline-mobile-copy">لكل ذوق</span>
+            </h4>
+            <p>
+              <span class="timeline-desktop-copy">نقدّم خيارات متعددة تناسب مختلف الأذواق والمزاجات</span>
+              <span class="timeline-mobile-copy">نحرص على أن نقدم لك قهوة تناسبك أنت</span>
+            </p>
+          </div>
+          <div class="timeline-image">
+            <img src="{{ 'images/about-us/figma-49db7e91-046a-4eab-ae53-0a912a7e5b27.webp' | asset_url }}" alt="تجربة تناسبك">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {# Principles Section #}
+  <section class="principles-section">
+    <div class="theme-container">
+      <h2 class="section-title">مبادئنا في كل كوب</h2>
+      <div class="principles-carousel-wrapper">
+        <div class="principles-carousel" data-principles-carousel>
+          <div class="principle-card">
+            <img src="{{ 'images/about-us/figma-bdbbc05e-1b36-4510-bef0-637a426b6c26.webp' | asset_url }}" alt="الجودة أولًا">
+            <h5>الجودة أولًا</h5>
+            <p>نلتزم بمعايير دقيقة في اختيار وتحميص القهوة، لضمان تجربة متزنة وثابتة</p>
+          </div>
+          <div class="principle-card">
+            <img src="{{ 'images/about-us/figma-8ce8b929-6242-4b06-9672-81b3f0da878d.webp' | asset_url }}" alt="تجربة تهمنا">
+            <h5>تجربة تهمنا</h5>
+            <p>نصمم كل تفصيلة بعناية، من اختيار المنتج إلى لحظة الاستمتاع</p>
+          </div>
+          <div class="principle-card">
+            <img src="{{ 'images/about-us/figma-6d154614-974e-4214-8bcc-f6495031cef0.webp' | asset_url }}" alt="شغف بالقهوة">
+            <h5>شغف بالقهوة</h5>
+            <p>نعمل بشغف حقيقي ينعكس في كل تفصيلة صغيرة</p>
+          </div>
+          <div class="principle-card">
+            <img src="{{ 'images/about-us/figma-c7d1bb43-764a-4ab3-a023-00034d7a9c25.webp' | asset_url }}" alt="علاقة مستمرة">
+            <h5>علاقة مستمرة</h5>
+            <p>نبني ثقة طويلة مع عملائنا وشركائنا من خلال الجودة والاهتمام</p>
+          </div>
+        </div>
+        <div class="principles-mobile-progress" aria-hidden="true">
+          <span class="principles-mobile-progress__fill" data-principles-progress></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {# Why Ananas Section #}
+  <section class="why-ananas-section">
+    <div class="theme-container">
+      <h2 class="section-title">ليش أناناس؟</h2>
+      <div class="why-ananas-desktop">
+        <div class="why-side-col">
+          <div class="why-icon-item">
+            <img src="{{ 'images/about-us/figma-601ecff7-d00f-4881-ba16-d13f751435eb.svg' | asset_url }}" alt="">
+            <p>جودة ثابتة في كل كوب</p>
+          </div>
+          <div class="why-icon-item">
+            <img src="{{ 'images/about-us/figma-d088e391-64f0-40bb-a62f-6ccc6a75b620.svg' | asset_url }}" alt="">
+            <p>تقنيات تضمن أفضل نتيجة</p>
+          </div>
+        </div>
+        <div class="why-cup-center" id="cup-center">
+          <img src="{{ 'images/about-us/figma-342b0340-e6f6-47cf-ae3a-e6ccab774d3b.webp' | asset_url }}" class="cup-bg" alt="">
+          <img src="{{ 'images/about-us/figma-342b0340-e6f6-47cf-ae3a-e6ccab774d3b.webp' | asset_url }}" class="cup-fill" alt="كوب قهوة أناناس">
+        </div>
+        <div class="why-side-col">
+          <div class="why-icon-item">
+            <img src="{{ 'images/about-us/figma-91044b95-765f-446f-9f86-4e752f645f84.svg' | asset_url }}" alt="">
+            <p>نكهات تناسب مختلف الأذواق</p>
+          </div>
+          <div class="why-icon-item">
+            <img src="{{ 'images/about-us/figma-3f6cf1bd-52c1-41ce-ad9e-0459d04dca8d.svg' | asset_url }}" alt="">
+            <p>تجربة سهلة من الطلب حتى التوصيل</p>
+          </div>
+        </div>
+      </div>
+      <div class="why-ananas-mobile">
+        <div class="why-ananas-mobile-text">
+          <div class="why-mobile-icon-item">
+            <img src="{{ 'images/about-us/figma-91044b95-765f-446f-9f86-4e752f645f84.svg' | asset_url }}" alt="">
+            <p>نكهات تناسب مختلف الأذواق</p>
+          </div>
+          <div class="why-mobile-icon-item">
+            <img src="{{ 'images/about-us/figma-601ecff7-d00f-4881-ba16-d13f751435eb.svg' | asset_url }}" alt="">
+            <p>جودة ثابتة في كل كوب</p>
+          </div>
+          <div class="why-mobile-icon-item">
+            <img src="{{ 'images/about-us/figma-d088e391-64f0-40bb-a62f-6ccc6a75b620.svg' | asset_url }}" alt="">
+            <p>تقنيات تضمن أفضل نتيجة</p>
+          </div>
+          <div class="why-mobile-icon-item">
+            <img src="{{ 'images/about-us/figma-3f6cf1bd-52c1-41ce-ad9e-0459d04dca8d.svg' | asset_url }}" alt="">
+            <p>تجربة سهلة من الطلب حتى التوصيل</p>
+          </div>
+        </div>
+        <div class="why-cup-mobile" id="cup-mobile">
+          <img src="{{ 'images/about-us/figma-342b0340-e6f6-47cf-ae3a-e6ccab774d3b.webp' | asset_url }}" class="cup-bg" alt="">
+          <img src="{{ 'images/about-us/figma-342b0340-e6f6-47cf-ae3a-e6ccab774d3b.webp' | asset_url }}" class="cup-fill" alt="كوب قهوة أناناس">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {# Partners Section #}
+  <section class="partners-section">
+    <div class="partners-inner">
+      <div class="partner-card-new">
+        <div class="card-img">
+          <img src="{{ 'images/about-us/figma-e109327c-fe1a-474c-9690-b6c8ce5ab075.webp' | asset_url }}" alt="حرفيتنا في كل تفصيلة">
+        </div>
+        <div class="card-text">
+          <h4>حرفيتنا في كل تفصيلة</h4>
+          <p>نعتمد على تقنيات متقدمة لضمان جودة القهوة وثباتها<br>وراء كل كوب شغل محسوب بدقة<br>✔ تحميص مضبوط لكل دفعة<br>✔ قياس دقيق للنكهة<br>✔ ثبات في الجودة مهما اختلف الوقت<br>النتيجة: كوب متوازن… في كل مرة</p>
+        </div>
+      </div>
+      <div class="partner-card-new">
+        <div class="card-img">
+          <img src="{{ 'images/about-us/figma-890bac56-7f46-4acc-976e-b9f7c8c0349e.webp' | asset_url }}" alt="شريكك في القهوة">
+        </div>
+        <div class="card-text">
+          <h4>شريكك في القهوة</h4>
+          <p>لو عندك مشروع قهوة، إحنا نكون معك في الخلفية<br>نوفر لك محاصيل مختصة بجودة عالية، ونعطيك الدعم اللي يخليك تقدم تجربة أقوى لعملائك بدون تعقيد</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  {# Grow Together Section #}
+  <section class="grow-together-section">
+    <div class="theme-container">
+      <h2>ننمو معًا</h2>
+      <p>أناناس مو مجرد محمصة هي ناس تحب القهوة، وتشارك نفس الشغف</p>
+      <p>نكتشف، نجرب، ونتطور ومع كل كوب، نكون أقرب</p>
+    </div>
+  </section>
+
+  {# Animation Script #}
+  <script>
+    (function() {
+      // --- Scrolling Bean Animation ---
+      const wrapper = document.querySelector('.timeline-wrapper');
+      const bean = document.querySelector('.scrolling-bean');
+      
+      function updateAnimations() {
+        if (wrapper && bean) {
+          const wrapperRect = wrapper.getBoundingClientRect();
+          const vh = window.innerHeight;
+          
+          // Bean Progress: 0 when top enters middle of screen, 1 when bottom leaves middle
+          let progress = (vh / 2 - wrapperRect.top) / wrapperRect.height;
+          progress = Math.max(0, Math.min(1, progress));
+          
+          bean.style.top = (progress * 100) + '%';
+        }
+
+        // Cup Fill Logic
+        ['cup-center', 'cup-mobile'].forEach(id => {
+          const cupContainer = document.getElementById(id);
+          if (!cupContainer) return;
+          const rect = cupContainer.getBoundingClientRect();
+          const vh = window.innerHeight;
+          
+          // Fill progress: 0 when cup bottom enters view, 1 when cup top passes middle
+          let fillProgress = (vh - rect.top) / (vh / 1.5);
+          fillProgress = Math.max(0, Math.min(1, fillProgress));
+          
+          // Map 0 -> 100% inset (empty), 1 -> 0% inset (full)
+          let insetPercent = (1 - fillProgress) * 100;
+          
+          const fillLayer = cupContainer.querySelector('.cup-fill');
+          if (fillLayer) {
+            fillLayer.style.setProperty('--cup-fill-percent', insetPercent + '%');
+          }
+        });
+      }
+
+      window.addEventListener('scroll', () => {
+        requestAnimationFrame(updateAnimations);
+      }, { passive: true });
+
+      // Apply initial state
+      updateAnimations();
+
+      const principlesCarousel = document.querySelector('[data-principles-carousel]');
+      const principlesProgress = document.querySelector('[data-principles-progress]');
+
+      function getRtlScrollRatio(element) {
+        const max = element.scrollWidth - element.clientWidth;
+        if (max <= 0) return 0;
+        const raw = element.scrollLeft;
+        if (getComputedStyle(element).direction === 'rtl') {
+          return raw < 0 ? Math.min(1, Math.abs(raw) / max) : Math.min(1, Math.max(0, max - raw) / max);
+        }
+        return Math.min(1, Math.max(0, raw) / max);
+      }
+
+      function updatePrinciplesProgress() {
+        if (!principlesCarousel || !principlesProgress) return;
+        const ratio = getRtlScrollRatio(principlesCarousel);
+        principlesProgress.style.setProperty('--principles-progress-offset', (-102 * ratio) + 'px');
+      }
+
+      if (principlesCarousel && principlesProgress) {
+        principlesCarousel.addEventListener('scroll', () => {
+          requestAnimationFrame(updatePrinciplesProgress);
+        }, { passive: true });
+        window.addEventListener('resize', updatePrinciplesProgress, { passive: true });
+        updatePrinciplesProgress();
+      }
+    })();
+  </script>
+
+  <style>
+    /* CSS additions for the JS animation variables */
+    /* Removed the old scaleY logic as we moved to layered clip-path */
+  </style>
+
+  {% elif page.slug == 'wishlist' %}
+
+  <section class="wishlist-page">
+    <div class="theme-container wishlist-page__inner">
+      {% set wishlist_style_seed_product = {
+        'id': '__wishlist_style_seed__',
+        'slug': '__wishlist-style-seed__',
+        'name': 'Wishlist style seed',
+        'in_stock': true,
+        'is_infinite': true,
+        'quantity': 1,
+        'has_options': false,
+        'has_fields': false,
+        'main_image': none,
+        'images': [],
+        'tags': [],
+        'rating': none,
+        'formatted_sale_price': none,
+        'formatted_price': '',
+        'discount_percentage': 0,
+        'badge': none,
+        'is_taxable': true
+      } %}
+      <div class="wishlist-page__card-style-seed" hidden inert aria-hidden="true">
+        {% with product=wishlist_style_seed_product, wishlist_card_mode=true, show_static_cta=true, product_card_variant='pc-card--figma-products' %}
+          {% include 'components/products/product-card.jinja' %}
+        {% endwith %}
+      </div>
+
+      <h1 class="wishlist-page__title">
+        <span>{{ page.title }}</span>
+        <small data-wishlist-count>( 0 {{ _("Products") }} )</small>
+      </h1>
+      <div data-wishlist-page-items>
+        <div class="wishlist-page__notice">
+          {{ _("Loading wishlist...") }}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% else %}
+
+  {# Breadcrumb #}
+  <section class="pc-breadcrumb-section px-4 py-6 md:px-16">
+    <div class="theme-container">
+      {%
+        with
+        items=[
+          {'href': url_for('home'), 'label': _("Home")},
+          {'label': page.title}
+        ]
+      %}
+        {% include 'components/ui/breadcrumb.jinja' %}
+      {% endwith %}
+    </div>
+  </section>
+
+  {# Generic Page Content #}
+  <section class="px-4 pb-16 md:px-16">
+    <div class="theme-container">
+      <h1 class="text-foreground text-xl md:text-2xl font-semibold tracking-tight mb-6 text-center">{{ page.title }}</h1>
+      <div class="prose prose-theme mx-auto max-w-[900px]">{{ page.content|safe }}</div>
+
+      {% set entity = page %}
+      {% include 'vitrin:shared/metafields.jinja' %}
+    </div>
+  </section>
+
+  {% endif %}
+{% endblock %}

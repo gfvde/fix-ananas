@@ -1,0 +1,590 @@
+{# Mobile Navigation Drawer — uses --ananas-* CSS variables from header.jinja #}
+{% set drawer_part = mobile_drawer_part | default('all') %}
+
+{# Hamburger button #}
+{% if drawer_part in ['all', 'button'] %}
+<button
+  type="button"
+  id="mobile-menu-btn"
+  aria-label="{{ _('Toggle menu') }}"
+  aria-expanded="false"
+  aria-controls="mobile-drawer"
+  class="ananas-mobile-btn lg:hidden"
+>
+  <span class="ananas-mobile-btn__bar ananas-mobile-btn__bar--top"></span>
+  <span class="ananas-mobile-btn__bar ananas-mobile-btn__bar--mid"></span>
+  <span class="ananas-mobile-btn__bar ananas-mobile-btn__bar--bot"></span>
+</button>
+{% endif %}
+
+{# Drawer #}
+{% if drawer_part in ['all', 'drawer'] %}
+<div id="mobile-drawer" class="ananas-drawer" aria-hidden="true" inert dir="rtl">
+  <div class="ananas-drawer__panel">
+
+    <div class="ananas-drawer__header">
+      <button type="button" class="ananas-drawer__close" data-mobile-drawer-close aria-label="{{ _('Close') }}">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+
+    {# Navigation menu #}
+    <nav class="ananas-drawer__nav" aria-label="{{ _('Mobile navigation') }}">
+      {% if settings.nav_enable_mega_menu != false and settings.nav_mega_mode == 'static' and settings.nav_mega_columns %}
+        {% for col in settings.nav_mega_columns %}
+          <details class="ananas-drawer__details ananas-drawer__details--mega" {% if loop.first %}open{% endif %}>
+            <summary class="ananas-drawer__summary">
+              <span>{{ col.title }}</span>
+              <span class="ananas-drawer__state" aria-hidden="true"></span>
+            </summary>
+            <div class="ananas-drawer__sub">
+              {% for link in col.links or [] %}
+                <a href="{{ link.url | default('#') }}" class="ananas-drawer__link">{{ link.label }}</a>
+              {% endfor %}
+            </div>
+          </details>
+          <div class="ananas-drawer__rule" aria-hidden="true"></div>
+          {% if loop.first and settings.nav_mega_standalone_links %}
+            {% for link in settings.nav_mega_standalone_links %}
+              <a href="{{ link.url | default('#') }}" class="ananas-drawer__plain-link">{{ link.label }}</a>
+              <div class="ananas-drawer__rule" aria-hidden="true"></div>
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        {% for item in store.settings.menus.main_menu.items %}
+          {% if item.items | length > 0 %}
+            <details class="ananas-drawer__details" {% if loop.first %}open{% endif %}>
+              <summary class="ananas-drawer__summary">
+                <span>{{ item.label }}</span>
+                <span class="ananas-drawer__state" aria-hidden="true"></span>
+              </summary>
+              <div class="ananas-drawer__sub">
+                {% for child in item.items %}
+                  {% if child.items | length > 0 %}
+                    <details class="ananas-drawer__details ananas-drawer__details--sub">
+                      <summary class="ananas-drawer__summary ananas-drawer__summary--sub">
+                        <span>{{ child.label }}</span>
+                        <span class="ananas-drawer__state" aria-hidden="true"></span>
+                      </summary>
+                      <div class="ananas-drawer__sub ananas-drawer__sub--deep">
+                        {% for gc in child.items %}
+                          <a
+                            href="{{ gc.url | localized_url if gc.resource_type != 'url' else gc.url }}"
+                            class="ananas-drawer__link"
+                          >{{ gc.label }}</a>
+                        {% endfor %}
+                      </div>
+                    </details>
+                  {% else %}
+                    <a
+                      href="{{ child.url | localized_url if child.resource_type != 'url' else child.url }}"
+                      class="ananas-drawer__link"
+                    >{{ child.label }}</a>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </details>
+            <div class="ananas-drawer__rule" aria-hidden="true"></div>
+          {% else %}
+            <a
+              href="{{ item.url | localized_url if item.resource_type != 'url' else item.url }}"
+              class="ananas-drawer__plain-link"
+            >{{ item.label }}</a>
+            <div class="ananas-drawer__rule" aria-hidden="true"></div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+
+      {% if settings.nav_mega_mode == 'static' %}
+        {% for item in store.settings.menus.main_menu.items %}
+          {% if item.items | length > 0 %}
+            <details class="ananas-drawer__details">
+              <summary class="ananas-drawer__summary">
+                <span>{{ item.label }}</span>
+                <span class="ananas-drawer__state" aria-hidden="true"></span>
+              </summary>
+              <div class="ananas-drawer__sub">
+                <a
+                  href="{{ item.url | localized_url if item.resource_type != 'url' else item.url }}"
+                  class="ananas-drawer__link ananas-drawer__link--all"
+                >{{ item.label }}</a>
+                {% for child in item.items %}
+                  {% if child.items | length > 0 %}
+                    <details class="ananas-drawer__details ananas-drawer__details--sub">
+                      <summary class="ananas-drawer__summary ananas-drawer__summary--sub">
+                        <span>{{ child.label }}</span>
+                        <span class="ananas-drawer__state" aria-hidden="true"></span>
+                      </summary>
+                      <div class="ananas-drawer__sub ananas-drawer__sub--deep">
+                        <a
+                          href="{{ child.url | localized_url if child.resource_type != 'url' else child.url }}"
+                          class="ananas-drawer__link ananas-drawer__link--deep"
+                        >{{ child.label }}</a>
+                        {% for gc in child.items %}
+                          <a
+                            href="{{ gc.url | localized_url if gc.resource_type != 'url' else gc.url }}"
+                            class="ananas-drawer__link ananas-drawer__link--deep"
+                          >{{ gc.label }}</a>
+                        {% endfor %}
+                      </div>
+                    </details>
+                  {% else %}
+                    <a
+                      href="{{ child.url | localized_url if child.resource_type != 'url' else child.url }}"
+                      class="ananas-drawer__link"
+                    >{{ child.label }}</a>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </details>
+            <div class="ananas-drawer__rule" aria-hidden="true"></div>
+          {% else %}
+            <a
+              href="{{ item.url | localized_url if item.resource_type != 'url' else item.url }}"
+              class="ananas-drawer__action-link{% if 'مبيع' in item.label or 'best' in item.label|lower %} ananas-drawer__action-link--hot{% endif %}"
+            >
+              <span>{{ item.label }}</span>
+              {% if 'حديث' in item.label or 'new' in item.label|lower %}
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10.8 1.8L5.7 10.3H10L9.2 18.2L14.3 8.9H10.1L10.8 1.8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              {% elif 'مبيع' in item.label or 'best' in item.label|lower %}
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 18C6.7 18 4.5 15.7 4.5 12.5C4.5 9.8 6.5 8.2 7.8 6.7C8.8 5.6 9.5 4.5 9 2.5C12.1 4.1 15.5 7.4 15.5 12.5C15.5 15.7 13.3 18 10 18Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              {% elif 'عرض' in item.label or 'offer' in item.label|lower %}
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10.4V4h6.4L17 11.6L10.6 18L3 10.4Z" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 7.5H6.51" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              {% endif %}
+            </a>
+            <div class="ananas-drawer__rule" aria-hidden="true"></div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+
+      <a href="/pages/wishlist" class="ananas-drawer__action-link">
+        <span>{{ _('Wishlist') }}</span>
+        <svg width="20" height="20" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+          <path d="M11 19.25S2.75 14.25 2.75 8.25A4.25 4.25 0 0 1 11 5.79 4.25 4.25 0 0 1 19.25 8.25C19.25 14.25 11 19.25 11 19.25Z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <div class="ananas-drawer__rule" aria-hidden="true"></div>
+
+      {% set show_country  = (store.countries | length > 1) and not settings.header_hide_country %}
+      {% set show_language = (store.languages | length > 1) and not settings.header_hide_language %}
+      {% if show_country or show_language %}
+        <button type="button" onclick="closeMobileDrawer(); return window.openAnanasRegionSettings(event);" class="ananas-drawer__action-link">
+          <span>{{ _('Language') }}</span>
+          <svg width="20" height="20" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="9" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M11 2C11 2 8 6.5 8 11C8 15.5 11 20 11 20M11 2C11 2 14 6.5 14 11C14 15.5 11 20 11 20M2 11H20" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </button>
+      {% endif %}
+    </nav>
+  </div>
+</div>
+
+<style>
+  /* ─── Mobile hamburger button ─────────────────── */
+  .ananas-mobile-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    flex-shrink: 0;
+    color: var(--ananas-icon-color);
+  }
+  .ananas-mobile-btn__bar {
+    display: block;
+    width: 20px;
+    height: 1.5px;
+    background: currentColor;
+    border-radius: 2px;
+    transform-origin: center;
+    transition: transform .3s ease, opacity .3s ease, width .3s ease;
+  }
+  /* Open state — X icon */
+  .ananas-mobile-btn.is-open .ananas-mobile-btn__bar--top  { transform: translateY(6.5px) rotate(45deg); }
+  .ananas-mobile-btn.is-open .ananas-mobile-btn__bar--mid  { opacity: 0; width: 0; }
+  .ananas-mobile-btn.is-open .ananas-mobile-btn__bar--bot  { transform: translateY(-6.5px) rotate(-45deg); }
+
+  /* ─── Drawer overlay ──────────────────────────── */
+  .ananas-drawer {
+    position: fixed;
+    inset: 0;
+    top: var(--header-h, 64px);
+    z-index: 1000;
+    pointer-events: none;
+    display: flex;
+	    justify-content: flex-start;
+  }
+  .ananas-drawer.is-open { pointer-events: auto; }
+
+  /* ─── Drawer panel ────────────────────────────── */
+  .ananas-drawer__panel {
+    width: min(340px, 100vw);
+    height: 100%;
+    background: var(--ananas-nav-bg);
+    border-left: 1px solid var(--ananas-nav-border);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+	    transform: translateX(100%);
+    transition: transform .35s cubic-bezier(.4,0,.2,1);
+    direction: rtl;
+  }
+  .ananas-drawer.is-open .ananas-drawer__panel { transform: translateX(0); }
+
+  /* ─── Nav items ───────────────────────────────── */
+  .ananas-drawer__nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 8px 0;
+  }
+
+  .ananas-drawer__link--top {
+    display: block;
+    color: var(--ananas-link-color);
+    font-size: 15px;
+    text-decoration: none;
+    padding: 13px 24px;
+    text-align: right;
+    transition: background .15s;
+  }
+  .ananas-drawer__link--top:hover { background: color-mix(in srgb, var(--ananas-nav-bg) 80%, white 20%); }
+
+  .ananas-drawer__details { width: 100%; }
+
+  .ananas-drawer__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 24px;
+    color: var(--ananas-link-color);
+    font-size: 15px;
+    cursor: pointer;
+    list-style: none;
+    text-align: right;
+    transition: background .15s;
+  }
+  .ananas-drawer__summary::-webkit-details-marker { display: none; }
+  .ananas-drawer__summary:hover { background: color-mix(in srgb, var(--ananas-nav-bg) 80%, white 20%); }
+  .ananas-drawer__summary--sub {
+    font-size: 14px;
+    padding: 10px 24px 10px 16px;
+    opacity: .85;
+  }
+
+  .ananas-drawer__chevron {
+    flex-shrink: 0;
+    transition: transform .25s;
+  }
+  .ananas-drawer__details[open] > .ananas-drawer__summary > .ananas-drawer__chevron,
+  .ananas-drawer__details--sub[open] > .ananas-drawer__summary--sub > .ananas-drawer__chevron {
+    transform: rotate(90deg);
+  }
+
+  .ananas-drawer__sub {
+    padding: 0 0 4px 0;
+    border-right: 2px solid var(--ananas-nav-border);
+    margin-right: 24px;
+  }
+  .ananas-drawer__sub--deep {
+    border-right: 2px solid color-mix(in srgb, var(--ananas-nav-border) 60%, white 40%);
+    margin-right: 16px;
+  }
+
+  .ananas-drawer__link {
+    display: block;
+    color: var(--ananas-link-color);
+    font-size: 14px;
+    text-decoration: none;
+    padding: 10px 16px;
+    text-align: right;
+    opacity: .85;
+    transition: opacity .15s;
+  }
+  .ananas-drawer__link:hover { opacity: 1; }
+  .ananas-drawer__link--all {
+    opacity: .5;
+    font-size: 13px;
+  }
+  .ananas-drawer__link--deep { padding-right: 16px; }
+
+  /* ─── Footer ──────────────────────────────────── */
+  .ananas-drawer__footer {
+    border-top: 1px solid var(--ananas-nav-border);
+    display: flex;
+    flex-direction: column;
+    padding: 8px 0 24px;
+  }
+  .ananas-drawer__footer-auth {
+    display: flex;
+    flex-direction: column;
+  }
+  .ananas-drawer__footer-auth.hidden { display: none !important; }
+  .ananas-drawer__footer-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 13px 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--ananas-link-color);
+    font-size: 14px;
+    text-decoration: none;
+    text-align: right;
+    direction: rtl;
+    transition: background .15s;
+  }
+  .ananas-drawer__footer-btn:hover { background: color-mix(in srgb, var(--ananas-nav-bg) 80%, white 20%); }
+  .ananas-drawer__footer-btn svg { flex-shrink: 0; }
+
+  /* ─── Figma mobile mega drawer ───────────────────── */
+	  .ananas-drawer {
+	    position: fixed !important;
+	    inset: 0 !important;
+	    top: 0 !important;
+	    background: rgba(0,0,0,0.25);
+	    opacity: 0;
+	    visibility: hidden;
+	    transition: opacity .25s ease, visibility .25s ease;
+	    z-index: 2147483000;
+	  }
+  .ananas-drawer.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+	  .ananas-drawer__panel {
+	    width: 315px;
+	    max-width: 100vw;
+	    height: 100dvh;
+	    min-height: 100dvh;
+	    background: #fcfaf7;
+    border-left: 1px solid #e5e5e5;
+    color: #000;
+    padding-bottom: 40px;
+  }
+  .ananas-drawer__header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    width: 100%;
+    height: 56px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background: #fcfaf7;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  .ananas-drawer__close {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #262626;
+    cursor: pointer;
+  }
+  .ananas-drawer__nav {
+    flex: 0 0 auto;
+    gap: 0;
+    padding: 16px;
+    align-items: flex-end;
+    overflow: visible;
+  }
+  .ananas-drawer__details,
+  .ananas-drawer__details--sub,
+  .ananas-drawer__details--mega {
+    width: 283px;
+    overflow: hidden;
+  }
+  .ananas-drawer__summary,
+  .ananas-drawer__summary--sub {
+    width: 100%;
+    min-height: 36px;
+    padding: 0;
+    color: #000;
+    background: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+  }
+  .ananas-drawer__summary:hover {
+    background: transparent;
+  }
+  .ananas-drawer__state {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    flex: 0 0 24px;
+  }
+  .ananas-drawer__state::before,
+  .ananas-drawer__state::after {
+    content: "";
+    position: absolute;
+    left: 7px;
+    right: 7px;
+    top: 11px;
+    height: 1.5px;
+    background: currentColor;
+  }
+  .ananas-drawer__state::after {
+    transform: rotate(90deg);
+  }
+  .ananas-drawer__details[open] > .ananas-drawer__summary .ananas-drawer__state::after {
+    transform: rotate(0deg);
+    opacity: 0;
+  }
+  .ananas-drawer__sub,
+  .ananas-drawer__sub--deep {
+    width: 100%;
+    margin: 0;
+    padding: 0 10px 8px;
+    border: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
+  }
+  .ananas-drawer__link,
+  .ananas-drawer__link--deep,
+  .ananas-drawer__link--all {
+    width: 100%;
+    min-height: 36px;
+    padding: 6px 0;
+    color: #262626;
+    opacity: 1;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: right;
+    text-decoration: none;
+  }
+  .ananas-drawer__plain-link {
+    width: 267px;
+    min-height: 32px;
+    padding: 4px 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: #000;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: right;
+    text-decoration: none;
+  }
+  .ananas-drawer__action-link {
+    flex-direction: row-reverse;
+    width: 100%;
+    min-height: 36px;
+    padding: 3px 0;
+    border: 0;
+    background: none;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: right;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .ananas-drawer__action-link--hot {
+    color: #c70036;
+  }
+  .ananas-drawer__action-link svg {
+    flex: 0 0 20px;
+  }
+  .ananas-drawer__rule {
+    width: 100%;
+    height: 1px;
+    background: #e5e5e5;
+    margin: 8px 0;
+    flex-shrink: 0;
+  }
+</style>
+
+<script>
+(function () {
+  var btn    = document.getElementById('mobile-menu-btn');
+  var drawer = document.getElementById('mobile-drawer');
+  var header = document.getElementById('ananas-header');
+  var closeButtons = drawer ? drawer.querySelectorAll('[data-mobile-drawer-close]') : [];
+
+  /* Keep --header-h in sync with actual rendered header height */
+  function syncHeaderHeight() {
+    if (header) {
+      document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
+    }
+  }
+  syncHeaderHeight();
+  window.addEventListener('resize', syncHeaderHeight);
+
+  function openDrawer() {
+    if (!drawer || !btn) return;
+    drawer.removeAttribute('inert');
+    drawer.classList.add('is-open');
+    drawer.setAttribute('aria-hidden', 'false');
+    btn.classList.add('is-open');
+    btn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+    var closeButton = drawer.querySelector('[data-mobile-drawer-close]');
+    if (closeButton) setTimeout(function () { closeButton.focus(); }, 80);
+  }
+
+  window.closeMobileDrawer = function () {
+    if (!drawer || !btn) return;
+    if (drawer.contains(document.activeElement)) {
+      document.activeElement.blur();
+    }
+    drawer.classList.remove('is-open');
+    drawer.setAttribute('inert', '');
+    drawer.setAttribute('aria-hidden', 'true');
+    btn.classList.remove('is-open');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.focus();
+    document.body.style.overflow = '';
+  };
+
+  if (btn && drawer) btn.addEventListener('click', function () {
+    if (drawer.classList.contains('is-open')) {
+      window.closeMobileDrawer();
+    } else {
+      openDrawer();
+    }
+  });
+
+  closeButtons.forEach(function (closeButton) {
+    closeButton.addEventListener('click', window.closeMobileDrawer);
+  });
+
+  /* Close on backdrop click */
+  if (drawer) drawer.addEventListener('click', function (e) {
+    if (e.target === drawer) window.closeMobileDrawer();
+  });
+
+  /* Close on Escape */
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && drawer.classList.contains('is-open')) window.closeMobileDrawer();
+  });
+})();
+</script>
+{% endif %}

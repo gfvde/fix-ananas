@@ -1,0 +1,51 @@
+{% set subtotal_condition = cart.free_shipping_rule.subtotal_condition if cart.free_shipping_rule else none %}
+{% set free_shipping_status = subtotal_condition.status | default('') if subtotal_condition else '' %}
+{% set free_shipping_remaining = subtotal_condition.remaining | default('57.00 SAR') if subtotal_condition else '57.00 SAR' %}
+{% set free_shipping_percent = subtotal_condition.products_subtotal_percentage_from_min | default(0) if subtotal_condition else 70 %}
+{% set free_shipping_width = 100 if free_shipping_status == 'applied' else free_shipping_percent %}
+
+<div class="cart-mobile-header">
+  <h1 class="cart-mobile-header__title">{{ _('Cart') }} ( {{ cart.products_count | default(0) }} )</h1>
+  <div
+    class="cart-free-shipping cart-free-shipping--mobile"
+    data-free-shipping-bar
+    data-free-shipping-remaining="{{ free_shipping_remaining }}"
+    data-free-shipping-percentage="{{ free_shipping_width }}"
+  >
+    <div class="cart-free-shipping__message-row">
+      <span
+        class="cart-free-shipping__message"
+        data-free-shipping-message
+      >
+        {% if free_shipping_status == 'applied' %}
+          {{ _('Free shipping applied!') }}
+        {% else %}
+          {{ _('Add purchases worth %(amount)s to get free shipping') | format(amount=free_shipping_remaining) }}
+        {% endif %}
+      </span>
+      <svg
+        class="cart-free-shipping__truck"
+        width="18"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path d="M3 7H14V17H3V7Z" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M14 11H18L21 14V17H14V11Z" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="7" cy="18" r="1.5" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="17" cy="18" r="1.5" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+    </div>
+    <div
+      class="cart-free-shipping__track"
+      data-free-shipping-progress-wrapper
+    >
+      <span
+        class="cart-free-shipping__fill"
+        style="width: {{ free_shipping_width }}%"
+        data-free-shipping-progress-bar
+      ></span>
+    </div>
+  </div>
+</div>

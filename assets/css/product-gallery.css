@@ -1,0 +1,566 @@
+/* ============================================================
+   Product Gallery — Swiper-based
+   BEM: .pg-wrapper, .pg-main, .pg-thumbs, .pg-thumbs-h
+   Modes: vertical (beside image) | horizontal (below image)
+   ============================================================ */
+.qty-input {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 0;
+  /* لو عايزه حواف حادة زي الصورة */
+  overflow: hidden;
+  height: 44px;
+  background: #fff;
+}
+
+/* الأزرار */
+.qty-input-btn {
+  width: 44px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* input في النص */
+.qty-input-field {
+  width: 50px;
+  height: 100%;
+  border: none;
+  text-align: center;
+  border-inline: 1px solid #D4D4D4 !important;
+  font-size: 16px;
+  font-weight: 600;
+  outline: none;
+  color: #000 !important;
+  background: #F5F5F5;
+}
+
+/* إزالة أسهم الـ number input */
+.qty-input-field::-webkit-outer-spin-button,
+.qty-input-field::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.qty-input-field[type=number] {
+  -moz-appearance: textfield;
+}
+
+.pg-thumbs__prev,
+.pg-thumbs__next {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e5e5e5;
+}
+
+#product-gallery-main-next,
+#product-gallery-main-prev {
+  display: none !important;
+}
+
+.pg-wrapper,
+#product-gallery-swiper-main,
+.pg-thumbs .swiper-wrapper {
+  height: clamp(332px, calc(20vw + 250px), 545px);
+}
+
+#product-gallery-main {
+  height: clamp(332px, calc(20vw + 250px), 545px);
+}
+
+.pg-thumbs .swiper-slide,
+.pg-thumbs-h .swiper-slide {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  filter: opacity(0.5) grayscale(20%);
+}
+
+.pg-thumbs .swiper-slide:hover,
+.pg-thumbs-h .swiper-slide:hover {
+  filter: opacity(0.8);
+}
+
+.pg-thumbs .swiper-slide-thumb-active,
+.pg-thumbs-h .swiper-slide-thumb-active {
+  filter: opacity(1) grayscale(0%);
+}
+
+.pg-thumbs .swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pg-main .swiper-button-prev,
+.pg-main .swiper-button-next {
+  pointer-events: auto;
+  z-index: 999 !important;
+}
+
+.pg-main .swiper-button-prev::after,
+.pg-main .swiper-button-next::after {
+  pointer-events: none;
+}
+
+.swiper-button-lock {
+  display: none !important;
+}
+
+.pg-wrapper .swiper {
+  --swiper-theme-color: #0b0a09;
+}
+
+/* ---------- Outer Wrapper ---------- */
+.pg-wrapper {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  position: relative;
+}
+
+/* ======================================================
+   VERTICAL MODE  (data-thumb-layout="vertical")
+   Thumbs on the side | Main fills remaining space
+   ====================================================== */
+.pg-wrapper[data-thumb-layout="vertical"] {
+  flex-direction: row;
+}
+
+/* Thumbs in vertical mode — side column */
+.pg-wrapper[data-thumb-layout="vertical"] .pg-thumbs {
+  display: flex;
+  flex-direction: column;
+  width: 88px;
+  flex-shrink: 0;
+  height: 100%;
+}
+
+/* Thumb position = end → reverse order */
+.pg-wrapper[data-thumb-pos="end"] {
+  flex-direction: row-reverse;
+}
+
+/* Hide horizontal thumbs in vertical mode */
+.pg-wrapper[data-thumb-layout="vertical"] .pg-thumbs-h {
+  display: none;
+}
+
+/* ======================================================
+   HORIZONTAL MODE  (data-thumb-layout="horizontal")
+   Thumbs below the main image
+   ====================================================== */
+.pg-wrapper[data-thumb-layout="horizontal"] {
+  flex-direction: column;
+}
+
+/* Hide vertical thumbs in horizontal mode */
+.pg-wrapper[data-thumb-layout="horizontal"] .pg-thumbs {
+  display: none;
+}
+
+/* Horizontal thumbs row */
+.pg-wrapper[data-thumb-layout="horizontal"] .pg-thumbs-h {
+  display: block;
+  width: 100%;
+}
+
+/* ---------- Main Swiper ---------- */
+.pg-main {
+  flex: 1;
+  min-width: 0;
+  /* border-radius: 12px; */
+  overflow: hidden;
+  background: #f3f3f3;
+}
+
+.pg-main .swiper-slide {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #f3f3f3;
+  /* border-radius: 12px; */
+}
+
+.pg-main .swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  /* border-radius: 12px; */
+  height: clamp(332px, calc(20vw + 250px), 545px);
+}
+
+/* ---------- Navigation Arrows (inside main) ---------- */
+.pg-main .swiper-button-prev,
+.pg-main .swiper-button-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px !important;
+  height: 44px !important;
+  margin-top: 0 !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-radius: 50% !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+  color: #0b0a09 !important;
+  z-index: 999 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  pointer-events: auto !important;
+}
+
+/* تأثير hover */
+.pg-main .swiper-button-prev:hover,
+.pg-main .swiper-button-next:hover {
+  background: white !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+  transform: translateY(-50%) scale(1.05) !important;
+}
+
+/* حالة التعطيل */
+.pg-main .swiper-button-disabled {
+  opacity: 0.3 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+}
+
+/* اخفاء الأزرار لو في سلايد واحد بس */
+.pg-main .swiper-button-lock {
+  display: none !important;
+}
+
+.pg-main .swiper-button-prev::after,
+.pg-main .swiper-button-next::after {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.pg-main .swiper-button-prev:hover,
+.pg-main .swiper-button-next:hover {
+  background: #fff;
+}
+
+.pg-main .swiper-button-disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ---------- Vertical Thumbs Swiper ---------- */
+.pg-thumbs {
+  position: relative;
+}
+
+.pg-thumbs .swiper {
+  height: 100%;
+  width: 88px;
+}
+
+.pg-thumbs .swiper-wrapper {
+  flex-direction: column;
+}
+
+.pg-thumbs .swiper-slide {
+  /* width: 88px !important; */
+  height: 80px !important;
+  /* border-radius: 8px; */
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition:
+    border-color 0.25s,
+    opacity 0.2s;
+  flex-shrink: 0;
+  background: #f3f3f3;
+}
+
+.pg-thumbs .swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* border-radius: 6px; */
+  transition: transform 0.25s;
+}
+
+.pg-thumbs .swiper-slide:hover img {
+  transform: scale(1.06);
+}
+
+.pg-thumbs .swiper-slide-thumb-active {
+  /* border-color: #0B0A09; */
+}
+
+.pg-thumbs .swiper-slide-thumb-active img {
+  transform: scale(1.03);
+}
+
+/* Thumb nav arrows (vertical) */
+.pg-thumbs .swiper-button-prev,
+.pg-thumbs .swiper-button-next {
+  width: 88px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 6px;
+  color: #0b0a09;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pg-thumbs .swiper-button-prev::after,
+.pg-thumbs .swiper-button-next::after {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.pg-thumbs .swiper-button-prev {
+  top: 0;
+  transform: rotate(90deg);
+}
+
+.pg-thumbs .swiper-button-next {
+  bottom: 0;
+  top: auto;
+  transform: rotate(90deg);
+}
+
+.pg-thumbs .swiper-button-disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ---------- Horizontal Thumbs Swiper ---------- */
+.pg-thumbs-h .swiper {
+  width: 100%;
+  padding: 4px 2px;
+}
+
+.pg-thumbs-h .swiper-slide {
+  /* width: 80px !important; */
+  height: 72px !important;
+  /* border-radius: 8px; */
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition:
+    border-color 0.25s,
+    opacity 0.2s;
+  background: #f3f3f3;
+  flex-shrink: 0;
+}
+
+.pg-thumbs-h .swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* border-radius: 6px; */
+  transition: transform 0.25s;
+}
+
+.pg-thumbs-h .swiper-slide:hover img {
+  transform: scale(1.06);
+}
+
+.pg-thumbs-h .swiper-slide-thumb-active {
+  /* border-color: #0B0A09; */
+}
+
+/* ---------- Video Overlay ---------- */
+.pg-slide__video-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.2);
+  transition: background 0.2s;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+}
+
+.pg-slide__video-overlay:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.pg-slide__play-icon {
+  width: 64px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.pg-slide__video-overlay:hover .pg-slide__play-icon {
+  transform: scale(1.08);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.28);
+}
+
+.pg-slide__video-container {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  /* border-radius: 12px; */
+}
+
+.pg-slide__video-container iframe {
+  width: 100%;
+  height: 100%;
+  /* border-radius: 12px; */
+}
+
+.pg-slide__video-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+  width: 34px;
+  height: 34px;
+  background: rgba(255, 255, 255, 0.85);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.pg-slide__video-close:hover {
+  background: #fff;
+}
+
+/* Thumb video badge */
+.pg-thumb__video-badge {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+}
+
+/* ---------- Progress Bar (Mobile Fallback) ---------- */
+.pg-progress {
+  height: 3px;
+  background: #e5e5e5;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.pg-progress__bar {
+  height: 100%;
+  background: #0b0a09;
+  border-radius: 2px;
+  transition: width 0.3s ease;
+  width: 0%;
+}
+
+/* ---------- Badges Overlay ---------- */
+.pg-badges {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pg-badge {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(4px);
+  color: #0b0a09;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+
+/* ---------- Responsive ---------- */
+
+/* Mobile: both modes → horizontal thumbs below */
+@media (max-width: 1023px) {
+
+  /* Force column layout on mobile regardless of mode */
+  .pg-wrapper {
+    flex-direction: column !important;
+  }
+
+  /* Hide vertical thumbs on mobile */
+  .pg-thumbs {
+    display: none !important;
+  }
+
+  /* Always show horizontal thumbs on mobile */
+  .pg-thumbs-h {
+    display: block !important;
+  }
+
+  /* Mobile thumb sizes */
+  .pg-thumbs-h .swiper-slide {
+    /* width: 64px !important; */
+    height: 60px !important;
+  }
+
+  /* Smaller nav arrows on mobile */
+  .pg-main .swiper-button-prev,
+  .pg-main .swiper-button-next {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .pg-thumbs-h .swiper-slide {
+    /* width: 72px !important; */
+    height: 66px !important;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .pg-thumbs .swiper {
+    max-height: 616px;
+    /* 7 thumbs × 80px + 6 gaps × 8px */
+  }
+
+  .pg-main .swiper-slide {
+    aspect-ratio: 3 / 4;
+  }
+}
+
+/* Scrollbar hide */
+.pg-thumbs-h .swiper-wrapper {
+  scrollbar-width: none;
+}
+
+.pg-thumbs-h .swiper-wrapper::-webkit-scrollbar {
+  display: none;
+}
