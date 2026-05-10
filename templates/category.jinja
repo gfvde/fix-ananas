@@ -28,19 +28,7 @@
     {% set category_filter_layout = 'drawer' %}
   {% endif %}
   {% set category_filters_sidebar = category_filter_layout == 'sidebar' %}
-  {% if category_page_settings.infinite_scroll_enabled is defined %}
-    {% set category_infinite_scroll_enabled = category_page_settings.infinite_scroll_enabled %}
-  {% elif settings.infinite_scroll_enabled is defined %}
-    {% set category_infinite_scroll_enabled = settings.infinite_scroll_enabled %}
-  {% elif settings.category_page_infinite_scroll_enabled is defined %}
-    {% set category_infinite_scroll_enabled = settings.category_page_infinite_scroll_enabled %}
-  {% elif settings.category_page_category_page_infinite_scroll_enabled is defined %}
-    {% set category_infinite_scroll_enabled = settings.category_page_category_page_infinite_scroll_enabled %}
-  {% else %}
-    {% set category_infinite_scroll_enabled = true %}
-  {% endif %}
-  {% set category_infinite_scroll_enabled_value = category_infinite_scroll_enabled|string|lower|trim %}
-  {% set category_infinite_scroll_enabled_bool = category_infinite_scroll_enabled_value in ['true', '1', 'on', 'yes'] %}
+  {% set category_infinite_scroll_enabled_bool = true %}
   {% set category_products_shell_class = 'products-with-sidebar products-with-sidebar--ready' if category_filters_sidebar else 'flex items-center gap-2' %}
 
   {% if category_page_enabled_value in ['true', '1', 'on', 'yes'] %}
@@ -48,11 +36,11 @@
   {% endif %}
 
   {# Products Section #}
-  <section class="px-4 py-6 md:px-16">
+  <section class="px-4  pb-8 md:px-16 md:py-6">
     <div class="theme-container">
       <div
         id="products-content"
-        class="flex flex-col gap-6 transition-opacity duration-200"
+        class="flex flex-col gap-3 md:gap-6 transition-opacity duration-200"
       >
         <div
           class="{{ category_products_shell_class }}"
@@ -73,7 +61,7 @@
               <div
                 data-grid-root="true"
                 data-grid="four"
-                class="group/grid grid gap-x-4 gap-y-10"
+                class="group/grid grid gap-x-3 gap-y-4 md:gap-x-4 md:gap-y-10"
               >
                 {% for product in products.results %}
                   {% include 'components/products/product-card.jinja' %}

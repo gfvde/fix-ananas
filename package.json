@@ -42,7 +42,7 @@
     "embla-carousel-fade": "^8.6.0",
     "nouislider": "^15.8.1",
     "photoswipe": "^5.4.4",
-    "swiper": "^11.2.10"
+    "swiper": "^12.1.4"
   },
   "main": "index.js"
 }

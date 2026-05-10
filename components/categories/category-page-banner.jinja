@@ -337,22 +337,25 @@
     }
 
     .category-page-banner__content {
-      display: block;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
     .category-page-banner--plain .category-page-banner__content {
       min-height: 123px;
-      padding: 33px 16px 8px;
+      padding: 33px 16px 30px;
     }
 
     .category-page-banner--with-subcategories {
-      background: var(--cph-bg);
+      background: #ffffff;
     }
 
     .category-page-banner--with-subcategories .category-page-banner__copy {
       display: flex;
-      padding: 28px 16px 14px;
+      padding: 21px 16px ;
       background: var(--cph-bg);
+      min-height: 123px;
     }
 
     .category-page-banner__copy {
@@ -361,22 +364,17 @@
       gap: 8px;
       text-align: center;
     }
-    .category-page-banner--with-subcategories .category-page-banner__copy {
-      background: var(--cph-bg);
-    }
-
-    .category-page-banner--plain .category-page-banner__copy {
-      padding: 0;
-    }
 
     .category-page-banner__copy h1 {
       font-size: 20px;
       line-height: 28px;
+      font-weight: 400;
     }
 
     .category-page-banner__copy p {
       font-size: 16px;
       line-height: 24px;
+      font-weight: 400;
     }
 
     .category-page-banner__subcategories {
@@ -385,10 +383,9 @@
       width: 100%;
       max-width: 100%;
       flex-basis: auto;
-      min-height: 186px;
       overflow-x: auto;
-      background: var(--cph-bg);
-      padding: 8px 16px 12px;
+      background: #ffffff;
+      padding: 8px 16px;
       scroll-padding-inline: 16px;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
@@ -402,11 +399,19 @@
       width: 114px;
       flex-basis: 114px;
     }
+    section.px-4.pb-8.md\:px-16.md\:py-6 .theme-container{
+      padding-inline: 0px !important;
+    }
+    .category-page-banner__subcategory-title {
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 400;
+    }
 
-    .category-page-banner__subcategory-title,
     .category-page-banner__subcategory-count {
       font-size: 14px;
       line-height: 20px;
+      font-weight: 500;
     }
   }
 </style>

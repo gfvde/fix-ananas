@@ -243,6 +243,15 @@
           "default": "2"
         },
         {
+          "id": "product_card_unified_height",
+          "type": "checkbox",
+          "label": {
+            "ar": "توحيد ارتفاع كارت المنتج",
+            "en": "Unified product card height"
+          },
+          "default": true
+        },
+        {
           "id": "image_aspect_ratio",
           "type": "select",
           "label": {
@@ -318,15 +327,7 @@
           ],
           "default": "sidebar"
         },
-        {
-          "id": "infinite_scroll_enabled",
-          "type": "checkbox",
-          "label": {
-            "ar": "تفعيل التحميل التلقائي للمنتجات",
-            "en": "Enable Infinite Product Loading"
-          },
-          "default": true
-        },
+
         {
           "id": "category_page_background_color",
           "type": "color",

@@ -13,22 +13,10 @@
   <div class="ananas-side-cart__content">
     <div class="ananas-side-cart__header">
       <div class="flex items-center gap-2">
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M5 13L9 17L19 7"
-            stroke="#000000"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
         <span class="font-expo text-base font-normal text-black">{{ _('Added to cart') }}</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C13.4121 3 14.7482 3.32519 15.9375 3.90476M19.3125 6.375L11.4375 14.25L9.1875 12" stroke="#468500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </div>
       <button
         id="side-cart-close-btn"
@@ -62,6 +50,9 @@
     <div class="ananas-side-cart__shipping-wrapper">
       <div class="ananas-side-cart__shipping">
         <div class="flex w-full items-center justify-start   gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="13" viewBox="0 0 18 13" fill="none">
+            <path d="M0 0V1.125H10.6875V9.5625H7.22475C6.97387 8.59556 6.10425 7.875 5.0625 7.875C4.02075 7.875 3.15113 8.59556 2.90025 9.5625H2.25V6.75H1.125V10.6875H2.90025C3.15113 11.6544 4.02075 12.375 5.0625 12.375C6.10425 12.375 6.97387 11.6544 7.22475 10.6875H11.9003C12.1511 11.6544 13.0208 12.375 14.0625 12.375C15.1042 12.375 15.9739 11.6544 16.2247 10.6875H18V6.09975L17.9646 6.01144L16.8396 2.63644L16.7175 2.25H11.8125V0H0ZM0.5625 2.25V3.375H5.625V2.25H0.5625ZM11.8125 3.375H15.9081L16.875 6.25781V9.5625H16.2247C15.9739 8.59556 15.1042 7.875 14.0625 7.875C13.0208 7.875 12.1511 8.59556 11.9003 9.5625H11.8125V3.375ZM1.125 4.5V5.625H4.5V4.5H1.125ZM5.0625 9C5.69081 9 6.1875 9.49669 6.1875 10.125C6.1875 10.7533 5.69081 11.25 5.0625 11.25C4.43419 11.25 3.9375 10.7533 3.9375 10.125C3.9375 9.49669 4.43419 9 5.0625 9ZM14.0625 9C14.6908 9 15.1875 9.49669 15.1875 10.125C15.1875 10.7533 14.6908 11.25 14.0625 11.25C13.4342 11.25 12.9375 10.7533 12.9375 10.125C12.9375 9.49669 13.4342 9 14.0625 9Z" fill="#171717"/>
+          </svg>
           <span
             class="font-expo text-xs font-normal text-[#171717]"
             id="side-cart-shipping-text"
@@ -69,40 +60,9 @@
             {% if side_cart_free_shipping_status == 'applied' %}
               {{ _('Free shipping applied!') }}
             {% else %}
-              {{ _('Add purchases worth') }} <span id="side-cart-shipping-remaining"></span> {{ _('to get free shipping') }}
+              {{ _('Add purchases worth %(total)s %(currency)s to get free shipping') | replace('%(total)s', '<span id="side-cart-shipping-remaining"></span>') | replace('%(currency)s', session.currency) }}
             {% endif %}
           </span>
-          <svg
-            width="22"
-            height="24"
-            viewBox="0 0 22 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <!-- delivery icon -->
-            <path
-              d="M1 5C1 3.89543 1.89543 3 3 3H14C15.1046 3 16 3.89543 16 5V19C16 20.1046 15.1046 21 14 21H3C1.89543 21 1 20.1046 1 19V5Z"
-              stroke="#171717"
-              stroke-width="1.5"
-            />
-            <path
-              d="M16 10H19C20.1046 10 21 10.8954 21 12V19C21 20.1046 20.1046 21 19 21H16"
-              stroke="#171717"
-              stroke-width="1.5"
-            />
-            <circle
-              cx="5.5"
-              cy="21.5"
-              r="1.5"
-              fill="#171717"
-            />
-            <circle
-              cx="16.5"
-              cy="21.5"
-              r="1.5"
-              fill="#171717"
-            />
-          </svg>
         </div>
         <div class="ananas-side-cart__progress-bar">
           <div
@@ -721,10 +681,10 @@
     const shippingProgressEl = document.getElementById("side-cart-shipping-progress");
     const shippingWrapperEl = document.querySelector(".ananas-side-cart__shipping-wrapper");
     const initialFreeShippingRule = {{ cart.free_shipping_rule | default(none) | tojson }};
-    const currencyCode = {{ (cart.currency.cart_currency.code if cart.currency else session.currency) | default('SAR') | tojson }};
+    const currencyCode = {{ session.currency | default('SAR') | tojson }};
     const sideCartTranslations = {
       freeShippingApplied: {{ _('Free shipping applied!') | tojson }},
-      addMoreForFreeShipping: {{ _('Add %(total)s more to get free shipping') | tojson }},
+      addMoreForFreeShipping: {{ _('Add purchases worth %(total)s %(currency)s to get free shipping') | tojson }},
       discountTemplate: {{ _('%(percent)s discount') | tojson }},
       options: {{ _('Options') | tojson }},
       cartEmpty: {{ _('Cart is empty') | tojson }},
@@ -833,7 +793,9 @@
         shippingTextEl.textContent = sideCartTranslations.freeShippingApplied;
         shippingProgressEl.style.width = "100%";
       } else {
-        shippingTextEl.textContent = sideCartTranslations.addMoreForFreeShipping.replace("%(total)s", state.remaining);
+        shippingTextEl.innerHTML = sideCartTranslations.addMoreForFreeShipping
+          .replace("%(total)s", '<span id="side-cart-shipping-remaining">' + state.remaining + '</span>')
+          .replace("%(currency)s", currencyCode);
         shippingProgressEl.style.width = state.percentage + "%";
       }
     }

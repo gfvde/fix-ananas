@@ -67,7 +67,7 @@
   {% set badge_text = product.badge.body.ar if session.lang == 'ar' else product.badge.body.en %}
 
   <span
-    class="{{ badge_class }} text-xs inline-flex items-center gap-1.5 rounded-[4px] border px-2 py-0.5 whitespace-nowrap"
+    class="{{ badge_class }} text-sm inline-flex items-center gap-1.5 rounded-[4px] border px-1.5 py-0.5 whitespace-nowrap"
   >
     {% if icon_path %}
       <svg

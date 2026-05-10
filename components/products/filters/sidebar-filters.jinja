@@ -214,12 +214,12 @@
   }
 
   .products-filter-sidebar__section {
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1.7px solid var(--border);
   }
 
   .products-filter-sidebar__section > div,
   .products-filter-sidebar__section > details {
-    padding: 16px 0 8px;
+    padding: 16px 0 ;
   }
 
   .products-filter-sidebar .filters--sidebar .product-filter {
@@ -333,13 +333,14 @@
     .products-with-sidebar.products-with-sidebar--ready {
       gap: 1rem !important;
     }
+  .flex.items-center.gap-3{
+      flex-direction: row-reverse !important;
+  }
   }
   summary.product-filter__summary{
     flex-direction: row-reverse !important;
   }
-  .flex.items-center.gap-3{
-      flex-direction: row-reverse !important;
-  }
+
   label.flex.w-full.cursor-pointer.items-center.justify-between.gap-3.peer-checked\:\[\&_svg\]\:rotate-0 {
       flex-direction: row-reverse !important;
   }

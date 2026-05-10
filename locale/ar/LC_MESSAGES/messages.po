@@ -1389,3 +1389,9 @@ msgstr "ثواني"
 
 msgid "selected"
 msgstr "محدد"
+
+msgid "SAR"
+msgstr "ريال"
+
+msgid "Add purchases worth %(total)s %(currency)s to get free shipping"
+msgstr "أضف مشتريات بقيمة %(total)s %(currency)s للحصول على شحن مجاني"

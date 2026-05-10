@@ -13,14 +13,18 @@
   <div class="mobile-inline-filters__bar">
     <button
       type="button"
-      command="show-modal"
-      commandfor="filters-drawer"
       class="mobile-inline-filters__bar-btn"
+      onclick="this.closest('.mobile-inline-filters').classList.toggle('is-active')"
     >
-      <span>{{ _('Filter') }}</span>
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M4 7h16M8 12h8M11 17h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="mobile-inline-filters__chevron">
+        <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
+      <div class="mobile-inline-filters__bar-btn-group">
+        <span>{{ _('Filter') }}</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 7h16M8 12h8M11 17h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
     </button>
 
     <form class="mobile-inline-filters__sort" method="get" onsubmit="return false">
@@ -114,13 +118,13 @@
   .mobile-inline-filters {
     display: flex;
     flex-direction: column;
-    gap: 12px;
     width: 100%;
   }
 
   @media (max-width: 1023px) {
     .mobile-inline-filters {
       display: flex !important;
+      margin-top: 0.5rem;
     }
   }
 
@@ -139,9 +143,8 @@
     display: flex;
     height: 100%;
     align-items: center;
-    justify-content: center;
     gap: 4px;
-    padding: 8px 12px;
+    padding: 0px 12px;
     border: 0;
     background: transparent;
     color: inherit;
@@ -152,9 +155,28 @@
   }
 
   .mobile-inline-filters__bar-btn {
-    flex-direction: row-reverse;
+    justify-content: space-between;
     grid-column: 1;
-    border-inline-start: 1px solid var(--border);
+    flex-direction: row-reverse;
+  }
+
+  .mobile-inline-filters__sort label {
+    justify-content: flex-start;
+  }
+
+  .mobile-inline-filters__bar-btn-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-direction: row-reverse;
+  }
+
+  .mobile-inline-filters.is-active .mobile-inline-filters__chevron {
+    transform: rotate(180deg);
+  }
+
+  .mobile-inline-filters__chevron {
+    transition: transform 0.3s ease;
   }
 
   .mobile-inline-filters__sort {
@@ -178,8 +200,10 @@
     flex-direction: row;
     gap: 8px;
     width: 100%;
-    overflow-x: auto;
-    overflow-y: visible;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
     padding-bottom: 2px;
     scrollbar-width: none;
   }
@@ -188,11 +212,21 @@
     display: none;
   }
 
+  .mobile-inline-filters.is-active .mobile-inline-filters__chips {
+    max-height: 100px;
+    opacity: 1;
+    margin-top: 12px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
   .mobile-inline-filters__result-count {
     color: var(--muted);
     font-size: 14px;
     line-height: 20px;
     text-align: right;
+    margin-bottom: 0.7rem;
+    margin-top: 0.7rem;
   }
 
   @media (min-width: 1024px) {

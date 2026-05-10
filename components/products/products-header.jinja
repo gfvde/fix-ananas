@@ -22,7 +22,7 @@
 {% endif %}
 {% set product_filters_sidebar = product_filters_layout == 'sidebar' %}
 
-<div class="products-header {% if product_filters_sidebar %}products-header--sidebar{% endif %} flex flex-col gap-4">
+<div class="products-header {% if product_filters_sidebar %}products-header--sidebar{% endif %} flex flex-col ">
   {% if product_filters_sidebar %}
     <div class="products-header__drawer-source lg:hidden">
       {% include 'components/products/filters/advanced-filters.jinja' %}
