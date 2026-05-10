@@ -255,52 +255,44 @@
         {% endfor %}
       </nav>
 
-      {# Desktop Icons #}
       <div class="ananas-nav__icons">
         {# Cart #}
         <a href="{{ url_for('cart_page') }}" class="ananas-nav__icon-btn" aria-label="{{ _('Cart') }}" {% if settings.header_enable_side_cart %}onclick="event.preventDefault(); if(window.openSideCart) window.openSideCart();"{% endif %}>
-	          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-	            <path d="M16.7505 4.24995L0.751039 4.24972L0.75 4.25M16.7505 4.24995L16.75 15.3467C16.75 16.3978 15.8817 17.25 14.8106 17.25H2.68939C1.6183 17.25 0.75 16.3978 0.75 15.3467V4.25M16.7505 4.24995L13.5429 1.04289C13.3554 0.855357 13.101 0.75 12.8358 0.75H4.66421C4.399 0.75 4.14464 0.855357 3.95711 1.04289L0.75 4.25M11.75 7.25C11.75 8.90686 10.4069 10.25 8.75 10.25C7.09315 10.25 5.75 8.90686 5.75 7.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-	          </svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
           <span data-cart-badge hidden class="ananas-nav__cart-badge">0</span>
         </a>
         {# Wishlist #}
-  <a
-    href="/pages/wishlist"
-    class="ananas-nav__icon-btn"
-    aria-label="{{ _('Wishlist') }}"
-  >
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-            <path d="M11 19.25S2.75 14.25 2.75 8.25A4.25 4.25 0 0 1 11 5.79 4.25 4.25 0 0 1 19.25 8.25C19.25 14.25 11 19.25 11 19.25Z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <a href="/pages/wishlist" class="ananas-nav__icon-btn" aria-label="{{ _('Wishlist') }}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
           </svg>
         </a>
         {# Region #}
         {% if show_region %}
-	          <button type="button" onclick="return window.openAnanasRegionSettings(event)" class="ananas-nav__icon-btn" aria-label="{{ _('Region') }}">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <circle cx="11" cy="11" r="9" stroke="currentColor" stroke-width="1.4"/>
-              <path d="M11 2C11 2 8 6.5 8 11C8 15.5 11 20 11 20M11 2C11 2 14 6.5 14 11C14 15.5 11 20 11 20M2 11H20" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <button type="button" onclick="return window.openAnanasRegionSettings(event)" class="ananas-nav__icon-btn" aria-label="{{ _('Region') }}">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
             </svg>
           </button>
         {% endif %}
         {# Account #}
         <button id="header-login-btn" type="button" onclick="handleLoginAction()" class="ananas-nav__icon-btn" aria-label="{{ _('Login') }}">
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-            <circle cx="11" cy="7.5" r="3.5" stroke="currentColor" stroke-width="1.4"/>
-            <path d="M3 19c0-3.31 3.58-6 8-6s8 2.69 8 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
           </svg>
         </button>
         <a id="header-profile-btn" href="{{ url_for('profile') }}" class="ananas-nav__icon-btn" style="display:none" aria-label="{{ _('Profile') }}">
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-            <circle cx="11" cy="7.5" r="3.5" stroke="currentColor" stroke-width="1.4"/>
-            <path d="M3 19c0-3.31 3.58-6 8-6s8 2.69 8 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
           </svg>
         </a>
         {# Search #}
         {% if settings.nav_enable_search != false %}
           <button class="ananas-nav__icon-btn" id="nav-search-btn" aria-label="{{ _('Search') }}" aria-expanded="false" aria-controls="nav-search-panel">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M17.5 17.5L13.875 13.875M15.83 9.17C15.83 12.85 12.85 15.83 9.17 15.83C5.48 15.83 2.5 12.85 2.5 9.17C2.5 5.48 5.48 2.5 9.17 2.5C12.85 2.5 15.83 5.48 15.83 9.17Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
           </button>
         {% endif %}
@@ -785,7 +777,12 @@
   .ananas-sub__link:hover { background: color-mix(in srgb, var(--ananas-dd-bg) 60%, white 40%); }
 
   /* Icons */
-	  .ananas-nav__icons { display: flex; align-items: center; direction: ltr; }
+  .ananas-nav__icons { 
+    display: flex; 
+    align-items: center; 
+    direction: ltr;
+    gap: 0px; 
+  }
   .ananas-nav__icon-btn {
     display: flex;
     align-items: center;
@@ -799,12 +796,21 @@
     position: relative;
     flex-shrink: 0;
     color: var(--ananas-icon-color);
+    transition: background 0.2s;
+    border-radius: 4px;
+  }
+  .ananas-nav__icon-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  .ananas-nav__icon-btn svg {
+    width: 20px;
+    height: 20px;
   }
   .ananas-nav__cart-badge {
     position: absolute;
     top: 4px;
-    left: 20px;
-    background: var(--ananas-badge-color);
+    right: 4px;
+    background: #25A562;
     color: white;
     font-size: 10px;
     font-weight: 700;
@@ -814,6 +820,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 1;
+    line-height: 1;
   }
 
   /* ─── MEGA MENU ──────────────────────────────── */
