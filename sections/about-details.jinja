@@ -47,23 +47,7 @@
       </div>
 
       <div class="about-details__mobile-nav">
-        <button
-          type="button"
-          class="about-details__nav-btn"
-          data-about-details-prev
-          aria-label="{{ _('Previous') }}"
-        >
-          ‹
-        </button>
         <span>{{ settings.mobile_nav_text | default('تصفّح المنتجات', true) }}</span>
-        <button
-          type="button"
-          class="about-details__nav-btn"
-          data-about-details-next
-          aria-label="{{ _('Next') }}"
-        >
-          ›
-        </button>
       </div>
 
       <div class="about-details__mobile-hero">
@@ -115,6 +99,66 @@
   [section-id="{{ sectionId }}"] .about-details__mobile-hero {
     position: relative;
     overflow: hidden;
+  }
+
+  /* Center product card content specifically in this section */
+  [section-id="{{ sectionId }}"] .pc-card {
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  [section-id="{{ sectionId }}"] .pc-info {
+    align-items: center !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  [section-id="{{ sectionId }}"] .pc-name,
+  [section-id="{{ sectionId }}"] .pc-name a {
+    text-align: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    display: block !important;
+  }
+
+  [section-id="{{ sectionId }}"] .pc-tags-container,
+  [section-id="{{ sectionId }}"] .pc-tags-wrapper,
+  [section-id="{{ sectionId }}"] .pc-tags-track {
+    justify-content: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+  }
+
+  [section-id="{{ sectionId }}"] .pc-tags-set {
+    display: flex !important;
+    gap: 8px !important;
+    justify-content: center !important;
+  }
+
+  [section-id="{{ sectionId }}"] .pc-rating,
+  [section-id="{{ sectionId }}"] .pc-price-wrap,
+  [section-id="{{ sectionId }}"] .pc-stock,
+  [section-id="{{ sectionId }}"] .pc-stock-sold,
+  [section-id="{{ sectionId }}"] .pc-stock-qty {
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    display: flex !important;
+    text-align: center !important;
+  }
+
+  [section-id="{{ sectionId }}"] .pc-options {
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    display: flex !important;
+  }
+
+  [section-id="{{ sectionId }}"] .pc-static-cta {
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 
   [section-id="{{ sectionId }}"] .about-details__mobile-hero {
@@ -205,8 +249,9 @@
   [section-id="{{ sectionId }}"] .about-details-product-card .pc-name,
   [section-id="{{ sectionId }}"] .about-details-product-card .pc-rating,
   [section-id="{{ sectionId }}"] .about-details-product-card .pc-price-wrap {
-    justify-content: center;
-    text-align: center;
+    justify-content: center !important;
+    text-align: center !important;
+    width: 100% !important;
   }
 
   [section-id="{{ sectionId }}"] .about-details-product-card .pc-price {
@@ -304,18 +349,33 @@
     [section-id="{{ sectionId }}"] .about-details__mobile-hero {
       position: sticky;
       top: calc(var(--header-height, 96px) + 16px);
-      z-index: 2;
+      z-index: 10;
+      overflow: visible !important;
+    }
+
+    [section-id="{{ sectionId }}"] .about-details__mobile-hero::before {
+      content: "";
+      position: absolute;
+      bottom: 100%;
+      left: -20px;
+      right: -20px;
+      height: 200px;
+      background: var(--about-details-mobile-bg);
+      pointer-events: none;
     }
 
     [section-id="{{ sectionId }}"] .about-details__header {
       color: var(--about-details-mobile-title);
       padding-top: 16px;
       gap: 0;
+      position: relative;
+      z-index: 15;
     }
 
     [section-id="{{ sectionId }}"] .about-details__header h2 {
       font-size: 24px;
       line-height: 32px;
+      margin-bottom: 8px;
     }
 
     [section-id="{{ sectionId }}"] .about-details__header p {
@@ -334,6 +394,9 @@
       font-weight: 500;
       text-decoration: underline;
       margin-top: -8px;
+      justify-content: center;
+      position: relative;
+      z-index: 15;
     }
 
     [section-id="{{ sectionId }}"] .about-details__nav-btn {
