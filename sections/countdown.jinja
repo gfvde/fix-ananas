@@ -7,6 +7,7 @@
   section-id="{{ sectionId }}"
   data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
   class="section-countdown relative flex min-h-[700px] items-center justify-center overflow-hidden px-4 py-6 md:min-h-[480px] md:px-16 md:py-32"
+  style="background-color: {{ settings.background_color | default('transparent') }};"
 >
   {% if settings.background_image %}
     <div class="absolute inset-0 -z-10">

@@ -109,6 +109,15 @@
       "default": []
     },
     {
+      "id": "section_background_color",
+      "type": "color",
+      "label": {
+        "ar": "لون خلفية السكشن",
+        "en": "Section Background Color"
+      },
+      "default": "#ffffff"
+    },
+    {
       "id": "remove_bottom_margin",
       "type": "checkbox",
       "label": {

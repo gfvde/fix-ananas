@@ -215,6 +215,7 @@
       font-size: 24px;
       font-weight: 500;
       line-height: 32px;
+      margin-bottom: 0.5rem;
     }
 
     [section-id="{{ sectionId }}"] .fp-subtitle {
@@ -303,6 +304,19 @@
     [section-id="{{ sectionId }}"] .fp-carousel__viewport.is-ready {
       opacity: 1;
     }
+    [section-id="{{ sectionId }}"] .fp-carousel__viewport.is-dragging {
+      cursor: grabbing;
+      scroll-snap-type: none;
+      scroll-behavior: auto !important;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    [section-id="{{ sectionId }}"] .fp-carousel__viewport:not(.is-dragging) {
+      cursor: grab;
+    }
+    [section-id="{{ sectionId }}"] .fp-carousel__viewport.is-dragging * {
+      pointer-events: none;
+    }
 
     [section-id="{{ sectionId }}"] .fp-carousel__viewport::-webkit-scrollbar {
       display: none;
@@ -370,7 +384,6 @@
         flex-direction: column;
         align-items: flex-start;
         gap: 16px;
-        min-height: 96px;
       }
 
       [section-id="{{ sectionId }}"] .fp-header--mobile-carousel,
@@ -408,6 +421,13 @@
         line-height: 24px;
         white-space: nowrap;
         direction: rtl;
+        transition: background 0.2s, transform 0.2s;
+        cursor: pointer;
+      }
+
+      [section-id="{{ sectionId }}"] .fp-cta:hover {
+        background: rgba(0, 0, 0, 0.04);
+        transform: translateY(-1px);
       }
 
       [section-id="{{ sectionId }}"] .fp-carousel__slide {
@@ -521,7 +541,60 @@
         );
       }
 
+      function initDragToScroll(viewport) {
+        if (!viewport || viewport.dataset.dragInitialized === "true") return;
+        viewport.dataset.dragInitialized = "true";
+
+        var isDown = false;
+        var startX;
+        var scrollLeft;
+        var moved = false;
+
+        viewport.addEventListener("mousedown", function (e) {
+          isDown = true;
+          moved = false;
+          viewport.classList.add("is-dragging");
+          startX = e.pageX - viewport.offsetLeft;
+          scrollLeft = viewport.scrollLeft;
+        });
+
+        viewport.addEventListener("mouseleave", function () {
+          if (!isDown) return;
+          isDown = false;
+          viewport.classList.remove("is-dragging");
+        });
+
+        viewport.addEventListener("mouseup", function (e) {
+          if (!isDown) return;
+          isDown = false;
+          viewport.classList.remove("is-dragging");
+        });
+
+        viewport.addEventListener("mousemove", function (e) {
+          if (!isDown) return;
+          e.preventDefault();
+          var x = e.pageX - viewport.offsetLeft;
+          var walk = x - startX;
+          if (Math.abs(walk) > 5) {
+            moved = true;
+          }
+          viewport.scrollLeft = scrollLeft - walk;
+        });
+
+        // Prevent clicks on links/buttons if we dragged
+        viewport.addEventListener("click", function (e) {
+          if (moved) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }, true);
+      }
+
       panels.forEach(function (panel) {
+        var viewport = panel.querySelector(".fp-carousel__viewport");
+        if (viewport) {
+          initDragToScroll(viewport);
+        }
         bindCarouselProgress(panel);
         if (!panel.classList.contains("is-hidden")) {
           alignCarousel(panel);

@@ -8,6 +8,7 @@
   data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
   class="section-hero relative flex items-center overflow-hidden px-4 md:px-16"
   data-variant="{{ settings.style_variant | default('default') }}"
+  style="background-color: {{ settings.background_color | default('transparent') }};"
 >
   {# Background image using native img for better LCP #}
   <div class="absolute inset-0 -z-10">

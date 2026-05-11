@@ -7,6 +7,7 @@
   section-id="{{ sectionId }}"
   data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
   class="section-logo-social bg-secondary px-4 md:px-16"
+  style="background-color: {{ settings.background_color | default('#ffffff') }};"
 >
   <div class="theme-container flex flex-col items-center gap-16 py-8">
     {# Logo #}

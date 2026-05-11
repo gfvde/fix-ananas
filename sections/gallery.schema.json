@@ -99,6 +99,15 @@
       "default": []
     },
     {
+      "id": "background_color",
+      "type": "color",
+      "label": {
+        "ar": "لون الخلفية",
+        "en": "Background Color"
+      },
+      "default": "transparent"
+    },
+    {
       "id": "remove_bottom_margin",
       "type": "checkbox",
       "label": {

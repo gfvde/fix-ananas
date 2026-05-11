@@ -542,17 +542,21 @@
   /* ── CTA overlay (desktop hover, button-mode only) ── */
   .pc-cta-wrap {
     position: absolute;
-    bottom: 8px;
+    bottom: 23px; /* Matches Figma y: 280 in 320px frame -> 40px from bottom, but let's adjust for visual balance */
     left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 44px);
+    transform: translate(-50%, 10px);
+    width: calc(100% - 46px);
+    max-width: 273px;
     opacity: 0;
-    transition: opacity 0.2s ease;
+    visibility: hidden;
+    transition: opacity 0.45s cubic-bezier(0.25, 1, 0.5, 1), transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.45s cubic-bezier(0.25, 1, 0.5, 1);
     z-index: 2;
   }
   .pc-card:hover .pc-cta-wrap,
   .pc-img-wrap:hover .pc-cta-wrap {
     opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
   }
   /* ── Image-pinned circular icon CTA ── */
   /* display controlled globally from layout.jinja — do NOT set display here */
@@ -616,19 +620,27 @@
     justify-content: center;
     gap: 6px;
     width: 100%;
-    background: #F7512B !important;
+    background: #FFFFFF !important;
     border: none;
     cursor: pointer;
     padding: 8px 12px;
     font-size: 16px;
     font-weight: 500;
-    color: #ffffff;
+    color: #000000 !important;
     white-space: nowrap;
     line-height: 24px;
-    transition: background 0.2s ease, transform 0.15s ease;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.15s ease;
     text-decoration: none;
   }
   .pc-cta:hover {
+    background: #F7512B !important;
+    color: #FFFFFF !important;
+  }
+  .pc-notify-btn {
+    background: #F7512B !important;
+    color: #FFFFFF !important;
+  }
+  .pc-notify-btn:hover {
     background: #D64625 !important;
   }
 
@@ -643,6 +655,14 @@
     color: #000 !important;
     font-weight: 400;
     border-radius: 0; /* Figma seems to have sharp corners or very subtle rounding */
+  }
+  .pc-cta-wrap-mb .pc-notify-btn {
+    background: #000000 !important;
+    color: #FFFFFF !important;
+    border: 1px solid #000 !important;
+  }
+  .pc-cta-wrap-mb .pc-notify-btn:hover {
+    background: #D64625 !important;
   }
 
   /* ── Static CTA ── */
@@ -806,22 +826,23 @@
     justify-content: center;
     gap: 6px;
     width: 100%;
-    background: #F7512B !important;
+    background: #ffffff !important;
     border: none;
     cursor: pointer;
     padding: 8px 12px;
     font-size: 16px;
     font-weight: 500;
-    color: #ffffff;
+    color: #000000 !important;
     white-space: nowrap;
     line-height: 24px;
     transition: background 0.2s ease, transform 0.15s ease;
   }
   .pc-notify-btn:hover {
     background: #D64625 !important;
+    color: #ffffff !important;
   }
   .pc-cta-wrap-mb .pc-notify-btn {
-    border: none;
+   
   }
   /* ── List view overrides ── */
   [data-grid="list"] .pc-card {

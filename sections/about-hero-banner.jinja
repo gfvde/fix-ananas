@@ -128,7 +128,7 @@
     display: flex;
     min-height: var(--ahb-mobile-height);
     overflow: hidden;
-    background: #171717;
+    background: {{ settings.background_color | default('#171717') }};
     isolation: isolate;
   }
 

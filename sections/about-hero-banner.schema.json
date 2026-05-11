@@ -278,6 +278,15 @@
       "default": "rgba(255,255,255,0.10)"
     },
     {
+      "id": "background_color",
+      "type": "color",
+      "label": {
+        "ar": "لون الخلفية",
+        "en": "Background Color"
+      },
+      "default": "#171717"
+    },
+    {
       "id": "remove_bottom_margin",
       "type": "checkbox",
       "label": {

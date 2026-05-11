@@ -370,6 +370,7 @@
       scrollbar-width: none;
       -ms-overflow-style: none;
       -webkit-overflow-scrolling: touch;
+      touch-action: pan-x pan-y;
     }
     [section-id="{{ sectionId }}"] .sbm-track::-webkit-scrollbar {
       display: none;
@@ -395,6 +396,8 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      user-select: none;
+      -webkit-user-drag: none;
     }
     [section-id="{{ sectionId }}"] .sbm-mob-card__info {
       display: flex;
