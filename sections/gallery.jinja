@@ -4,6 +4,7 @@
   section-id="{{ sectionId }}"
   data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
   class="section-gallery bg-background px-4 py-6 md:p-16"
+  style="background-color: {{ settings.background_color | default('transparent') }};"
 >
   <div class="theme-container">
     {% if settings.title %}

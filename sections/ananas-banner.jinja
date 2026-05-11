@@ -5,6 +5,7 @@
   section-id="{{ sectionId }}"
   data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
   class="section-home-banner relative flex min-h-[500px] items-center overflow-hidden px-4 md:px-16 md:min-h-[468px] animate-fade-in"
+  style="background-color: {{ settings.background_color | default('transparent') }};"
 >
   {# Background image #}
   <div class="absolute inset-0 -z-10">

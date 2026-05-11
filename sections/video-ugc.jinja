@@ -14,7 +14,7 @@
 {% endif %}
 
 <section section-id="{{ sectionId }}"
-  data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}" class="section-video-ugc bg-white" dir="rtl">
+  data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}" class="section-video-ugc" style="background-color: {{ settings.background_color | default('#ffffff') }};" dir="rtl">
 
   {# Header #}
   <div class="video-ugc__header">

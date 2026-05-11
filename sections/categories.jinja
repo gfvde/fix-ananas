@@ -4,6 +4,7 @@
   section-id="{{ sectionId }}"
   data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
   class="section-categories px-4 py-6 md:px-16 md:py-16"
+  style="background-color: {{ settings.background_color | default('transparent') }};"
 >
   <div class="theme-container space-y-6">
     <div class="md:flex md:items-center md:justify-between">

@@ -5,6 +5,7 @@
   data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
   class="section-carousel relative overflow-hidden"
   data-variant="{{ settings.style_variant | default('default') }}"
+  style="background-color: {{ settings.background_color | default('transparent') }};"
 >
   <!-- Carousel with data attributes for JS initialization -->
   <div

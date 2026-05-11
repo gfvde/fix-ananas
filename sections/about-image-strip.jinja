@@ -16,6 +16,7 @@
     --image-strip-mobile-padding: {{ mobile_padding }}px;
     --image-strip-title-color: {{ title_color }};
     --image-strip-subtitle-color: {{ subtitle_color }};
+    background-color: {{ settings.background_color | default('transparent') }};
   "
 >
   {% set imgs = [settings.photo1, settings.photo2, settings.photo3, settings.photo4] %}

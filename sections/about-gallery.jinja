@@ -1,5 +1,8 @@
 <section section-id="{{ sectionId }}"
-  data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}" class="bg-white py-6 px-4 md:py-10 md:px-14" dir="rtl" data-carousel>
+  data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}" 
+  class="py-6 px-4 md:py-10 md:px-14" 
+  style="background-color: {{ settings.background_color | default('#ffffff') }};"
+  dir="rtl" data-carousel>
   
   {% set border_radius = settings.border_radius | default(8) %}
   {% set title_color = settings.title_color | default('#000000') %}

@@ -54,8 +54,8 @@
           {% if hover_text %}
             <span class="category-card__hover-cta">
               <span>{{ hover_text }}</span>
-              <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
-                <path d="M5.625 3.125L10 7.5L5.625 11.875" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </span>
           {% endif %}
@@ -171,7 +171,7 @@
   [section-id="{{ sectionId }}"] .category-card__hover-cta {
     position: absolute;
     left: 50%;
-    bottom: 0;
+    bottom: 24px;
     z-index: 3;
     display: inline-flex;
     align-items: center;
@@ -179,15 +179,15 @@
     gap: 4px;
     color: var(--sbc-hover-text);
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 24px;
     letter-spacing: 0;
     text-transform: uppercase;
     white-space: nowrap;
     direction: ltr;
     opacity: 0;
-    transform: translate(-50%, 8px);
-    transition: opacity 180ms ease, transform 180ms ease;
+    transform: translate(-50%, 10px);
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   [section-id="{{ sectionId }}"] .category-card__hover-cta svg {
