@@ -102,6 +102,33 @@
       ]
     },
     {
+      "id": "desktop_media_width",
+      "type": "number",
+      "label": {
+        "ar": "عرض الوسائط في الديسكتوب (%)",
+        "en": "Desktop Media Width (%)"
+      },
+      "default": 50
+    },
+    {
+      "id": "desktop_media_height",
+      "type": "number",
+      "label": {
+        "ar": "ارتفاع الوسائط في الديسكتوب (px)",
+        "en": "Desktop Media Height (px)"
+      },
+      "default": 504
+    },
+    {
+      "id": "mobile_media_height",
+      "type": "number",
+      "label": {
+        "ar": "ارتفاع الوسائط في الموبايل (px)",
+        "en": "Mobile Media Height (px)"
+      },
+      "default": 375
+    },
+    {
       "id": "title",
       "type": "text",
       "label": {

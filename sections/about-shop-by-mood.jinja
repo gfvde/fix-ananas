@@ -503,7 +503,7 @@
     }
     function scroll(dir) {
       var w = cards[0].offsetWidth + 16;
-      track.scrollBy({ left: dir === "next" ? w : -w, behavior: "smooth" });
+      track.scrollBy({ left: dir === "next" ? -w : w, behavior: "smooth" });
     }
     if (prev)
       prev.addEventListener("click", function () {

@@ -108,16 +108,18 @@
   {% set first_stars = first_review.stars | default(5) | int %}
   <div class="arf-carousel{% if is_mobile %} arf-carousel--mobile{% endif %}" data-arf-carousel tabindex="0" role="region" aria-label="{{ _('Customer reviews') }}">
     {% if has_multiple and show_arrows %}
-      <button class="arf-arrow arf-arrow--prev" type="button" data-arf-arrow="prev" aria-label="{{ _('Previous review') }}">
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M15 18L9 12L15 6" />
-        </svg>
-      </button>
-      <button class="arf-arrow arf-arrow--next" type="button" data-arf-arrow="next" aria-label="{{ _('Next review') }}">
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M9 18L15 12L9 6" />
-        </svg>
-      </button>
+      <div class="arf-arrows-wrap">
+        <button class="arf-arrow arf-arrow--prev" type="button" data-arf-arrow="prev" aria-label="{{ _('Previous review') }}">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M15 18L9 12L15 6" />
+          </svg>
+        </button>
+        <button class="arf-arrow arf-arrow--next" type="button" data-arf-arrow="next" aria-label="{{ _('Next review') }}">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M9 18L15 12L9 6" />
+          </svg>
+        </button>
+      </div>
     {% endif %}
     <div class="arf-deck{% if has_multiple %} arf-deck--multiple{% else %} arf-deck--single{% endif %}" style="--arf-front-bg: {{ front_bg }}; --arf-front-color: {{ front_color }}; --arf-back-one-bg: {{ back_one_bg }}; --arf-back-two-bg: {{ back_two_bg }};">
       {% if has_multiple %}
@@ -585,10 +587,20 @@
     box-shadow: 0 0 0 3px rgba(37, 165, 98, 0.22), 0 12px 36px rgba(0, 0, 0, 0.12);
   }
 
+  .arf-arrows-wrap {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .arf-arrow {
     position: absolute;
     top: 50%;
-    z-index: 6;
+    pointer-events: auto;
     width: 48px;
     height: 48px;
     border: 1px solid rgba(0, 0, 0, 0.12);
@@ -630,11 +642,11 @@
   }
 
   .arf-arrow--prev {
-    left: -92px;
+    right: -92px;
   }
 
   .arf-arrow--next {
-    right: -92px;
+    left: -92px;
   }
 
   .arf-deck {
@@ -872,6 +884,21 @@
     .arf-carousel--mobile {
       width: 100%;
       max-width: 340px;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .arf-carousel--mobile .arf-arrows-wrap {
+      position: static;
+      pointer-events: auto;
+      display: flex;
+      gap: 16px;
+      order: 2;
+    }
+
+    .arf-carousel--mobile .arf-arrow {
+      position: static;
+      transform: none;
     }
 
     .arf-carousel--mobile .arf-arrow {
