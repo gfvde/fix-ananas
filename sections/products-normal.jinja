@@ -113,7 +113,7 @@
             data-grid="grid"
           >
             {% for product in products %}
-              {% with index=loop.index0, is_priority=(loop.first and settings.order <= 2) %}
+              {% with index=loop.index0, product_card_variant='pc-card--figma-products pc-card--figma-grid', is_priority=(loop.first and settings.order <= 2) %}
                 {% include 'components/products/product-card.jinja' %}
               {% endwith %}
             {% endfor %}
@@ -129,7 +129,7 @@
               <div class="fp-carousel__container">
                 {% for product in products %}
                   <div class="fp-carousel__slide">
-                    {% with index=loop.index0, is_priority=(loop.first and settings.order <= 2) %}
+                    {% with index=loop.index0, product_card_variant='pc-card--figma-products pc-card--figma-carousel', is_priority=(loop.first and settings.order <= 2) %}
                       {% include 'components/products/product-card.jinja' %}
                     {% endwith %}
                   </div>
@@ -473,6 +473,165 @@
     @media (min-width: 1024px) and (max-width: 1439px) {
       [section-id="{{ sectionId }}"].fp-section--grid .fp-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      }
+    }
+
+    [section-id="{{ sectionId }}"] .pc-card--figma-products {
+      gap: 12px;
+      color: var(--fp-text);
+    }
+
+    [section-id="{{ sectionId }}"] .pc-card--figma-products .pc-img-wrap {
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+    }
+
+    [section-id="{{ sectionId }}"] .pc-card--figma-products .pc-img {
+      width: 100%;
+      height: 137.47%;
+      top: -13.35%;
+      object-fit: cover;
+    }
+
+    [section-id="{{ sectionId }}"] .pc-card--figma-products .pc-badge-pill,
+    [section-id="{{ sectionId }}"] .pc-card--figma-products .pc-badges > span {
+      background: var(--fp-badge-bg);
+      color: var(--fp-badge-text);
+      border-radius: 0;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 20px;
+      padding: 3px 6px;
+    }
+
+    [section-id="{{ sectionId }}"] .pc-card--figma-products .pc-actions {
+      top: 8px;
+      left: 8px;
+      gap: 6px;
+    }
+
+    [section-id="{{ sectionId }}"] .pc-card--figma-products .pc-info {
+      gap: 6px;
+      padding: 0 0 0 16px;
+    }
+
+    [section-id="{{ sectionId }}"] .pc-card--figma-products .pc-name {
+      color: var(--fp-text);
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+    }
+
+    [section-id="{{ sectionId }}"] .pc-card--figma-products .pc-tags-track {
+      gap: 6px;
+    }
+
+    [section-id="{{ sectionId }}"] .pc-card--figma-products .pc-tag {
+      background: var(--fp-chip-bg);
+      color: #525252;
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 16px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      flex: 0 0 auto;
+    }
+
+    [section-id="{{ sectionId }}"] .pc-card--figma-products .pc-rating,
+    [section-id="{{ sectionId }}"] .pc-card--figma-products .pc-price-wrap {
+      width: 100%;
+      justify-content: flex-end;
+      gap: 4px;
+    }
+
+    [section-id="{{ sectionId }}"] .pc-card--figma-products .pc-rating__score,
+    [section-id="{{ sectionId }}"] .pc-card--figma-products .pc-rating__count,
+    [section-id="{{ sectionId }}"] .pc-card--figma-products .pc-price {
+      color: var(--fp-text);
+    }
+
+    [section-id="{{ sectionId }}"] .pc-card--figma-products .pc-price {
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 28px;
+    }
+
+    [section-id="{{ sectionId }}"] .pc-card--figma-products .pc-rating svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    [section-id="{{ sectionId }}"] .pc-card--figma-products .pc-static-cta {
+      display: none !important;
+    }
+
+    [section-id="{{ sectionId }}"] .pc-card--figma-carousel {
+      width: 299px;
+      align-items: center;
+    }
+
+    [section-id="{{ sectionId }}"] .pc-card--figma-carousel .pc-info {
+      align-items: center;
+      text-align: center;
+      padding: 0;
+      overflow: hidden;
+      gap: 8px;
+      width: 100%;
+    }
+
+    [section-id="{{ sectionId }}"] .pc-card--figma-carousel .pc-name {
+      text-align: center;
+    }
+
+    [section-id="{{ sectionId }}"] .pc-card--figma-carousel .pc-rating,
+    [section-id="{{ sectionId }}"] .pc-card--figma-carousel .pc-price-wrap {
+      justify-content: center;
+    }
+
+    [section-id="{{ sectionId }}"] .pc-card--figma-grid .pc-img-wrap {
+      width: 100%;
+    }
+
+    [section-id="{{ sectionId }}"] .pc-card--figma-grid .pc-actions {
+      flex-direction: column;
+    }
+
+    [section-id="{{ sectionId }}"] .pc-card--figma-grid .pc-info {
+      padding-left: 8px;
+    }
+
+    @media (min-width: 768px) {
+      [section-id="{{ sectionId }}"] .pc-card--figma-products {
+        width: 320px;
+        min-width: 0;
+      }
+
+      [section-id="{{ sectionId }}"] .pc-card--figma-products .pc-img {
+        height: 100%;
+        top: 0;
+      }
+
+      [section-id="{{ sectionId }}"] .pc-card--figma-products .pc-badge-pill,
+      [section-id="{{ sectionId }}"] .pc-card--figma-products .pc-badges > span {
+        font-size: 12px;
+        line-height: 16px;
+      }
+
+      [section-id="{{ sectionId }}"] .pc-card--figma-products .pc-tag {
+        color: var(--fp-muted);
+      }
+
+      [section-id="{{ sectionId }}"] .pc-card--figma-products .pc-rating svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      [section-id="{{ sectionId }}"] .pc-card--figma-carousel .pc-info {
+        gap: 6px;
+      }
+
+      [section-id="{{ sectionId }}"] .pc-card--figma-products .pc-cta-wrap {
+        width: 273px;
       }
     }
   </style>
