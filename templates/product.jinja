@@ -4,7 +4,7 @@
 
 {% block content %}
   {# Breadcrumb Section #}
-  <section class=" py-4 md:py-6"
+  <section class="py-[10px]"
   style="background-color: {{ settings.single_product_section_background_color_page or 'transparent' }};"
   >
     <div class="theme-container"> 
@@ -36,7 +36,7 @@
 
   {# Product Main Section #}
   {% set details_position = store.settings.product_gallery.details_thumbnail_position %}
-  <section class="py-6 md:py-12 single-product-page"
+  <section class="pb-9 md:pb-12 single-product-page"
   
   style="background-color: {{ settings.single_product_section_background_color_page or 'transparent' }};">
     <div class="theme-container overflow-x-hidden">
@@ -359,7 +359,7 @@
                 {% endif %}
             </div>
         {# Right Column: Product Details #}
-        <div class="product-details-column flex flex-col gap-4">
+        <div class="product-details-column flex flex-col gap-3 md:gap-4">
           {# Product Name #} {# Rating + Actions #}
           
           <div
@@ -574,63 +574,104 @@
     {% endfor %}
   {% endfor %}
 
-  {% if matching_features|length > 0 %}
-  <section class="mt-2">
-    <div class="bg-[#F9B75724] py-2 px-4">
+    {% if matching_features|length > 0 %}
+        <section class="mt-2">
+          <div
+            class="py-2 px-4"
+            style="
+              background-color: {{ settings.single_product_section_features_section_background | default('#F9B75724') }};
+              border-radius: {{ settings.single_product_section_features_section_radius | default(16) }}px;
+            "
+          >
 
-      {# Section Title #}
-      <div class="mb-2 ">
-        <h2 class="font-medium text-sm leading-5 tracking-normal"
-            style="color: {{ settings.single_product_section_head_title_color | default('#000000') }};">
-          {{ settings.single_product_section_head_title_feature | default('مزيج نكهات فريد') }}
-        </h2>
-      </div>
+            {# Section Title #}
+            <div class="mb-2">
+              <h2
+                class="font-medium leading-5 tracking-normal"
+                style="
+                  color: {{ settings.single_product_section_head_title_color | default('#000000') }};
+                  font-size: {{ settings.single_product_section_features_title_font_size | default(16) }}px;
+                "
+              >
+                {{ settings.single_product_section_head_title_feature | default('مزيج نكهات فريد') }}
+              </h2>
+            </div>
 
-      {# Features Grid #}
-      <div class="grid grid-cols-3 gap-6  ">
-        {% for feature in matching_features %}
-          <div class="feature-card rounded-lg transition-all duration-300">
+            {# Features Grid #}
+            <div
+              class="grid grid-cols-3"
+              style="
+                gap: {{ settings.single_product_section_features_items_gap | default(24) }}px;
+              "
+            >
+              {% for feature in matching_features %}
+                <div class="feature-card rounded-lg transition-all duration-300">
 
-            {# Icon Container #}
-            <div class="flex justify-center mb-4">
-              <div class="flex items-center justify-center rounded-full w-[38px] h-[38px] md:w-[56px] md:h-[56px] transition-transform duration-300 hover:scale-110">
+                  {# Icon Container #}
+                  <div class="flex justify-center mb-4">
+                    <div
+                      class="flex items-center justify-center rounded-full transition-transform duration-300 hover:scale-110"
+                      style="
+                        width: {{ settings.single_product_section_features_icon_size | default(56) }}px;
+                        height: {{ settings.single_product_section_features_icon_size | default(56) }}px;
+                      "
+                    >
 
-                {% if feature.display_type == 'image' %}
-                  {% if feature.feat_image %}
-                    <img src="{{ feature.feat_image }}"
-                         alt="{{ feature.main_text | default('') }}"
-                         class="w-12 h-12 object-contain"
-                         loading="lazy">
+                      {% if feature.display_type == 'image' %}
+
+                        {% if feature.feat_image %}
+                          <img
+                            src="{{ feature.feat_image }}"
+                            alt="{{ feature.main_text | default('') }}"
+                            loading="lazy"
+                            style="
+                              width: {{ settings.single_product_section_features_icon_size | default(56) }}px;
+                              height: {{ settings.single_product_section_features_icon_size | default(56) }}px;
+                              object-fit: contain;
+                            "
+                          >
+                        {% endif %}
+
+                      {% else %}
+
+                        <lord-icon
+                          src="https://cdn.lordicon.com/{{ feature.feat_animate_icon }}.json"
+                          trigger="loop"
+                          delay="800"
+                          colors="primary:{{ feature.first_icon_color | default('#FF6B6B') }},secondary:{{ feature.second_icon_color | default('#4ECDC4') }}"
+                          style="
+                            width: {{ settings.single_product_section_features_icon_size | default(56) }}px;
+                            height: {{ settings.single_product_section_features_icon_size | default(56) }}px;
+                          "
+                        >
+                        </lord-icon>
+
+                      {% endif %}
+                    </div>
+                  </div>
+
+                  {# Text Content #}
+                  {% if feature.main_text %}
+                    <div class="text-center">
+                      <h3
+                        class="font-medium leading-5 md:leading-6 tracking-normal text-center"
+                        style="
+                          color: {{ feature.main_text_color | default('#1b1b1b') }};
+                          font-size: {{ settings.single_product_section_features_text_font_size | default(14) }}px;
+                        "
+                      >
+                        {{ feature.main_text }}
+                      </h3>
+                    </div>
                   {% endif %}
-                {% else %}
-                  <lord-icon
-                    src="https://cdn.lordicon.com/{{ feature.feat_animate_icon }}.json"
-                    trigger="loop"
-                    delay="800"
-                    colors="primary:{{ feature.first_icon_color | default('#FF6B6B') }},secondary:{{ feature.second_icon_color | default('#4ECDC4') }}"
-                    style="width: 3rem; height: 3rem;">
-                  </lord-icon>
-                {% endif %}
-              </div>
-            </div>
 
-            {# Text Content #}
-            {% if feature.main_text %}
-            <div class="text-center">
-              <h3 class="font-medium text-sm md:text-base leading-5 md:leading-6 tracking-normal text-cernter"
-                  style="color: {{ feature.main_text_color | default('#1b1b1b') }};">
-                {{ feature.main_text }}
-              </h3>
+                </div>
+              {% endfor %}
             </div>
-            {% endif %}
 
           </div>
-        {% endfor %}
-      </div>
-
-    </div>
-  </section>
-  {% endif %}
+        </section>
+    {% endif %}
 
 {% endif %}
 
@@ -649,7 +690,7 @@
   {% endfor %}
 
   {% if matching_attributes|length > 0 %}
-  <section class="mt-6 pb-3 border-b-[1px] border-b-[#E5E5E5]">
+  <section class="pb-3 border-b-[1px] border-b-[#E5E5E5]">
     <div class="rounded-lg w-full">
 
       {# Coffee Attributes #}
@@ -1266,7 +1307,7 @@ document.getElementById('bundle-add-btn').addEventListener('click', async functi
       </div>
       <div
         id="additional-info"
-        class="mt-6"
+        class="mt-1"
       >
         {% set has_weight = product.selected_product and product.selected_product.weight and product.selected_product.weight.value %}
         {% set has_metafields = product and product.metafields and store and store.settings.products.is_metafields_enabled and product.metafields|length > 0 %}
@@ -1304,7 +1345,7 @@ document.getElementById('bundle-add-btn').addEventListener('click', async functi
         {% set show_coffee_cta     = settings.single_product_section_enabled_coffee_cta_section and (cta_has_primary or cta_has_secondary) %}
 
         {# Desktop: Tab Navigation #}
-        <div class="hidden md:flex overflow-x-auto border-b border-border scrollbar-hide justify-center">
+        <div class="hidden md:flex overflow-x-auto border-b border-[#E2E8F0] scrollbar-hide justify-center">
           <button
             class="tab-button active whitespace-nowrap px-4 py-3 text-sm font-medium text-foreground border-b-2 border-foreground hover:text-foreground transition-colors"
             data-tab="description"
@@ -1894,7 +1935,7 @@ document.getElementById('bundle-add-btn').addEventListener('click', async functi
 
         {# Related Products Section #}
         {% if product.related_products and product.related_products|length > 0 %}
-          <div class="mt-12">
+          <div class="mt-4 md:mt-10">
             {%
               with
               products=product.related_products,

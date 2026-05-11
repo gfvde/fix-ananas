@@ -640,6 +640,60 @@
           "default": "مزيج نكهات فريد"
         },
         {
+          "id": "features_section_background",
+          "type": "color",
+          "label": {
+            "ar": "لون خلفية قسم المميزات",
+            "en": "Features Section Background"
+          },
+          "default": "#FFFFFF"
+        },
+        {
+          "id": "features_title_font_size",
+          "type": "number",
+          "label": {
+            "ar": "حجم عنوان القسم",
+            "en": "Section Title Font Size"
+          },
+          "default": 32
+        },
+        {
+          "id": "features_icon_size",
+          "type": "number",
+          "label": {
+            "ar": "حجم الأيقونات",
+            "en": "Icon Size"
+          },
+          "default": 48
+        },
+        {
+          "id": "features_text_font_size",
+          "type": "number",
+          "label": {
+            "ar": "حجم نص المميزات",
+            "en": "Features Text Font Size"
+          },
+          "default": 16
+        },
+        {
+          "id": "features_items_gap",
+          "type": "number",
+          "label": {
+            "ar": "المسافة بين العناصر",
+            "en": "Items Gap"
+          },
+          "default": 24
+        },
+        {
+          "id": "features_section_radius",
+          "type": "number",
+          "label": {
+            "ar": "استدارة الحواف",
+            "en": "Border Radius"
+          },
+          "default": 24
+        },
+        {
           "id": "head_title_color",
           "type": "color",
           "label": {

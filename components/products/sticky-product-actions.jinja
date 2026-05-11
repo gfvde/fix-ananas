@@ -9,7 +9,7 @@
 </style>
 <div
   id="sticky-cta"
-  class="bg-secondary border-border-light fixed inset-x-0 bottom-0 z-40 hidden border-t px-4 py-4 transition-transform transition-discrete duration-300 md:px-16 starting:translate-y-full"
+  class="bg-[#FCF8F2] border-border-light fixed inset-x-0 bottom-0 z-40 hidden border-t px-4 py-4 transition-transform transition-discrete duration-300 md:px-16 starting:translate-y-full"
   data-sticky-cta
   aria-hidden="true"
 >
@@ -61,6 +61,7 @@
       </div>
 
       {# In Stock State #}
+      
       <div
         class="{{ 'hidden' if not product.in_stock }} flex flex-1  items-center gap-4"
         data-sticky-cta-in-stock
