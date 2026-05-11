@@ -3,10 +3,10 @@
 
   Props:
   - rating: number (0-5)
-  - size: number (default 16) - size in pixels
+  - size: number (default 24) - size in pixels
 #}
 
-{% set star_size = size or 16 %}
+{% set star_size = size or 24 %}
 
 {% if rating is not none %}
   {% set ratingRounded = ((rating * 2) | round(0, 'ceil')) / 2 %}
@@ -18,12 +18,12 @@
           xmlns="http://www.w3.org/2000/svg"
           width="{{ star_size }}"
           height="{{ star_size }}"
-          viewBox="0 0 16 16"
+          viewBox="0 0 24 24"
           fill="none"
           class="text-warning"
         >
           <path
-            d="M8 11.1733L11.5733 13.3333L10.6933 9.30667L13.7333 6.59333L9.63333 6.28L8 2.5L6.36667 6.28L2.26667 6.59333L5.30667 9.30667L4.42667 13.3333L8 11.1733Z"
+            d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"
             fill="currentColor"
           />
         </svg>
@@ -33,7 +33,7 @@
           xmlns="http://www.w3.org/2000/svg"
           width="{{ star_size }}"
           height="{{ star_size }}"
-          viewBox="0 0 16 16"
+          viewBox="0 0 24 24"
           fill="none"
         >
           <defs>
@@ -49,7 +49,7 @@
             </linearGradient>
           </defs>
           <path
-            d="M8 11.1733L11.5733 13.3333L10.6933 9.30667L13.7333 6.59333L9.63333 6.28L8 2.5L6.36667 6.28L2.26667 6.59333L5.30667 9.30667L4.42667 13.3333L8 11.1733Z"
+            d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"
             fill="url(#half-star-{{ n }})"
           />
         </svg>
@@ -59,12 +59,12 @@
           xmlns="http://www.w3.org/2000/svg"
           width="{{ star_size }}"
           height="{{ star_size }}"
-          viewBox="0 0 16 16"
+          viewBox="0 0 24 24"
           fill="none"
           class="text-muted-foreground"
         >
           <path
-            d="M8 11.1733L11.5733 13.3333L10.6933 9.30667L13.7333 6.59333L9.63333 6.28L8 2.5L6.36667 6.28L2.26667 6.59333L5.30667 9.30667L4.42667 13.3333L8 11.1733Z"
+            d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"
             fill="currentColor"
           />
         </svg>

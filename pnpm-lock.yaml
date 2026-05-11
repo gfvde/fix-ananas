@@ -27,8 +27,8 @@ importers:
         specifier: ^5.4.4
         version: 5.4.4
       swiper:
-        specifier: ^11.2.10
-        version: 11.2.10
+        specifier: ^12.1.4
+        version: 12.1.4
     devDependencies:
       '@tailwindcss/cli':
         specifier: ^4.1.13
@@ -853,8 +853,8 @@ packages:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
 
-  swiper@11.2.10:
-    resolution: {integrity: sha512-RMeVUUjTQH+6N3ckimK93oxz6Sn5la4aDlgPzB+rBrG/smPdCTicXyhxa+woIpopz+jewEloiEE3lKo1h9w2YQ==}
+  swiper@12.1.4:
+    resolution: {integrity: sha512-bihiwoKMOQwW8FfdUbo1DgkVH25E+4ZELIq0oopL1KTKBteLuaTMi/wwFjMxtlhTkk45k3XQ89D1Fvv0spSqBA==}
     engines: {node: '>= 4.7.0'}
 
   tailwindcss@4.2.4:
@@ -1476,7 +1476,7 @@ snapshots:
 
   source-map-js@1.2.1: {}
 
-  swiper@11.2.10: {}
+  swiper@12.1.4: {}
 
   tailwindcss@4.2.4: {}
 
