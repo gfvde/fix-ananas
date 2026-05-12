@@ -179,6 +179,7 @@
 </script>
 
 <style>
+
   [section-id="{{ sectionId }}"].section-star-reviews {
     padding: 40px 56px 24px;
     direction: rtl;
@@ -192,11 +193,17 @@
     text-align: right;
     margin-bottom: 24px;
   }
+    [dir="ltr"] [section-id="{{ sectionId }}"] .sr-title {
+      text-align: left;
+    }
   .sr-desktop {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
     align-items: stretch;
+  }
+       [dir="ltr"] [section-id="{{ sectionId }}"]  .sr-desktop{ 
+    direction: ltr;
   }
   .sr-mobile { display: none; }
   .sr-col { display: flex; flex-direction: column; gap: 10px; }
