@@ -341,20 +341,12 @@
       </div>
     {% endif %}
 
-    {# Description - list view only #}
-    {% if product.short_description or product.description %}
-      <p
-        class="pc-desc hidden group-data-[grid=list]/grid:line-clamp-1 group-data-[grid=list]/grid:[display:-webkit-box] md:group-data-[grid=list]/grid:line-clamp-3"
-      >
-        {{ product.short_description|striptags|truncate(200) or product.description|striptags|truncate(200) }}
-      </p>
-    {% endif %}
     {% if not is_out_of_stock %}
-      <div class="pc-cta-wrap-mb">
+      <div class="pc-cta-wrap-mb-card md:hidden">
         {% if has_options %}
           <a
             href="{{ url_for('product_details', slug=product.slug) }}"
-            class="pc-cta"
+            class="pc-cta md:hidden"
             aria-label="{{ _('Select options') }}"
           >
             {{ _("Select options") }}
@@ -362,7 +354,7 @@
         {% else %}
           <button
             type="button"
-            class="pc-cta"
+            class="pc-cta md:hidden"
             data-add-to-cart="{{ product.id }}"
             aria-label="{{ _('Add to cart') }}"
           >
@@ -371,7 +363,7 @@
         {% endif %}
       </div>
     {% else %}
-      <div class="pc-cta-wrap-mb">
+      <div class="pc-cta-wrap-mb-card">
         <button
           type="button"
           class="pc-cta pc-notify-btn"
@@ -635,14 +627,14 @@
   }
 
   /* ── Mobile CTA wrapper ── */
-  .pc-cta-wrap-mb {
+  .pc-cta-wrap-mb-card {
     width: 100%;
     margin-top: 8px;
     padding: 0;
     display: flex;
     align-items: center;
   }
-  .pc-card--unified .pc-cta-wrap-mb {
+  .pc-card--unified .pc-cta-wrap-mb-card {
     margin-top: auto;
   }
 
@@ -685,19 +677,19 @@
   .pc-cta__label { display: inline; }
 
   /* ── Mobile CTA button inside wrapper ── */
-  .pc-cta-wrap-mb .pc-cta {
+  .pc-cta-wrap-mb-card .pc-cta {
     background: transparent !important;
     border: 1px solid #000 !important;
     color: #000 !important;
     font-weight: 400;
     border-radius: 0; /* Figma seems to have sharp corners or very subtle rounding */
   }
-  .pc-cta-wrap-mb .pc-notify-btn {
+  .pc-cta-wrap-mb-card .pc-notify-btn {
     background: transparent !important;
     color: #000000 !important;
     border: 1px solid #000 !important;
   }
-  .pc-cta-wrap-mb .pc-notify-btn:hover {
+  .pc-cta-wrap-mb-card .pc-notify-btn:hover {
     background: #D64625 !important;
   }
 
@@ -726,10 +718,10 @@
      Hover overlay visible, mobile wrapper hidden */
   @media (min-width: 768px) {
     .pc-cta-wrap    { display: block; }
-    .pc-cta-wrap-mb { display: none !important; }
+    .pc-cta-wrap-mb-card { display: none !important; }
 
     /* Desktop button is always full-width inside its parent */
-    .pc-cta-wrap-mb .pc-cta {
+    .pc-cta-wrap-mb-card .pc-cta {
       width: 100%;
     }
 
@@ -742,7 +734,7 @@
      Hover overlay hidden, mobile wrapper visible */
   @media (max-width: 767px) {
     .pc-cta-wrap { display: none !important; }
-    .pc-cta-wrap-mb { display: flex; }
+    .pc-cta-wrap-mb-card { display: flex; }
   }
 
 
@@ -877,7 +869,7 @@
     background: #D64625 !important;
     color: #ffffff !important;
   }
-  .pc-cta-wrap-mb .pc-notify-btn {
+  .pc-cta-wrap-mb-card .pc-notify-btn {
    
   }
   /* ── List view overrides ── */
@@ -1078,8 +1070,6 @@ body[data-pc-align="start"] .pc-stock-qty { justify-content: flex-start; }
 </style>
 
 <script>
-window.productcard  = {{ product | tojson | safe }};
-console.log('window.productcard',window.productcard);
 (function () {
   // Fake sold count: stable hash from product id string
   function hashId(str) {
