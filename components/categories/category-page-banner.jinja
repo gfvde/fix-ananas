@@ -86,52 +86,69 @@
       </div>
 
       {% if cph_has_subcategories %}
-        <div
-          class="category-page-banner__subcategories"
-          aria-label="{{ _('Subcategories') }}"
-        >
-          {% for subcategory in cph_subcategories %}
-            {% set subcategory_image = subcategory.image_full_size if subcategory.image_full_size else subcategory.image %}
-            {% set count_ns = namespace(value=none) %}
-            {% if subcategory.products_count is defined and subcategory.products_count is not none %}
-              {% set count_ns.value = subcategory.products_count %}
-            {% elif subcategory.productsCount is defined and subcategory.productsCount is not none %}
-              {% set count_ns.value = subcategory.productsCount %}
-            {% elif subcategory.product_count is defined and subcategory.product_count is not none %}
-              {% set count_ns.value = subcategory.product_count %}
-            {% elif subcategory.count is defined and subcategory.count is not none %}
-              {% set count_ns.value = subcategory.count %}
-            {% elif subcategory.products is defined and subcategory.products %}
-              {% set count_ns.value = subcategory.products|length %}
-            {% endif %}
-            {% set subcategory_count = count_ns.value %}
-            {% set subcategory_url = url_for('category_details', category_id=subcategory.id, slug=subcategory.slug) %}
-            <a
-              href="{{ subcategory_url }}"
-              class="category-page-banner__subcategory"
-              {% if cph_is_category and subcategory.id == category.id %}aria-current="page"{% endif %}
-            >
-              <span class="category-page-banner__subcategory-media">
-                {% if subcategory_image %}
-                  <img
-                    src="{{ image_url(subcategory_image, w=320, q=90, f='auto') }}"
-                    alt="{{ subcategory.name }}"
-                    loading="{% if loop.index > 3 %}lazy{% else %}eager{% endif %}"
-                  />
-                {% endif %}
-              </span>
-              <span class="category-page-banner__subcategory-text">
-                <span class="category-page-banner__subcategory-title">{{ subcategory.name }}</span>
-                <span
-                  class="category-page-banner__subcategory-count"
-                  data-category-page-count
-                  data-count-url="{{ subcategory_url }}"
-                  data-count-loaded="{% if subcategory_count is not none and subcategory_count|string != '0' %}true{% else %}false{% endif %}"
-                  >{{ _('%(count)s products') | format(count=(subcategory_count | default(0, true))) }}</span
-                >
-              </span>
-            </a>
-          {% endfor %}
+        <div class="category-page-banner__subcategories-wrap">
+          <div
+            class="category-page-banner__subcategories"
+            aria-label="{{ _('Subcategories') }}"
+            data-cph-track
+          >
+            {% for subcategory in cph_subcategories %}
+              {% set subcategory_image = subcategory.image_full_size if subcategory.image_full_size else subcategory.image %}
+              {% set count_ns = namespace(value=none) %}
+              {% if subcategory.products_count is defined and subcategory.products_count is not none %}
+                {% set count_ns.value = subcategory.products_count %}
+              {% elif subcategory.productsCount is defined and subcategory.productsCount is not none %}
+                {% set count_ns.value = subcategory.productsCount %}
+              {% elif subcategory.product_count is defined and subcategory.product_count is not none %}
+                {% set count_ns.value = subcategory.product_count %}
+              {% elif subcategory.count is defined and subcategory.count is not none %}
+                {% set count_ns.value = subcategory.count %}
+              {% elif subcategory.products is defined and subcategory.products %}
+                {% set count_ns.value = subcategory.products|length %}
+              {% endif %}
+              {% set subcategory_count = count_ns.value %}
+              {% set subcategory_url = url_for('category_details', category_id=subcategory.id, slug=subcategory.slug) %}
+              <a
+                href="{{ subcategory_url }}"
+                class="category-page-banner__subcategory"
+                {% if cph_is_category and subcategory.id == category.id %}aria-current="page"{% endif %}
+              >
+                <span class="category-page-banner__subcategory-media">
+                  {% if subcategory_image %}
+                    <img
+                      src="{{ image_url(subcategory_image, w=320, q=90, f='auto') }}"
+                      alt="{{ subcategory.name }}"
+                      loading="{% if loop.index > 3 %}lazy{% else %}eager{% endif %}"
+                    />
+                  {% endif %}
+                </span>
+                <span class="category-page-banner__subcategory-text">
+                  <span class="category-page-banner__subcategory-title">{{ subcategory.name }}</span>
+                  <span
+                    class="category-page-banner__subcategory-count"
+                    data-category-page-count
+                    data-count-url="{{ subcategory_url }}"
+                    data-count-loaded="{% if subcategory_count is not none and subcategory_count|string != '0' %}true{% else %}false{% endif %}"
+                    >{{ _('%(count)s products') | format(count=(subcategory_count | default(0, true))) }}</span
+                  >
+                </span>
+              </a>
+            {% endfor %}
+          </div>
+          {% if cph_subcategories | length > 3 %}
+            <div class="category-page-banner__arrows" data-cph-arrows>
+              <button class="category-page-banner__arrow category-page-banner__arrow--prev" data-cph-prev type="button" aria-label="{{ _('Previous') }}">
+                <svg width="5" height="10" viewBox="0 0 5 10" fill="none">
+                  <path d="M4 1L1 5L4 9" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <button class="category-page-banner__arrow category-page-banner__arrow--next" data-cph-next type="button" aria-label="{{ _('Next') }}">
+                <svg width="5" height="10" viewBox="0 0 5 10" fill="none">
+                  <path d="M1 1L4 5L1 9" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          {% endif %}
         </div>
       {% endif %}
     </div>
@@ -231,15 +248,21 @@
     line-height: 24px;
   }
 
-  .category-page-banner__subcategories {
+  .category-page-banner__subcategories-wrap {
     display: flex;
     flex: 0 0 490px;
     width: 490px;
     max-width: 490px;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .category-page-banner__subcategories {
+    display: flex;
+    width: 100%;
     align-items: flex-start;
     justify-content: flex-start;
     gap: 20px;
-    /*direction: rtl;*/
     overflow-x: auto;
     overflow-y: hidden;
     scroll-padding-inline: 0;
@@ -250,6 +273,44 @@
 
   .category-page-banner__subcategories::-webkit-scrollbar {
     display: none;
+  }
+
+  .category-page-banner__arrows {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    direction: ltr;
+  }
+
+  html[dir="ltr"] .category-page-banner__arrows {
+    flex-direction: row-reverse;
+  }
+
+  html[dir="ltr"] .category-page-banner__arrow--prev svg,
+  html[dir="ltr"] .category-page-banner__arrow--next svg {
+    transform: scaleX(-1);
+  }
+
+  .category-page-banner__arrow {
+    width: 32px;
+    height: 32px;
+    border-radius: 99px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s;
+    background: #f85f3b;
+  }
+
+  .category-page-banner__arrow--inactive {
+    background: rgba(248, 95, 59, 0.32);
+  }
+
+  .category-page-banner__arrow svg path {
+    stroke: white;
   }
 
   .category-page-banner__subcategory {
@@ -380,12 +441,17 @@
       font-weight: 400;
     }
 
+    .category-page-banner__subcategories-wrap {
+      width: 100%;
+      max-width: 100%;
+      flex: none;
+    }
+
     .category-page-banner__subcategories {
       justify-content: flex-start;
       gap: 8px;
       width: 100%;
       max-width: 100%;
-      flex-basis: auto;
       overflow-x: auto;
       background: #ffffff;
       padding: 8px 16px;
@@ -395,6 +461,10 @@
     }
 
     .category-page-banner__subcategories::-webkit-scrollbar {
+      display: none;
+    }
+
+    .category-page-banner__arrows {
       display: none;
     }
 
@@ -423,6 +493,48 @@
   (function () {
     const root = document.querySelector(".category-page-banner");
     if (!root) return;
+
+    // Arrows scroll
+    const track = root.querySelector("[data-cph-track]");
+    const prevBtn = root.querySelector("[data-cph-prev]");
+    const nextBtn = root.querySelector("[data-cph-next]");
+
+    if (track && prevBtn && nextBtn) {
+      const cardWidth = 150 + 20; // card width + gap
+
+      function updateArrows() {
+        var isRTL = document.documentElement.dir === "rtl";
+        var scrollLeft = track.scrollLeft;
+        var maxScroll = track.scrollWidth - track.clientWidth;
+        var atStart = Math.abs(scrollLeft) <= 2;
+        var atEnd = Math.abs(scrollLeft) >= maxScroll - 2;
+
+        if (isRTL) {
+          // In RTL, scrollLeft is 0 at the right (visual start), goes negative toward left
+          var atRTLStart = scrollLeft >= -2;
+          var atRTLEnd = scrollLeft <= -(maxScroll - 2);
+          prevBtn.classList.toggle("category-page-banner__arrow--inactive", atRTLStart);
+          nextBtn.classList.toggle("category-page-banner__arrow--inactive", atRTLEnd);
+        } else {
+          prevBtn.classList.toggle("category-page-banner__arrow--inactive", atStart);
+          nextBtn.classList.toggle("category-page-banner__arrow--inactive", atEnd);
+        }
+      }
+
+      prevBtn.addEventListener("click", function () {
+        var isRTL = document.documentElement.dir === "rtl";
+        track.scrollBy({ left: isRTL ? cardWidth : -cardWidth, behavior: "smooth" });
+      });
+
+      nextBtn.addEventListener("click", function () {
+        var isRTL = document.documentElement.dir === "rtl";
+        track.scrollBy({ left: isRTL ? -cardWidth : cardWidth, behavior: "smooth" });
+      });
+
+      track.addEventListener("scroll", updateArrows, { passive: true });
+      setTimeout(updateArrows, 100);
+    }
+
 
     const countNodes = root.querySelectorAll("[data-category-page-count][data-count-loaded='false']");
     if (!countNodes.length || !window.DOMParser || !window.fetch) return;

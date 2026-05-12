@@ -485,6 +485,7 @@
     border: none !important;
   }
   .pc-badges span.pc-badge-pill{
+    font-size: 10px !important;
     width: 78px !important;
     text-align: center;
     border-radius: 0 !important;
@@ -1139,6 +1140,8 @@ body[data-pc-align="start"] .pc-stock-qty { justify-content: flex-start; }
   }
 
   window.addEventListener("content:loaded", initAll);
+  window.addEventListener("products-appended", initAll);
+  window.addEventListener("products:updated", initAll);
 })();
 </script>
 

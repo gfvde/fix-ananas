@@ -108,3 +108,8 @@ window.addEventListener("content:loaded", () => {
 window.addEventListener("products:updated", () => {
   initCartButtons();
 });
+
+// Re-init cart buttons when infinite scroll appends new products
+window.addEventListener("products-appended", () => {
+  initCartButtons();
+});

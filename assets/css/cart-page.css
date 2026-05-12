@@ -16,6 +16,12 @@
     padding: 24px 64px;
   }
 
+  .cart-with-products {
+    direction: ltr !important;
+  }
+  html[dir="ltr"] .cart-with-products {
+    direction: rtl !important;
+  }
   .cart-page-main-section {
     padding: 0 64px 64px;
   }
@@ -38,6 +44,10 @@ body:has(.cart-page-layout) {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  direction: ltr;
+}
+html[dir="ltr"] .cart-page-layout {
+  direction: rtl !important;
 }
 
 .cart-page-layout__sidebar {
@@ -83,9 +93,7 @@ body:has(.cart-page-layout) {
     flex-direction: row;
     gap: 24px;
     align-items: flex-start;
-    /*direction: ltr;*/
   }
-
   .cart-page-layout__sidebar {
     display: block;
     flex: 0 0 440px;
@@ -579,7 +587,10 @@ body:has(.cart-page-layout) {
   width: 100%;
   max-width: 392px;
   margin-top: 0;
-  /*direction: ltr;*/
+  direction: ltr;
+}
+html[dir="ltr"] .cart-coupon__form {
+  direction: ltr !important;
 }
 
 .cart-coupon__input-wrap {
@@ -607,11 +618,10 @@ body:has(.cart-page-layout) {
   font-size: 14px;
   line-height: 20px;
   outline: none;
-} 
+}
 [dir="ltr"] .cart-coupon__form input {
   text-align: left;
 }
-
 
 .cart-coupon__form input::placeholder {
   color: #7a8187;
@@ -691,7 +701,7 @@ body:has(.cart-page-layout) {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  /*direction: ltr;*/
+  direction: ltr;
 }
 
 .cart-summary__row {

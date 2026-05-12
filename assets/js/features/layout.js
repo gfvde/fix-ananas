@@ -107,8 +107,10 @@ function initCustomerGreeting() {
       }
 
       const mobileLoginBtn = document.getElementById("mobile-login-btn");
+      const mobileProfileBtn = document.getElementById("mobile-profile-btn");
       const mobileLoggedInLinks = document.getElementById("mobile-logged-in-links");
       if (mobileLoginBtn) mobileLoginBtn.style.display = "none";
+      if (mobileProfileBtn) mobileProfileBtn.style.display = "inline-flex";
       if (mobileLoggedInLinks) {
         mobileLoggedInLinks.classList.remove("hidden");
         mobileLoggedInLinks.classList.add("flex");

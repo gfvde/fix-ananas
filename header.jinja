@@ -328,14 +328,15 @@
 	          </svg>
           <span data-cart-badge hidden class="ananas-nav__cart-badge">0</span>
         </a>
-        <a
-          href="/pages/wishlist"
-          class="ananas-nav__icon-btn"
-          aria-label="{{ _('Wishlist') }}"
-        >
-         <svg width="19" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M16.3669 2.20913C18.211 4.01929 18.211 6.95412 16.3669 8.76428L9.95049 15.0624C9.56153 15.4442 8.93846 15.4442 8.5495 15.0624L2.13311 8.76428C0.288964 6.95412 0.288964 4.01929 2.13311 2.20913C3.5992 0.770065 5.36887 0.32943 7.15452 1.18467C7.86325 1.52413 8.79253 2.20913 9.25 3.10393C9.70746 2.20913 10.6367 1.52413 11.3455 1.18467C13.1311 0.329429 14.9008 0.770064 16.3669 2.20913Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <button id="mobile-login-btn" type="button" onclick="handleLoginAction()" class="ananas-nav__icon-btn" aria-label="{{ _('Login') }}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </button>
+        <a id="mobile-profile-btn" href="{{ url_for('profile') }}" class="ananas-nav__icon-btn" style="display:none" aria-label="{{ _('Profile') }}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
         </a>
         {% if show_region %}
 	          <button type="button" onclick="return window.openAnanasRegionSettings(event)" class="ananas-nav__icon-btn" aria-label="{{ _('Region') }}">
@@ -720,7 +721,7 @@
 	    direction: ltr;
 	    width: 100%;
 	  }
-  .ananas-mob__left  { display: flex; align-items: center; justify-content: flex-start; }
+  .ananas-mob__left  { display: flex; align-items: center; justify-content: flex-start;gap: 5px; }
   .ananas-mob__right { display: flex; align-items: center; justify-content: flex-end; }
   /* Center logo inside its grid cell */
   .ananas-nav__inner--mob .ananas-nav__logo { justify-self: center; }
@@ -840,8 +841,59 @@
   [dir="rtl"] .ananas-sub__children { left: auto; right: 100%; }
   .ananas-sub__group:hover .ananas-sub__children { display: block; }
 
+  /* Sub-dropdown scroll arrows */
+  .ananas-sub--scrollable {
+    padding: 0;
+  }
+  .ananas-sub__list {
+    max-height: 240px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 4px 0;
+  }
+  .ananas-sub__list::-webkit-scrollbar { display: none; }
+
+  .ananas-sub__arrows {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 16px 4px;
+    direction: ltr;
+  }
+  .ananas-sub__arrow {
+    width: 32px;
+    height: 32px;
+    border-radius: 99px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: opacity .2s;
+  }
+  .ananas-sub__arrow--prev {
+    background: #f85f3b;
+  }
+  .ananas-sub__arrow--next {
+    background: rgba(248, 95, 59, 0.32);
+  }
+  .ananas-sub__arrow--prev.ananas-sub__arrow--active {
+    background: #f85f3b;
+  }
+  .ananas-sub__arrow--next.ananas-sub__arrow--active {
+    background: #f85f3b;
+  }
+  .ananas-sub__arrow--prev:not(.ananas-sub__arrow--active) {
+    background: rgba(248, 95, 59, 0.32);
+  }
+  .ananas-sub__arrow svg path { stroke: white; }
+
   /* Icons */
-  .ananas-nav__icons { 
+  .ananas-nav__icons {
     display: flex; 
     align-items: center; 
     gap: 0px; 
@@ -1211,8 +1263,8 @@
   /* Slider arrow */
   .ananas-search__slider-arrow {
     position: absolute;
-    left: -40px;
-    top: 144px;
+    top: 50%;
+    transform: translateY(-50%);
     width: 32px;
     height: 32px;
     background: rgba(255,255,255,0.2);
@@ -1229,9 +1281,12 @@
     color: var(--ananas-icon-color);
     transition: opacity .2s;
   }
-  .ananas-search__slider-arrow--next {
-    display: none !important;
-  }
+  .ananas-search__slider-arrow--prev { left: -40px; }
+  .ananas-search__slider-arrow--next { right: -40px; }
+  html[dir="rtl"] .ananas-search__slider-arrow--prev { left: auto; right: -40px; }
+  html[dir="rtl"] .ananas-search__slider-arrow--next { right: auto; left: -40px; }
+  html[dir="rtl"] .ananas-search__slider-arrow--prev svg { transform: scaleX(-1); }
+  html[dir="ltr"] .ananas-search__slider-arrow--next svg { transform: scaleX(-1); }
   .ananas-search__slider-arrow:hover { opacity: .8; }
   .ananas-search__slider-arrow svg { pointer-events: none; }
 
@@ -1642,6 +1697,35 @@ menuItems.forEach(function(item, i) {
     }
   });
 
+  /* ── Sub-dropdown scroll arrows ── */
+  document.querySelectorAll('[data-sub-prev]').forEach(function(btn) {
+    var idx = btn.dataset.subPrev;
+    var list = document.querySelector('[data-sub-list="' + idx + '"]');
+    var nextBtn = document.querySelector('[data-sub-next="' + idx + '"]');
+    var prevBtn = btn;
+    if (!list) return;
+
+    function updateArrows() {
+      var atTop = list.scrollTop <= 0;
+      var atBottom = list.scrollTop + list.clientHeight >= list.scrollHeight - 2;
+      prevBtn.style.background = atTop ? 'rgba(248,95,59,0.32)' : '#f85f3b';
+      nextBtn.style.background = atBottom ? 'rgba(248,95,59,0.32)' : '#f85f3b';
+    }
+
+    btn.addEventListener('click', function(e) {
+      e.preventDefault(); e.stopPropagation();
+      list.scrollBy({ top: -80, behavior: 'smooth' });
+    });
+
+    nextBtn && nextBtn.addEventListener('click', function(e) {
+      e.preventDefault(); e.stopPropagation();
+      list.scrollBy({ top: 80, behavior: 'smooth' });
+    });
+
+    list.addEventListener('scroll', updateArrows, { passive: true });
+    setTimeout(updateArrows, 100);
+  });
+
   /* ── Search toggle ── */
   if (searchBtn) {
     searchBtn.addEventListener('click', function () {
@@ -1681,13 +1765,15 @@ menuItems.forEach(function(item, i) {
   var loginBtn     = qs('#header-login-btn');
   var profileBtn   = qs('#header-profile-btn');
   var mLoginBtn    = qs('#mobile-login-btn');
+  var mProfileBtn  = qs('#mobile-profile-btn');
 	  var mLoggedIn    = qs('#mobile-logged-in-links');
 
 	  function setAuthState(loggedIn) {
-	    if (loginBtn)   loginBtn.style.display   = loggedIn ? 'none' : '';
-	    if (profileBtn) profileBtn.style.display = loggedIn ? '' : 'none';
-	    if (mLoginBtn)  mLoginBtn.style.display  = loggedIn  ? 'none'         : '';
-	    if (mLoggedIn)  mLoggedIn.style.display  = loggedIn  ? 'flex'         : 'none';
+	    if (loginBtn)    loginBtn.style.display    = loggedIn ? 'none' : '';
+	    if (profileBtn)  profileBtn.style.display  = loggedIn ? 'inline-flex' : 'none';
+	    if (mLoginBtn)   mLoginBtn.style.display   = loggedIn ? 'none' : '';
+	    if (mProfileBtn) mProfileBtn.style.display = loggedIn ? 'inline-flex' : 'none';
+	    if (mLoggedIn)   mLoggedIn.style.display   = loggedIn ? 'flex' : 'none';
 	  }
 
 	  /* handleLoginAction — called by both desktop and mobile login buttons */
@@ -1708,16 +1794,29 @@ menuItems.forEach(function(item, i) {
   /* Listen for Zid auth events */
   document.addEventListener('zid:customer:loggedIn',  function () { setAuthState(true); });
   document.addEventListener('zid:customer:loggedOut', function () { setAuthState(false); });
+  document.addEventListener('zid-customer-fetched', function (e) {
+    var customer = e && e.detail && e.detail.customer;
+    setAuthState(!!(customer && customer.name));
+  });
 
   /* Initial state from cookie / global */
-  (function checkInitialAuth() {
+  function checkInitialAuth() {
     if (typeof zid !== 'undefined' && zid.customer) {
       try {
         var isLogged = zid.customer.isLoggedIn ? zid.customer.isLoggedIn() : false;
         setAuthState(isLogged);
+        return true;
       } catch (e) {}
     }
-  })();
+    return false;
+  }
+  if (!checkInitialAuth()) {
+    var authRetry = window.setTimeout(function () { checkInitialAuth(); }, 800);
+    document.addEventListener('DOMContentLoaded', function () {
+      window.clearTimeout(authRetry);
+      checkInitialAuth();
+    });
+  }
 
   /* ────────────────────────────────────────────────
      CART BADGE
@@ -1899,6 +1998,8 @@ menuItems.forEach(function(item, i) {
     return Math.max(0, (total - pp) * (getCardW() + CARD_GAP));
   }
 
+  var isRTLSearch = document.documentElement.dir === 'rtl';
+
   function applySlider() {
     if (!track) return;
     var total     = track.querySelectorAll('.ananas-pcard').length;
@@ -1908,14 +2009,15 @@ menuItems.forEach(function(item, i) {
     if (currentOffset < 0)         currentOffset = 0;
     if (currentOffset > maxOffset) currentOffset = maxOffset;
 
-    track.style.transform = 'translateX(-' + currentOffset + 'px)';
+    var tx = isRTLSearch ? currentOffset : -currentOffset;
+    track.style.transform = 'translateX(' + tx + 'px)';
 
     var prevArrow = qs('#search-slider-prev');
     var nextArrow = qs('#search-slider-next');
     var hasMore   = total > pp;
 
-    if (prevArrow) prevArrow.hidden = !hasMore || currentOffset >= maxOffset;
-    if (nextArrow) nextArrow.hidden = true;
+    if (prevArrow) prevArrow.hidden = !hasMore || currentOffset <= 0;
+    if (nextArrow) nextArrow.hidden = !hasMore || currentOffset >= maxOffset;
   }
 
   function updateSearchSliderArrow() { applySlider(); }
@@ -1927,7 +2029,7 @@ menuItems.forEach(function(item, i) {
   var sliderPrevArrow = qs('#search-slider-prev');
   if (sliderPrevArrow && track) {
     sliderPrevArrow.addEventListener('click', function () {
-      currentOffset = Math.min(getMaxOffset(), currentOffset + getCardW() + CARD_GAP);
+      currentOffset = Math.max(0, currentOffset - (getCardW() + CARD_GAP));
       applySlider();
     });
   }
@@ -1935,7 +2037,7 @@ menuItems.forEach(function(item, i) {
   var sliderNextArrow = qs('#search-slider-next');
   if (sliderNextArrow && track) {
     sliderNextArrow.addEventListener('click', function () {
-      currentOffset = Math.min(getMaxOffset(), currentOffset + getCardW() + CARD_GAP);
+      currentOffset = Math.min(getMaxOffset(), currentOffset + (getCardW() + CARD_GAP));
       applySlider();
     });
   }

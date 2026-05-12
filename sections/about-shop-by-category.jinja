@@ -10,6 +10,7 @@
 {% set mobile_layout = settings.mobile_layout | default('caption') %}
 {% set scroll_effect_enabled = settings.scroll_effect_enabled | default(false) %}
 {% set scroll_effect_strength = settings.scroll_effect_strength | default(18) %}
+{% set mobile_image_height = settings.mobile_image_height | default(150) %}
 
 <section
   section-id="{{ sectionId }}"
@@ -226,10 +227,8 @@
     [section-id="{{ sectionId }}"] .category-card__media {
       display: block !important;
       width: 100%;
-      height: calc((100vw - 48px) / 3);
-      min-height: 96px;
-      max-height: 150px;
-      aspect-ratio: 1 / 1;
+      height: {{ mobile_image_height }}px;
+      aspect-ratio: unset;
       flex: 0 0 auto;
       overflow: hidden;
       background: #f5f2ed;
@@ -274,9 +273,7 @@
     }
 
     [section-id="{{ sectionId }}"][data-mobile-layout="overlay"] .category-card__media {
-      height: calc((100vw - 40px) / 2);
-      min-height: 160px;
-      max-height: 240px;
+      height: {{ mobile_image_height }}px;
     }
 
     [section-id="{{ sectionId }}"][data-mobile-layout="overlay"] {
