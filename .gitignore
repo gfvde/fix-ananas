@@ -1,7 +1,16 @@
 node_modules/
 .DS_Store
 dist/
+assets/dist/
 .env
 *.log
+*.zip
 .gemini/
 .claude/
+css_*.txt
+parsed_*.txt
+fix_footer*.py
+parse_figma.py
+msgfmt
+pnpm-workspace.yaml
+.npmrc
