@@ -203,6 +203,11 @@
   /* border-radius: 12px; */
   height: clamp(332px, calc(20vw + 250px), 545px);
 }
+@media (max-width: 768px) {
+ .pg-main .swiper-slide img{
+  object-fit: contain;
+ }
+}
 
 /* ---------- Navigation Arrows (inside main) ---------- */
 .pg-main .swiper-button-prev,
