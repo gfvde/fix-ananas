@@ -177,7 +177,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    direction: rtl;
   }
 
   [section-id="{{ sectionId }}"] .about-details__header {
@@ -274,6 +273,9 @@
     padding: 8px 24px;
   }
 
+  [dir="ltr"] [section-id="{{ sectionId }}"] .about-details__sticky {
+    direction: rtl;
+  }
   @media (min-width: 992px) {
     [section-id="{{ sectionId }}"].about-details {
       height: var(--about-details-height);

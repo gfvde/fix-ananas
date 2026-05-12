@@ -163,7 +163,7 @@
   })();
 </script>
 
-<div class="sticky top-0 z-50" id="ananas-header" dir="rtl">
+<div class="sticky top-0 z-50" id="ananas-header" >
 
   {% include 'components/header-announcement-bar.jinja' %}
 
@@ -692,7 +692,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    direction: rtl;
+    /*direction: rtl;*/
   }
   /* Mobile inner — CSS Grid: [left-icons 1fr] [logo auto] [right-icons 1fr]
      hidden on desktop, shown on mobile via media query */
@@ -723,7 +723,7 @@
     flex-wrap: wrap;
     align-items: center;
     gap: 4px;
-    direction: rtl;
+    /*direction: rtl;*/
   }
   .ananas-nav__link {
     display: inline-flex;
@@ -761,7 +761,7 @@
     pointer-events: none;
     transform: translateY(-4px);
     transition: opacity .2s, transform .2s;
-    direction: rtl;
+    /*direction: rtl;*/
   }
   .ananas-sub.is-open { opacity: 1; pointer-events: auto; transform: translateY(0); }
   .ananas-sub__link {
@@ -775,6 +775,7 @@
     transition: background .15s;
     white-space: nowrap;
   }
+  [dir="ltr"] .ananas-sub__link { text-align: left; }
   .ananas-sub__link:hover { background: color-mix(in srgb, var(--ananas-dd-bg) 60%, white 40%); }
 
   /* Icons */
@@ -837,7 +838,7 @@
     background: var(--ananas-mega-bg);
     border-bottom: 1px solid var(--ananas-nav-border);
     overflow: hidden;
-    direction: rtl;
+    /*direction: rtl;*/
     position: absolute;
     top: 100%;
     left: 0;
@@ -862,7 +863,7 @@
     align-items: flex-start;
     justify-content: space-between;
     gap: 104px;
-    direction: rtl;
+    /*direction: rtl;*/
     position: relative;
   }
 
@@ -894,7 +895,7 @@
     font-weight: 500;
     font-family: 'Expo Arabic', sans-serif;
     white-space: nowrap;
-    direction: rtl;
+    /*direction: rtl;*/
     pointer-events: none;
   }
 
@@ -907,7 +908,7 @@
     align-items: flex-start;
     flex-wrap: nowrap;
     overflow: hidden;
-    direction: rtl;
+    /*direction: rtl;*/
   }
   .ananas-mega__col {
     display: flex;
@@ -932,6 +933,9 @@
     line-height: 20px;
     width: 100%;
   }
+  [dir="ltr"] .ananas-mega__col-head {
+    text-align: left;
+  }
   .ananas-mega__link {
     color: var(--ananas-mega-link);
     font-size: 16px;
@@ -944,6 +948,9 @@
     transition: opacity .15s;
     display: block;
     width: 100%;
+  }
+  [dir="ltr"] .ananas-mega__link {
+    text-align: left;
   }
   .ananas-mega__link:hover { opacity: .65; }
 
@@ -1006,7 +1013,7 @@
     font-weight: 500;
     font-family: 'Expo Arabic', sans-serif;
     white-space: nowrap;
-    direction: rtl;
+    /*direction: rtl;*/
     pointer-events: none;
   }
 
@@ -1018,7 +1025,7 @@
     display: flex;
     gap: 64px;
     align-items: flex-start;
-    direction: rtl;
+    /*direction: rtl;*/
     flex-direction: row-reverse;
   }
   /* Standalone col in static mode uses pt-36px (matches Figma) */
@@ -1032,7 +1039,7 @@
     border-top: 1px solid var(--ananas-search-border);
     border-bottom: 1px solid var(--ananas-search-border);
     overflow: hidden;
-    direction: rtl;
+    /*direction: rtl;*/
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
     position: absolute;
@@ -1075,7 +1082,7 @@
     gap: 6px;
     border-bottom: 1px solid var(--ananas-search-border);
     height: 48px;
-    direction: rtl;
+    /*direction: rtl;*/
   }
   .ananas-search__field-icon { flex-shrink: 0; color: var(--ananas-search-input); }
   .ananas-search__input {
@@ -1087,9 +1094,10 @@
     font-size: 18px;
     font-family: 'Expo Arabic', sans-serif;
     text-align: right;
-    direction: rtl;
+    /*direction: rtl;*/
     width: 100%;
   }
+  [dir="ltr"] .ananas-search__input { text-align: left; }
   .ananas-search__input::placeholder { color: var(--ananas-search-input); }
   .ananas-search__input:focus { color: var(--ananas-icon-color); }
   .ananas-search__sep {
@@ -1198,7 +1206,7 @@
     gap: 8px;
     align-items: center;
     text-decoration: none;
-    direction: rtl;
+    /*direction: rtl;*/
     transition: border-color .15s;
     cursor: pointer;
     background: transparent;
@@ -1334,7 +1342,7 @@
     display: flex;
     align-items: center;
     gap: 4px;
-    direction: rtl;
+    /*direction: rtl;*/
     transition: opacity .15s;
     white-space: nowrap;
   }

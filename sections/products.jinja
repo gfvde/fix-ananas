@@ -36,7 +36,6 @@
     section-id="{{ sectionId }}"
   data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
     class="section-products fp-section fp-section--{{ layout }} fp-mobile-tabs--{{ mobile_tabs_layout }} {% if use_single_products %}fp-section--single-source{% endif %}"
-    dir="rtl"
     style="
       --fp-bg: {{ settings.background_color | default('#FCFAF7', true) }};
       --fp-text: {{ settings.text_color | default('#000000', true) }};
@@ -264,7 +263,7 @@
     [section-id="{{ sectionId }}"].fp-section {
       background: var(--fp-bg);
       color: var(--fp-text);
-      direction: rtl;
+      /*direction: rtl;*/
       overflow: hidden;
     }
 
@@ -309,7 +308,7 @@
     }
 
     [section-id="{{ sectionId }}"] .fp-mobile-copy {
-      width: 327px;
+      /*width: 327px;*/
       max-width: 100%;
       display: flex;
       flex-direction: column;
@@ -323,7 +322,7 @@
       margin: 0;
       color: var(--fp-text);
       letter-spacing: 0;
-      text-align: right;
+      /*text-align: right;*/
     }
 
     [section-id="{{ sectionId }}"] .fp-title {
@@ -350,7 +349,7 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      direction: rtl;
+      /*direction: rtl;*/
     }
 
     [section-id="{{ sectionId }}"].fp-mobile-tabs--arrows .fp-tabs--mobile {
@@ -376,7 +375,7 @@
       line-height: 24px;
       white-space: nowrap;
       cursor: pointer;
-      direction: rtl;
+      /*direction: rtl;*/
     }
 
     [section-id="{{ sectionId }}"] .fp-tab.is-active {
@@ -430,7 +429,7 @@
       text-decoration: underline;
       text-underline-offset: 2px;
       white-space: nowrap;
-      direction: rtl;
+      /*direction: rtl;*/
       border: 0;
       background: transparent;
       padding: 0;
@@ -492,7 +491,7 @@
       flex: 0 0 299px;
       min-width: 0;
       scroll-snap-align: end;
-      direction: rtl;
+      /*direction: rtl;*/
     }
 
     [section-id="{{ sectionId }}"] .fp-grid {
@@ -682,12 +681,15 @@
         justify-content: space-between;
         direction: ltr;
       }
+      [dir="ltr"] .fp-header__top{
+        flex-direction: row-reverse;
+      }
 
       [section-id="{{ sectionId }}"] .fp-title {
-        width: 327px;
+        /*width: 327px;*/
         font-size: 30px;
         line-height: 36px;
-        text-align: right;
+        /*text-align: right;*/
       }
 
       [section-id="{{ sectionId }}"] .fp-cta {
@@ -703,7 +705,7 @@
         font-weight: 500;
         line-height: 24px;
         white-space: nowrap;
-        direction: rtl;
+        /*direction: rtl;*/
         transition: background 0.2s, transform 0.2s;
         cursor: pointer;
       }

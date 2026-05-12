@@ -185,6 +185,9 @@
     color: var(--mc-text, #000);
     text-align: right;
   }
+  [dir="ltr"] [section-id="{{ sectionId }}"] .sbm-title {
+    text-align: left;
+  }
   [section-id="{{ sectionId }}"] .sbm-subtitle {
     margin: 0;
     font-size: 16px;
@@ -193,6 +196,9 @@
     color: var(--mc-text, #000);
     text-align: right;
   }
+   [dir="ltr"] [section-id="{{ sectionId }}"] .sbm-subtitle {
+    text-align: left;}
+
   [section-id="{{ sectionId }}"] .sbm-cta {
     display: inline-flex;
     flex-direction: row;
@@ -282,6 +288,9 @@
     text-align: right;
     transition: color 0.25s ease;
   }
+   [dir="ltr"] [section-id="{{ sectionId }}"] .sbm-card__name {
+    text-align: left;
+  }
   [section-id="{{ sectionId }}"] .sbm-card__desc {
     margin: 0;
     font-size: 14px;
@@ -291,6 +300,9 @@
     text-align: right;
     transition: color 0.25s ease;
   }
+    [dir="ltr"] [section-id="{{ sectionId }}"] .sbm-card__desc {
+      text-align: left;
+    }
   [section-id="{{ sectionId }}"] .sbm-card:hover .sbm-card__name,
   [section-id="{{ sectionId }}"] .sbm-card:hover .sbm-card__desc {
     color: var(--mc-hover-text, #fff);
@@ -432,7 +444,6 @@
       position: relative;
       overflow: hidden;
       border-radius: 1px;
-      direction: ltr;
     }
     [section-id="{{ sectionId }}"] .sbm-scrollbar__thumb {
       position: absolute;
