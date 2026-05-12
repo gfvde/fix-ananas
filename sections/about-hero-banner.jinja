@@ -22,7 +22,7 @@
   section-id="{{ sectionId }}"
   data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
   class="about-hero-banner {% if settings.show_desktop_content %}about-hero-banner--desktop-content{% endif %}"
-  dir="rtl"
+  dir=""
   style="
     --ahb-desktop-height: {{ settings.desktop_height | default(468, true) }}px;
     --ahb-mobile-height: {{ settings.mobile_height | default(460, true) }}px;
@@ -40,7 +40,7 @@
   "
 >
   <div
-    class="about-hero-banner__media"
+    class="about-hero-banner__media ltr:-scale-x-100"
     aria-hidden="true"
   >
     <picture>
