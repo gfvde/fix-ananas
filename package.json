@@ -44,5 +44,8 @@
     "photoswipe": "^5.4.4",
     "swiper": "^12.1.4"
   },
-  "main": "index.js"
+  "main": "index.js",
+  "pnpm": {
+    "onlyBuiltDependencies": ["@parcel/watcher", "esbuild"]
+  }
 }

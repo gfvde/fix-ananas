@@ -878,6 +878,7 @@
         var moved = false;
 
         viewport.addEventListener("mousedown", function (e) {
+          if (e.target.closest("button, a")) return;
           isDown = true;
           moved = false;
           viewport.classList.add("is-dragging");
@@ -888,6 +889,7 @@
         viewport.addEventListener("mouseleave", function () {
           if (!isDown) return;
           isDown = false;
+          moved = false;
           viewport.classList.remove("is-dragging");
         });
 
@@ -895,6 +897,7 @@
           if (!isDown) return;
           isDown = false;
           viewport.classList.remove("is-dragging");
+          setTimeout(function () { moved = false; }, 0);
         });
 
         viewport.addEventListener("mousemove", function (e) {
