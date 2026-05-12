@@ -167,13 +167,17 @@
   .products-filter-sidebar__toggle {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     gap: 8px;
     color: var(--foreground);
     font-size: 16px;
     font-weight: 500;
     line-height: 24px;
     cursor: pointer;
+  }
+
+  [dir="ltr"] .products-filter-sidebar__toggle {
+    justify-content: flex-end;
   }
 
   .products-filter-sidebar__toggle input {

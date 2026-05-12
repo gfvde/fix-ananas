@@ -84,13 +84,17 @@
     position: relative;
     height: 100%;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: flex-end;
     gap: 8px;
     padding: 7px 16px;
     color: var(--foreground);
     font-size: 14px;
     line-height: 20px;
     white-space: nowrap;
+  }
+  [dir="ltr"] .products-sidebar-topbar__sort label,
+  [dir="ltr"] .products-sidebar-topbar__filter, [dir="ltr"] .products-sidebar-topbar__count {
+    /*justify-content: flex-start;*/
   }
 
   .products-sidebar-topbar__sort select {
