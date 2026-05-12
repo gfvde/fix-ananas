@@ -896,8 +896,13 @@
       position: static;
       pointer-events: auto;
       display: flex;
+      flex-direction: row;
       gap: 16px;
       order: 2;
+    }
+
+    html[dir="rtl"] .arf-carousel--mobile .arf-arrows-wrap {
+      flex-direction: row-reverse;
     }
 
     .arf-carousel--mobile .arf-arrow {
@@ -916,14 +921,15 @@
     }
 
     .arf-carousel--mobile .arf-arrow--prev {
-      transform: rotate(0deg);
+      transform: rotate(0deg) !important;
       left: -8px;
     }
 
     .arf-carousel--mobile .arf-arrow--next {
       right: -8px;
-      transform: rotate(0deg);
+      transform: rotate(0deg) !important;
     }
+
 
     .arf-carousel--mobile .arf-deck {
       width: 100%;

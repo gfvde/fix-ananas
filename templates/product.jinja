@@ -598,8 +598,19 @@
             </div>
 
             {# Features Grid #}
+            {% set visible_features = matching_features[:4] %}
+            {% set feat_count = visible_features | length %}
+            {% if feat_count == 1 %}
+              {% set grid_cols = "grid-cols-1" %}
+            {% elif feat_count == 2 %}
+              {% set grid_cols = "grid-cols-2" %}
+            {% elif feat_count == 3 %}
+              {% set grid_cols = "grid-cols-3" %}
+            {% else %}
+              {% set grid_cols = "grid-cols-2 md:grid-cols-4" %}
+            {% endif %}
             <div
-              class="grid grid-cols-2 md:grid-cols-4"
+              class="grid {{ grid_cols }} justify-items-center"
               style="
                 gap: {{ settings.single_product_section_features_items_gap | default(24) }}px;
               "

@@ -387,6 +387,30 @@
         }
       }
       {% endif %}
+
+      /* Region settings dialog RTL fixes */
+      html[dir="rtl"] .MuiSelect-select,
+      html[dir="rtl"] .MuiInputBase-input,
+      html[dir="rtl"] .MuiOutlinedInput-input {
+        text-align: right !important;
+        direction: rtl !important;
+      }
+      html[dir="rtl"] .MuiSelect-icon {
+        right: auto !important;
+        left: 7px !important;
+      }
+      html[dir="rtl"] .MuiFormLabel-root,
+      html[dir="rtl"] .MuiInputLabel-root {
+        right: 14px !important;
+        left: auto !important;
+        transform-origin: right !important;
+      }
+      html[dir="rtl"] .MuiDialog-paper,
+      html[dir="rtl"] .MuiDialogContent-root,
+      html[dir="rtl"] .MuiDialogTitle-root {
+        direction: rtl !important;
+        text-align: right !important;
+      }
     </style>
     <!-- prettier-ignore-end -->
 

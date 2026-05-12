@@ -10,6 +10,7 @@
 {% set mobile_layout = settings.mobile_layout | default('caption') %}
 {% set scroll_effect_enabled = settings.scroll_effect_enabled | default(false) %}
 {% set scroll_effect_strength = settings.scroll_effect_strength | default(18) %}
+{% set mobile_image_height = settings.mobile_image_height | default(150) %}
 
 <section
   section-id="{{ sectionId }}"
@@ -228,7 +229,7 @@
       width: 100%;
       height: calc((100vw - 48px) / 3);
       min-height: 96px;
-      max-height: 150px;
+      max-height: {{ mobile_image_height }}px;
       aspect-ratio: 1 / 1;
       flex: 0 0 auto;
       overflow: hidden;
