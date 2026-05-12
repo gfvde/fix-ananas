@@ -364,6 +364,10 @@
     [section-id="{{ sectionId }}"] .sbm-arrow:hover {
       opacity: 0.7;
     }
+    html[dir="ltr"] [section-id="{{ sectionId }}"] [data-sbm-prev] svg,
+    html[dir="ltr"] [section-id="{{ sectionId }}"] [data-sbm-next] svg {
+      transform: scaleX(-1);
+    }
     [section-id="{{ sectionId }}"] .sbm-mob-subtitle {
       margin: 0;
       font-size: 16px;
@@ -514,7 +518,9 @@
     }
     function scroll(dir) {
       var w = cards[0].offsetWidth + 16;
-      track.scrollBy({ left: dir === "next" ? -w : w, behavior: "smooth" });
+      var isRTL = document.documentElement.dir === "rtl";
+      var amount = isRTL ? (dir === "next" ? -w : w) : (dir === "next" ? w : -w);
+      track.scrollBy({ left: amount, behavior: "smooth" });
     }
     if (prev)
       prev.addEventListener("click", function () {

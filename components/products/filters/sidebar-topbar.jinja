@@ -139,9 +139,20 @@
   }
 
   .products-sidebar-topbar__filter {
-    flex-direction: row-reverse;
+    flex-direction: row;
     grid-column: 3;
     justify-content: flex-end;
+    border-left: 1px solid var(--border);
+    border-right: 0;
+  }
+  html[dir="ltr"] .products-sidebar-topbar__filter{
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    border-right: 1px solid var(--border);
+    border-left: 0;
+  }
+  html[dir="ltr"] .products-sidebar-topbar__sort{
+    border-right: 0;
     border-left: 1px solid var(--border);
   }
 </style>
