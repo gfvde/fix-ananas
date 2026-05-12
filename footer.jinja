@@ -34,9 +34,19 @@
 	    text-align: right;
 	    align-items: flex-start;
 	  }
+    [dir="ltr"]  #footer .footer-brand,
+	  #footer .footer-links,
+	  #footer .footer-contact {
+      text-align: left;
+      align-items: flex-start;
+    }
+
 	  #footer .footer-description {
 	    text-align: right !important;
 	  }
+    [dir="ltr"] #footer .footer-description {
+      text-align: left !important;
+    }
 	  #footer .footer-social {
 	    width: 100%;
 	    justify-content: flex-start;
