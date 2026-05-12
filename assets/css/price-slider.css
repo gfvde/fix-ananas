@@ -39,7 +39,8 @@
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1) !important;
   cursor: pointer !important;
   top: -8px !important;
-  transform: translateX(-50%) !important;
+  right: -10px !important;
+  transform: none !important;
 }
 
 /* Remove default little bars */
@@ -49,10 +50,11 @@
 }
 
 /* RTL Support */
-[dir="rtl"] .noUi-horizontal .noUi-handle {
-  transform: translateX(50%) !important;
-}
-
 [dir="rtl"] .noUi-horizontal {
   direction: rtl !important;
+}
+
+[dir="rtl"] .noUi-horizontal .noUi-handle {
+  right: auto !important;
+  left: -10px !important;
 }
