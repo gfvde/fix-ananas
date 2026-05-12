@@ -240,9 +240,24 @@
                 </a>
                 <div class="ananas-sub" id="sub-{{ loop.index }}" aria-hidden="true">
                   {% for child in item.items %}
-                    <a href="{{ child.url | localized_url if child.resource_type != 'url' else child.url }}" class="ananas-sub__link">
-                      {{ child.label }}
-                    </a>
+                    {% if child.items | length > 0 %}
+                      <div class="ananas-sub__group">
+                        <a href="{{ child.url | localized_url if child.resource_type != 'url' else child.url }}" class="ananas-sub__link ananas-sub__link--parent">
+                          {{ child.label }}
+                        </a>
+                        <div class="ananas-sub__children">
+                          {% for grandchild in child.items %}
+                            <a href="{{ grandchild.url | localized_url if grandchild.resource_type != 'url' else grandchild.url }}" class="ananas-sub__link ananas-sub__link--child">
+                              {{ grandchild.label }}
+                            </a>
+                          {% endfor %}
+                        </div>
+                      </div>
+                    {% else %}
+                      <a href="{{ child.url | localized_url if child.resource_type != 'url' else child.url }}" class="ananas-sub__link">
+                        {{ child.label }}
+                      </a>
+                    {% endif %}
                   {% endfor %}
                 </div>
               </div>
@@ -777,6 +792,48 @@
   }
   [dir="ltr"] .ananas-sub__link { text-align: left; }
   .ananas-sub__link:hover { background: color-mix(in srgb, var(--ananas-dd-bg) 60%, white 40%); }
+
+  /* 3rd level nested sub */
+  .ananas-sub__group { position: relative; }
+  .ananas-sub__link--parent {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+  .ananas-sub__link--parent::before {
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-right: 5px solid currentColor;
+    opacity: .5;
+    flex-shrink: 0;
+  }
+  [dir="ltr"] .ananas-sub__link--parent {
+    flex-direction: row;
+  }
+  [dir="ltr"] .ananas-sub__link--parent::before {
+    border-right: none;
+    border-left: 5px solid currentColor;
+  }
+  .ananas-sub__children {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    background: var(--ananas-dd-bg);
+    border: 1px solid var(--ananas-dd-border);
+    min-width: 160px;
+    padding: 4px 0;
+    z-index: 201;
+  }
+  [dir="rtl"] .ananas-sub__children { left: auto; right: 100%; }
+  .ananas-sub__group:hover .ananas-sub__children { display: block; }
 
   /* Icons */
   .ananas-nav__icons { 
