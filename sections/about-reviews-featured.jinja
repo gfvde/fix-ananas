@@ -916,13 +916,17 @@
     }
 
     .arf-carousel--mobile .arf-arrow--prev {
-      transform: rotate(0deg);
+      transform: rotate(0deg) ;
       left: -8px;
     }
-
+    
+    [dir="ltr"] [section-id="{{ sectionId }}"] .arf-carousel--mobile .arf-arrow--prev ,[dir="ltr"] [section-id="{{ sectionId }}"] .arf-carousel--mobile .arf-arrow--next {
+      transform: rotate(0deg) !important ;
+      
+    }
     .arf-carousel--mobile .arf-arrow--next {
       right: -8px;
-      transform: rotate(0deg);
+      transform: rotate(0deg) ;
     }
 
     .arf-carousel--mobile .arf-deck {
