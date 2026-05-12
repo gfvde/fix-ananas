@@ -35,10 +35,9 @@
 	    align-items: flex-start;
 	  }
     [dir="ltr"]  #footer .footer-brand,
-	  #footer .footer-links,
-	  #footer .footer-contact {
+	   [dir="ltr"]  #footer .footer-contact {
       text-align: left;
-      align-items: flex-start;
+      /*align-items: flex-end;*/
     }
 
 	  #footer .footer-description {
@@ -51,6 +50,7 @@
 	    width: 100%;
 	    justify-content: flex-start;
 	  }
+
 	  #footer .footer-contact a {
 	    flex-direction: row;
 	  }
@@ -95,8 +95,7 @@
 
 <footer
   id="footer"
-  dir="{{ 'rtl' if session.lang == 'ar' else 'ltr' }}"
-  class="flex flex-col px-6 pt-4 pb-6 gap-2 md:px-20 md:pt-8 md:pb-6 md:gap-8"
+  class="flex flex-col px-6 pt-4 pb-6 gap-2 md:px-20 md:pt-8 md:pb-6"
   style="
     background-color: {{ bg_color }}; 
     color: {{ text_color }};
@@ -303,7 +302,7 @@
   {% set has_payment = store.settings.checkout.payment_methods | length > 0 or store.settings.checkout.shipping_methods | length > 0 %}
   {% set has_legal = store.settings.contact.business_center or store.settings.general.tax_settings.is_certificate_visible or store.settings.general.tax_settings.tax_number or store.settings.general.commercial_registration_number %}
   {% if has_payment or has_legal %}
-		    <div class="footer-legal-strip py-4 px-0 flex flex-col md:flex-row-reverse items-center justify-between gap-4 md:gap-4 w-full" >
+		    <div class="footer-legal-strip !pb-0 py-4 px-0 flex flex-col md:flex-row-reverse items-center justify-between gap-4 md:gap-4 w-full" >
 
       {# Legal Badges #}
 		      <div class="order-1 md:order-2 flex flex-wrap justify-center md:justify-end items-center gap-4 md:gap-6" dir="rtl">
@@ -325,7 +324,7 @@
         {% endif %}
 
         {% if store.settings.contact.business_center %}
-		          <a href="https://eauthenticate.saudibusiness.gov.sa/certificate-details/{{ store.settings.contact.business_center }}" target="_blank" rel="noopener noreferrer" class="footer-legal-item--commerce flex items-center gap-2 text-right transition-opacity hover:opacity-80">
+		          <a href="https://eauthenticate.saudibusiness.gov.sa/certificate-details/{{ store.settings.contact.business_center }}" target="_blank" rel="noopener noreferrer" class="ltr:flex-row-reverse footer-legal-item--commerce flex items-center gap-2 text-right transition-opacity hover:opacity-80">
 	            <div class="flex items-center justify-center w-7 h-7">
 	              <img src="{{ 'images/ecommerce-certificate.svg' | asset_url }}" alt="Business Center" class="w-7 h-7 object-contain" />
 	            </div>
@@ -397,7 +396,7 @@
   {% endif %}
 
   {# ── Divider ───────────────────────────────────────────────────────────── #}
-	  <div class="w-full" style="border-top: 1px solid {{ divider_color }};"></div>
+	  <div class="w-full hidden md:block" style="border-top: 1px solid {{ divider_color }};"></div>
 
   {# ── Bottom bar ────────────────────────────────────────────────────────── #}
 	  <div class="py-4 px-4 flex flex-col md:grid md:grid-cols-3 items-center gap-4 md:gap-0 w-full ">
@@ -409,9 +408,10 @@
 	        class="flex items-center gap-2 text-xs transition-opacity hover:opacity-100 md:justify-self-start"
         style="color: {{ text_color }}; opacity: 0.8;"
       >
-        <svg viewBox="0 0 20 20" fill="currentColor" class="size-4">
-          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z" clip-rule="evenodd"/>
+       <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.5 13.125C10.1204 13.125 12.3222 11.3333 12.9473 8.90809M7.5 13.125C4.87964 13.125 2.67776 11.3333 2.05269 8.90809M7.5 13.125C9.0533 13.125 10.3125 10.6066 10.3125 7.5C10.3125 4.3934 9.0533 1.875 7.5 1.875M7.5 13.125C5.9467 13.125 4.6875 10.6066 4.6875 7.5C4.6875 4.3934 5.9467 1.875 7.5 1.875M12.9473 8.90809C13.0633 8.45807 13.125 7.98624 13.125 7.5C13.125 6.49664 12.8623 5.55464 12.4019 4.73903C11.4369 3.02934 9.60324 1.875 7.5 1.875M2.05269 8.90809C1.9367 8.45807 1.875 7.98624 1.875 7.5C1.875 6.49664 2.1377 5.55464 2.59808 4.73903C3.56312 3.02934 5.39676 1.875 7.5 1.875M12.4019 4.73903C11.0873 5.87524 9.37392 6.5625 7.5 6.5625C5.62608 6.5625 3.91267 5.87524 2.59808 4.73903M12.9473 8.90809C11.3334 9.80296 9.47618 10.3125 7.5 10.3125C5.52382 10.3125 3.66664 9.80296 2.05269 8.90809" stroke="white" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
+
 	        {% set footer_country_code = store.current_country.code if store.current_country and store.current_country.code else (session.country.code if session.country and session.country.code else '') %}
 	        {% if footer_country_code %}
 	          <span>{{ footer_country_code | title }}</span>

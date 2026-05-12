@@ -360,7 +360,7 @@
     [section-id="{{ sectionId }}"] .fp-progress__bar {
       position: absolute;
       top: 0;
-      left: 0;
+      right: 0;
       height: 2px;
       width: 78px;
       background: var(--fp-progress-fill);
@@ -371,6 +371,10 @@
       will-change: transform, width;
     }
 
+    [dir="ltr"] [section-id="{{ sectionId }}"] .fp-progress__bar{
+      right: auto;
+      left: 0;
+    }
     @media (min-width: 768px) {
       [section-id="{{ sectionId }}"].fp-section--carousel .fp-inner {
         padding: 24px 56px;
@@ -643,6 +647,9 @@
         width: 273px;
       }
     }
+    [dir="rtl"] [section-id="{{ sectionId }}"] .fp-progress {
+  direction: ltr;
+}
   </style>
 
   <script>
@@ -667,34 +674,54 @@
         });
       }
 
-      function updateProgress(panel) {
-        var currentPanel = panel || section.querySelector("[data-fp-panel]:not(.is-hidden)");
-        if (!currentPanel) return;
+function updateProgress(panel) {
+  var currentPanel = panel || section.querySelector("[data-fp-panel]:not(.is-hidden)");
+  if (!currentPanel) return;
 
-        var viewport = currentPanel.querySelector(".fp-carousel__viewport");
-        var progress = currentPanel.querySelector(".fp-progress");
-        var bar = progress && progress.querySelector(".fp-progress__bar");
-        if (!viewport || !progress || !bar) return;
+  var viewport = currentPanel.querySelector(".fp-carousel__viewport");
+  var progress = currentPanel.querySelector(".fp-progress");
+  var bar = progress && progress.querySelector(".fp-progress__bar");
 
-        var maxScroll = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
-        var trackWidth = progress.clientWidth;
+  if (!viewport || !progress || !bar) return;
 
-        if (maxScroll <= 1) {
-          progress.style.display = "none";
-          return;
-        } else {
-          progress.style.display = "block";
-        }
+  var maxScroll = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
+  var trackWidth = progress.clientWidth;
 
-        var visibleRatio = Math.max(0, Math.min(1, viewport.clientWidth / viewport.scrollWidth));
-        var barWidth = Math.max(32, Math.round(trackWidth * visibleRatio));
-        var scrollRatio = Math.max(0, Math.min(1, viewport.scrollLeft / maxScroll));
-        var maxTravel = Math.max(0, trackWidth - barWidth);
+  if (maxScroll <= 1) {
+    progress.style.display = "none";
+    return;
+  } else {
+    progress.style.display = "block";
+  }
 
-        bar.style.width = barWidth + "px";
-        bar.style.transform = "translateX(" + Math.round(maxTravel * scrollRatio) + "px)";
-      }
+  var visibleRatio = Math.max(
+    0,
+    Math.min(1, viewport.clientWidth / viewport.scrollWidth)
+  );
 
+  var barWidth = Math.max(32, Math.round(trackWidth * visibleRatio));
+
+  var isRTL = document.documentElement.dir === "rtl";
+
+  var currentScroll = Math.abs(viewport.scrollLeft);
+
+  var scrollRatio = Math.max(
+    0,
+    Math.min(1, currentScroll / maxScroll)
+  );
+
+  var maxTravel = Math.max(0, trackWidth - barWidth);
+
+  var translate = Math.round(maxTravel * scrollRatio);
+
+  bar.style.width = barWidth + "px";
+
+  if (isRTL) {
+    bar.style.transform = "translateX(" + (-translate) + "px)";
+  } else {
+    bar.style.transform = "translateX(" + translate + "px)";
+  }
+}
       function bindCarouselProgress(panel) {
         var viewport = panel && panel.querySelector(".fp-carousel__viewport");
         if (!viewport || viewport.dataset.fpProgressBound === "true") return;

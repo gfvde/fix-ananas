@@ -342,7 +342,7 @@
     {% endif %}
 
     {% if not is_out_of_stock %}
-      <div class="pc-cta-wrap-mb-card md:hidden">
+      <div class="pc-cta-wrap-mb-card md:hidden not-icon-cta">
         {% if has_options %}
           <a
             href="{{ url_for('product_details', slug=product.slug) }}"
@@ -363,7 +363,7 @@
         {% endif %}
       </div>
     {% else %}
-      <div class="pc-cta-wrap-mb-card">
+      <div class="pc-cta-wrap-mb-card not-icon-cta">
         <button
           type="button"
           class="pc-cta pc-notify-btn"
@@ -590,7 +590,7 @@
   .pc-img-icon-cta {
     position: absolute;
     bottom: 10px;
-    left: 5px;
+    left: 29px !important;
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -601,7 +601,7 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
     cursor: pointer;
     z-index: 3;
-    color: #000;
+    color: #fff;
     transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
     align-items: center;
     justify-content: center;
@@ -899,7 +899,7 @@
 /* ── Stock info: flip between sold & qty ── */
 .pc-stock {
   position: relative;
-  height: 20px;
+  height: 40px;
   width: 100%;
   overflow: hidden;
 }

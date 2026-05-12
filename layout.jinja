@@ -191,6 +191,9 @@
           align-items: center;
           justify-content: center;
         }
+        body[data-pc-mobile-cta="icon"] .not-icon-cta{
+          display: none !important;
+        }
         body[data-pc-mobile-cta="icon"] .pc-cta-wrap-mb { display: none !important; }
 
         /* alignment: center button */
@@ -203,7 +206,7 @@
 
         /* center + icon mode: pin icon to center bottom */
         body[data-pc-align="center"][data-pc-mobile-cta="icon"] .pc-img-icon-cta {
-          left: 50% !important;
+          left: 29px !important;
           transform: translateX(-50%);
         }
         body[data-pc-align="center"][data-pc-mobile-cta="icon"] .pc-img-icon-cta:hover,
