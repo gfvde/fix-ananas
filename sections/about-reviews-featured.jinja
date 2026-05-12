@@ -154,7 +154,7 @@
 {% endmacro %}
 
 <section section-id="{{ sectionId }}"
-  data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}" class="section-arf" dir="rtl" style="--arf-title-color: {{ title_color }};">
+  data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}" class="section-arf"  style="--arf-title-color: {{ title_color }};">
   <div class="arf-desktop">
     <div class="arf-header">
       <h2 class="arf-title">{{ settings.title | default('تجربة القهوة بعيون عملائنا') }}</h2>
@@ -395,7 +395,6 @@
 <style>
   [section-id="{{ sectionId }}"].section-arf {
     background: {{ settings.section_background_color | default('#FCFAF7') }};
-    direction: rtl;
   }
 
   .arf-desktop {
@@ -418,6 +417,9 @@
     margin: 0;
     text-align: right;
   }
+    [dir="ltr"] [section-id="{{ sectionId }}"] .arf-title {
+      text-align: left;
+    }
 
   .arf-stage {
     position: relative;

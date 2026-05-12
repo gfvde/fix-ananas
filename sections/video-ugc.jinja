@@ -14,7 +14,7 @@
 {% endif %}
 
 <section section-id="{{ sectionId }}"
-  data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}" class="section-video-ugc" style="background-color: {{ settings.background_color | default('#ffffff') }};" dir="rtl">
+  data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}" class="section-video-ugc" style="background-color: {{ settings.background_color | default('#ffffff') }};" >
 
   {# Header #}
   <div class="video-ugc__header">
@@ -98,7 +98,6 @@
 <style>
   [section-id="{{ sectionId }}"].section-video-ugc {
     padding: 24px 56px 48px;
-    direction: rtl;
     background: #fff;
   }
   .video-ugc__header {
