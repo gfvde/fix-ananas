@@ -1263,8 +1263,8 @@
   /* Slider arrow */
   .ananas-search__slider-arrow {
     position: absolute;
-    left: -40px;
-    top: 144px;
+    top: 50%;
+    transform: translateY(-50%);
     width: 32px;
     height: 32px;
     background: rgba(255,255,255,0.2);
@@ -1281,9 +1281,12 @@
     color: var(--ananas-icon-color);
     transition: opacity .2s;
   }
-  .ananas-search__slider-arrow--next {
-    display: none !important;
-  }
+  .ananas-search__slider-arrow--prev { left: -40px; }
+  .ananas-search__slider-arrow--next { right: -40px; }
+  html[dir="rtl"] .ananas-search__slider-arrow--prev { left: auto; right: -40px; }
+  html[dir="rtl"] .ananas-search__slider-arrow--next { right: auto; left: -40px; }
+  html[dir="rtl"] .ananas-search__slider-arrow--prev svg { transform: scaleX(-1); }
+  html[dir="ltr"] .ananas-search__slider-arrow--next svg { transform: scaleX(-1); }
   .ananas-search__slider-arrow:hover { opacity: .8; }
   .ananas-search__slider-arrow svg { pointer-events: none; }
 
@@ -1766,11 +1769,11 @@ menuItems.forEach(function(item, i) {
 	  var mLoggedIn    = qs('#mobile-logged-in-links');
 
 	  function setAuthState(loggedIn) {
-	    if (loginBtn)   loginBtn.style.display   = loggedIn ? 'none' : '';
-	    if (profileBtn) profileBtn.style.display = loggedIn ? 'inline-flex' : 'none';
-	    if (mLoginBtn)  mLoginBtn.style.display  = loggedIn ? 'none' : 'inline-flex';
+	    if (loginBtn)    loginBtn.style.display    = loggedIn ? 'none' : '';
+	    if (profileBtn)  profileBtn.style.display  = loggedIn ? 'inline-flex' : 'none';
+	    if (mLoginBtn)   mLoginBtn.style.display   = loggedIn ? 'none' : '';
 	    if (mProfileBtn) mProfileBtn.style.display = loggedIn ? 'inline-flex' : 'none';
-	    if (mLoggedIn)  mLoggedIn.style.display  = loggedIn  ? 'flex'         : 'none';
+	    if (mLoggedIn)   mLoggedIn.style.display   = loggedIn ? 'flex' : 'none';
 	  }
 
 	  /* handleLoginAction — called by both desktop and mobile login buttons */
@@ -1791,6 +1794,10 @@ menuItems.forEach(function(item, i) {
   /* Listen for Zid auth events */
   document.addEventListener('zid:customer:loggedIn',  function () { setAuthState(true); });
   document.addEventListener('zid:customer:loggedOut', function () { setAuthState(false); });
+  document.addEventListener('zid-customer-fetched', function (e) {
+    var customer = e && e.detail && e.detail.customer;
+    setAuthState(!!(customer && customer.name));
+  });
 
   /* Initial state from cookie / global */
   function checkInitialAuth() {
@@ -1991,6 +1998,8 @@ menuItems.forEach(function(item, i) {
     return Math.max(0, (total - pp) * (getCardW() + CARD_GAP));
   }
 
+  var isRTLSearch = document.documentElement.dir === 'rtl';
+
   function applySlider() {
     if (!track) return;
     var total     = track.querySelectorAll('.ananas-pcard').length;
@@ -2000,14 +2009,15 @@ menuItems.forEach(function(item, i) {
     if (currentOffset < 0)         currentOffset = 0;
     if (currentOffset > maxOffset) currentOffset = maxOffset;
 
-    track.style.transform = 'translateX(-' + currentOffset + 'px)';
+    var tx = isRTLSearch ? currentOffset : -currentOffset;
+    track.style.transform = 'translateX(' + tx + 'px)';
 
     var prevArrow = qs('#search-slider-prev');
     var nextArrow = qs('#search-slider-next');
     var hasMore   = total > pp;
 
-    if (prevArrow) prevArrow.hidden = !hasMore || currentOffset >= maxOffset;
-    if (nextArrow) nextArrow.hidden = true;
+    if (prevArrow) prevArrow.hidden = !hasMore || currentOffset <= 0;
+    if (nextArrow) nextArrow.hidden = !hasMore || currentOffset >= maxOffset;
   }
 
   function updateSearchSliderArrow() { applySlider(); }
@@ -2019,7 +2029,7 @@ menuItems.forEach(function(item, i) {
   var sliderPrevArrow = qs('#search-slider-prev');
   if (sliderPrevArrow && track) {
     sliderPrevArrow.addEventListener('click', function () {
-      currentOffset = Math.min(getMaxOffset(), currentOffset + getCardW() + CARD_GAP);
+      currentOffset = Math.max(0, currentOffset - (getCardW() + CARD_GAP));
       applySlider();
     });
   }
@@ -2027,7 +2037,7 @@ menuItems.forEach(function(item, i) {
   var sliderNextArrow = qs('#search-slider-next');
   if (sliderNextArrow && track) {
     sliderNextArrow.addEventListener('click', function () {
-      currentOffset = Math.min(getMaxOffset(), currentOffset + getCardW() + CARD_GAP);
+      currentOffset = Math.min(getMaxOffset(), currentOffset + (getCardW() + CARD_GAP));
       applySlider();
     });
   }
