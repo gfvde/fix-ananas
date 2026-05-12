@@ -74,11 +74,11 @@
 .pg-wrapper,
 #product-gallery-swiper-main,
 .pg-thumbs .swiper-wrapper {
-  height: clamp(332px, calc(20vw + 250px), 545px);
+  height: clamp(450px, calc(20vw + 250px), 545px);
 }
 
 #product-gallery-main {
-  height: clamp(332px, calc(20vw + 250px), 545px);
+  height: clamp(450px, calc(20vw + 250px), 545px);
 }
 
 .pg-thumbs .swiper-slide,
@@ -201,7 +201,7 @@
   object-fit: cover;
   display: block;
   /* border-radius: 12px; */
-  height: clamp(332px, calc(20vw + 250px), 545px);
+  height: clamp(350px, calc(20vw + 250px), 545px);
 }
 @media (max-width: 768px) {
  .pg-main .swiper-slide img{
