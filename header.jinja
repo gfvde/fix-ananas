@@ -839,9 +839,9 @@
   .ananas-nav__icons { 
     display: flex; 
     align-items: center; 
-    direction: ltr;
     gap: 0px; 
   }
+  [dir="ltr"] .ananas-nav__icons { flex-direction: row-reverse; }
   .ananas-nav__icon-btn {
     display: flex;
     align-items: center;

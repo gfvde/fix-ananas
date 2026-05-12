@@ -15,8 +15,8 @@
 {% set products_start = ((current_page - 1) * page_size) + 1 if products_total > 0 else 0 %}
 {% set products_end = products_start + products_current - 1 if products_current > 0 else 0 %}
 
-<div class="products-sidebar-topbar hidden lg:grid" dir="ltr">
-  <form class="products-sidebar-topbar__sort" method="get" onsubmit="return false" dir="rtl">
+<div class="products-sidebar-topbar hidden lg:grid">
+  <form class="products-sidebar-topbar__sort" method="get" onsubmit="return false" >
     <label>
       <span class="products-sidebar-topbar__sort-current">
         <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -36,11 +36,11 @@
     </label>
   </form>
 
-  <div class="products-sidebar-topbar__count" dir="rtl" data-products-range-count>
+  <div class="products-sidebar-topbar__count"  data-products-range-count>
     {{ _('Showing %(start)s - %(end)s of %(total)s') | format(start=products_start, end=products_end, total=products_total) }}
   </div>
 
-  <button class="products-sidebar-topbar__filter" type="button" dir="rtl">
+  <button class="products-sidebar-topbar__filter" type="button" >
     <span>{{ _('Filter') }}</span>
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path d="M4 7h16M8 12h8M11 17h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
