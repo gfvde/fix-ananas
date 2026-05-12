@@ -804,6 +804,11 @@
     justify-content: flex-end;
     gap: 6px;
   }
+  [dir="ltr"] .ananas-sub__link--parent {
+    align-items: center;
+    flex-direction: row-reverse !important;
+    justify-content: space-between;; 
+  }
   .ananas-sub__link--parent::before {
     content: '';
     display: inline-block;
@@ -1554,6 +1559,28 @@
    SCRIPTS
 ══════════════════════════════════════════════════ #}
 <script>
+  var menuItems = {{ store.settings.menus.main_menu.items | tojson }};
+console.log('Main Menu Items:', menuItems);
+menuItems.forEach(function(item, i) {
+  console.group('📁 ' + item.label + ' (Level 1)');
+  console.log('URL:', item.url);
+  console.log('Resource Type:', item.resource_type);
+
+  if (item.items && item.items.length > 0) {
+    item.items.forEach(function(child, j) {
+      console.group('  📂 ' + child.label + ' (Level 2)');
+      console.log('  URL:', child.url);
+
+      if (child.items && child.items.length > 0) {
+        child.items.forEach(function(gc) {
+          console.log('    📄 ' + gc.label + ' → ' + gc.url);
+        });
+      }
+      console.groupEnd();
+    });
+  }
+  console.groupEnd();
+});
 (function () {
   'use strict';
 
