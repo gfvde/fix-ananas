@@ -538,7 +538,7 @@
       width: 100%;
       height: 137.47%;
       top: -13.35%;
-      object-fit: cover;
+      object-fit: contain;
     }
 
     [section-id="{{ sectionId }}"] .pc-card--figma-products .pc-badge-pill,
@@ -965,7 +965,9 @@
 
       function moveMobileTab(step) {
         if (!tabOrder.length) return;
-        var nextIndex = (getActiveIndex() + step + tabOrder.length) % tabOrder.length;
+        var isRTL = document.documentElement.dir === "rtl";
+        var dir = isRTL ? -step : step;
+        var nextIndex = (getActiveIndex() + dir + tabOrder.length) % tabOrder.length;
         setActiveTab(tabOrder[nextIndex]);
       }
 
