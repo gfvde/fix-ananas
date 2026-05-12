@@ -95,7 +95,7 @@
 
 <footer
   id="footer"
-  class="flex flex-col px-6 pt-4 pb-6 gap-2 md:px-20 md:pt-8 md:pb-6"
+  class="flex flex-col px-6 pt-4 pb-1 gap-2 md:px-20 md:pt-8"
   style="
     background-color: {{ bg_color }}; 
     color: {{ text_color }};
@@ -247,11 +247,11 @@
       {# ── Link group columns ────────────────────────────────────────────── #}
       {% for group in settings.link_groups_items or [] %}
         {% if not group.hide and group.links %}
-	          <div class="footer-links flex flex-col gap-[10px]">
+	          <div class="footer-links flex flex-col gap-[10px] ltr:text-left rtl:text-right">
             {% if group.title %}
               <h3 class="text-sm font-semibold mb-1" style="color: {{ heading_color }};">{{ group.title }}</h3>
             {% endif %}
-            <ul class="flex flex-col gap-[10px]">
+            <ul class="flex flex-col gap-[10px] ltr:text-left rtl:text-right">
               {% for link in group.links %}
                 <li>
                   <a href="{{ link.url }}" class="text-xs hover:opacity-100 transition-opacity" style="color: {{ text_color }}; opacity: 0.85;">
@@ -302,7 +302,7 @@
   {% set has_payment = store.settings.checkout.payment_methods | length > 0 or store.settings.checkout.shipping_methods | length > 0 %}
   {% set has_legal = store.settings.contact.business_center or store.settings.general.tax_settings.is_certificate_visible or store.settings.general.tax_settings.tax_number or store.settings.general.commercial_registration_number %}
   {% if has_payment or has_legal %}
-		    <div class="footer-legal-strip !pb-0 py-4 px-0 flex flex-col md:flex-row-reverse items-center justify-between gap-4 md:gap-4 w-full" >
+		    <div class="footer-legal-strip  py-4 px-0 flex flex-col md:flex-row-reverse items-center justify-between gap-4 md:gap-4 w-full" >
 
       {# Legal Badges #}
 		      <div class="order-1 md:order-2 flex flex-wrap justify-center md:justify-end items-center gap-4 md:gap-6" dir="rtl">
