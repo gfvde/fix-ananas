@@ -599,12 +599,13 @@
 
             {# Features Grid #}
             <div
-              class="grid grid-cols-3"
+              class="grid grid-cols-2 md:grid-cols-4"
               style="
                 gap: {{ settings.single_product_section_features_items_gap | default(24) }}px;
               "
             >
               {% for feature in matching_features %}
+              {% if loop.index0 >= 4 %}{% continue %}{% endif %}
                 <div class="feature-card rounded-lg transition-all duration-300">
 
                   {# Icon Container #}
