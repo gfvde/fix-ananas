@@ -44,7 +44,6 @@
 
 <section
   class="category-page-banner {{ cph_variant_class }}"
-  dir="rtl"
   data-count-template="{{ _('%(count)s products') }}"
   style="
     --cph-bg: {{ cph_bg }};
@@ -201,6 +200,10 @@
     gap: 12px;
     text-align: right;
   }
+   [dir="ltr"]  .category-page-banner__copy {
+    align-items: flex-start;
+    text-align: left;
+  }
 
   .category-page-banner--plain .category-page-banner__copy {
     align-items: center;
@@ -236,7 +239,7 @@
     align-items: flex-start;
     justify-content: flex-start;
     gap: 20px;
-    direction: rtl;
+    /*direction: rtl;*/
     overflow-x: auto;
     overflow-y: hidden;
     scroll-padding-inline: 0;

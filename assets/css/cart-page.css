@@ -60,7 +60,7 @@ body:has(.cart-page-layout) {
     align-items: center;
     gap: 8px;
     margin-bottom: 24px;
-    direction: rtl;
+    /*direction: rtl;*/
   }
 
   .cart-page-header__title {
@@ -83,19 +83,19 @@ body:has(.cart-page-layout) {
     flex-direction: row;
     gap: 24px;
     align-items: flex-start;
-    direction: ltr;
+    /*direction: ltr;*/
   }
 
   .cart-page-layout__sidebar {
     display: block;
     flex: 0 0 440px;
     width: 440px;
-    direction: rtl;
+    /*direction: rtl;*/
   }
 
   .cart-page-layout__products {
     flex: 1 1 auto;
-    direction: rtl;
+    /*direction: rtl;*/
   }
 
   /* Desktop: reset mobile-specific styles */
@@ -119,7 +119,7 @@ body:has(.cart-page-layout) {
   border-radius: 8px;
   box-shadow: 0 0 17.5px rgba(0, 0, 0, 0.06);
   padding: 16px 0;
-  direction: ltr;
+  /*direction: ltr;*/
 }
 
 .ananas-cart-item {
@@ -129,7 +129,7 @@ body:has(.cart-page-layout) {
   min-height: 120px;
   padding: 0 0 0 16px;
   background: #ffffff;
-  direction: ltr;
+  /*direction: ltr;*/
 }
 
 .ananas-cart-item + .ananas-cart-item {
@@ -259,6 +259,9 @@ body:has(.cart-page-layout) {
   line-height: 16px;
   text-align: right;
 }
+[dir="ltr"] .ananas-cart-item__meta {
+  text-align: left;
+}
 
 .ananas-cart-item__title {
   display: block;
@@ -269,6 +272,9 @@ body:has(.cart-page-layout) {
   line-height: 24px;
   text-align: right;
   text-decoration: none;
+}
+[dir="ltr"] .ananas-cart-item__title {
+  text-align: left;
 }
 
 .ananas-cart-item__title:hover {
@@ -281,7 +287,7 @@ body:has(.cart-page-layout) {
   justify-content: flex-end;
   gap: 24px;
   width: 100%;
-  direction: ltr;
+  /*direction: ltr;*/
 }
 
 .ananas-cart-item__option {
@@ -338,9 +344,12 @@ body:has(.cart-page-layout) {
   font-size: 13px;
   line-height: 20px;
   text-align: right;
-  direction: rtl;
+  /*direction: rtl;*/
 }
 
+[dir="ltr"] .ananas-cart-item__variant-select {
+  text-align: left;
+}
 .ananas-cart-item__swatch-wrap {
   display: flex;
   align-items: flex-start;
@@ -418,7 +427,7 @@ body:has(.cart-page-layout) {
   flex-direction: column;
   gap: 16px;
   background: #ffffff;
-  direction: rtl;
+  /*direction: rtl;*/
   padding: 16px;
 }
 
@@ -430,9 +439,12 @@ body:has(.cart-page-layout) {
   line-height: 28px;
   text-align: right;
 }
+[dir="ltr"] .cart-mobile-header__title {
+  text-align: left;
+}
 
 .cart-sidebar {
-  direction: rtl;
+  /*direction: rtl;*/
 }
 
 .cart-sidebar__panel {
@@ -470,6 +482,9 @@ body:has(.cart-page-layout) {
   line-height: 20px;
   text-align: right;
   white-space: normal;
+}
+[dir="ltr"] .cart-free-shipping__message {
+  text-align: left;
 }
 
 .cart-free-shipping__truck {
@@ -511,7 +526,9 @@ body:has(.cart-page-layout) {
   line-height: 28px;
   text-align: right;
 }
-
+[dir="ltr"] .cart-summary__title {
+  text-align: left;
+}
 .cart-coupon__details {
   width: 100%;
 }
@@ -531,6 +548,10 @@ body:has(.cart-page-layout) {
   text-align: right;
   text-decoration: underline;
   cursor: pointer;
+}
+[dir="ltr"] .cart-coupon__details summary,
+.cart-coupon__applied-label {
+  text-align: left;
 }
 
 .cart-coupon__details summary {
@@ -558,7 +579,7 @@ body:has(.cart-page-layout) {
   width: 100%;
   max-width: 392px;
   margin-top: 0;
-  direction: ltr;
+  /*direction: ltr;*/
 }
 
 .cart-coupon__input-wrap {
@@ -582,11 +603,15 @@ body:has(.cart-page-layout) {
   border-radius: inherit;
   color: #7a8187;
   text-align: right;
-  direction: rtl;
+  /*direction: rtl;*/
   font-size: 14px;
   line-height: 20px;
   outline: none;
+} 
+[dir="ltr"] .cart-coupon__form input {
+  text-align: left;
 }
+
 
 .cart-coupon__form input::placeholder {
   color: #7a8187;
@@ -636,7 +661,7 @@ body:has(.cart-page-layout) {
   font-size: 13px;
   line-height: 18px;
   text-decoration: none;
-  direction: ltr;
+  /*direction: ltr;*/
 }
 
 .cart-coupon__remove {
@@ -666,7 +691,7 @@ body:has(.cart-page-layout) {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  direction: ltr;
+  /*direction: ltr;*/
 }
 
 .cart-summary__row {
@@ -686,12 +711,15 @@ body:has(.cart-page-layout) {
   text-align: right;
 }
 
+[dir="ltr"] .cart-summary__label {
+  text-align: left;
+}
 .cart-summary__value {
   color: #737373;
   font-size: 14px;
   line-height: 20px;
   text-align: left;
-  direction: rtl;
+  /*direction: rtl;*/
   unicode-bidi: plaintext;
 }
 
@@ -739,12 +767,12 @@ body:has(.cart-page-layout) {
   font-size: 18px;
   font-weight: 600;
   line-height: 28px;
-  direction: rtl;
+  /*direction: rtl;*/
   unicode-bidi: plaintext;
 }
 
 .cart-summary__checkout [data-cart-summary-checkout-total] {
-  direction: rtl;
+  /*direction: rtl;*/
   unicode-bidi: plaintext;
 }
 
@@ -876,6 +904,9 @@ body:has(.cart-page-layout) {
   height: 100%;
   animation: cart-payments-scroll 18s linear infinite;
 }
+[dir="ltr"] .cart-payments__track {
+  animation: ltr-cart-payments-scroll 18s linear infinite !important;
+}
 
 .cart-payments:hover .cart-payments__track {
   animation-play-state: paused;
@@ -928,6 +959,14 @@ body:has(.cart-page-layout) {
     transform: translateX(50%);
   }
 }
+@keyframes ltr-cart-payments-scroll {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
 
 /* ── Mobile layout ── */
 
@@ -950,7 +989,7 @@ body:has(.cart-page-layout) {
   gap: 16px;
   padding: 16px;
   background: #ffffff;
-  direction: rtl;
+  /*direction: rtl;*/
 }
 
 /* hide continue-shopping link on mobile */
@@ -986,7 +1025,7 @@ body:has(.cart-page-layout) {
   color: #ffffff;
   text-decoration: none;
   overflow: hidden;
-  direction: rtl;
+  /*direction: rtl;*/
 }
 
 /* Figma: "أكمل طلبك" Expo Arabic 16px/24px white — shown left in btn (RTL: right) */
@@ -1013,7 +1052,7 @@ body:has(.cart-page-layout) {
   text-decoration: line-through;
   color: #ffffff;
   opacity: 0.9;
-  direction: rtl;
+  /*direction: rtl;*/
   unicode-bidi: plaintext;
   white-space: nowrap;
 }
@@ -1028,7 +1067,7 @@ body:has(.cart-page-layout) {
   font-weight: 500;
   line-height: 24px;
   color: #ffffff;
-  direction: rtl;
+  /*direction: rtl;*/
   unicode-bidi: plaintext;
   white-space: nowrap;
 }
@@ -1037,7 +1076,7 @@ body:has(.cart-page-layout) {
 .cart-mobile-header {
   padding: 16px;
   background: #ffffff;
-  direction: rtl;
+  /*direction: rtl;*/
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -1052,6 +1091,9 @@ body:has(.cart-page-layout) {
   color: #000000;
   text-align: right;
 }
+[dir="ltr"] .cart-mobile-header__title {
+  text-align: left;
+}
 
 /* Figma free-shipping bar: message 12px Expo Arabic, icon 18x20 right */
 .cart-free-shipping__message-row {
@@ -1059,7 +1101,7 @@ body:has(.cart-page-layout) {
   align-items: center;
   gap: 8px;
   padding-inline: 8px;
-  direction: rtl;
+  /*direction: rtl;*/
 }
 
 .cart-free-shipping__message {
@@ -1071,6 +1113,9 @@ body:has(.cart-page-layout) {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+[dir="ltr"] .cart-free-shipping__message {
+  text-align: left;
 }
 
 .cart-free-shipping__truck {
@@ -1119,6 +1164,9 @@ body:has(.cart-page-layout) {
     text-align: right;
   }
 
+  [dir="ltr"] .cart-summary__title {
+    text-align: left;
+  }
   /* coupon link: Cairo Medium 16px underline color #262626 */
   .cart-coupon__details summary,
   .cart-coupon__applied-label {
@@ -1155,7 +1203,7 @@ body:has(.cart-page-layout) {
     font-weight: 500;
     line-height: 24px;
     color: #737373;
-    direction: rtl;
+    /*direction: rtl;*/
     unicode-bidi: plaintext;
   }
 
@@ -1183,7 +1231,7 @@ body:has(.cart-page-layout) {
     font-weight: 600;
     line-height: 28px;
     color: #000000;
-    direction: rtl;
+    /*direction: rtl;*/
     unicode-bidi: plaintext;
   }
 

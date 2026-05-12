@@ -4,7 +4,6 @@
   aria-hidden="true"
   role="dialog"
   aria-modal="true"
-  dir="rtl"
 >
   <div
     class="ananas-side-cart__overlay"
@@ -267,7 +266,7 @@
     z-index: 9999;
     display: flex;
     pointer-events: none;
-    direction: rtl;
+    /*direction: rtl;*/
   }
   .ananas-side-cart.is-active {
     pointer-events: auto;
@@ -402,6 +401,9 @@
     text-align: right;
     white-space: nowrap;
   }
+  [dir="ltr"] .ananas-side-cart__item-meta {
+    text-align: left;
+  }
   .ananas-side-cart__item-topline {
     display: flex;
     align-items: flex-start;
@@ -409,7 +411,7 @@
     gap: 8px;
     width: 100%;
     min-height: 22px;
-    direction: rtl;
+    /*direction: rtl;*/
   }
   .ananas-side-cart__item-title {
     font-size: 16px;
@@ -427,13 +429,16 @@
     word-break: normal;
     text-decoration: none;
   }
+  [dir="ltr"] .ananas-side-cart__item-title {
+    text-align: left;
+  }
   .ananas-side-cart__price-row {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     gap: 8px;
     flex-wrap: wrap;
-    direction: rtl;
+    /*direction: rtl;*/
   }
   .ananas-side-cart__item-price {
     font-size: 18px;
@@ -486,6 +491,9 @@
     width: 100%;
     min-width: 0;
   }
+    [dir="ltr"] .ananas-side-cart__option {
+    text-align: left;
+  }
   .ananas-side-cart__option-label {
     color: #18181b;
     font-weight: 600;
@@ -503,9 +511,12 @@
     color: #27272a;
     font-size: 12px;
     line-height: 16px;
-    direction: rtl;
+    /*direction: rtl;*/
     text-align: right;
   }
+    [dir="ltr"] .ananas-side-cart__variant-select {
+      text-align: left;
+    }
   .ananas-side-cart__item-actions {
     display: flex;
     justify-content: space-between;
@@ -592,7 +603,7 @@
     justify-content: space-between;
     gap: 12px;
     width: 100%;
-    direction: rtl;
+    /*direction: rtl;*/
   }
   .ananas-side-cart__summary-copy {
     display: flex;
@@ -607,7 +618,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    direction: rtl;
+    /*direction: rtl;*/
     white-space: nowrap;
   }
   .ananas-side-cart__btn {
