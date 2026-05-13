@@ -1395,3 +1395,127 @@ msgstr "ريال"
 
 msgid "Add purchases worth %(total)s %(currency)s to get free shipping"
 msgstr "أضف مشتريات بقيمة %(total)s %(currency)s للحصول على شحن مجاني"
+
+# ==============================================================================
+# About Us Page
+# ==============================================================================
+
+msgid "About Ananas"
+msgstr "عن أناناس"
+
+msgid "Ananas... More Than Just Coffee"
+msgstr "أناناس… أكثر من مجرد قهوة"
+
+msgid "We are a Saudi roastery that believes great coffee starts with a careful selection and ends with an experience worth repeating. Everything we offer is built on genuine passion and uncompromising quality."
+msgstr "نحن محمصة سعودية نؤمن بأن القهوة الجيدة تبدأ من اختيار دقيق، وتنتهي بتجربة تستحق التكرار. كل ما نقدمه مبني على شغف حقيقي، وجودة ما نتنازل عنها."
+
+msgid "Coffee Journey from Source to Your Cup"
+msgstr "رحلة القهوة من المصدر إلى كوبك"
+
+msgid "From the Farm... The Beginning"
+msgstr "من المزرعة… البداية"
+
+msgid "We carefully select our crops from the finest coffee-growing regions around the world"
+msgstr "نختار محاصيلنا بعناية من أفضل مناطق زراعة القهوة حول العالم"
+
+msgid "We source from farms we trust, because the beginning is the foundation"
+msgstr "نختار محاصيلنا من مزارع نثق فيها لأن البداية هي الأساس"
+
+msgid "Precise Selection"
+msgstr "اختيار أدق"
+
+msgid "Every crop passes through meticulous selection stages to ensure the highest quality"
+msgstr "نمرر كل محصول عبر مراحل اختيار دقيقة لضمان أعلى جودة"
+
+msgid "Every bean goes through careful inspection, because quality has no shortcuts"
+msgstr "كل حبة تمر بمراحل فحص دقيقة، لأن الجودة ما فيها مجاملة"
+
+msgid "Precise Roasting"
+msgstr "تحميص بدقة"
+
+msgid "Calibrated Roasting"
+msgstr "تحميص مضبوط"
+
+msgid "We roast every batch to precise standards to ensure consistent flavor"
+msgstr "نُحمّص كل دفعة وفق معايير دقيقة لضمان ثبات النكهة"
+
+msgid "We roast with precision so every cup gives you the same feeling every time"
+msgstr "نحمّص بدقة ليكون كل كوب يعطيك نفس الإحساس بكل مرة"
+
+msgid "An Experience Made for You"
+msgstr "تجربة تناسبك"
+
+msgid "For Every Taste"
+msgstr "لكل ذوق"
+
+msgid "We offer multiple options to suit different tastes and moods"
+msgstr "نقدّم خيارات متعددة تناسب مختلف الأذواق والمزاجات"
+
+msgid "We make sure to offer you a coffee that suits you"
+msgstr "نحرص على أن نقدم لك قهوة تناسبك أنت"
+
+msgid "Our Principles in Every Cup"
+msgstr "مبادئنا في كل كوب"
+
+msgid "Quality First"
+msgstr "الجودة أولًا"
+
+msgid "We commit to precise standards in selecting and roasting coffee, to ensure a balanced and consistent experience"
+msgstr "نلتزم بمعايير دقيقة في اختيار وتحميص القهوة، لضمان تجربة متزنة وثابتة"
+
+msgid "An Experience That Matters"
+msgstr "تجربة تهمنا"
+
+msgid "We design every detail with care, from product selection to the moment of enjoyment"
+msgstr "نصمم كل تفصيلة بعناية، من اختيار المنتج إلى لحظة الاستمتاع"
+
+msgid "Passion for Coffee"
+msgstr "شغف بالقهوة"
+
+msgid "We work with genuine passion that reflects in every small detail"
+msgstr "نعمل بشغف حقيقي ينعكس في كل تفصيلة صغيرة"
+
+msgid "A Lasting Relationship"
+msgstr "علاقة مستمرة"
+
+msgid "We build long-term trust with our customers and partners through quality and care"
+msgstr "نبني ثقة طويلة مع عملائنا وشركائنا من خلال الجودة والاهتمام"
+
+msgid "Why Ananas?"
+msgstr "ليش أناناس؟"
+
+msgid "Consistent quality in every cup"
+msgstr "جودة ثابتة في كل كوب"
+
+msgid "Technology that ensures the best results"
+msgstr "تقنيات تضمن أفضل نتيجة"
+
+msgid "Flavors to suit every taste"
+msgstr "نكهات تناسب مختلف الأذواق"
+
+msgid "Seamless experience from order to delivery"
+msgstr "تجربة سهلة من الطلب حتى التوصيل"
+
+msgid "Ananas Coffee Cup"
+msgstr "كوب قهوة أناناس"
+
+msgid "Craftsmanship in Every Detail"
+msgstr "حرفيتنا في كل تفصيلة"
+
+msgid "We rely on advanced technology to ensure coffee quality and consistency<br>Behind every cup is precisely calculated craftsmanship<br>✔ Calibrated roasting for every batch<br>✔ Precise flavor measurement<br>✔ Consistent quality regardless of time<br>The result: a balanced cup… every time"
+msgstr "نعتمد على تقنيات متقدمة لضمان جودة القهوة وثباتها<br>وراء كل كوب شغل محسوب بدقة<br>✔ تحميص مضبوط لكل دفعة<br>✔ قياس دقيق للنكهة<br>✔ ثبات في الجودة مهما اختلف الوقت<br>النتيجة: كوب متوازن… في كل مرة"
+
+msgid "Your Coffee Partner"
+msgstr "شريكك في القهوة"
+
+msgid "If you have a coffee business, we will be your backbone<br>We provide you with specialty crops of high quality and give you the support to offer a stronger experience to your customers without the complexity"
+msgstr "لو عندك مشروع قهوة، إحنا نكون معك في الخلفية<br>نوفر لك محاصيل مختصة بجودة عالية، ونعطيك الدعم اللي يخليك تقدم تجربة أقوى لعملائك بدون تعقيد"
+
+msgid "We Grow Together"
+msgstr "ننمو معًا"
+
+msgid "Ananas is not just a roastery — it's people who love coffee and share the same passion"
+msgstr "أناناس مو مجرد محمصة هي ناس تحب القهوة، وتشارك نفس الشغف"
+
+msgid "We discover, experiment, and grow — and with every cup, we get closer"
+msgstr "نكتشف، نجرب، ونتطور ومع كل كوب، نكون أقرب"

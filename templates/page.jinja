@@ -9,7 +9,6 @@
     .reviews-section {
       background: #ffffff;
       padding: 40px 56px 24px;
-      direction: rtl;
     }
     .reviews-section__title {
       font-size: 30px;
@@ -176,7 +175,6 @@
       padding-top: 5rem;
       padding-bottom: 3rem;
       background-color: #ffffff;
-      direction: rtl;
     }
 
     /* Journey Section */
@@ -184,7 +182,6 @@
       background-color: #FFF0EC;
       padding: 6rem 0;
       overflow: clip;
-      direction: rtl;
     }
     .journey-title {
       color: #F7512B;
@@ -241,9 +238,9 @@
     .timeline-item:last-child { margin-bottom: 0; }
     .timeline-content {
       width: 195px;
-      text-align: right;
-      direction: rtl;
     }
+    html[dir="rtl"] .timeline-content { text-align: right; }
+    html[dir="ltr"] .timeline-content { text-align: left; }
     .timeline-image {
       width: 195px;
       display: flex;
@@ -274,7 +271,6 @@
     .principles-section {
       padding: 6rem 0;
       background-color: #FFFFFF;
-      direction: rtl;
     }
     .section-title {
       color: #F7512B;
@@ -287,7 +283,6 @@
       margin: 0 auto;
       max-width: 1328px;
       padding: 0 15px;
-      direction: rtl;
     }
     .principles-carousel {
       display: flex;
@@ -303,8 +298,9 @@
       scroll-snap-align: start;
       display: flex;
       flex-direction: column;
-      text-align: right;
     }
+    html[dir="rtl"] .principle-card { text-align: right; }
+    html[dir="ltr"] .principle-card { text-align: left; }
     .principle-card img {
       width: 320px;
       height: 320px;
@@ -330,7 +326,6 @@
     .why-ananas-section {
       padding: 5rem 0;
       background-color: #FFFFFF;
-      direction: rtl;
     }
     .why-ananas-desktop {
       display: flex;
@@ -391,7 +386,6 @@
     }
     .why-ananas-mobile { display: none; }
     .why-ananas-mobile-text {
-      direction: rtl;
       text-align: center;
       color: #363636;
       font-size: 16px;
@@ -419,7 +413,6 @@
     .partners-section {
       padding: 40px 0;
       background: #fff;
-      direction: rtl;
     }
     .partners-inner {
       display: flex;
@@ -436,8 +429,9 @@
       align-items: center;
       gap: 16px;
       min-height: 260px;
-      flex-direction: row-reverse;
     }
+    html[dir="rtl"] .partner-card-new { flex-direction: row-reverse; }
+    html[dir="ltr"] .partner-card-new { flex-direction: row; }
     .partner-card-new .card-img {
       flex: 1;
       min-width: 0;
@@ -457,8 +451,9 @@
       flex: 1;
       min-width: 0;
       padding: 16px;
-      text-align: right;
     }
+    html[dir="rtl"] .partner-card-new .card-text { text-align: right; }
+    html[dir="ltr"] .partner-card-new .card-text { text-align: left; }
     .partner-card-new .card-text h4 {
       color: #F7512B;
       font-weight: 700;
@@ -479,7 +474,6 @@
     .grow-together-section {
       padding: 5rem 15px;
       text-align: center;
-      direction: rtl;
     }
     .grow-together-section h2 {
       color: #F7512B;
@@ -504,8 +498,14 @@
       .principle-card { flex: 0 0 280px; }
       .principle-card img { width: 280px; height: 280px; }
       .partners-inner { flex-direction: column; }
-      .partner-card-new { flex-direction: column; }
-      .partner-card-new .card-img { width: 22.375rem; min-height: 358px; height: 22.375rem; flex: none; }
+      .partner-card-new,
+      html[dir="rtl"] .partner-card-new,
+      html[dir="ltr"] .partner-card-new { flex-direction: column; }
+      .partner-card-new .card-img { width: 100%; min-height: 280px; height: 280px; flex: none; }
+      .partner-card-new .card-text,
+      html[dir="rtl"] .partner-card-new .card-text,
+      html[dir="ltr"] .partner-card-new .card-text { text-align: center; }
+      .partner-card-new .card-text p { font-size: 15px; line-height: 24px; font-weight: 400; }
       .grow-together-section h2 { font-size: 24px; }
       .grow-together-section p { font-size: 18px;margin-bottom: 20px;}
     }
@@ -514,16 +514,16 @@
     .ugc-section {
       background: #ffffff;
       padding: 24px 56px 48px;
-      direction: rtl;
     }
     .ugc-section__header {
       display: flex;
       flex-direction: column;
       gap: 8px;
-      align-items: flex-end;
-      text-align: right;
+      align-items: center;
+      text-align: center;
       margin-bottom: 16px;
     }
+    html[dir="rtl"] .ugc-section__header { align-items: flex-end; text-align: right; }
     .ugc-section__title {
       font-size: 30px;
       font-weight: 500;
@@ -576,7 +576,6 @@
     .gallery-section {
       background: #ffffff;
       padding: 40px 56px;
-      direction: rtl;
     }
     .gallery-section__header {
       display: flex;
@@ -1199,26 +1198,25 @@
       }
     }
   </style>
-{# 
 
   {# About Content Section #}
   <section class="about-ananas-section">
     <div class="theme-container" style="max-width: 800px; text-align: center;">
-      <h3 class="ananas-title" style="color: #F85A3E; font-weight: 900; font-size: 2.5rem; margin-bottom: 1.5rem;">عن أناناس</h3>
+      <h3 class="ananas-title" style="color: #F85A3E; font-weight: 900; font-size: 2.5rem; margin-bottom: 1.5rem;">{{ _('About Ananas') }}</h3>
       <p class="ananas-subtitle" style="color: #222222; font-weight: 700; font-size: 1.4rem; line-height: 1.8; margin-bottom: 4rem;">
-        <span class="ananas-subtitle__lead">القهوة مو شيء تشربه وخلاص<br class="about-mobile-break"> هي مزاج، ووقت، ولحظة تضبط يومك من أولها</span>
-        <span class="ananas-subtitle__body">في أناناس، نشتغل على كل تفصيلة عشان تعيش هالتجربة كما تستحقها</span>
+        <span class="ananas-subtitle__lead">{{ _('Ananas... More Than Just Coffee') }}</span>
+        <span class="ananas-subtitle__body">{{ _('We are a Saudi roastery that believes great coffee starts with a careful selection and ends with an experience worth repeating. Everything we offer is built on genuine passion and uncompromising quality.') }}</span>
       </p>
     </div>
     <div class="ananas-img-wrapper w-full">
-      <img src="{{ 'images/about-us/figma-d3380972-304b-40b5-8515-a02c0b0bb090.jpg' | asset_url }}" alt="عن أناناس" style="object-fit: cover; max-height: 50vh; width: 100%;" />
+      <img src="{{ 'images/about-us/figma-d3380972-304b-40b5-8515-a02c0b0bb090.jpg' | asset_url }}" alt="{{ _('About Ananas') }}" style="object-fit: cover; max-height: 50vh; width: 100%;" />
     </div>
   </section>
 
   {# Coffee Journey #}
   <section class="coffee-journey-section">
     <div class="theme-container">
-      <h2 class="journey-title">رحلة القهوة من المصدر إلى كوبك</h2>
+      <h2 class="journey-title">{{ _('Coffee Journey from Source to Your Cup') }}</h2>
       <div class="timeline-wrapper">
         <div class="timeline-line"></div>
         <div class="scrolling-bean">
@@ -1235,59 +1233,59 @@
 
         <div class="timeline-item">
           <div class="timeline-content">
-            <h4>من المزرعة… البداية</h4>
+            <h4>{{ _('From the Farm... The Beginning') }}</h4>
             <p>
-              <span class="timeline-desktop-copy">نختار محاصيلنا بعناية من أفضل مناطق زراعة القهوة حول العالم</span>
-              <span class="timeline-mobile-copy">نختار محاصيلنا من مزارع نثق فيها لأن البداية هي الأساس</span>
+              <span class="timeline-desktop-copy">{{ _('We carefully select our crops from the finest coffee-growing regions around the world') }}</span>
+              <span class="timeline-mobile-copy">{{ _('We source from farms we trust, because the beginning is the foundation') }}</span>
             </p>
           </div>
           <div class="timeline-image">
-            <img src="{{ 'images/about-us/figma-f0765ba7-3de1-4097-b091-f7840ab8af2e.webp' | asset_url }}" alt="من المزرعة">
+            <img src="{{ 'images/about-us/figma-f0765ba7-3de1-4097-b091-f7840ab8af2e.webp' | asset_url }}" alt="{{ _('From the Farm... The Beginning') }}">
           </div>
         </div>
 
         <div class="timeline-item">
           <div class="timeline-content">
-            <h4>اختيار أدق</h4>
+            <h4>{{ _('Precise Selection') }}</h4>
             <p>
-              <span class="timeline-desktop-copy">نمرر كل محصول عبر مراحل اختيار دقيقة لضمان أعلى جودة</span>
-              <span class="timeline-mobile-copy">كل حبة تمر بمراحل فحص دقيقة، لأن الجودة ما فيها مجاملة</span>
+              <span class="timeline-desktop-copy">{{ _('Every crop passes through meticulous selection stages to ensure the highest quality') }}</span>
+              <span class="timeline-mobile-copy">{{ _('Every bean goes through careful inspection, because quality has no shortcuts') }}</span>
             </p>
           </div>
           <div class="timeline-image">
-            <img src="{{ 'images/about-us/figma-d99f4eee-c9ca-4540-b485-5a8b3cc67e96.webp' | asset_url }}" alt="اختيار أدق">
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-content">
-            <h4>
-              <span class="timeline-desktop-copy">تحميص بدقة</span>
-              <span class="timeline-mobile-copy">تحميص مضبوط</span>
-            </h4>
-            <p>
-              <span class="timeline-desktop-copy">نُحمّص كل دفعة وفق معايير دقيقة لضمان ثبات النكهة</span>
-              <span class="timeline-mobile-copy">نحمّص بدقة ليكون كل كوب يعطيك نفس الإحساس بكل مرة</span>
-            </p>
-          </div>
-          <div class="timeline-image">
-            <img src="{{ 'images/about-us/figma-3a6dd3ed-f70e-4758-8118-73d6e2190f64.webp' | asset_url }}" alt="تحميص بدقة">
+            <img src="{{ 'images/about-us/figma-d99f4eee-c9ca-4540-b485-5a8b3cc67e96.webp' | asset_url }}" alt="{{ _('Precise Selection') }}">
           </div>
         </div>
 
         <div class="timeline-item">
           <div class="timeline-content">
             <h4>
-              <span class="timeline-desktop-copy">تجربة تناسبك</span>
-              <span class="timeline-mobile-copy">لكل ذوق</span>
+              <span class="timeline-desktop-copy">{{ _('Precise Roasting') }}</span>
+              <span class="timeline-mobile-copy">{{ _('Calibrated Roasting') }}</span>
             </h4>
             <p>
-              <span class="timeline-desktop-copy">نقدّم خيارات متعددة تناسب مختلف الأذواق والمزاجات</span>
-              <span class="timeline-mobile-copy">نحرص على أن نقدم لك قهوة تناسبك أنت</span>
+              <span class="timeline-desktop-copy">{{ _('We roast every batch to precise standards to ensure consistent flavor') }}</span>
+              <span class="timeline-mobile-copy">{{ _('We roast with precision so every cup gives you the same feeling every time') }}</span>
             </p>
           </div>
           <div class="timeline-image">
-            <img src="{{ 'images/about-us/figma-49db7e91-046a-4eab-ae53-0a912a7e5b27.webp' | asset_url }}" alt="تجربة تناسبك">
+            <img src="{{ 'images/about-us/figma-3a6dd3ed-f70e-4758-8118-73d6e2190f64.webp' | asset_url }}" alt="{{ _('Precise Roasting') }}">
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <h4>
+              <span class="timeline-desktop-copy">{{ _('An Experience Made for You') }}</span>
+              <span class="timeline-mobile-copy">{{ _('For Every Taste') }}</span>
+            </h4>
+            <p>
+              <span class="timeline-desktop-copy">{{ _('We offer multiple options to suit different tastes and moods') }}</span>
+              <span class="timeline-mobile-copy">{{ _('We make sure to offer you a coffee that suits you') }}</span>
+            </p>
+          </div>
+          <div class="timeline-image">
+            <img src="{{ 'images/about-us/figma-49db7e91-046a-4eab-ae53-0a912a7e5b27.webp' | asset_url }}" alt="{{ _('An Experience Made for You') }}">
           </div>
         </div>
       </div>
@@ -1297,28 +1295,28 @@
   {# Principles Section #}
   <section class="principles-section">
     <div class="theme-container">
-      <h2 class="section-title">مبادئنا في كل كوب</h2>
+      <h2 class="section-title">{{ _('Our Principles in Every Cup') }}</h2>
       <div class="principles-carousel-wrapper">
         <div class="principles-carousel" data-principles-carousel>
           <div class="principle-card">
-            <img src="{{ 'images/about-us/figma-bdbbc05e-1b36-4510-bef0-637a426b6c26.webp' | asset_url }}" alt="الجودة أولًا">
-            <h5>الجودة أولًا</h5>
-            <p>نلتزم بمعايير دقيقة في اختيار وتحميص القهوة، لضمان تجربة متزنة وثابتة</p>
+            <img src="{{ 'images/about-us/figma-bdbbc05e-1b36-4510-bef0-637a426b6c26.webp' | asset_url }}" alt="{{ _('Quality First') }}">
+            <h5>{{ _('Quality First') }}</h5>
+            <p>{{ _('We commit to precise standards in selecting and roasting coffee, to ensure a balanced and consistent experience') }}</p>
           </div>
           <div class="principle-card">
-            <img src="{{ 'images/about-us/figma-8ce8b929-6242-4b06-9672-81b3f0da878d.webp' | asset_url }}" alt="تجربة تهمنا">
-            <h5>تجربة تهمنا</h5>
-            <p>نصمم كل تفصيلة بعناية، من اختيار المنتج إلى لحظة الاستمتاع</p>
+            <img src="{{ 'images/about-us/figma-8ce8b929-6242-4b06-9672-81b3f0da878d.webp' | asset_url }}" alt="{{ _('An Experience That Matters') }}">
+            <h5>{{ _('An Experience That Matters') }}</h5>
+            <p>{{ _('We design every detail with care, from product selection to the moment of enjoyment') }}</p>
           </div>
           <div class="principle-card">
-            <img src="{{ 'images/about-us/figma-6d154614-974e-4214-8bcc-f6495031cef0.webp' | asset_url }}" alt="شغف بالقهوة">
-            <h5>شغف بالقهوة</h5>
-            <p>نعمل بشغف حقيقي ينعكس في كل تفصيلة صغيرة</p>
+            <img src="{{ 'images/about-us/figma-6d154614-974e-4214-8bcc-f6495031cef0.webp' | asset_url }}" alt="{{ _('Passion for Coffee') }}">
+            <h5>{{ _('Passion for Coffee') }}</h5>
+            <p>{{ _('We work with genuine passion that reflects in every small detail') }}</p>
           </div>
           <div class="principle-card">
-            <img src="{{ 'images/about-us/figma-c7d1bb43-764a-4ab3-a023-00034d7a9c25.webp' | asset_url }}" alt="علاقة مستمرة">
-            <h5>علاقة مستمرة</h5>
-            <p>نبني ثقة طويلة مع عملائنا وشركائنا من خلال الجودة والاهتمام</p>
+            <img src="{{ 'images/about-us/figma-c7d1bb43-764a-4ab3-a023-00034d7a9c25.webp' | asset_url }}" alt="{{ _('A Lasting Relationship') }}">
+            <h5>{{ _('A Lasting Relationship') }}</h5>
+            <p>{{ _('We build long-term trust with our customers and partners through quality and care') }}</p>
           </div>
         </div>
         <div class="principles-mobile-progress" aria-hidden="true">
@@ -1331,30 +1329,30 @@
   {# Why Ananas Section #}
   <section class="why-ananas-section">
     <div class="theme-container">
-      <h2 class="section-title">ليش أناناس؟</h2>
+      <h2 class="section-title">{{ _('Why Ananas?') }}</h2>
       <div class="why-ananas-desktop">
         <div class="why-side-col">
           <div class="why-icon-item">
             <img src="{{ 'images/about-us/figma-601ecff7-d00f-4881-ba16-d13f751435eb.svg' | asset_url }}" alt="">
-            <p>جودة ثابتة في كل كوب</p>
+            <p>{{ _('Consistent quality in every cup') }}</p>
           </div>
           <div class="why-icon-item">
             <img src="{{ 'images/about-us/figma-d088e391-64f0-40bb-a62f-6ccc6a75b620.svg' | asset_url }}" alt="">
-            <p>تقنيات تضمن أفضل نتيجة</p>
+            <p>{{ _('Technology that ensures the best results') }}</p>
           </div>
         </div>
         <div class="why-cup-center" id="cup-center">
           <img src="{{ 'images/about-us/figma-342b0340-e6f6-47cf-ae3a-e6ccab774d3b.webp' | asset_url }}" class="cup-bg" alt="">
-          <img src="{{ 'images/about-us/figma-342b0340-e6f6-47cf-ae3a-e6ccab774d3b.webp' | asset_url }}" class="cup-fill" alt="كوب قهوة أناناس">
+          <img src="{{ 'images/about-us/figma-342b0340-e6f6-47cf-ae3a-e6ccab774d3b.webp' | asset_url }}" class="cup-fill" alt="{{ _('Ananas Coffee Cup') }}">
         </div>
         <div class="why-side-col">
           <div class="why-icon-item">
             <img src="{{ 'images/about-us/figma-91044b95-765f-446f-9f86-4e752f645f84.svg' | asset_url }}" alt="">
-            <p>نكهات تناسب مختلف الأذواق</p>
+            <p>{{ _('Flavors to suit every taste') }}</p>
           </div>
           <div class="why-icon-item">
             <img src="{{ 'images/about-us/figma-3f6cf1bd-52c1-41ce-ad9e-0459d04dca8d.svg' | asset_url }}" alt="">
-            <p>تجربة سهلة من الطلب حتى التوصيل</p>
+            <p>{{ _('Seamless experience from order to delivery') }}</p>
           </div>
         </div>
       </div>
@@ -1362,24 +1360,24 @@
         <div class="why-ananas-mobile-text">
           <div class="why-mobile-icon-item">
             <img src="{{ 'images/about-us/figma-91044b95-765f-446f-9f86-4e752f645f84.svg' | asset_url }}" alt="">
-            <p>نكهات تناسب مختلف الأذواق</p>
+            <p>{{ _('Flavors to suit every taste') }}</p>
           </div>
           <div class="why-mobile-icon-item">
             <img src="{{ 'images/about-us/figma-601ecff7-d00f-4881-ba16-d13f751435eb.svg' | asset_url }}" alt="">
-            <p>جودة ثابتة في كل كوب</p>
+            <p>{{ _('Consistent quality in every cup') }}</p>
           </div>
           <div class="why-mobile-icon-item">
             <img src="{{ 'images/about-us/figma-d088e391-64f0-40bb-a62f-6ccc6a75b620.svg' | asset_url }}" alt="">
-            <p>تقنيات تضمن أفضل نتيجة</p>
+            <p>{{ _('Technology that ensures the best results') }}</p>
           </div>
           <div class="why-mobile-icon-item">
             <img src="{{ 'images/about-us/figma-3f6cf1bd-52c1-41ce-ad9e-0459d04dca8d.svg' | asset_url }}" alt="">
-            <p>تجربة سهلة من الطلب حتى التوصيل</p>
+            <p>{{ _('Seamless experience from order to delivery') }}</p>
           </div>
         </div>
         <div class="why-cup-mobile" id="cup-mobile">
           <img src="{{ 'images/about-us/figma-342b0340-e6f6-47cf-ae3a-e6ccab774d3b.webp' | asset_url }}" class="cup-bg" alt="">
-          <img src="{{ 'images/about-us/figma-342b0340-e6f6-47cf-ae3a-e6ccab774d3b.webp' | asset_url }}" class="cup-fill" alt="كوب قهوة أناناس">
+          <img src="{{ 'images/about-us/figma-342b0340-e6f6-47cf-ae3a-e6ccab774d3b.webp' | asset_url }}" class="cup-fill" alt="{{ _('Ananas Coffee Cup') }}">
         </div>
       </div>
     </div>
@@ -1390,20 +1388,20 @@
     <div class="partners-inner">
       <div class="partner-card-new">
         <div class="card-img">
-          <img src="{{ 'images/about-us/figma-e109327c-fe1a-474c-9690-b6c8ce5ab075.webp' | asset_url }}" alt="حرفيتنا في كل تفصيلة">
+          <img src="{{ 'images/about-us/figma-e109327c-fe1a-474c-9690-b6c8ce5ab075.webp' | asset_url }}" alt="{{ _('Craftsmanship in Every Detail') }}">
         </div>
         <div class="card-text">
-          <h4>حرفيتنا في كل تفصيلة</h4>
-          <p>نعتمد على تقنيات متقدمة لضمان جودة القهوة وثباتها<br>وراء كل كوب شغل محسوب بدقة<br>✔ تحميص مضبوط لكل دفعة<br>✔ قياس دقيق للنكهة<br>✔ ثبات في الجودة مهما اختلف الوقت<br>النتيجة: كوب متوازن… في كل مرة</p>
+          <h4>{{ _('Craftsmanship in Every Detail') }}</h4>
+          <p>{{ _('We rely on advanced technology to ensure coffee quality and consistency<br>Behind every cup is precisely calculated craftsmanship<br>✔ Calibrated roasting for every batch<br>✔ Precise flavor measurement<br>✔ Consistent quality regardless of time<br>The result: a balanced cup… every time') | safe }}</p>
         </div>
       </div>
       <div class="partner-card-new">
         <div class="card-img">
-          <img src="{{ 'images/about-us/figma-890bac56-7f46-4acc-976e-b9f7c8c0349e.webp' | asset_url }}" alt="شريكك في القهوة">
+          <img src="{{ 'images/about-us/figma-890bac56-7f46-4acc-976e-b9f7c8c0349e.webp' | asset_url }}" alt="{{ _('Your Coffee Partner') }}">
         </div>
         <div class="card-text">
-          <h4>شريكك في القهوة</h4>
-          <p>لو عندك مشروع قهوة، إحنا نكون معك في الخلفية<br>نوفر لك محاصيل مختصة بجودة عالية، ونعطيك الدعم اللي يخليك تقدم تجربة أقوى لعملائك بدون تعقيد</p>
+          <h4>{{ _('Your Coffee Partner') }}</h4>
+          <p>{{ _('If you have a coffee business, we will be your backbone<br>We provide you with specialty crops of high quality and give you the support to offer a stronger experience to your customers without the complexity') | safe }}</p>
         </div>
       </div>
     </div>
@@ -1414,9 +1412,9 @@
   {# Grow Together Section #}
   <section class="grow-together-section">
     <div class="theme-container">
-      <h2>ننمو معًا</h2>
-      <p>أناناس مو مجرد محمصة هي ناس تحب القهوة، وتشارك نفس الشغف</p>
-      <p>نكتشف، نجرب، ونتطور ومع كل كوب، نكون أقرب</p>
+      <h2>{{ _('We Grow Together') }}</h2>
+      <p>{{ _('Ananas is not just a roastery — it\'s people who love coffee and share the same passion') }}</p>
+      <p>{{ _('We discover, experiment, and grow — and with every cup, we get closer') }}</p>
     </div>
   </section>
 
