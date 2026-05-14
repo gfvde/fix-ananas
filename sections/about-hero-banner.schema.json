@@ -166,6 +166,24 @@
       "default": 5
     },
     {
+      "id": "rating_label",
+      "type": "text",
+      "label": {
+        "ar": "العدد أسفل التقييم",
+        "en": "Rating Sub-label Count"
+      },
+      "default": "+13K"
+    },
+    {
+      "id": "rating_count",
+      "type": "text",
+      "label": {
+        "ar": "النص أسفل التقييم",
+        "en": "Rating Sub-label Text"
+      },
+      "default": "عميل مروق"
+    },
+    {
       "id": "rating_scroll_target",
       "type": "select",
       "label": {
