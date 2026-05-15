@@ -317,6 +317,9 @@ html[dir="ltr"] .cart-page-layout {
   line-height: 20px;
   white-space: nowrap;
 }
+[dir="rtl"] .ananas-cart-item__option-label {
+  direction: rtl !important;
+}
 
 .ananas-cart-item__option-value {
   color: #52525c;
@@ -566,7 +569,7 @@ html[dir="ltr"] .cart-page-layout {
 .cart-coupon__details summary {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   width: 100%;
   list-style: none;
 }
