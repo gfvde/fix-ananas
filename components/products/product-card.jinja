@@ -290,6 +290,7 @@
           and product.stocks is defined
           and product.stocks | length > 0
           and product.stocks[0].available_quantity is not none
+          and product.stocks[0].available_quantity < 30
         )
       %}
       {%
