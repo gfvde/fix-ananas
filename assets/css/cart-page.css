@@ -544,7 +544,7 @@ html[dir="ltr"] .cart-page-layout {
 .cart-coupon__details[open] {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: 8px;
 }
 
@@ -556,6 +556,7 @@ html[dir="ltr"] .cart-page-layout {
   text-align: right;
   text-decoration: underline;
   cursor: pointer;
+  justify-content: flex-start;
 }
 [dir="ltr"] .cart-coupon__details summary,
 .cart-coupon__applied-label {
