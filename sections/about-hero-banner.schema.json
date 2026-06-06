@@ -145,6 +145,15 @@
       "default": "#ffffff"
     },
     {
+      "id": "show_rating",
+      "type": "checkbox",
+      "label": {
+        "ar": "إظهار التقييم",
+        "en": "Show Rating"
+      },
+      "default": true
+    },
+    {
       "id": "rating",
       "type": "text",
       "label": {
@@ -227,6 +236,15 @@
         }
       ],
       "default": []
+    },
+    {
+      "id": "cta_link_on_banner",
+      "type": "checkbox",
+      "label": {
+        "ar": "اجعل الرابط على البانر كله",
+        "en": "Link Entire Banner"
+      },
+      "default": false
     },
     {
       "id": "cta_text",
