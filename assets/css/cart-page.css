@@ -454,10 +454,6 @@ html[dir="ltr"] .cart-page-layout {
   text-align: left;
 }
 
-.cart-sidebar {
-  /*direction: rtl;*/
-}
-
 .cart-sidebar__panel {
   position: sticky;
   top: 16px;
