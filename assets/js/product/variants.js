@@ -162,6 +162,11 @@ export function updateProductInfo(selectedProduct) {
 export function updateStockStatus(selectedProduct) {
   if (!selectedProduct) return;
 
+  // Preorder (ported from upstream deb8912): the PDP section exposes data-can-preorder
+  const canPreorder =
+    document.querySelector("[data-can-preorder]")?.getAttribute("data-can-preorder") === "true" ||
+    selectedProduct.can_be_preordered === true;
+
   // Update hidden product ID
   const productIdInput = document.querySelector("#product-id");
   if (productIdInput) {
@@ -180,6 +185,11 @@ export function updateStockStatus(selectedProduct) {
     // Update quantity selector
     updateQuantitySelector(selectedProduct);
     if (quantityWrapper) show("[data-quantity-wrapper]");
+  } else if (canPreorder) {
+    // Out of stock but preorderable: keep the buy buttons, hide notify-me and quantity
+    if (inStockSection) show("[data-in-stock]");
+    if (outOfStockSection) hide("[data-out-of-stock]");
+    if (quantityWrapper) hide("[data-quantity-wrapper]");
   } else {
     // Show out-of-stock elements
     if (inStockSection) hide("[data-in-stock]");
