@@ -1,7 +1,7 @@
 {% set section_bg_color = settings.section_bg_color | default('#ffffff') %}
 {% set title_color = settings.title_color | default('#000000') %}
 {% set card_text_color = settings.card_text_color | default('#ffffff') %}
-{% set hover_text = settings.hover_text | default('VIEW THE COLLECTION') %}
+{% set hover_text = settings.hover_text | default(_('View the collection')) %}
 {% set hover_text_color = settings.hover_text_color | default('#ffffff') %}
 {% set mobile_text_color = settings.mobile_text_color | default('#000000') %}
 {% set overlay_color = settings.overlay_color | default('#000000') %}
@@ -34,21 +34,23 @@
   <div class="sbc-grid">
 
     {% set cats = [
-      { 'name': settings.cat1_name | default('أظرف القهوه'),   'url': settings.cat1_url | default('/collections/coffee-pods', true),    'img': settings.cat1_img, 'text_color': settings.cat1_text_color | default(card_text_color), 'fallback': 'https://www.figma.com/api/mcp/asset/07ccbeb4-7443-457e-accb-24075653cc69' },
-      { 'name': settings.cat2_name | default('محاصيل القهوه'), 'url': settings.cat2_url | default('/collections/coffee-origins', true),  'img': settings.cat2_img, 'text_color': settings.cat2_text_color | default(card_text_color), 'fallback': 'https://www.figma.com/api/mcp/asset/269f6b46-e012-4914-86b8-25f100f60a55' },
-      { 'name': settings.cat3_name | default('البكجــات'),     'url': settings.cat3_url | default('/collections/bundles', true),         'img': settings.cat3_img, 'text_color': settings.cat3_text_color | default(card_text_color), 'fallback': 'https://www.figma.com/api/mcp/asset/8ba664c6-8816-44d7-b424-c7ead398f29e' },
-      { 'name': settings.cat4_name | default('عروض الربيع'),   'url': settings.cat4_url | default('/collections/spring-offers', true),   'img': settings.cat4_img, 'text_color': settings.cat4_text_color | default(card_text_color), 'fallback': 'https://www.figma.com/api/mcp/asset/772d1ccf-fe08-4145-b952-10652d047a23' },
-      { 'name': settings.cat5_name | default('منتجات أناناس'), 'url': settings.cat5_url | default('/collections/ananas-products', true), 'img': settings.cat5_img, 'text_color': settings.cat5_text_color | default(card_text_color), 'fallback': 'https://www.figma.com/api/mcp/asset/3b01f2d6-1d92-48a4-8702-5c40e028923d' },
-      { 'name': settings.cat6_name | default('أدوات القهوة'),  'url': settings.cat6_url | default('/collections/coffee-tools', true),    'img': settings.cat6_img, 'text_color': settings.cat6_text_color | default(card_text_color), 'fallback': 'https://www.figma.com/api/mcp/asset/4f2427fb-b089-4775-932a-70029652fae9' }
+      { 'name': settings.cat1_name | default('أظرف القهوه'),   'url': settings.cat1_url | default('', true), 'img': settings.cat1_img, 'text_color': settings.cat1_text_color | default(card_text_color) },
+      { 'name': settings.cat2_name | default('محاصيل القهوه'), 'url': settings.cat2_url | default('', true), 'img': settings.cat2_img, 'text_color': settings.cat2_text_color | default(card_text_color) },
+      { 'name': settings.cat3_name | default('البكجــات'),     'url': settings.cat3_url | default('', true), 'img': settings.cat3_img, 'text_color': settings.cat3_text_color | default(card_text_color) },
+      { 'name': settings.cat4_name | default('عروض الربيع'),   'url': settings.cat4_url | default('', true), 'img': settings.cat4_img, 'text_color': settings.cat4_text_color | default(card_text_color) },
+      { 'name': settings.cat5_name | default('منتجات أناناس'), 'url': settings.cat5_url | default('', true), 'img': settings.cat5_img, 'text_color': settings.cat5_text_color | default(card_text_color) },
+      { 'name': settings.cat6_name | default('أدوات القهوة'),  'url': settings.cat6_url | default('', true), 'img': settings.cat6_img, 'text_color': settings.cat6_text_color | default(card_text_color) }
     ] %}
 
-    {% for cat in cats %}
+    {% for cat in cats if cat.img %}
+      {% set card_tag = 'a' if cat.url else 'div' %}
       <div class="category-card" style="--sbc-item-text: {{ cat.text_color }};">
-        <a href="{{ cat.url }}" class="category-card__media" aria-label="{{ cat.name }}" data-sbc-parallax-card>
+        <{{ card_tag }} {% if cat.url %}href="{{ cat.url }}" aria-label="{{ cat.name }}" {% endif %}class="category-card__media" data-sbc-parallax-card>
           <img
-            src="{{ image_url(cat.img, w=900, f='auto') if cat.img else cat.fallback }}"
+            src="{{ image_url(cat.img, w=900, f='auto') }}"
             alt="{{ cat.name }}"
             loading="lazy"
+            decoding="async"
             data-sbc-parallax-img
           />
           <span class="category-card__name">{{ cat.name }}</span>
@@ -60,8 +62,8 @@
               </svg>
             </span>
           {% endif %}
-        </a>
-        <a href="{{ cat.url }}" class="category-card__mobile-name">{{ cat.name }}</a>
+        </{{ card_tag }}>
+        <{{ card_tag }} {% if cat.url %}href="{{ cat.url }}" {% endif %}class="category-card__mobile-name">{{ cat.name }}</{{ card_tag }}>
       </div>
     {% endfor %}
 

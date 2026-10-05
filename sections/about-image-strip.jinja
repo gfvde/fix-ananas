@@ -23,19 +23,13 @@
   {% set urls = [settings.photo1_url, settings.photo2_url, settings.photo3_url, settings.photo4_url] %}
   {% set titles = [settings.photo1_title, settings.photo2_title, settings.photo3_title, settings.photo4_title] %}
   {% set subtitles = [settings.photo1_subtitle, settings.photo2_subtitle, settings.photo3_subtitle, settings.photo4_subtitle] %}
-  {% set fallback = [
-    'https://www.figma.com/api/mcp/asset/25fecfb6-2575-4a48-b501-fe46765f5c36',
-    'https://www.figma.com/api/mcp/asset/219fb7e7-571c-4c3e-9f38-7bfc958afb7f',
-    'https://www.figma.com/api/mcp/asset/06f71408-762e-4081-80e0-8e68b6a90352',
-    'https://www.figma.com/api/mcp/asset/72261d83-e7c5-452c-a490-15f0d0c77a6b'
-  ] %}
   <div class="image-strip__grid">
-    {% for i in range(4) %}
+    {% for i in range(4) if imgs[i] %}
       <div class="image-strip__item">
         {% if urls[i] %}
           <a href="{{ urls[i] }}" class="image-strip__link" aria-label="{{ titles[i] | default(_('Open image link'), true) }}">
             <span class="image-strip__media">
-              <img src="{{ image_url(imgs[i], w=420, h=420, f='auto') if imgs[i] else fallback[i] }}" alt="{{ titles[i] | default('', true) }}" loading="lazy" />
+              <img src="{{ image_url(imgs[i], w=420, h=420, f='auto') }}" alt="{{ titles[i] | default('', true) }}" width="420" height="420" loading="lazy" decoding="async" />
             </span>
             {% if titles[i] or subtitles[i] %}
               <span class="image-strip__caption">
@@ -47,7 +41,7 @@
         {% else %}
           <div class="image-strip__content">
             <span class="image-strip__media">
-              <img src="{{ image_url(imgs[i], w=420, h=420, f='auto') if imgs[i] else fallback[i] }}" alt="{{ titles[i] | default('', true) }}" loading="lazy" />
+              <img src="{{ image_url(imgs[i], w=420, h=420, f='auto') }}" alt="{{ titles[i] | default('', true) }}" width="420" height="420" loading="lazy" decoding="async" />
             </span>
             {% if titles[i] or subtitles[i] %}
               <span class="image-strip__caption">

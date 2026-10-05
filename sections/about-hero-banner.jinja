@@ -7,16 +7,14 @@
 {% if desktop_bg %}
 <link rel="preload" as="image" href="{{ image_url(desktop_bg, w=1920, q=90, f='auto') }}" media="(min-width: 768px)" fetchpriority="high">
 {% endif %}
-{% set desktop_bg_fallback = 'https://www.figma.com/api/mcp/asset/c6c69e01-3f07-4ed3-9e50-06772bd8db74' %}
-{% set mobile_bg_fallback = 'https://www.figma.com/api/mcp/asset/297e3655-2f98-4e05-8004-7f6a6640e017' %}
 {% set heading = settings.heading | default('قهوة تضبط يومك', true) %}
 {% set subheading = settings.subheading | default('تجربة جريئة محمصة بعناية لتجربة تفهم جوك', true) %}
 {% set rating_value = settings.rating | default('4.8', true) %}
 {% set star_count = settings.rating_stars | default(5, true) %}
 {% set rating_scroll_target = settings.rating_scroll_target | default('about_reviews_featured', true) %}
-{% set avatar_items = settings.avatars if settings.avatars else [] %}
+{% set avatar_items = safeget(settings, "avatars", []) | selectattr('image') | list %}
 {% set cta_text = settings.cta_text | default('تسوّق قهوتك الآن', true) %}
-{% set cta_url = settings.cta_url | default('/collections/all', true) %}
+{% set cta_url = settings.cta_url | default('/products', true) %}
 {% set rating_count = settings.rating_count | default('عميل مروق', true) %}
 {% set rating_label = settings.rating_label | default('+13K', true) %}
 {% set link_on_banner = settings.cta_link_on_banner and cta_url %}
@@ -46,18 +44,22 @@
     class="about-hero-banner__media"
     aria-hidden="true"
   >
+    {% if mobile_bg %}
     <picture>
+      {% if desktop_bg %}
       <source
         media="(min-width: 768px)"
-        srcset="{{ image_url(desktop_bg, w=1920, q=90, f='auto') if desktop_bg else desktop_bg_fallback }}"
+        srcset="{{ image_url(desktop_bg, w=1920, q=90, f='auto') }}"
       />
+      {% endif %}
       <img
-        src="{{ image_url(mobile_bg, w=900, q=85, f='auto') if mobile_bg else mobile_bg_fallback }}"
+        src="{{ image_url(mobile_bg, w=900, q=85, f='auto') }}"
         alt=""
         class="about-hero-banner__image"
         fetchpriority="high"
       />
     </picture>
+    {% endif %}
     <div class="about-hero-banner__overlay"></div>
   </div>
 

@@ -10,8 +10,7 @@
 {% set mobile_card_size = settings.mobile_card_size | default(325) %}
 {% set selected_products = settings.products.results if settings.products and settings.products.results else [] %}
 {% set products = selected_products[:3] %}
-{% set hero_img_fallback = 'https://www.figma.com/api/mcp/asset/e19428e7-2b0a-4079-9e18-881f04c61bcc' %}
-{% set mobile_hero_fallback = 'https://www.figma.com/api/mcp/asset/3d030c66-4c46-41c7-8fb2-c0be2751fa46' %}
+{% set hero_alt = settings.hero_alt | default(_('About details image'), true) %}
 
 <section
   section-id="{{ sectionId }}"
@@ -33,11 +32,14 @@
 >
   <div class="about-details__sticky">
     <div class="about-details__media">
+      {% if settings.hero_image %}
       <img
-        src="{{ image_url(settings.hero_image, w=1440, f='auto') if settings.hero_image else hero_img_fallback }}"
-        alt="{{ settings.hero_alt | default('About details image', true) }}"
+        src="{{ image_url(settings.hero_image, w=1440, f='auto') }}"
+        alt="{{ hero_alt }}"
         loading="lazy"
+        decoding="async"
       />
+      {% endif %}
     </div>
 
     <div class="about-details__content">
@@ -51,11 +53,14 @@
       </div>
 
       <div class="about-details__mobile-hero">
+        {% if settings.mobile_hero_image or settings.hero_image %}
         <img
-          src="{{ image_url(settings.mobile_hero_image, w=720, f='auto') if settings.mobile_hero_image else (image_url(settings.hero_image, w=720, f='auto') if settings.hero_image else mobile_hero_fallback) }}"
-          alt="{{ settings.hero_alt | default('About details image', true) }}"
+          src="{{ image_url(settings.mobile_hero_image or settings.hero_image, w=720, f='auto') }}"
+          alt="{{ hero_alt }}"
           loading="lazy"
+          decoding="async"
         />
+        {% endif %}
       </div>
 
       {% if products | length > 0 %}
@@ -75,7 +80,7 @@
       {% endif %}
 
       {% if settings.show_cta | default(true) %}
-        <a class="about-details__cta" href="{{ settings.cta_url | default('/collections/all', true) }}">
+        <a class="about-details__cta" href="{{ settings.cta_url | default('/products', true) }}">
           {{ settings.cta_text | default('عرض الكل', true) }}
         </a>
       {% endif %}

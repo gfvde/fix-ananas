@@ -10,7 +10,8 @@
     {% if settings.title %}
       <h2 class="text-foreground text-xl md:text-2xl font-semibold tracking-tight">{{ settings.title }}</h2>
     {% endif %}
-    {% if settings.store_partners %}
+    {% set store_partners = safeget(settings, "store_partners", []) | select | list %}
+    {% if store_partners %}
       <div
         class="embla relative overflow-hidden"
         data-carousel
@@ -22,7 +23,7 @@
         <div class="fade-right pointer-events-none absolute top-0 z-10 h-full w-20 ltr:right-0 rtl:left-0"></div>
         <div class="embla__viewport overflow-hidden" data-carousel-viewport>
           <div class="embla__container">
-            {% for partner in settings.store_partners %}
+            {% for partner in store_partners %}
               <div class="embla__slide">
                 <div class="flex h-[72px] w-[138px] shrink-0 items-center justify-center">
                   {% if partner.url %}
