@@ -120,33 +120,6 @@
           "default": true
         },
         {
-          "id": "show_fake_sold_count",
-          "type": "checkbox",
-          "label": {
-            "ar": "عرض عداد مبيعات تقديري (أرقام عشوائية لكل منتج)",
-            "en": "Show estimated sold count (random per product)"
-          },
-          "default": false
-        },
-        {
-          "id": "fake_sold_min",
-          "type": "text",
-          "label": {
-            "ar": "أقل قيمة للمبيعات التقديرية",
-            "en": "Minimum fake sold count"
-          },
-          "default": "100"
-        },
-        {
-          "id": "fake_sold_max",
-          "type": "text",
-          "label": {
-            "ar": "أعلى قيمة للمبيعات التقديرية",
-            "en": "Maximum fake sold count"
-          },
-          "default": "1000"
-        },
-        {
           "id": "mobile_add_to_cart_style",
           "type": "select",
           "label": {

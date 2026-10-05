@@ -419,6 +419,7 @@
       type="text/css"
       href="{{ 'styles.css' | asset_url }}"
     />
+    <link rel="stylesheet" type="text/css" href="{{ 'css/product-card.css' | asset_url }}" />
 
     {# TailwindPlus Elements - pinned version for better caching #}
     <script
@@ -442,9 +443,6 @@
     data-pc-colors="{{ 'true' if settings.product_card_show_color_options != false else 'false' }}"
     data-pc-rating="{{ 'true' if settings.product_card_show_rating != false else 'false' }}"
     data-pc-stock="{{ 'true' if settings.product_card_show_stock_info != false else 'false' }}"
-    data-pc-fake-sold="{{ 'false' if (settings.product_card_show_fake_sold_count == false or settings.product_card_show_fake_sold_count is not defined) else 'true' }}"
-    data-pc-fake-min="{{ settings.product_card_fake_sold_min | default('100') }}"
-    data-pc-fake-max="{{ settings.product_card_fake_sold_max | default('1000') }}"
     data-pc-aspect="{{ settings.product_card_image_aspect_ratio | default('adapt') }}"
     data-pc-mobile-cta="{{ settings.product_card_mobile_add_to_cart_style | default('button') }}"
     data-show-breadcrumb="{{ 'true' if settings.general_show_breadcrumb != false else 'false' }}"
