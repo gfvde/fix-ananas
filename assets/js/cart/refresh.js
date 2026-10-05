@@ -89,10 +89,37 @@ function swapElements(selector, newDoc) {
  * Refresh cart page via AJAX
  * Fetches current page and swaps content sections
  */
-export async function refreshCartPage() {
-  if (isRefreshing) return;
-  isRefreshing = true;
+let refreshPromise = null;
+let refreshQueued = false;
 
+/**
+ * Concurrent calls share the in-flight refresh; a call made while one is
+ * running queues exactly one more pass, so a mutation that lands mid-fetch is
+ * always rendered (previously the second call was silently dropped).
+ * @returns {Promise<void>}
+ */
+export function refreshCartPage() {
+  if (refreshPromise) {
+    refreshQueued = true;
+    return refreshPromise;
+  }
+
+  isRefreshing = true;
+  refreshPromise = (async () => {
+    do {
+      refreshQueued = false;
+      await doRefreshCartPage();
+    } while (refreshQueued);
+  })().finally(() => {
+    refreshPromise = null;
+    isRefreshing = false;
+    setCartLoadingState(false);
+  });
+
+  return refreshPromise;
+}
+
+async function doRefreshCartPage() {
   try {
     const response = await fetch(window.location.href, {
       headers: { "X-Requested-With": "XMLHttpRequest" }
@@ -164,9 +191,6 @@ export async function refreshCartPage() {
     console.error("Error refreshing cart:", error);
     // Fallback to page reload on error
     window.location.reload();
-  } finally {
-    isRefreshing = false;
-    setCartLoadingState(false);
   }
 }
 

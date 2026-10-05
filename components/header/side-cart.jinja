@@ -700,9 +700,9 @@
       itemsInCart: {{ _('%(count)s items in cart') | tojson }}
     };
 
-    let isRefreshing = false;
+    let refreshPromise = null;
+    let refreshQueued = false;
     let isMutating = false;
-    let suppressCartEvents = 0;
     let cachedCartData = null;
 
     // Initialize free shipping bar on load
@@ -766,7 +766,17 @@
       document.documentElement.classList.add("side-cart-open");
       document.body.classList.add("side-cart-open");
       showSideCartLoading();
-      fetchCartData();
+      fetchCartData().then(function (cart) {
+        // view_cart is auto-fired on /cart only; drawers must send it (E_js_sdk §10.2)
+        var onCartPage = document.body.dataset.template === "cart" || /^\/cart\/?$/.test(location.pathname);
+        if (cart && !onCartPage && window.zidTracking && window.zidTracking.sendGaCartDetailViewedEvent) {
+          try {
+            window.zidTracking.sendGaCartDetailViewedEvent({ cart: cart });
+          } catch (err) {
+            console.warn("[SideCart] view_cart tracking failed:", err);
+          }
+        }
+      });
     };
 
     function getFreeShippingState(cartData, total) {
@@ -1018,27 +1028,6 @@
         resolveImageUrl(item.variant?.media?.[0]) ||
         resolveImageUrl(item.variant?.images?.[0])
       );
-    }
-
-    function debugFirstCartItem(products) {
-      if (!products || !products.length) return;
-      var first = products[0];
-      console.log("[SideCart debug] first cart item:", first);
-      console.log("[SideCart debug] resolved image:", getItemImage(first));
-      console.log("[SideCart debug] image candidates:", {
-        image_url: first.image_url,
-        image: first.image,
-        images0: first.images?.[0],
-        product_image: first.product?.image,
-        product_image_url: first.product?.image_url,
-        product_images0: first.product?.images?.[0],
-        product_main_image: first.product?.main_image,
-        selected_product_images0: first.product?.selected_product?.images?.[0],
-        selected_product_media0: first.product?.selected_product?.media?.[0],
-        thumbnail: first.thumbnail,
-        product_thumbnail: first.product?.thumbnail,
-        product_media0: first.product?.media?.[0]
-      });
     }
 
     function getItemUrl(item) {
@@ -1433,10 +1422,30 @@
       return products;
     }
 
-    async function fetchCartData() {
-      if (isRefreshing) return;
-      isRefreshing = true;
+    /**
+     * Refresh the drawer from zid.cart.get(). Concurrent callers share the
+     * in-flight request; a call made while one is running queues exactly one
+     * more fetch, so the resolved data is never older than the last mutation.
+     */
+    function fetchCartData() {
+      if (refreshPromise) {
+        refreshQueued = true;
+        return refreshPromise;
+      }
+      refreshPromise = (async function () {
+        var data;
+        do {
+          refreshQueued = false;
+          data = await loadCartData();
+        } while (refreshQueued);
+        return data;
+      })().finally(function () {
+        refreshPromise = null;
+      });
+      return refreshPromise;
+    }
 
+    async function loadCartData() {
       // If we have cached data, render it immediately for instant display
       if (cachedCartData) {
         var existingImages = getExistingItemImages();
@@ -1466,7 +1475,6 @@
         const existingImages = getExistingItemImages();
         let products = renderCartData(cartData, existingImages);
         products = await hydrateMissingImagesFromProductsApi(products);
-        debugFirstCartItem(products);
 
         // Re-render with enhanced images after async fetch
         if (itemsContainer && products.length > 0) {
@@ -1477,18 +1485,15 @@
         return cartData;
       } catch (err) {
         console.error("Error refreshing side cart:", err);
-      } finally {
-        isRefreshing = false;
       }
     }
 
     function notifyCartUpdated(cartData) {
       const products = cartData?.products || cartData?.cart?.products || [];
       const count = getProductsCount(cartData, products);
-      const detail = { cart: cartData, items_count: count };
-      suppressCartEvents = 2;
-      window.dispatchEvent(new CustomEvent("cart:updated", { detail, bubbles: true }));
-      document.dispatchEvent(new CustomEvent("cart:updated", { detail, bubbles: true }));
+      const detail = { cart: cartData, items_count: count, source: "side-cart" };
+      // Dispatch once on window (a document dispatch would bubble to window too)
+      window.dispatchEvent(new CustomEvent("cart:updated", { detail }));
       document.dispatchEvent(new CustomEvent("zid:cart:updated", { detail, bubbles: true }));
     }
 
@@ -1606,16 +1611,13 @@
     };
 
     // Listen to generic cart update events
-    function handleExternalCartUpdated() {
-      if (suppressCartEvents > 0) {
-        suppressCartEvents -= 1;
-        return;
-      }
+    function handleExternalCartUpdated(event) {
+      // Our own notifyCartUpdated already rendered the fresh cart
+      if (event && event.detail && event.detail.source === "side-cart") return;
       fetchCartData();
     }
 
     window.addEventListener("cart:updated", handleExternalCartUpdated);
-    document.addEventListener("cart:updated", handleExternalCartUpdated);
     window.addEventListener("zidcart:updated", handleExternalCartUpdated);
   })();
 </script>
