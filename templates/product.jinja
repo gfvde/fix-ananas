@@ -727,7 +727,7 @@
         {# Acidity Section #}
         <div class="mb-5">
           <div class="flex justify-between text-sm font-medium mb-[6px]">
-            <span class="text-right text-gray-900">{{settings.single_product_section_coffee_acidity_level | default(__('الحموضة'))}}</span>
+            <span class="text-right text-gray-900">{{settings.single_product_section_coffee_acidity_level | default(_('Acidity'))}}</span>
           </div>
 
           <div class="relative flex items-center">
@@ -786,7 +786,7 @@
         {# Body Section #}
         <div>
           <div class="flex justify-between text-sm font-medium mb-[6px]">
-            <span class="text-right text-gray-900">{{settings.single_product_section_coffee_body_level | default(__('القوام'))}}</span>
+            <span class="text-right text-gray-900">{{settings.single_product_section_coffee_body_level | default(_('Body'))}}</span>
           </div>
 
           <div class="relative flex items-center">
@@ -933,8 +933,6 @@
                                   data-buy-now-form="product-form"
                                 >
                                   <!-- Icon -->
-                                  <div class="buy-now-icon flex items-center justify-center"
-                                      style="mask: url({{ 'buy-now.svg' | asset_url }}) no-repeat center;"></div>
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                       <path d="M1.99805 6.28125L2.00195 16.5812C2.00195 17.7595 2.95708 18.7146 4.13529 18.7146H15.8686C17.0468 18.7146 18.002 17.7595 18.002 16.5812V8.04792C18.002 7.06608 17.206 6.27014 16.2242 6.27014H2.01373C2.00667 6.27014 2.00039 6.27459 1.99805 6.28125ZM1.99805 6.28125C1.9987 6.08156 14.002 1.28125 14.002 1.28125V5.78125M13.7492 12.3007L13.7353 12.3146" stroke="#F7512B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
