@@ -329,11 +329,6 @@ class WishlistManager {
   }
 
   showToast(message, type = "success") {
-    if (window.zid?.store?.showMessage) {
-      window.zid.store.showMessage(message, type);
-      return;
-    }
-
     if (window.toastr?.[type]) {
       window.toastr[type](message);
       return;

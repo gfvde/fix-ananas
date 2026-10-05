@@ -26,11 +26,6 @@ function showCartToast(key, type = "success") {
   };
   const message = labels[key] || fallbacks[key];
 
-  if (window.zid?.store?.showMessage) {
-    window.zid.store.showMessage(message, type);
-    return;
-  }
-
   if (window.showAnanasToast) {
     window.showAnanasToast(message, type);
     return;
