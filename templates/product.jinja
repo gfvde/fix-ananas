@@ -1073,7 +1073,7 @@
       </div>
 {% if settings.single_product_section_bundle_products_with_selection and settings.single_product_section_bundle_products_with_selection|length > 0 %}
 
-  {% set ns = namespace(current_bundle=null) %}
+  {% set ns = namespace(current_bundle=none) %}
 
   {% for bundle in settings.single_product_section_bundle_products_with_selection %}
     {% if bundle.main_product and bundle.main_product.id|string == product.id|string %}

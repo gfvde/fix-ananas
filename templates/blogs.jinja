@@ -1,6 +1,13 @@
 {% extends "layout.jinja" %}
 
 {% block content %}
+    {# Zid passes a PaginatedBlogPosts object (docs: `blogs`, upstream Growth: `posts`) #}
+    {% set blog_src = blogs if blogs is defined and blogs is not none else (posts if posts is defined else none) %}
+    {% set blog_list = blog_src.results if blog_src and blog_src.results else [] %}
+    {% set blog_count = (blog_src.count if blog_src and blog_src.count is not none else blog_list | length) %}
+    {% set blog_categories = categories.results if categories is defined and categories and categories.results else [] %}
+    {% set active_category = session.query_params.get('category', '') if session and session.query_params else '' %}
+    {% if not active_category and blog_categories %}{% set active_category = blog_categories[0].slug %}{% endif %}
     <section class="blog py-6">
         <div class="container mx-auto px-4">
 
@@ -8,7 +15,18 @@
                 <h1 class="text-3xl font-bold">{{ _("Blog") }}</h1>
             </div>
 
-            {% if blogs is none %}
+            {% if blog_categories | length > 1 %}
+                <div class="flex flex-wrap items-center gap-2 mb-4">
+                    {% for category in blog_categories %}
+                        <a
+                            href="/blogs?category={{ category.slug }}"
+                            class="px-3 py-1 rounded-full border text-sm {{ 'bg-primary text-white border-primary' if category.slug == active_category else 'text-gray-600 hover:border-primary' }}"
+                        >{{ category.name }}</a>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if not blog_list %}
                 <div class="bg-white shadow-sm rounded mb-4">
                     <div class="p-4">
                         <p class="text-gray-500 mb-0">
@@ -20,12 +38,12 @@
                 <div class="flex justify-between items-center mb-3">
                     <div class="text-gray-500 flex items-center text-base">
                         <span>{{ _("Total Posts") }}</span>
-                        <span class="ms-2 inline-flex items-center justify-center bg-primary text-white text-xs font-medium rounded-full w-5 h-5">{{ blogs|length }}</span>
+                        <span class="ms-2 inline-flex items-center justify-center bg-primary text-white text-xs font-medium rounded-full w-5 h-5">{{ blog_count }}</span>
                     </div>
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-4">
-                    {% for blog in blogs %}
+                    {% for blog in blog_list %}
                         <div class="bg-white shadow-sm rounded h-full transition-transform duration-200 hover:border hover:border-primary">
                             <div class="px-4 py-3 border-b">
                                 <h6 class="font-bold mb-0 text-gray-700 text-sm">
@@ -57,7 +75,9 @@
                                 </h6>
                             </div>
                             <div class="p-3 text-gray-500 text-sm">
-                                {% if blog.i18n_SEO_page_description and blog.i18n_SEO_page_description != '[]' %}
+                                {% if blog.snippet %}
+                                    {{ blog.snippet | striptags | truncate(200) }}
+                                {% elif blog.i18n_SEO_page_description and blog.i18n_SEO_page_description != '[]' %}
                                     {{ blog.i18n_SEO_page_description | safe }}
                                 {% endif %}
                                 ...
@@ -157,6 +177,20 @@
                         </div>
                     {% endfor %}
                 </div>
+
+                {% if blog_src and blog_src.pages_count and blog_src.pages_count > 1 %}
+                    {% set current_page = (blog_src.page | default(1)) | int %}
+                    {% set category_qs = ('category=' ~ active_category ~ '&') if active_category else '' %}
+                    <nav class="mt-8 flex flex-wrap items-center justify-center gap-2" aria-label="{{ _('Pagination') }}">
+                        {% for page_num in range(1, blog_src.pages_count + 1) %}
+                            {% if page_num == current_page %}
+                                <span class="inline-flex size-9 items-center justify-center rounded bg-primary text-white text-sm" aria-current="page">{{ page_num }}</span>
+                            {% else %}
+                                <a href="/blogs?{{ category_qs }}page={{ page_num }}" class="inline-flex size-9 items-center justify-center rounded border text-sm text-gray-600 hover:border-primary">{{ page_num }}</a>
+                            {% endif %}
+                        {% endfor %}
+                    </nav>
+                {% endif %}
             {% endif %}
 
         </div>

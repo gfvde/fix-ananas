@@ -88,7 +88,7 @@
                   {{ _("We couldn't find any products matching your search. Try adjusting your filters or search terms.") }}
                 </p>
                 <a
-                  href="/products"
+                  href="{{ url_for('list_products') }}"
                   class="bg-primary text-primary-foreground rounded-lg px-6 py-3 text-sm font-medium"
                 >
                   {{ _("View all products") }}
