@@ -93,6 +93,8 @@ class WishlistManager {
     document.addEventListener("keydown", this.handleKeyDown);
     window.addEventListener("products-updated", () => this.updateAllButtons());
     window.addEventListener("content:loaded", () => this.updateAllButtons());
+    // Re-sync after a popup login (customerAuthState is updated by layout.js)
+    window.addEventListener("vitrin:auth:success", () => setTimeout(() => this.syncWishlistState(), 0));
     this.createWishlistModal();
     this.renderWishlistPage();
 
@@ -179,7 +181,9 @@ class WishlistManager {
   }
 
   async syncWishlistState() {
-    if (!window.zid?.account?.wishlists) {
+    // Guests: zid.account.wishlists() is a guaranteed 401 — skip the request.
+    const isGuest = window.customerAuthState && !window.customerAuthState.isAuthenticated;
+    if (!window.zid?.account?.wishlists || isGuest) {
       this.isLoggedIn = false;
       this.updateAllButtons();
       this.renderWishlistPage();
@@ -325,11 +329,6 @@ class WishlistManager {
   }
 
   showToast(message, type = "success") {
-    if (window.zid?.store?.showMessage) {
-      window.zid.store.showMessage(message, type);
-      return;
-    }
-
     if (window.toastr?.[type]) {
       window.toastr[type](message);
       return;
@@ -665,6 +664,11 @@ class WishlistManager {
   }
 
   redirectToLogin() {
+    // Prefer the platform login popup (auth_dialog) via the shared handler
+    if (typeof window.handleLoginAction === "function") {
+      window.handleLoginAction("", false);
+      return;
+    }
     const currentPath = window.location.pathname;
     window.location.href = `/auth/login?redirect_to=${encodeURIComponent(currentPath)}`;
   }

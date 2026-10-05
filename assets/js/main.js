@@ -30,8 +30,9 @@ import "./features/product-filter.js";
 import "./features/price-slider.js";
 import "./features/bundle-offers.js";
 import "./features/notify-me.js";
-import "./features/swiper-global.js";
-// Note: loyalty-rewards is loaded as standalone script AFTER vitrin_body in layout.jinja
+import "./features/product-card.js";
+// Note: the loyalty floating button (js/layout-loyalty.js) is a standalone script in layout.jinja;
+// it opens the platform window.loyalty_rewards_dialog.
 
 // Store for initialized carousel instances (for cleanup)
 const carouselInstances = new WeakMap();
@@ -74,9 +75,6 @@ function initCarousels() {
  * Initialize theme
  */
 function init() {
-  const page = document.body.dataset.template;
-  console.log("[Theme] Initializing for page:", page);
-
   // Initialize carousels
   initCarousels();
 
@@ -104,7 +102,11 @@ window.addEventListener("content:loaded", () => {
   initCartButtons();
 });
 
-// Re-init cart buttons when products are filtered/updated
+// Re-init cart buttons when products are filtered/sorted (product-filter.js
+// dispatches "products-updated"; "products:updated" kept for older callers)
+window.addEventListener("products-updated", () => {
+  initCartButtons();
+});
 window.addEventListener("products:updated", () => {
   initCartButtons();
 });

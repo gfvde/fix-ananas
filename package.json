@@ -41,8 +41,7 @@
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-fade": "^8.6.0",
     "nouislider": "^15.8.1",
-    "photoswipe": "^5.4.4",
-    "swiper": "^12.1.4"
+    "photoswipe": "^5.4.4"
   },
   "main": "index.js",
   "pnpm": {

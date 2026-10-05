@@ -20,6 +20,8 @@ const CONFIG = {
   productSectionId: "product-main-section"
 };
 
+const QV_FORM_ID = "qv-product-form";
+
 const ELEMENTS = {
   dialog: "quick-view-dialog",
   modal: "product-quick-view-modal",
@@ -48,10 +50,15 @@ class QuickViewManager {
     this.sdkScriptLoaded = false;
     this.sdkScriptUrl = null;
 
+    // Snapshot of window.productObj before quick-view mutates it (restored on close)
+    this.originalProductObj = undefined;
+    this.hasOriginalProductObj = false;
+
     // Bound methods for event listeners
     this.handleMouseOver = this.handleMouseOver.bind(this);
     this.handleMouseOut = this.handleMouseOut.bind(this);
     this.handleCartUpdated = this.handleCartUpdated.bind(this);
+    this.handleDialogClose = this.handleDialogClose.bind(this);
   }
 
   // ─────────────────────────────────────────────────────────────
@@ -202,6 +209,7 @@ class QuickViewManager {
 
     return new Promise((resolve, reject) => {
       const script = document.createElement("script");
+      script.type = "module";
       script.src = this.sdkScriptUrl;
       script.onload = () => {
         this.sdkScriptLoaded = true;
@@ -365,17 +373,53 @@ class QuickViewManager {
     window.dispatchEvent(new CustomEvent("content:loaded"));
   }
 
+  /**
+   * When quick view opens on a page that already has a product form/gallery
+   * (e.g. related products on a PDP), the injected section would duplicate
+   * `#product-form` and the `product-gallery-*` ids. `zid.cart.addProduct({form_id})`
+   * reads the first match, i.e. the wrong product. Rename the injected copies.
+   */
+  isolateIds(section) {
+    const outside = (id) => {
+      const el = document.getElementById(id);
+      return el && !section.contains(el);
+    };
+
+    const form = section.querySelector("#product-form");
+    if (form && outside("product-form")) {
+      form.id = QV_FORM_ID;
+      section.querySelectorAll('[data-add-to-cart-form="product-form"]').forEach((el) => {
+        el.dataset.addToCartForm = QV_FORM_ID;
+      });
+      section.querySelectorAll('[data-buy-now-form="product-form"]').forEach((el) => {
+        el.dataset.buyNowForm = QV_FORM_ID;
+      });
+      section.querySelectorAll('[form="product-form"]').forEach((el) => el.setAttribute("form", QV_FORM_ID));
+    }
+
+    const galleryWrapper = section.querySelector(".pg-wrapper[data-gallery-id]");
+    const galleryId = galleryWrapper?.dataset.galleryId;
+    if (galleryId && outside(`${galleryId}-wrapper`)) {
+      const newId = `qv-${galleryId}`;
+      section.querySelectorAll(`[id^="${galleryId}-"]`).forEach((el) => {
+        el.id = newId + el.id.slice(galleryId.length);
+      });
+      galleryWrapper.dataset.galleryId = newId;
+    }
+  }
+
   enhanceContent(content, productObj) {
     const section = content.querySelector(`#${CONFIG.productSectionId}`);
     if (!section) return;
 
     section.classList.add("quick-view-product-section");
+    this.isolateIds(section);
 
     const galleryColumn = section.querySelector(".product-gallery-column");
     const galleryShell = galleryColumn?.querySelector(":scope > div");
     const galleryMain = galleryShell?.querySelector(":scope > .flex-1 > .relative, :scope > .relative");
     const detailsColumn = section.querySelector(".product-details-column");
-    const productForm = section.querySelector("#product-form");
+    const productForm = section.querySelector(`#product-form, #${QV_FORM_ID}`);
     const inStockActions = section.querySelector("[data-in-stock]");
     const addToCartButton = section.querySelector("[data-add-to-cart-form]");
     const quantityWrapper = section.querySelector("[data-quantity-wrapper]");
@@ -487,6 +531,11 @@ class QuickViewManager {
     const baseUrl = productUrl || `/p/${productSlug}`;
     const messages = this.getMessages(modal);
 
+    if (!this.hasOriginalProductObj) {
+      this.originalProductObj = window.productObj;
+      this.hasOriginalProductObj = true;
+    }
+
     const cachedData = this.cacheGet(baseUrl);
 
     if (cachedData) {
@@ -553,16 +602,68 @@ class QuickViewManager {
     }
   }
 
+  isOpen() {
+    return !!document.getElementById(ELEMENTS.dialog)?.hasAttribute("open");
+  }
+
+  /**
+   * Clear injected content and restore the page's own productObj (upstream 2b73b27:
+   * prevents stuck variant selection on iOS and a wrong productObj on the PDP).
+   */
+  /**
+   * Close the quick view first, then run `fn` (e.g. zid.cart.buyNow, which opens
+   * the checkout dialog — F §1: never stack platform popups over theme overlays).
+   * Injected content stays in the DOM until `fn` settles so the SDK can still
+   * read the form.
+   */
+  async closeThen(fn) {
+    this.deferCleanup = true;
+    this.close();
+    await new Promise((r) => requestAnimationFrame(() => setTimeout(r, 50)));
+    try {
+      return await fn();
+    } finally {
+      this.deferCleanup = false;
+      if (!this.isOpen()) this.handleDialogClose();
+    }
+  }
+
+  handleDialogClose() {
+    if (this.deferCleanup) return;
+    const content = document.getElementById(ELEMENTS.content);
+    if (content) content.innerHTML = "";
+
+    if (this.hasOriginalProductObj) {
+      window.productObj = this.originalProductObj;
+      this.originalProductObj = undefined;
+      this.hasOriginalProductObj = false;
+    }
+
+    const elements = this.getElements();
+    if (elements) this.setModalState(elements, "loading");
+
+    // Drop gallery instances whose DOM was just removed
+    window.initAllProductGalleries?.();
+  }
+
   // ─────────────────────────────────────────────────────────────
   // Event Handlers
   // ─────────────────────────────────────────────────────────────
 
   setupCartListener() {
-    window.addEventListener("cart-updated", this.handleCartUpdated);
+    // add-to-cart.js dispatches "cart:updated" (colon)
+    window.addEventListener("cart:updated", this.handleCartUpdated);
   }
 
-  handleCartUpdated() {
-    this.close();
+  setupDialogCloseListener() {
+    const modal = document.getElementById(ELEMENTS.modal);
+    if (modal) modal.addEventListener("close", this.handleDialogClose);
+  }
+
+  handleCartUpdated(event) {
+    const action = event?.detail?.action;
+    if (action && action !== "add") return;
+    if (this.isOpen()) this.close();
   }
 
   // ─────────────────────────────────────────────────────────────
@@ -572,12 +673,16 @@ class QuickViewManager {
   init() {
     this.setupPrefetchListeners();
     this.setupCartListener();
+    this.setupDialogCloseListener();
   }
 
   destroy() {
     document.removeEventListener("mouseover", this.handleMouseOver);
     document.removeEventListener("mouseout", this.handleMouseOut);
-    window.removeEventListener("cart-updated", this.handleCartUpdated);
+    window.removeEventListener("cart:updated", this.handleCartUpdated);
+
+    const modal = document.getElementById(ELEMENTS.modal);
+    if (modal) modal.removeEventListener("close", this.handleDialogClose);
 
     this.cancelPrefetch();
     this.cacheClear();
@@ -678,20 +783,20 @@ if (document.readyState === "loading") {
     });
   }
 
-  // أول تحميل
-  document.addEventListener("DOMContentLoaded", () => {
-    applyColors();
-  });
+  // Colorize option swatches whenever quick-view content is (re)injected.
+  // Observe only the quick-view container, not the whole document.
+  function observeQuickView() {
+    const target = document.getElementById("quick-view-content");
+    if (!target) return;
+    applyColors(target);
+    new MutationObserver(() => applyColors(target)).observe(target, { childList: true, subtree: true });
+  }
 
-  // مهم جدًا للـ Quick View (ديناميكي)
-  const observer = new MutationObserver(() => {
-    applyColors(document);
-  });
-
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true
-  });
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", observeQuickView);
+  } else {
+    observeQuickView();
+  }
 
 })();
 
