@@ -89,8 +89,7 @@
     </div>
   </section>
 
-  {# Quick View Modal #}
-  {% include 'components/products/quick-view-modal.jinja' %}
+  {# Quick View Modal is included globally in layout.jinja #}
   {% if category_filters_sidebar %}
     {% include 'components/products/filters/sidebar-layout-ready.jinja' %}
   {% endif %}

@@ -284,6 +284,12 @@
           class="quick-view-content hidden"
         ></div>
 
+        {# Checkout dialog for Buy Now from quick view (injected HTML does not run its own include scripts).
+           Skipped on the PDP, which already includes it once. #}
+        {% if not (product is defined and product and product.id) %}
+          {% include 'vitrin:checkout/checkout_dialog.jinja' %}
+        {% endif %}
+
         {% set quick_view_payment_methods = safeget(settings, 'cart_page_payment_methods', safeget(settings, 'cart_page_cart_page_payment_methods', [])) %}
         <template id="quick-view-payment-template">
           <div

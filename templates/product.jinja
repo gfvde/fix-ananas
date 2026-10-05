@@ -926,23 +926,21 @@
               {% include 'vitrin:products/bundle-products.jinja' %}
             {% endif %}
 
+            {# Checkout dialog (Buy Now popup) - included once on the PDP #}
+            {% include 'vitrin:checkout/checkout_dialog.jinja' %}
+
             {# Action Buttons #}
             <div class="flex justify-between gap-2 items-center w-full flex-row-reverse">
-                            <div class="finish-buy {{ '!hidden' if not product.in_stock }}  w-full h-full flex-1">
-                                <!-- Checkout dialog -->
-                                {% include 'vitrin:checkout/checkout_dialog.jinja' %}
-
+                            {% if not safeget(store, 'settings.general.availability.closed_now') and safeget(store, 'settings.checkout.show_checkout_as_popup') and not product.preorder_campaign and is_in_stock %}
+                            <div class="finish-buy w-full h-full flex-1">
                                <button
-                                  class="{{ '!hidden' if not product.in_stock }} btn !rounded-[0px] btn-buy-now relative flex items-center justify-center gap-2 w-full h-full flex-1
+                                  class="btn !rounded-[0px] btn-buy-now relative flex items-center justify-center gap-2 w-full h-full flex-1
                                         border border-[#F7512B] text-[#F7512B]
                                         transition-colors duration-200
                                         disabled:opacity-60 disabled:cursor-not-allowed py-3 flex items-center justify-center"
                                   type="button"
-                                  onclick="zidProductBuyNow(this)"
+                                  data-buy-now-form="product-form"
                                 >
-                                  <!-- Spinner -->
-                                  <span class="buy-now-spinner hidden h-5 w-5 border-2 border-[#F7512B]/30 border-t-[#F7512B] rounded-full animate-spin"></span>
-
                                   <!-- Icon -->
                                   <div class="buy-now-icon flex items-center justify-center"
                                       style="mask: url({{ 'buy-now.svg' | asset_url }}) no-repeat center;"></div>
@@ -950,10 +948,10 @@
                                       <path d="M1.99805 6.28125L2.00195 16.5812C2.00195 17.7595 2.95708 18.7146 4.13529 18.7146H15.8686C17.0468 18.7146 18.002 17.7595 18.002 16.5812V8.04792C18.002 7.06608 17.206 6.27014 16.2242 6.27014H2.01373C2.00667 6.27014 2.00039 6.27459 1.99805 6.28125ZM1.99805 6.28125C1.9987 6.08156 14.002 1.28125 14.002 1.28125V5.78125M13.7492 12.3007L13.7353 12.3146" stroke="#F7512B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
 
-                                  <span class="buy-now-text">{{ 'اشتري الآن' if session.lang == 'ar' else 'Buy now' }}</span>
+                                  <span class="buy-now-text">{{ _("Buy now") }}</span>
                                 </button>
-
                             </div>
+                            {% endif %}
                             <div
                               class="flex flex-col gap-3 flex-1"
                               data-product-actions
@@ -2190,46 +2188,6 @@
   updateViewers();
 
   setInterval(updateViewers, 15000);
-</script>
-<script>
-window.zidProductBuyNow = async (btn) => {
-
-    const setLoading = (state) => {
-        const spinner = btn.querySelector('.buy-now-spinner');
-        const icon = btn.querySelector('.buy-now-icon');
-        const text = btn.querySelector('.buy-now-text');
-
-        btn.disabled = state;
-
-        if (spinner) spinner.classList.toggle('hidden', !state);
-        if (icon) icon.classList.toggle('hidden', state);
-
-        // اختياري: تغيير النص
-        if (text) {
-            text.textContent = state ? 'Processing...' : '{{ _("Buy now") }}';
-        }
-    };
-
-    const bundlePayload = window.bundleCartPayload;
-    const addProductOptions = bundlePayload
-        ? { ...bundlePayload, form_id: 'product-form' }
-        : { form_id: 'product-form' };
-
-    try {
-        setLoading(true);
-
-        await window.zid.cart.buyNow(
-            addProductOptions,
-            { showErrorNotification: true }
-        );
-
-    } catch (error) {
-        console.error(error, 'Buy Now failed');
-    } finally {
-        setLoading(false);
-    }
-};
-
 </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
