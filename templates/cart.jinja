@@ -20,6 +20,7 @@
 
   <section class="cart-page-bg cart-page-main-section">
     <div class="theme-container">
+      {% set gift_order_enabled = safeget(store, 'settings.checkout.gift_order_settings.is_gift_order_enabled', false) == '1' %}
       {% if cart.products_count > 0 %}
         <div class="cart-with-products">
           <div class="cart-page-header">
@@ -44,7 +45,7 @@
 
               <div data-cart-products-list>
                 {% include 'components/cart/products-list.jinja' %}
-                {% if store.settings.checkout.gift_order_settings.is_gift_order_enabled == '1' %}
+                {% if gift_order_enabled and not safeget(cart, 'gift_card_details.card_product_id') and not safeget(cart, 'gift_card_details.card_design') %}
                   <div class="mt-4">{% include 'components/cart/gift-card-display.jinja' %}</div>
                 {% endif %}
               </div>
@@ -71,6 +72,11 @@
               </a>
             </div>
           </div>
+
+          {# Gift dialog: included once per page (cart-summary renders twice: mobile + desktop) #}
+          {% if gift_order_enabled %}
+            {% include 'vitrin:cart/gift-card.jinja' %}
+          {% endif %}
 
           {# MOBILE benefits (loyalty + UVPs + payments) below products #}
           <div class="cart-mobile-only">

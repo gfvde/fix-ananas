@@ -6,14 +6,6 @@
   {%- endfor -%}
 {% endmacro %}
 
-{% macro get_total_amount(code) %}
-  {%- for cartTotal in cart.totals -%}
-    {%- if cartTotal.code == code -%}
-      {{- cartTotal.value | default(cartTotal.amount | default(cartTotal.value_string | default(''))) -}}
-    {%- endif -%}
-  {%- endfor -%}
-{% endmacro %}
-
 {% macro get_first_total(codes) %}
   {%- for code in codes -%}
     {%- set value = get_total(code) | trim -%}
@@ -27,19 +19,7 @@
   {{- (value|string)|trim -}}
 {%- endmacro %}
 
-{% set products_subtotal = namespace(value=0) %}
-{% if cart.products %}
-  {% for item in cart.products %}
-    {% set line_total = item.total | default(item.total_value | default(item.total_price | default(item.line_total | default(none)))) %}
-    {% if line_total is not none %}
-      {% set products_subtotal.value = products_subtotal.value + (line_total | float) %}
-    {% else %}
-      {% set unit_price = item.price | default(item.sale_price | default(item.product.sale_price | default(item.product.price | default(0)))) %}
-      {% set products_subtotal.value = products_subtotal.value + ((unit_price | float) * (item.quantity | default(1) | float)) %}
-    {% endif %}
-  {% endfor %}
-{% endif %}
-
+{# Totals come from the platform-formatted cart.totals (value_string) only #}
 {% set subtotal_text = get_first_total(['sub_totals', 'subtotal', 'sub_total', 'products_subtotal', 'products_total']) | trim %}
 {% if not subtotal_text %}
   {% set subtotal_text = cart.sub_total_string | default(cart.subtotal_string | default(cart.products_subtotal_string | default(cart.products_total_string | default('')))) %}
@@ -54,20 +34,10 @@
   {% set discount_text = '-' ~ discount_text %}
 {% endif %}
 {% if not shipping_text %}{% set shipping_text = '-' %}{% endif %}
-{% set currency_code = cart.currency.cart_currency.code | default(session.currency.code | default('')) %}
-{% if products_subtotal.value > 0 %}
-  {% set subtotal_text = '%.2f' | format(products_subtotal.value) ~ (' ' ~ currency_code if currency_code else '') %}
-{% endif %}
 {% if not subtotal_text %}
   {% set subtotal_text = total_text %}
 {% endif %}
-{% if not discount_text and cart.coupon and products_subtotal.value > 0 %}
-  {% set total_amount = get_total_amount('total') | trim %}
-  {% set total_number = total_amount | default(cart.total_value | default(cart.total | default(0))) | float %}
-  {% if total_number > 0 and products_subtotal.value > total_number %}
-    {% set discount_text = '-%.2f' | format(products_subtotal.value - total_number) ~ (' ' ~ currency_code if currency_code else '') %}
-  {% endif %}
-{% endif %}
+{% set coupon_form_enabled = safeget(store, 'settings.checkout.is_coupon_form_enabled', true) != false %}
 
 <div
   class="cart-summary"
@@ -75,6 +45,7 @@
 >
   <h2 class="cart-summary__title">{{ _('Order summary') }}</h2>
 
+  {% if coupon_form_enabled %}
   <div
     class="cart-coupon"
     data-coupon-section
@@ -188,6 +159,7 @@
       </details>
     {% endif %}
   </div>
+  {% endif %}
 
   {% include 'components/cart/gift-order.jinja' %}
 

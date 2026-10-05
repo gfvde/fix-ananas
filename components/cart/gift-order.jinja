@@ -1,4 +1,4 @@
-{% if store.settings.checkout.gift_order_settings.is_gift_order_enabled == '1' %}
+{% if safeget(store, 'settings.checkout.gift_order_settings.is_gift_order_enabled', false) == '1' %}
   {% set has_gift = cart.gift_card_details and cart.gift_card_details | length > 0 %}
   <div
     class="py-4"
@@ -37,6 +37,6 @@
         {{ _("Edit details") }}
       </span>
     </button>
-    {% include 'vitrin:cart/gift-card.jinja' %}
+    {# vitrin:cart/gift-card.jinja (gift_dialog) is included once in templates/cart.jinja #}
   </div>
 {% endif %}
