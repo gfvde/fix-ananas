@@ -957,8 +957,48 @@ html[dir="ltr"] .cart-coupon__form {
   padding-inline: 6px;
 }
 
-.cart-sidebar__hidden-widgets {
+/* Platform payment features: bank discounts, payment widgets (Tabby/Tamara), Apple Pay */
+.cart-sidebar__widgets {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.cart-sidebar__wallet:empty {
   display: none;
+}
+
+.cart-sidebar__wallet:not(:empty) {
+  margin-bottom: 12px;
+}
+
+/* Mobile: the sidebar column is reused only for wallet + payment widgets
+   (summary and benefits are rendered by the mobile blocks), shown after products */
+@media (max-width: 1023px) {
+  .cart-page-layout__sidebar {
+    display: block;
+    order: 2;
+  }
+
+  .cart-page-layout__products {
+    order: 1;
+  }
+
+  .cart-sidebar__panel > .cart-free-shipping,
+  .cart-sidebar__panel > .cart-sidebar__summary,
+  .cart-sidebar__panel > .cart-benefits {
+    display: none;
+  }
+
+  .cart-sidebar__panel {
+    background: transparent;
+  }
+
+  .cart-sidebar__widgets {
+    margin-top: 0;
+    padding-inline: 16px;
+  }
 }
 
 @keyframes cart-payments-scroll {

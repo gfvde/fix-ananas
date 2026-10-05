@@ -40,6 +40,8 @@
             </div>
 
             <div class="cart-page-layout__products">
+              {% include 'vitrin:cart/progressive_discount.jinja' %}
+
               <div data-cart-products-list>
                 {% include 'components/cart/products-list.jinja' %}
                 {% if store.settings.checkout.gift_order_settings.is_gift_order_enabled == '1' %}

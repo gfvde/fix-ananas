@@ -38,6 +38,10 @@
   "
 >
   <div class="cart-sidebar__panel">
+    <div class="cart-sidebar__wallet">
+      {% include 'vitrin:cart/customer_wallet_progress.jinja' %}
+    </div>
+
     <div
       class="cart-free-shipping cart-free-shipping--desktop"
       data-free-shipping-bar
@@ -102,7 +106,7 @@
       </div>
     </div>
 
-    <div>{% include 'components/cart/cart-summary.jinja' %}</div>
+    <div class="cart-sidebar__summary">{% include 'components/cart/cart-summary.jinja' %}</div>
 
     <div class="cart-benefits">
       {% if store.settings.checkout.is_loyalty_enabled | default(false) %}
@@ -257,11 +261,10 @@
       </div>
     </div>
 
-    <div
-      class="cart-sidebar__hidden-widgets"
-      data-payment-widgets
-    >
-      {% include 'vitrin:cart/payment_widgets.jinja' %}
+    {# Platform payment features (bank discounts above payment widgets, Apple Pay once per page) #}
+    <div class="cart-sidebar__widgets">
+      {% include 'vitrin:shared/bank_discounts.jinja' %}
+      <div data-payment-widgets>{% include 'vitrin:cart/payment_widgets.jinja' %}</div>
       {% include 'vitrin:checkout/apple-pay-quick-checkout.jinja' %}
     </div>
   </div>
