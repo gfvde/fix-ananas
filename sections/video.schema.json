@@ -4,6 +4,8 @@
     "ar": "فيديو",
     "en": "Video"
   },
+  "icon": "movie-line",
+  "meta": { "type": "video" },
   "settings": [
     {
       "id": "title",
@@ -44,6 +46,15 @@
       "label": {
         "ar": "تشغيل الفيديو بشكل مباشر",
         "en": "Autoplay"
+      },
+      "default": false
+    },
+    {
+      "id": "controls",
+      "type": "checkbox",
+      "label": {
+        "ar": "عرض ازرار التحكم",
+        "en": "Controls"
       },
       "default": false
     },

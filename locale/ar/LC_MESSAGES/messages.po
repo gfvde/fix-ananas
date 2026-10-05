@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: \n"
 "Language: ar\n"
 "Language-Team: ar <>\n"
-"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=0 && n%100<=2 ? 4 : 5);\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1519,3 +1519,54 @@ msgstr "أناناس مو مجرد محمصة هي ناس تحب القهوة، 
 
 msgid "We discover, experiment, and grow — and with every cup, we get closer"
 msgstr "نكتشف، نجرب، ونتطور ومع كل كوب، نكون أقرب"
+
+# --- schema/i18n fixes ---
+msgid "About details image"
+msgstr "صورة قسم التفاصيل"
+
+msgid "Image thumbnails"
+msgstr "الصور المصغرة"
+
+msgid "Link copied"
+msgstr "تم نسخ الرابط"
+
+msgid "Previous review"
+msgstr "التقييم السابق"
+
+msgid "Next review"
+msgstr "التقييم التالي"
+
+msgid "Open image link"
+msgstr "فتح رابط الصورة"
+
+msgid "Product video"
+msgstr "فيديو المنتج"
+
+msgid "Recipes"
+msgstr "الوصفات"
+
+msgid "Scroll thumbnails up"
+msgstr "تمرير الصور المصغرة للأعلى"
+
+msgid "Scroll thumbnails down"
+msgstr "تمرير الصور المصغرة للأسفل"
+
+msgid "Scroll to reviews"
+msgstr "الانتقال إلى التقييمات"
+
+msgid "Show more tags"
+msgstr "عرض المزيد من الوسوم"
+
+msgid "View the collection"
+msgstr "عرض المجموعة"
+
+msgid "Your browser does not support the video tag."
+msgstr "متصفحك لا يدعم تشغيل الفيديو."
+
+# English msgids for templates/product.jinja (currently _('الحموضة') / _('القوام');
+# switch those calls to _('Acidity') / _('Body') when product.jinja is edited)
+msgid "Acidity"
+msgstr "الحموضة"
+
+msgid "Body"
+msgstr "القوام"

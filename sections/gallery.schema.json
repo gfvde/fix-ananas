@@ -4,6 +4,8 @@
     "ar": "معرض الصور",
     "en": "Gallery"
   },
+  "icon": "gallery-line",
+  "meta": { "type": "gallery" },
   "settings": [
     {
       "id": "title",

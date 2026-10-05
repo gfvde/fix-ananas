@@ -243,7 +243,7 @@
           "default": "2"
         },
         {
-          "id": "product_card_unified_height",
+          "id": "unified_height",
           "type": "checkbox",
           "label": {
             "ar": "توحيد ارتفاع كارت المنتج",
@@ -705,6 +705,7 @@
         {
           "id": "list_features_with_product_selection",
           "type": "list",
+          "max_items": 20,
           "label": {
             "ar": "المميزات",
             "en": "Features List"
@@ -713,6 +714,7 @@
             {
               "id": "product_has_features",
               "type": "list",
+              "max_items": 50,
               "label": {
                 "ar": "مميزات المنتج",
                 "en": "Products have features"
@@ -732,6 +734,7 @@
             {
               "id": "list_features",
               "type": "list",
+              "max_items": 10,
               "label": {
                 "ar": "المميزات",
                 "en": "Features List"
@@ -837,6 +840,7 @@
         {
           "id": "bundle_products_with_selection",
           "type": "list",
+          "max_items": 20,
           "label": {
             "ar": "منتجات تُشترى معاً",
             "en": "Bundle Products"
@@ -853,6 +857,7 @@
             {
               "id": "bundle_items",
               "type": "list",
+              "max_items": 10,
               "label": {
                 "ar": "المنتجات المرتبطة",
                 "en": "Bundle Items"
@@ -910,6 +915,7 @@
         {
           "id": "list_features_with_product_selection_store",
           "type": "list",
+          "max_items": 20,
           "label": {
             "ar": "مميزات المتجر",
             "en": "Features List"
@@ -918,6 +924,7 @@
             {
               "id": "product_has_features_store",
               "type": "list",
+              "max_items": 50,
               "label": {
                 "ar": "تحديد المنتجات التي تظهر لها مميزات المتجر",
                 "en": "Select products that will display store features"
@@ -937,6 +944,7 @@
             {
               "id": "list_features_store",
               "type": "list",
+              "max_items": 10,
               "label": {
                 "ar": "مميزات المتجر",
                 "en": "Store Features List"
@@ -1082,6 +1090,7 @@
         {
           "id": "coffee_attributes_selection",
           "type": "list",
+          "max_items": 20,
           "label": {
             "ar": "خصائص القهوة",
             "en": "Coffee Attributes"
@@ -1090,6 +1099,7 @@
             {
               "id": "products_with_attributes",
               "type": "list",
+              "max_items": 50,
               "label": {
                 "ar": "تحديد المنتجات التي تظهر لها خصائص القهوة",
                 "en": "Select products to show coffee attributes"
@@ -1109,6 +1119,7 @@
             {
               "id": "coffee_attributes_list",
               "type": "list",
+              "max_items": 10,
               "label": {
                 "ar": "قائمة خصائص القهوة",
                 "en": "Coffee Attributes List"
@@ -1176,6 +1187,7 @@
         {
           "id": "coffee_cta_iframe_by_product",
           "type": "list",
+          "max_items": 50,
           "label": {
             "ar": "أزرار الـ CTA حسب المنتج",
             "en": "CTA Buttons by Product"
@@ -1439,13 +1451,6 @@
           },
           "default": "IBM+Plex+Sans+Arabic",
           "options": [
-            {
-              "label": {
-                "ar": "Expo Arabic",
-                "en": "Expo Arabic"
-              },
-              "value": "Expo+Arabic"
-            },
             {
               "label": {
                 "ar": "IBM Arabic",

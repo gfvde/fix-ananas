@@ -267,6 +267,7 @@
         {
           "id": "texts",
           "type": "list",
+          "max_items": 5,
           "label": {
             "ar": "النصوص",
             "en": "Texts"
@@ -432,6 +433,7 @@
         {
           "id": "mega_standalone_links",
           "type": "list",
+          "max_items": 8,
           "label": {
             "ar": "روابط بدون عنوان عمود (يمين)",
             "en": "Standalone Links (no column header, far right)"
@@ -458,6 +460,7 @@
         {
           "id": "mega_columns",
           "type": "list",
+          "max_items": 6,
           "label": {
             "ar": "أعمدة الميجا منيو",
             "en": "Mega Menu Columns"
@@ -476,6 +479,7 @@
             {
               "id": "links",
               "type": "list",
+              "max_items": 8,
               "label": { "ar": "الروابط", "en": "Links" },
               "item_label": { "ar": "رابط", "en": "Link" },
               "settings": [
@@ -568,6 +572,7 @@
         {
           "id": "popular_searches",
           "type": "list",
+          "max_items": 8,
           "label": {
             "ar": "عمليات البحث الشائعة",
             "en": "Popular Searches"

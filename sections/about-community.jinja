@@ -26,7 +26,9 @@
       </button>
     {% else %}
       <div class="ac-image">
-        <img src="{{ image_url(settings.photo, w=1440, f='auto') if settings.photo else 'https://www.figma.com/api/mcp/asset/67196906-4176-4917-a681-116ad5548b06' }}" alt="{{ settings.image_alt | default('') }}" loading="lazy">
+        {% if settings.photo %}
+        <img src="{{ image_url(settings.photo, w=1440, f='auto') }}" alt="{{ settings.image_alt | default('') }}" loading="lazy" decoding="async">
+        {% endif %}
       </div>
     {% endif %}
   </div>

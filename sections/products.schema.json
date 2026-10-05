@@ -4,6 +4,8 @@
     "ar": "قائمة المنتجات",
     "en": "Products"
   },
+  "icon": "shopping-bag-line",
+  "meta": { "type": "products" },
   "settings": [
     {
       "id": "layout",
@@ -92,6 +94,42 @@
         "en": "Mobile Grid Link URL"
       },
       "default": ""
+    },
+    {
+      "id": "products_source",
+      "type": "select",
+      "label": {
+        "ar": "مصدر المنتجات",
+        "en": "Products Source"
+      },
+      "options": [
+        {
+          "value": "tabs",
+          "label": {
+            "ar": "تبويبان",
+            "en": "Two tabs"
+          }
+        },
+        {
+          "value": "products",
+          "label": {
+            "ar": "قائمة منتجات واحدة",
+            "en": "Single product list"
+          }
+        }
+      ],
+      "default": "tabs"
+    },
+    {
+      "id": "products",
+      "type": "products",
+      "label": {
+        "ar": "اختر قائمة المنتجات",
+        "en": "Select Products"
+      },
+      "visible_if": {
+        "products_source": "products"
+      }
     },
     {
       "id": "tab_1_text",

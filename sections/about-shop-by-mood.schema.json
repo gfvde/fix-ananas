@@ -4,6 +4,7 @@
     "ar": "قهوتك على مزاجك",
     "en": "Coffee for your mood"
   },
+  "icon": "emotion-happy-line",
   "settings": [
     {
       "id": "section_bg_color",

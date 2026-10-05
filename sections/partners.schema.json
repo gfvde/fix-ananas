@@ -4,6 +4,8 @@
     "ar": "شركائنا",
     "en": "Partners"
   },
+  "icon": "group-line",
+  "meta": { "type": "partners" },
   "settings": [
     {
       "id": "title",

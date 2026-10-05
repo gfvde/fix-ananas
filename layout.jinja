@@ -17,7 +17,7 @@
     />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+      content="width=device-width, initial-scale=1"
     />
     <style>.no-js-init dialog,.no-js-init el-dialog,.no-js-init .ananas-mega,.no-js-init .ananas-search{visibility:hidden!important;pointer-events:none!important}</style>
     {% vitrin_head %}
@@ -37,44 +37,12 @@
     />
 
 
-    {% if settings.font_family == 'Expo+Arabic' %}
-      <!-- prettier-ignore-start -->
-      <style>
-        /* Note: onlinewebfonts URLs are blocked by CORS. You must upload the font files to the assets/fonts/ directory and reference them locally to fix the console errors. */
-        @font-face {
-          font-family: 'Expo Arabic';
-          /* src: url('https://db.onlinewebfonts.com/t/1b047c9f13e477c4e2e04ced6f65e5e8.woff2') format('woff2'),
-               url('https://db.onlinewebfonts.com/t/1b047c9f13e477c4e2e04ced6f65e5e8.woff') format('woff'); */
-          font-weight: 400;
-          font-style: normal;
-          font-display: swap;
-        }
-        @font-face {
-          font-family: 'Expo Arabic';
-          /* src: url('https://db.onlinewebfonts.com/t/fc1db5810ac27f4ab57ff5ed6c190a1a.woff2') format('woff2'),
-               url('https://db.onlinewebfonts.com/t/fc1db5810ac27f4ab57ff5ed6c190a1a.woff') format('woff'); */
-          font-weight: 500;
-          font-style: normal;
-          font-display: swap;
-        }
-        @font-face {
-          font-family: 'Expo Arabic';
-          /* src: url('https://db.onlinewebfonts.com/t/4cac2b67059c10c8df5e2779c7ca42af.woff2') format('woff2'),
-               url('https://db.onlinewebfonts.com/t/4cac2b67059c10c8df5e2779c7ca42af.woff') format('woff'); */
-          font-weight: 700;
-          font-style: normal;
-          font-display: swap;
-        }
-      </style>
-      <!-- prettier-ignore-end -->
-    {% else %}
-      <link
-        rel="stylesheet"
-        media="print"
-        onload="this.onload=null;this.media='all'"
-        href="https://fonts.googleapis.com/css2?family={{ settings.font_family | default('Roboto') }}:wght@300;400;500;700&display=swap"
-      />
-    {% endif %}
+    <link
+      rel="stylesheet"
+      media="print"
+      onload="this.onload=null;this.media='all'"
+      href="https://fonts.googleapis.com/css2?family={{ settings.font_family | default('Roboto') }}:wght@300;400;500;700&display=swap"
+    />
     {#
       Prettier ignore is needed here because the CSS contains Jinja template variables
       which cause Prettier's PostCSS parser to fail with "Cannot read properties of undefined (reading 'raw')"
