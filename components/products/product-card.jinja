@@ -5,7 +5,10 @@
 {% set show_card_options_above_title = show_card_options_above_title | default(false) %}
 {% set wishlist_card_mode = wishlist_card_mode | default(false) %}
 
-{% set is_out_of_stock = product.in_stock == false or (product.is_infinite == false and product.quantity is not none and product.quantity <= 0) %}
+{# Preorder: can_be_preordered decides availability, effective_preorder_campaign decides display #}
+{% set has_preorder = true if product.effective_preorder_campaign else false %}
+{% set can_preorder = product.can_be_preordered %}
+{% set is_out_of_stock = (product.in_stock == false or (product.is_infinite == false and product.quantity is not none and product.quantity <= 0)) and not can_preorder %}
 {% set has_options = product.has_options or product.has_fields %}
 {# ************************** Card Options **************************************** #}
 {# All product card display settings come from body data attributes set in layout.jinja #}
@@ -43,6 +46,10 @@
         {% with product=product %}
           {% include 'components/products/merchant-badge.jinja' %}
         {% endwith %}
+      {% endif %}
+      {% if has_preorder %}
+        {% set preorder_badge_variant = 'product_card' %}
+        {% include 'vitrin:products/preorder_badge.jinja' %}
       {% endif %}
       {% if is_out_of_stock %}
         <span class="pc-badge-pill">{{ _("OUT OF STOCK") }}</span>
@@ -145,7 +152,7 @@
             class="pc-cta"
             data-add-to-cart="{{ product.id }}"
           >
-            {{ _("Add to cart") }}
+            {{ _("Preorder now") if has_preorder else _("Add to cart") }}
           </button>
         {% endif %}
       </div>

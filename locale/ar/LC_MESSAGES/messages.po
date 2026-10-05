@@ -1519,3 +1519,11 @@ msgstr "أناناس مو مجرد محمصة هي ناس تحب القهوة، 
 
 msgid "We discover, experiment, and grow — and with every cup, we get closer"
 msgstr "نكتشف، نجرب، ونتطور ومع كل كوب، نكون أقرب"
+
+
+# --- commerce fixes ---
+msgid "Preorder"
+msgstr "الطلب المسبق"
+
+msgid "Preorder now"
+msgstr "اطلب مسبقاً"

@@ -3,6 +3,23 @@
 {% block title %}{{ product.name }} – {{ store.name }}{% endblock %}
 
 {% block content %}
+  {# Preorder state (see Zid "Add Preorder Support"): can_be_preordered drives
+     availability, preorder_campaign drives display #}
+  {% if product %}
+    {% set selected_product = selected_product if selected_product is defined else product.selected_product %}
+    {% set has_preorder = true if product.effective_preorder_campaign else false %}
+    {% set can_preorder = product.can_be_preordered %}
+    {% set preorder_stock_behavior = product.preorder_stock_behavior %}
+    {% set is_in_stock = selected_product.in_stock if selected_product else product.in_stock %}
+    {% set can_buy = is_in_stock or can_preorder %}
+  {% else %}
+    {% set has_preorder = false %}
+    {% set can_preorder = false %}
+    {% set preorder_stock_behavior = '' %}
+    {% set is_in_stock = false %}
+    {% set can_buy = false %}
+  {% endif %}
+
   {# Breadcrumb Section #}
   <section class="py-[10px]"
   style="background-color: {{ settings.single_product_section_background_color_page or 'transparent' }};"
@@ -37,6 +54,9 @@
   {# Product Main Section #}
   {% set details_position = store.settings.product_gallery.details_thumbnail_position %}
   <section class="pb-9 md:pb-12 single-product-page"
+  data-has-preorder="{{ 'true' if has_preorder else 'false' }}"
+  data-can-preorder="{{ 'true' if can_preorder else 'false' }}"
+  data-stock-behavior="{{ preorder_stock_behavior or '' }}"
   
   style="background-color: {{ settings.single_product_section_background_color_page or 'transparent' }};">
     <div class="theme-container overflow-x-hidden">
@@ -210,6 +230,11 @@
                         {% with product=product %}
                           {% include 'components/products/merchant-badge.jinja' %}
                         {% endwith %}
+                      {% endif %}
+
+                      {# Preorder Badge #}
+                      {% if has_preorder %}
+                        {% include 'vitrin:products/preorder_badge.jinja' %}
                       {% endif %}
 
                       {# Bundle Offer Badge #}
@@ -883,7 +908,7 @@
 
             {# Quantity Input #}
             <div
-              class="{{ 'hidden' if not product.in_stock }} grid w-full items-center gap-2"
+              class="{{ 'hidden' if not is_in_stock }} grid w-full items-center gap-2"
               data-quantity-wrapper
             >
               <label
@@ -891,7 +916,7 @@
                 class="form-label"
                 >{{ 'الكمية' if session.lang == 'ar' else 'Quantity' }}</label
               >
-              {% with id='product-quantity', quantity=1, min=1, max=product.quantity if not product.is_infinite else none, sync_target='sticky-qty' %}
+              {% with id='product-quantity', quantity=1, min=1, max=product.quantity if not product.is_infinite and product.quantity and product.quantity > 0 else (1 if can_preorder else none), sync_target='sticky-qty' %}
                 {% include 'components/ui/quantity-input.jinja' %}
               {% endwith %}
             </div>
@@ -935,7 +960,7 @@
                             >
                               {# In Stock State #}
                               <div
-                                class="{{ 'hidden' if not product.in_stock }} flex items-center gap-2"
+                                class="{{ 'hidden' if not can_buy }} flex items-center gap-2"
                                 data-in-stock
                               >
                                 {# Add to Cart Button #}
@@ -950,7 +975,7 @@
                                 <path d="M16.2002 4.72808L1.80069 4.72787L1.79976 4.72813M1.79976 4.72813L4.68616 1.84173C4.85494 1.67295 5.08386 1.57812 5.32255 1.57812H12.677C12.9157 1.57812 13.1446 1.67295 13.3134 1.84173L16.2002 4.72808L16.1998 14.7151C16.1998 15.6612 15.4183 16.4281 14.4543 16.4281H3.54521C2.58123 16.4281 1.79976 15.6612 1.79976 14.7151V4.72813ZM11.6998 7.42813C11.6998 8.9193 10.4909 10.1281 8.99976 10.1281C7.50859 10.1281 6.29976 8.9193 6.29976 7.42813" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
 
-                                  {{ 'أضف للسلة' if session.lang == 'ar' else 'Add to cart' }}
+                                  {{ _("Preorder now") if product.preorder_campaign else _("Add to cart") }}
                                 </button>
                 
                                 {# i need to add buy now button #}
@@ -971,7 +996,7 @@
                 
                               {# Out of Stock State #}
                               <div
-                                class="{{ 'hidden' if product.in_stock }} flex flex-col gap-3"
+                                class="{{ 'hidden' if can_buy }} flex flex-col gap-3"
                                 data-out-of-stock
                               >
                                 {# Disabled Add to Cart Button #}
@@ -980,7 +1005,7 @@
                                   disabled
                                   class="btn btn-lg bg-secondary text-muted-foreground w-full cursor-not-allowed border border-transparent"
                                 >
-                                  {{ 'أضف للسلة' if session.lang == 'ar' else 'Add to cart' }}
+                                  {{ _("Preorder now") if product.preorder_campaign else _("Add to cart") }}
                                 </button>
                 
                                 {# Notify Me & Wishlist Buttons #}
@@ -1308,6 +1333,7 @@ document.getElementById('bundle-add-btn').addEventListener('click', async functi
             {% include 'vitrin:products/loyalty_points_widget.jinja' %}
             {% include 'vitrin:shared/bank_discounts.jinja' %}
             {% include 'vitrin:products/payment_widgets.jinja' %}
+            {% include 'vitrin:products/preorder_countdown.jinja' %}
             {% include 'vitrin:checkout/apple-pay-quick-checkout.jinja' %}
 
           </form>
