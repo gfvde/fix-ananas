@@ -31,7 +31,8 @@ import "./features/price-slider.js";
 import "./features/bundle-offers.js";
 import "./features/notify-me.js";
 import "./features/product-card.js";
-// Note: loyalty-rewards is loaded as standalone script AFTER vitrin_body in layout.jinja
+// Note: the loyalty floating button (js/layout-loyalty.js) is a standalone script in layout.jinja;
+// it opens the platform window.loyalty_rewards_dialog.
 
 // Store for initialized carousel instances (for cleanup)
 const carouselInstances = new WeakMap();
