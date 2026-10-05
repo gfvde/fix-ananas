@@ -84,20 +84,31 @@
           </div>
 
           {# MOBILE FIXED CHECKOUT BUTTON #}
-          <div class="cart-mobile-checkout-bar cart-mobile-only">
-            <a
-              href="/checkout"
-              class="cart-mobile-checkout-btn"
-              data-cart-mobile-checkout
-            >
-              <span class="cart-mobile-checkout-btn__prices">
-                <span class="cart-mobile-checkout-btn__compare" data-cart-mobile-compare></span>
-                <span class="cart-mobile-checkout-btn__total" data-cart-mobile-total>
-                  {%- for t in cart.totals if t.code == 'total' -%}{{ t.value_string }}{%- endfor -%}
-                </span>
+          {% set store_closed = safeget(store, 'settings.general.availability.closed_now') %}
+          {% set mobile_checkout_inner %}
+            <span class="cart-mobile-checkout-btn__prices">
+              <span class="cart-mobile-checkout-btn__compare" data-cart-mobile-compare></span>
+              <span class="cart-mobile-checkout-btn__total" data-cart-mobile-total>
+                {%- for t in cart.totals if t.code == 'total' -%}{{ t.value_string }}{%- endfor -%}
               </span>
-              <span class="cart-mobile-checkout-btn__label">{{ _('Complete your order') }}</span>
-            </a>
+            </span>
+            <span class="cart-mobile-checkout-btn__label">{{ _('Store is closed') if store_closed else _('Complete your order') }}</span>
+          {% endset %}
+          <div class="cart-mobile-checkout-bar cart-mobile-only">
+            {% if store_closed %}
+              <button
+                type="button"
+                class="cart-mobile-checkout-btn"
+                disabled
+                data-cart-mobile-checkout
+              >{{ mobile_checkout_inner }}</button>
+            {% else %}
+              <a
+                href="{{ '/auth/login?redirect_to=/checkout' if safeget(session, 'is_guest') else '/checkout' }}"
+                class="cart-mobile-checkout-btn"
+                data-cart-mobile-checkout
+              >{{ mobile_checkout_inner }}</a>
+            {% endif %}
           </div>
         </div>
       {% else %}

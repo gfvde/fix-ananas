@@ -204,11 +204,22 @@
     </div>
   </div>
 
-  <a
-    href="/checkout"
-    class="cart-summary__checkout"
-  >
-    <span data-cart-summary-checkout-total>{{ money_text(total_text) }}</span>
-    <span>{{ _('Complete your order') }}</span>
-  </a>
+  {% if safeget(store, 'settings.general.availability.closed_now') %}
+    <button
+      type="button"
+      class="cart-summary__checkout"
+      disabled
+    >
+      <span data-cart-summary-checkout-total>{{ money_text(total_text) }}</span>
+      <span>{{ _('Store is closed') }}</span>
+    </button>
+  {% else %}
+    <a
+      href="{{ '/auth/login?redirect_to=/checkout' if safeget(session, 'is_guest') else '/checkout' }}"
+      class="cart-summary__checkout"
+    >
+      <span data-cart-summary-checkout-total>{{ money_text(total_text) }}</span>
+      <span>{{ _('Complete your order') }}</span>
+    </a>
+  {% endif %}
 </div>

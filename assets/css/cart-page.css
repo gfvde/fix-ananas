@@ -854,6 +854,10 @@ html[dir="ltr"] .cart-coupon__form {
   text-decoration: underline;
 }
 
+.cart-loyalty__link--note {
+  text-decoration: none;
+}
+
 .cart-features {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1060,6 +1064,14 @@ html[dir="ltr"] .cart-coupon__form {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(2px);
   border-top: 1px solid #d4d4d4;
+}
+
+/* Store closed: checkout buttons are rendered as disabled <button> */
+.cart-mobile-checkout-btn:disabled,
+.cart-summary__checkout:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  border: none;
 }
 
 /* Figma btn: bg #f7512b, flex-1, h-44, gap-8, py-8 px-4, no-radius */

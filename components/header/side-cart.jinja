@@ -241,11 +241,22 @@
         </div>
       </div>
       <div class="flex w-full items-center gap-3">
-        <a
-          href="/checkout"
-          class="ananas-side-cart__btn ananas-side-cart__btn--primary font-expo"
-          >{{ _('Checkout page') }}</a
-        >
+        {% if safeget(store, 'settings.general.availability.closed_now') %}
+          <button
+            type="button"
+            disabled
+            class="ananas-side-cart__btn ananas-side-cart__btn--primary font-expo"
+            style="opacity: 0.6; cursor: not-allowed;"
+          >
+            {{ _('Store is closed') }}
+          </button>
+        {% else %}
+          <a
+            href="{{ '/auth/login?redirect_to=/checkout' if safeget(session, 'is_guest') else '/checkout' }}"
+            class="ananas-side-cart__btn ananas-side-cart__btn--primary font-expo"
+            >{{ _('Checkout page') }}</a
+          >
+        {% endif %}
         <a
           href="{{ url_for('cart_page') }}"
           class="ananas-side-cart__btn ananas-side-cart__btn--outline font-expo"

@@ -1,5 +1,6 @@
 {# Mobile benefits: Loyalty + UVPs + Payment methods (mirrors sidebar cart-benefits) #}
 {% set cart_settings = settings %}
+{% set is_guest_customer = safeget(session, 'is_guest', true) %}
 {% set feature_title_color = safeget(cart_settings, 'cart_page_feature_title_color', '#000000') %}
 {% set feature_subtitle_color = safeget(cart_settings, 'cart_page_feature_subtitle_color', '#52525C') %}
 {% set loyalty_bg = safeget(cart_settings, 'cart_page_loyalty_background_color', '#F5F5F5') %}
@@ -46,13 +47,20 @@
       </div>
       <a
         href="/auth/login?redirect_to=/cart"
-        class="cart-loyalty__link"
+        class="cart-loyalty__link{{ ' hidden' if not is_guest_customer }}"
+        data-auth-guest
         data-action="login"
         data-redirect="/cart"
         data-add-to-url="false"
       >
         {{ _('Please log in to view and redeem your points') }} ←
       </a>
+      <span
+        class="cart-loyalty__link cart-loyalty__link--note{{ ' hidden' if is_guest_customer }}"
+        data-auth-user
+      >
+        {{ _('Points will be added to your balance after your order is completed') }}
+      </span>
     </div>
   {% endif %}
 

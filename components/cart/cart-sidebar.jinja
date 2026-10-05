@@ -1,4 +1,5 @@
 {% set cart_settings = settings %}
+{% set is_guest_customer = safeget(session, 'is_guest', true) %}
 {% set feature_title_color = safeget(cart_settings, 'cart_page_feature_title_color', safeget(cart_settings, 'cart_page_cart_page_feature_title_color', '#000000')) %}
 {% set feature_subtitle_color = safeget(cart_settings, 'cart_page_feature_subtitle_color', safeget(cart_settings, 'cart_page_cart_page_feature_subtitle_color', '#52525C')) %}
 {% set loyalty_bg = safeget(cart_settings, 'cart_page_loyalty_background_color', safeget(cart_settings, 'cart_page_cart_page_loyalty_background_color', '#F5F5F5')) %}
@@ -18,12 +19,14 @@
   %}
 {% endif %}
 
-{% set subtotal_condition = cart.free_shipping_rule.subtotal_condition if cart.free_shipping_rule else none %}
-{% set free_shipping_status = subtotal_condition.status | default('') if subtotal_condition else '' %}
-{% set free_shipping_remaining_raw = subtotal_condition.remaining | default('57.00 SAR') if subtotal_condition else '57.00 SAR' %}
-{% set free_shipping_remaining_num = free_shipping_remaining_raw | replace(' SAR', '') | replace(' sar', '') | replace('SAR', '') | trim %}
-{% set free_shipping_remaining = free_shipping_remaining_num %}
-{% set free_shipping_percent = subtotal_condition.products_subtotal_percentage_from_min | default(0) if subtotal_condition else 70 %}
+{% set has_free_shipping_rule = cart.free_shipping_rule and cart.free_shipping_rule.code %}
+{% set subtotal_condition = cart.free_shipping_rule.subtotal_condition if has_free_shipping_rule else none %}
+{% set free_shipping_status = (subtotal_condition.status | default('')) if subtotal_condition else '' %}
+{% set free_shipping_remaining_raw = ((subtotal_condition.remaining | default('0')) if subtotal_condition else '0') | string | trim %}
+{# remaining is already currency-formatted; only SAR is swapped for the riyal symbol #}
+{% set free_shipping_is_sar = free_shipping_remaining_raw.endswith('SAR') or free_shipping_remaining_raw.endswith('sar') %}
+{% set free_shipping_remaining = (free_shipping_remaining_raw | replace('SAR', '') | replace('sar', '') | trim) if free_shipping_is_sar else free_shipping_remaining_raw %}
+{% set free_shipping_percent = (subtotal_condition.products_subtotal_percentage_from_min | default(0)) if subtotal_condition else 0 %}
 {% set free_shipping_width = 100 if free_shipping_status == 'applied' else free_shipping_percent %}
 
 <aside
@@ -42,6 +45,7 @@
       {% include 'vitrin:cart/customer_wallet_progress.jinja' %}
     </div>
 
+    {% if has_free_shipping_rule %}
     <div
       class="cart-free-shipping cart-free-shipping--desktop"
       data-free-shipping-bar
@@ -90,7 +94,7 @@
             {{ _('Free shipping applied!') }}
           {% else %}
             {% set riyal_svg %}<svg class="riyal-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1124.14 1256.39" width="12" height="14" style="display:inline-block;vertical-align:-0.1em"><path fill="currentColor" d="M699.62,1113.02h0c-20.06,44.48-33.32,92.75-38.4,143.37l424.51-90.24c20.06-44.47,33.31-92.75,38.4-143.37l-424.51,90.24Z"/><path fill="currentColor" d="M1085.73,895.8c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.33v-135.2l292.27-62.11c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.27V66.13c-50.67,28.45-95.67,66.32-132.25,110.99v403.35l-132.25,28.11V0c-50.67,28.44-95.67,66.32-132.25,110.99v525.69l-295.91,62.88c-20.06,44.47-33.33,92.75-38.42,143.37l334.33-71.05v170.26l-358.3,76.14c-20.06,44.47-33.32,92.75-38.4,143.37l375.04-79.7c30.53-6.35,56.77-24.4,73.83-49.24l68.78-101.97v-.02c7.14-10.55,11.3-23.27,11.3-36.97v-149.98l132.25-28.11v270.4l424.53-90.28Z"/></svg>{% endset %}
-            {{ (_('Add purchases worth %(amount)s to get free shipping') | format(amount=free_shipping_remaining ~ ' ' ~ riyal_svg)) | safe }}
+            {{ (_('Add purchases worth %(amount)s to get free shipping') | format(amount=(free_shipping_remaining | e) ~ ((' ' ~ riyal_svg) if free_shipping_is_sar else ''))) | safe }}
           {% endif %}
         </span>
       </div>
@@ -105,6 +109,7 @@
         ></span>
       </div>
     </div>
+    {% endif %}
 
     <div class="cart-sidebar__summary">{% include 'components/cart/cart-summary.jinja' %}</div>
 
@@ -167,13 +172,20 @@
           </div>
           <a
             href="/auth/login?redirect_to=/cart"
-            class="cart-loyalty__link"
+            class="cart-loyalty__link{{ ' hidden' if not is_guest_customer }}"
+            data-auth-guest
             data-action="login"
             data-redirect="/cart"
             data-add-to-url="false"
           >
             {{ _('Please log in to view and redeem your points') }} ←
           </a>
+          <span
+            class="cart-loyalty__link cart-loyalty__link--note{{ ' hidden' if is_guest_customer }}"
+            data-auth-user
+          >
+            {{ _('Points will be added to your balance after your order is completed') }}
+          </span>
         </div>
       {% endif %}
 
