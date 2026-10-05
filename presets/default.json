@@ -1166,7 +1166,7 @@
       "path": "layout.jinja",
       "settings": {
         "ar": {
-          "font_family": "Expo+Arabic",
+          "font_family": "IBM+Plex+Sans+Arabic",
           "cart_page_features": [
             {
               "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/687474c3-df84-4183-a278-ebaff513025d.png",
