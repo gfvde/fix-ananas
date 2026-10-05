@@ -1530,3 +1530,15 @@ msgstr "اطلب مسبقاً"
 
 msgid "Points will be added to your balance after your order is completed"
 msgstr "ستُضاف النقاط إلى رصيدك بعد إتمام الطلب"
+
+msgid "Could not load products"
+msgstr "تعذر تحميل المنتجات"
+
+msgid "Products added to cart"
+msgstr "تمت إضافة المنتجات إلى السلة"
+
+msgid "Some products were added"
+msgstr "تمت إضافة بعض المنتجات فقط"
+
+msgid "Some products are out of stock"
+msgstr "بعض المنتجات غير متوفرة حالياً"

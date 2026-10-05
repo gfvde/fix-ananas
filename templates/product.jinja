@@ -1106,6 +1106,7 @@
         <div id="bundle-products-row" class="flex flex-wrap items-start gap-1"></div>
         <div class="mt-4 flex md:justify-start justify-center">
           <button id="bundle-add-btn"
+                  type="button"
                   class="px-6 py-3  text-sm font-medium border-2 transition-all duration-200 flex items-center gap-2"
                   style="border-color: {{ ns.current_bundle.bundle_btn_color | default('#e63b3b') }}; color: {{ ns.current_bundle.bundle_btn_color | default('#e63b3b') }};">
             <span>{{ ns.current_bundle.bundle_btn_text | default('اشتري معاً بسعر') }}</span>
@@ -1126,68 +1127,103 @@
   (function () {
 
     const MAIN_PRODUCT = {
-      id: "{{ product.id }}",
+      id: {{ (product.selected_product.id if product.selected_product else product.id) | string | tojson }},
       name: {{ product.name | tojson }},
-      price: {{ product.effective_price | default(product.price) }},
-      image: "{{ product.main_image.image.medium }}",
-      formatted_price: {{ product.formatted_sale_price | default(product.formatted_price) | tojson }}
+      price: {{ (safeget(product, 'selected_product.sale_price') or safeget(product, 'selected_product.price') or product.sale_price or product.price or 0) | float | tojson }},
+      image: {{ safeget(product, 'main_image.image.medium', '') | tojson }},
+      formatted_price: {{ (product.formatted_sale_price or product.formatted_price or '') | tojson }}
     };
 
     const BUNDLE_ITEMS_RAW = [
-      {% for item in ns.current_bundle.bundle_items %}
+      {% for item in ns.current_bundle.bundle_items if item.product %}
       {
-        id: "{{ item.product.id }}",
+        id: {{ item.product.id | string | tojson }},
         name: {{ item.product.name | tojson }},
-        checked: {{ item.checked_by_default | default(false) | tojson }}
+        checked: {{ (item.checked_by_default | default(false)) | tojson }}
       }{% if not loop.last %},{% endif %}
       {% endfor %}
     ];
 
-    const BTN_COLOR = "{{ ns.current_bundle.bundle_btn_color | default('#e63b3b') }}";
+    const BTN_COLOR = {{ (ns.current_bundle.bundle_btn_color or '#e63b3b') | tojson }};
+    const I18N = {
+      loadError: {{ _("Could not load products") | tojson }},
+      added: {{ _("Products added to cart") | tojson }},
+      partiallyAdded: {{ _("Some products were added") | tojson }},
+      failed: {{ _("Some products are out of stock") | tojson }},
+      selectOptions: {{ _("Select options") | tojson }}
+    };
     let bundleData = [];
 
-async function loadBundleProducts() {
-  try {
-    const fetched = await Promise.all(
-      BUNDLE_ITEMS_RAW.map(async function(item) {
-        const response = await window.zid.products.get(item.id);
-        const p = response.product || response.data || response;
-        return {
-          id: item.id,
-          name: p.name || item.name,
-          price: p.effective_price || p.sale_price || p.price || 0,
-          formatted_price: p.formatted_sale_price || p.formatted_price || '',
-          image: (p.main_image && p.main_image.image && p.main_image.image.medium) || '',
-          checked: item.checked
-        };
-      })
-    );
-    bundleData = fetched;
-    console.log('Bundle products loaded:', bundleData);
-    renderBundle();
-  } catch (e) {
-    console.error('Bundle fetch error:', e);
-    document.getElementById('bundle-skeleton').innerHTML =
-      '<p class="text-sm text-gray-400 text-right">تعذر تحميل المنتجات</p>';
-  }
-}
+    function showSkeletonError() {
+      const skeleton = document.getElementById('bundle-skeleton');
+      if (skeleton) {
+        skeleton.innerHTML = '<p class="text-sm text-gray-400 text-right"></p>';
+        skeleton.firstChild.textContent = I18N.loadError;
+      }
+    }
 
-// ── Init — wait for zid to be ready ──────────────────────────────────────
-function waitForZid(callback, retries = 20) {
-  if (typeof window.zid !== 'undefined' && window.zid.products) {
-    callback();
-  } else if (retries > 0) {
-    setTimeout(function() { waitForZid(callback, retries - 1); }, 200);
-  } else {
-    console.error('zid SDK not available');
-    document.getElementById('bundle-skeleton').innerHTML =
-      '<p class="text-sm text-gray-400 text-right">تعذر تحميل المنتجات</p>';
-  }
-}
+    function escapeHtml(value) {
+      return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
 
-waitForZid(loadBundleProducts);
+    // Reuse the store's formatted price (currency symbol/position) for the bundle total
+    function formatMoney(amount) {
+      const value = Number(amount || 0).toFixed(2);
+      const sample = MAIN_PRODUCT.formatted_price || '';
+      const numberPattern = /[\d٠-٩][\d٠-٩.,٫٬\s]*/;
+      return numberPattern.test(sample) ? sample.replace(numberPattern, value + ' ').replace(/\s+/g, ' ').trim() : value;
+    }
+
+    function notify(message, type) {
+      if (typeof window.showAnanasToast === 'function') {
+        window.showAnanasToast(message, type || 'success');
+      }
+    }
+
+    async function loadBundleProducts() {
+      try {
+        const fetched = await Promise.all(
+          BUNDLE_ITEMS_RAW.map(async function (item) {
+            const response = await window.zid.products.get(item.id);
+            const p = (response && (response.product || response.data)) || response || {};
+            const needsOptions = !!(p.has_options || p.has_fields || p.product_class === 'dynamic_bundle');
+            return {
+              id: item.id,
+              name: p.name || item.name,
+              price: p.sale_price || p.price || 0,
+              formatted_price: p.formatted_sale_price || p.formatted_price || '',
+              image: (p.main_image && p.main_image.image && p.main_image.image.medium) || '',
+              url: p.html_url || (p.slug ? '/products/' + p.slug : ''),
+              needsOptions: needsOptions,
+              checked: needsOptions ? false : item.checked
+            };
+          })
+        );
+        bundleData = fetched;
+        renderBundle();
+      } catch (e) {
+        console.error('Bundle fetch error:', e);
+        showSkeletonError();
+      }
+    }
+
+    function waitForZid(callback, retries) {
+      retries = typeof retries === 'number' ? retries : 25;
+      if (window.zid && window.zid.products && window.zid.cart) {
+        callback();
+      } else if (retries > 0) {
+        setTimeout(function () { waitForZid(callback, retries - 1); }, 200);
+      } else {
+        console.error('zid SDK not available');
+        showSkeletonError();
+      }
+    }
+
     function renderBundle() {
       const row = document.getElementById('bundle-products-row');
+      if (!row) return;
       row.innerHTML = '';
 
       row.appendChild(createCard({
@@ -1204,16 +1240,14 @@ waitForZid(loadBundleProducts);
         plus.className = 'flex items-center self-center text-[#737373] text-xl font-light mt-[-20px] select-none';
         plus.textContent = '+';
         row.appendChild(plus);
-        row.appendChild(createCard(item, true));
+        row.appendChild(createCard(item, !item.needsOptions));
       });
-      console.log('Rendering bundle with items:', bundleData);
       updateTotal();
       document.getElementById('bundle-skeleton').classList.add('hidden');
       document.getElementById('bundle-content').classList.remove('hidden');
     }
 
     function createCard(item, toggleable) {
-      console.log('Creating card for item:', item, 'Toggleable:', toggleable);
       const wrapper = document.createElement('div');
       wrapper.className = 'bundle-card flex flex-col items-start w-[106px] md:w-[120px]';
       wrapper.dataset.id = item.id;
@@ -1223,12 +1257,14 @@ waitForZid(loadBundleProducts);
       const imgOpacity = item.checked ? '1' : '0.4';
       const checkBg = item.checked ? '#1b1b1b' : '#e5e7eb';
       const cursorClass = toggleable ? 'cursor-pointer' : '';
+      const optionsLink = item.needsOptions && item.url
+        ? '<a href="' + escapeHtml(item.url) + '" class="text-xs underline mt-1">' + escapeHtml(I18N.selectOptions) + '</a>'
+        : '';
 
       wrapper.innerHTML = `
-        <div class="relative ${cursorClass}" ${toggleable ? `onclick="window.__bundleToggle('${item.id}')"` : ''}>
-          <img src="${item.image}"
-               alt="${item.name}"
-               onerror="this.src='https://placehold.co/120x120?text=...'"
+        <div class="relative ${cursorClass}" data-bundle-toggle>
+          <img src="${escapeHtml(item.image)}"
+               alt="${escapeHtml(item.name)}"
                class="w-[106px] h-[106px] md:w-[120px] md:h-[120px] object-cover transition-opacity duration-200"
                style="opacity:${imgOpacity};">
           <div class="check-dot absolute top-1 right-1 w-5 h-5 rounded flex items-center justify-center transition-colors duration-200"
@@ -1238,91 +1274,99 @@ waitForZid(loadBundleProducts);
             </svg>
           </div>
         </div>
-        <p class="font-medium text-xs leading-4 tracking-normal md:text-sm md:leading-5 line-clamp-2 w-full">${item.name}</p>
-        <!-- <p class="font-normal text-[#525252] text-xs leading-4 tracking-normal align-middle md:text-sm md:leading-5 line-clamp-2 w-full">${item.short_description}</p> -->
-        <p class="text-xs font-medium mt-1" style="color:${BTN_COLOR};">${item.formatted_price}</p>
+        <p class="font-medium text-xs leading-4 tracking-normal md:text-sm md:leading-5 line-clamp-2 w-full">${escapeHtml(item.name)}</p>
+        <p class="text-xs font-medium mt-1" style="color:${escapeHtml(BTN_COLOR)};">${escapeHtml(item.formatted_price)}</p>
+        ${optionsLink}
       `;
+      if (toggleable) {
+        wrapper.querySelector('[data-bundle-toggle]').addEventListener('click', function () {
+          toggleItem(item.id);
+        });
+      }
       return wrapper;
     }
 
-    window.__bundleToggle = function (id) {
-      const card = document.querySelector(`.bundle-card[data-id="${id}"]`);
+    function toggleItem(id) {
+      const card = document.querySelector('.bundle-card[data-id="' + CSS.escape(id) + '"]');
       if (!card) return;
       const isChecked = card.dataset.checked === 'true';
       card.dataset.checked = isChecked ? 'false' : 'true';
       card.querySelector('img').style.opacity = isChecked ? '0.4' : '1';
       card.querySelector('.check-dot').style.background = isChecked ? '#e5e7eb' : '#1b1b1b';
-      const item = bundleData.find(i => i.id === id);
+      const item = bundleData.find(function (i) { return i.id === id; });
       if (item) item.checked = !isChecked;
       updateTotal();
-    };
+    }
 
     function updateTotal() {
-      let total = MAIN_PRODUCT.price;
+      let total = Number(MAIN_PRODUCT.price) || 0;
       bundleData.forEach(function (item) {
-        if (item.checked) total += parseFloat(item.price || 0);
+        if (item.checked) total += parseFloat(item.price || 0) || 0;
       });
-      document.getElementById('bundle-total-display').textContent =
-        total.toFixed(2) + ' ر.س';
+      document.getElementById('bundle-total-display').textContent = formatMoney(total);
     }
 
-document.getElementById('bundle-add-btn').addEventListener('click', async function () {
-  const btn = this;
-  const loader = document.getElementById('bundle-add-loader');
-  btn.disabled = true;
-  loader.classList.remove('hidden');
+    const addBtn = document.getElementById('bundle-add-btn');
+    if (addBtn) {
+      addBtn.addEventListener('click', async function (event) {
+        event.preventDefault();
+        const btn = this;
+        const loader = document.getElementById('bundle-add-loader');
+        btn.disabled = true;
+        loader.classList.remove('hidden');
 
-  const toAdd = [MAIN_PRODUCT.id, ...bundleData.filter(i => i.checked).map(i => i.id)];
+        let hasError = false;
+        let addedCount = 0;
 
-  let hasError = false;
-  let addedCount = 0;
+        // Main product goes through the product form so the selected variant,
+        // quantity and custom fields are respected.
+        try {
+          await window.zid.cart.addProduct({ form_id: 'product-form' }, { showErrorNotification: true });
+          addedCount++;
+        } catch (e) {
+          console.warn('Failed to add main product:', e);
+          hasError = true;
+        }
 
-  for (const pid of toAdd) {
-    try {
-      const response = await zid.cart.addProduct(
-        { product_id: pid, quantity: 1 },
-        { showErrorNotification: false }
-      );
+        const extras = bundleData.filter(function (i) { return i.checked && !i.needsOptions; });
+        for (const item of extras) {
+          try {
+            await window.zid.cart.addProduct({ product_id: item.id, quantity: 1 }, { showErrorNotification: false });
+            addedCount++;
+          } catch (e) {
+            console.warn('Failed to add bundle product:', item.id, e);
+            hasError = true;
+          }
+        }
 
-      if (response && response.status === 'error') {
-        console.warn('Failed to add product:', pid, response.message);
-        hasError = true;
-      } else {
-        addedCount++;
-      }
-    } catch (e) {
-      console.warn('Exception adding product:', pid, e);
-      hasError = true;
+        if (addedCount > 0) {
+          try {
+            const cart = await window.zid.cart.get();
+            const count = (cart && (cart.cart_items_quantity != null ? cart.cart_items_quantity : cart.products_count)) || 0;
+            document.querySelectorAll('[data-cart-badge]').forEach(function (el) {
+              el.textContent = count;
+              el.hidden = count === 0;
+            });
+            window.dispatchEvent(new CustomEvent('cart:updated', { detail: { action: 'add', source: 'bundle', cart: cart } }));
+          } catch (e) {
+            console.warn('Cart refresh failed:', e);
+          }
+        }
+
+        if (!hasError) {
+          notify(I18N.added, 'success');
+        } else if (addedCount > 0) {
+          notify(I18N.partiallyAdded, 'warning');
+        } else {
+          notify(I18N.failed, 'error');
+        }
+
+        btn.disabled = false;
+        loader.classList.add('hidden');
+      });
     }
-  }
 
-  // Update cart UI
-  if (addedCount > 0) {
-    try {
-      const cartResponse = await zid.cart.fetch();
-      if (typeof setCartTotalAndBadge === 'function') setCartTotalAndBadge(cartResponse);
-      if (typeof fetchCart === 'function') fetchCart();
-    } catch (e) {}
-  }
-
-  // Toast
-  if (typeof toast === 'function') {
-    if (!hasError) {
-      toast({ ar: 'تمت إضافة المنتجات إلى السلة 🛒', en: 'Products added to cart 🛒' });
-    } else if (addedCount > 0) {
-      toast({ ar: 'تمت إضافة بعض المنتجات فقط', en: 'Some products were added' }, 'warning');
-    } else {
-      toast(
-        { ar: 'بعض المنتجات غير متوفرة حالياً', en: 'Some products are out of stock' },
-        'error'
-      );
-    }
-  }
-
-  btn.disabled = false;
-  loader.classList.add('hidden');
-});
-    loadBundleProducts();
+    waitForZid(loadBundleProducts);
 
   })();
   </script>
