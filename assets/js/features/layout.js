@@ -27,61 +27,129 @@ function initAnnouncementBar() {
 // Login/Account Management
 // ─────────────────────────────────────────────────────────────
 
-// Store pending redirect for post-login navigation
-let pendingAuthRedirect = null;
+// Both theme.js and cart-controller.js include this module. Share state so the
+// layout listeners initialize once and either bundle can complete an auth
+// redirect (ported from upstream 3eae6f8 / c3f5c48).
+const layoutStateKey = Symbol.for("growth-theme.layout-state");
+const layoutState = window[layoutStateKey] || {
+  initialized: false,
+  pendingAuthRedirect: null,
+  authEndpointsComplete: false
+};
+window[layoutStateKey] = layoutState;
+
+function normalizeAuthRedirect(redirectTo) {
+  try {
+    const redirectUrl = new URL(redirectTo, window.location.origin);
+    if (redirectUrl.origin !== window.location.origin) return "";
+    return redirectUrl.pathname + redirectUrl.search + redirectUrl.hash;
+  } catch {
+    return "";
+  }
+}
+
+function getProfileRedirect() {
+  return normalizeAuthRedirect(window.layoutConfig?.profileUrl || "/account-profile") || "/account-profile";
+}
+
+function markCustomerAuthenticated() {
+  window.customerAuthState = window.customerAuthState || {};
+  window.customerAuthState.isAuthenticated = true;
+  window.customerAuthState.isGuest = false;
+}
 
 /**
- * Setup listener for auth success event
- * Handles redirect after successful OTP verification
+ * Toggle the header/mobile login vs profile buttons (header.jinja ids).
+ * Only called with `true` on load so the server-rendered guest state never
+ * flickers.
+ */
+function applyHeaderAuthState(loggedIn) {
+  const byId = (id) => document.getElementById(id);
+  const loginBtn = byId("header-login-btn");
+  const profileBtn = byId("header-profile-btn");
+  const mLoginBtn = byId("mobile-login-btn");
+  const mProfileBtn = byId("mobile-profile-btn");
+  const mLoggedIn = byId("mobile-logged-in-links");
+
+  if (loginBtn) loginBtn.style.display = loggedIn ? "none" : "";
+  if (profileBtn) {
+    profileBtn.style.display = loggedIn ? "inline-flex" : "none";
+    profileBtn.classList.toggle("hidden", !loggedIn);
+  }
+  if (mLoginBtn) mLoginBtn.style.display = loggedIn ? "none" : "";
+  if (mProfileBtn) mProfileBtn.style.display = loggedIn ? "inline-flex" : "none";
+  if (mLoggedIn) {
+    mLoggedIn.classList.toggle("hidden", !loggedIn);
+    mLoggedIn.classList.toggle("flex", loggedIn);
+    mLoggedIn.style.display = loggedIn ? "" : "none";
+  }
+}
+
+/**
+ * Single vitrin:auth:success listener (F §5): customerAuthState does not
+ * update after a popup login, so set it, refresh the UI, then follow any
+ * pending redirect.
  */
 function setupAuthSuccessListener() {
-  window.addEventListener("vitrin:auth:success", function () {
-    // Update auth state
-    if (window.customerAuthState) {
-      window.customerAuthState.isAuthenticated = true;
-      window.customerAuthState.isGuest = false;
+  window.addEventListener("vitrin:auth:success", async function () {
+    markCustomerAuthenticated();
+    applyHeaderAuthState(true);
+    initAuthVisibility();
+
+    if (layoutState.pendingAuthRedirect) {
+      const redirectUrl = layoutState.pendingAuthRedirect;
+      layoutState.pendingAuthRedirect = null;
+      window.location.href = redirectUrl;
+      return;
     }
 
-    // Handle pending redirect
-    if (pendingAuthRedirect) {
-      const redirectUrl = pendingAuthRedirect;
-      pendingAuthRedirect = null;
-      window.location.href = redirectUrl;
+    // No redirect: refresh customer data so account-dependent UI updates
+    if (window.zid?.account?.get) {
+      try {
+        const customer = await window.zid.account.get();
+        if (customer) {
+          window.customer = customer;
+          document.dispatchEvent(new CustomEvent("zid-customer-fetched", { detail: { customer } }));
+        }
+      } catch (err) {
+        console.warn("[Layout] Failed to refresh customer after login:", err);
+      }
     }
   });
 }
 
 /**
- * Login action handler - opens login dialog with optional redirect
+ * Login action handler - opens the platform login popup with optional redirect.
+ * Exported so the cart bundle reuses the same implementation/state.
  */
-window.handleLoginAction = function (redirectTo, addToUrl) {
-  if (redirectTo === undefined) redirectTo = "";
+export function handleLoginAction(redirectTo, addToUrl) {
+  if (redirectTo === undefined || redirectTo === null || typeof redirectTo === "object") redirectTo = "";
   if (addToUrl === undefined) addToUrl = true;
 
+  // Normalize the redirect before checking auth so an explicit action target
+  // is preserved for shoppers who are already signed in.
+  const finalRedirect = addToUrl ? window.location.pathname + redirectTo : redirectTo;
+  const normalizedRedirect = finalRedirect ? normalizeAuthRedirect(finalRedirect) : "";
+  const profileRedirect = getProfileRedirect();
+  const authRedirect = normalizedRedirect || profileRedirect;
+
   if (window.customerAuthState && window.customerAuthState.isAuthenticated) {
-    window.location.href = window.layoutConfig?.profileUrl || "/account-profile";
+    window.location.href = redirectTo && normalizedRedirect ? normalizedRedirect : profileRedirect;
     return;
   }
 
-  // Calculate final redirect URL and store for post-login navigation
-  const finalRedirect = addToUrl ? window.location.pathname + redirectTo : redirectTo;
-  if (finalRedirect) {
-    pendingAuthRedirect = finalRedirect;
-  }
+  // Store redirect for post-login navigation (only when the caller asked for one)
+  layoutState.pendingAuthRedirect = redirectTo ? authRedirect : null;
 
-  // Use auth_dialog if available (preferred per Zid docs)
-  if (window.auth_dialog?.open && typeof window.auth_dialog.open === "function") {
+  if (typeof window.auth_dialog?.open === "function") {
     window.auth_dialog.open();
-  } else if (typeof zid !== "undefined" && zid.customer && zid.customer.login) {
-    // Fallback to Zid SDK login
-    zid.customer.login.open({
-      redirectTo: finalRedirect
-    });
   } else {
-    // Final fallback to page redirect
-    window.location.href = window.layoutConfig?.profileUrl || "/account-profile";
+    // Popup login disabled for this store: go to the login page
+    window.location.href = "/auth/login?redirect_to=" + encodeURIComponent(authRedirect);
   }
-};
+}
+
+window.handleLoginAction = handleLoginAction;
 
 function initLoginRedirectButtons() {
   document.addEventListener("click", function (e) {
@@ -96,27 +164,19 @@ function initLoginRedirectButtons() {
 
 function initCustomerGreeting() {
   document.addEventListener("zid-customer-fetched", function (event) {
-    const customer = event.detail.customer;
-    if (customer && customer.name) {
-      const headerLoginBtn = document.getElementById("header-login-btn");
-      const headerProfileBtn = document.getElementById("header-profile-btn");
-      if (headerLoginBtn) headerLoginBtn.style.display = "none";
-      if (headerProfileBtn) {
-        headerProfileBtn.style.display = "";
-        headerProfileBtn.classList.remove("hidden");
-      }
-
-      const mobileLoginBtn = document.getElementById("mobile-login-btn");
-      const mobileProfileBtn = document.getElementById("mobile-profile-btn");
-      const mobileLoggedInLinks = document.getElementById("mobile-logged-in-links");
-      if (mobileLoginBtn) mobileLoginBtn.style.display = "none";
-      if (mobileProfileBtn) mobileProfileBtn.style.display = "inline-flex";
-      if (mobileLoggedInLinks) {
-        mobileLoggedInLinks.classList.remove("hidden");
-        mobileLoggedInLinks.classList.add("flex");
-      }
+    const customer = event.detail?.customer;
+    if (customer && (customer.id || customer.name)) {
+      markCustomerAuthenticated();
+      applyHeaderAuthState(true);
     }
+
+    layoutState.authEndpointsComplete = true;
+    initAuthVisibility();
   });
+
+  if (window.customerAuthState?.isAuthenticated) {
+    applyHeaderAuthState(true);
+  }
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -184,7 +244,7 @@ window.selectMobileLanguage = function (languageCode) {
  * Elements with [data-auth-user] are shown only to authenticated users
  * This allows templates to be cached while still showing correct content
  */
-function initAuthVisibility() {
+export function initAuthVisibility() {
   const isGuest = !window.customerAuthState || window.customerAuthState.isGuest;
   const isAuthenticated = window.customerAuthState && window.customerAuthState.isAuthenticated;
 
@@ -212,14 +272,14 @@ function initAuthVisibility() {
   });
 }
 
-// Re-run visibility check after auth changes
-window.addEventListener("vitrin:auth:success", initAuthVisibility);
-
 // ─────────────────────────────────────────────────────────────
 // Initialization
 // ─────────────────────────────────────────────────────────────
 
 export function init() {
+  if (layoutState.initialized) return;
+  layoutState.initialized = true;
+
   initAnnouncementBar();
   initLocaleForms();
   initLoginRedirectButtons();

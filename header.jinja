@@ -1759,64 +1759,8 @@ menuItems.forEach(function(item, i) {
   backdrop.addEventListener('click', closeAll);
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(); });
 
-  /* ────────────────────────────────────────────────
-     AUTH STATE
-  ──────────────────────────────────────────────── */
-  var loginBtn     = qs('#header-login-btn');
-  var profileBtn   = qs('#header-profile-btn');
-  var mLoginBtn    = qs('#mobile-login-btn');
-  var mProfileBtn  = qs('#mobile-profile-btn');
-	  var mLoggedIn    = qs('#mobile-logged-in-links');
-
-	  function setAuthState(loggedIn) {
-	    if (loginBtn)    loginBtn.style.display    = loggedIn ? 'none' : '';
-	    if (profileBtn)  profileBtn.style.display  = loggedIn ? 'inline-flex' : 'none';
-	    if (mLoginBtn)   mLoginBtn.style.display   = loggedIn ? 'none' : '';
-	    if (mProfileBtn) mProfileBtn.style.display = loggedIn ? 'inline-flex' : 'none';
-	    if (mLoggedIn)   mLoggedIn.style.display   = loggedIn ? 'flex' : 'none';
-	  }
-
-	  /* handleLoginAction — called by both desktop and mobile login buttons */
-	  window.handleLoginAction = function () {
-	    try {
-	      if (typeof zid !== 'undefined' && zid.customer && zid.customer.isLoggedIn && zid.customer.isLoggedIn()) {
-	        window.location.href = "{{ url_for('profile') }}";
-	        return;
-	      }
-	    } catch (e) {}
-	    if (typeof zid !== 'undefined' && zid.customer && zid.customer.login) {
-	      zid.customer.login();
-	    } else if (typeof zidLogin === 'function') {
-      zidLogin();
-    }
-  };
-
-  /* Listen for Zid auth events */
-  document.addEventListener('zid:customer:loggedIn',  function () { setAuthState(true); });
-  document.addEventListener('zid:customer:loggedOut', function () { setAuthState(false); });
-  document.addEventListener('zid-customer-fetched', function (e) {
-    var customer = e && e.detail && e.detail.customer;
-    setAuthState(!!(customer && customer.name));
-  });
-
-  /* Initial state from cookie / global */
-  function checkInitialAuth() {
-    if (typeof zid !== 'undefined' && zid.customer) {
-      try {
-        var isLogged = zid.customer.isLoggedIn ? zid.customer.isLoggedIn() : false;
-        setAuthState(isLogged);
-        return true;
-      } catch (e) {}
-    }
-    return false;
-  }
-  if (!checkInitialAuth()) {
-    var authRetry = window.setTimeout(function () { checkInitialAuth(); }, 800);
-    document.addEventListener('DOMContentLoaded', function () {
-      window.clearTimeout(authRetry);
-      checkInitialAuth();
-    });
-  }
+  /* AUTH STATE: handled by assets/js/features/layout.js (handleLoginAction,
+     vitrin:auth:success, zid-customer-fetched, customerAuthState). */
 
   /* ────────────────────────────────────────────────
      CART BADGE
