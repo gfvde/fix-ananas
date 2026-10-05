@@ -4,6 +4,8 @@
     "ar": "معرض الصور والفيديو",
     "en": "Media Gallery"
   },
+  "icon": "image-2-line",
+  "meta": { "type": "gallery" },
   "settings": [
     {
       "id": "title",
@@ -57,6 +59,7 @@
     {
       "id": "media_items",
       "type": "list",
+      "max_items": 10,
       "label": {
         "ar": "الوسائط",
         "en": "Media Items"

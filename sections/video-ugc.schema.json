@@ -4,6 +4,8 @@
     "ar": "معرض فيديو UGC",
     "en": "Video UGC Gallery"
   },
+  "icon": "video-line",
+  "meta": { "type": "video" },
   "settings": [
     {
       "id": "title",
@@ -57,6 +59,7 @@
     {
       "id": "videos",
       "type": "list",
+      "max_items": 5,
       "label": {
         "ar": "الفيديوهات",
         "en": "Videos"

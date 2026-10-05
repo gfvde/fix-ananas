@@ -4,6 +4,8 @@
     "ar": "هيرو بانر (About)",
     "en": "Hero Banner (About)"
   },
+  "icon": "landscape-line",
+  "meta": { "type": "slider" },
   "settings": [
     {
       "id": "bg_desktop",
@@ -58,7 +60,7 @@
       "max": 120,
       "step": 1,
       "unit": "px",
-      "default": 252
+      "default": 0
     },
     {
       "id": "mobile_content_offset_y",
@@ -262,7 +264,7 @@
         "ar": "رابط الزر",
         "en": "CTA URL"
       },
-      "default": "/collections/all"
+      "default": "/products"
     },
     {
       "id": "cta_text_color",

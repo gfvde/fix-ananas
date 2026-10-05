@@ -216,6 +216,7 @@
         {
           "id": "items",
           "type": "list",
+          "max_items": 6,
           "label": {
             "ar": "مجموعات الروابط",
             "en": "Link Groups"
@@ -240,6 +241,7 @@
             {
               "id": "links",
               "type": "list",
+              "max_items": 10,
               "label": {
                 "ar": "الروابط",
                 "en": "Links"

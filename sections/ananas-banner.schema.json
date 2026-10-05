@@ -4,6 +4,8 @@
     "ar": "بانر الهوم (فيجما)",
     "en": "Home Banner (Figma)"
   },
+  "icon": "image-line",
+  "meta": { "type": "slider" },
   "settings": [
     {
       "id": "background_image",
