@@ -127,8 +127,16 @@ async function buyNowFromForm(btn) {
     const bundlePayload = window.bundleCartPayload;
     const buyNowOptions = bundlePayload ? { ...bundlePayload, form_id: formId } : { form_id: formId };
 
-    await window.zid.cart.buyNow(buyNowOptions, { showErrorNotification: true });
-    // buyNow handles redirect
+    const inQuickView = btn.closest("#quick-view-content") && window.quickViewManager?.closeThen;
+    if (inQuickView) {
+      await window.quickViewManager.closeThen(() =>
+        window.zid.cart.buyNow(buyNowOptions, { showErrorNotification: true })
+      );
+      hideSpinner(btn);
+    } else {
+      await window.zid.cart.buyNow(buyNowOptions, { showErrorNotification: true });
+    }
+    // buyNow handles redirect / checkout dialog
   } catch (err) {
     console.error("[Cart] Buy now failed:", err);
     hideSpinner(btn);
