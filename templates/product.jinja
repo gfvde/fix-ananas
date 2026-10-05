@@ -542,15 +542,6 @@
             </div>
 
           </div>
-                    <div class="flex items-center gap-2">
-           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M11.7678 11.7678C12.2366 11.2989 12.5 10.663 12.5 10C12.5 9.33696 12.2366 8.70107 11.7678 8.23223C11.2989 7.76339 10.663 7.5 10 7.5C9.33696 7.5 8.70107 7.76339 8.23223 8.23223C7.76339 8.70107 7.5 9.33696 7.5 10C7.5 10.663 7.76339 11.2989 8.23223 11.7678C8.70107 12.2366 9.33696 12.5 10 12.5C10.663 12.5 11.2989 12.2366 11.7678 11.7678Z" stroke="black" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M2.04883 10.0003C3.11049 6.61949 6.26966 4.16699 10.0005 4.16699C13.7322 4.16699 16.8905 6.61949 17.9522 10.0003C16.8905 13.3812 13.7322 15.8337 10.0005 15.8337C6.26966 15.8337 3.11049 13.3812 2.04883 10.0003Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-
-           <span class="font-medium text-sm leading-5 tracking-normal" id="viewerText"></span>
-
-          </div>
           <span
             class="text-muted-foreground {{ 'hidden' if not product.sku }} text-sm"
             data-product-sku-wrapper
@@ -2165,30 +2156,6 @@
           });
         });
       </script>
-  <script>
-  const viewerText = document.getElementById("viewerText");
-
-  // detect language (عدل حسب نظامك)
-  const lang = document.documentElement.lang || "ar";
-
-  function getRandomViewers(min = 5, max = 30) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
-  function updateViewers() {
-    const count = getRandomViewers();
-
-    if (lang === "ar") {
-      viewerText.textContent = `يشاهد ${count} شخصًا هذا المنتج الآن`;
-    } else {
-      viewerText.textContent = `${count} people are viewing this product now`;
-    }
-  }
-
-  updateViewers();
-
-  setInterval(updateViewers, 15000);
-</script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
