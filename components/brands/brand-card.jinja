@@ -1,0 +1,36 @@
+{#
+  Brand Card (Ananas) - mirrors components/categories/category-card.jinja look
+
+  Props:
+  - brand: Brand (name, display_name, slug, logo, products_count, description)
+  - index: number (optional) - for lazy loading
+#}
+{% set card_index = index | default(0) %}
+{% set brand_name = (brand.display_name or brand.name) | default('') %}
+
+<a
+  href="/brands/{{ brand.slug }}"
+  class="group flex flex-col gap-3"
+  title="{{ brand_name }}"
+>
+  <div class="bg-secondary relative flex aspect-square w-full items-center justify-center overflow-hidden rounded">
+    {% if brand.logo %}
+      <img
+        src="{{ image_url(brand.logo, w=320, q=80, f='auto') }}"
+        alt="{{ brand_name }}"
+        class="h-full w-full object-contain object-center p-4 transition-transform duration-300 group-hover:scale-105"
+        {% if card_index > 3 %}loading="lazy"{% endif %}
+        onerror="this.style.display='none'"
+      />
+    {% else %}
+      <span class="text-foreground px-2 text-center text-lg font-semibold">{{ brand_name }}</span>
+    {% endif %}
+  </div>
+
+  <h3 class="text-foreground group-hover:text-primary text-base md:text-lg font-semibold tracking-tight text-center transition-colors">
+    {{ brand_name }}
+    {% if brand.products_count %}
+      <span class="text-muted text-sm font-normal">({{ brand.products_count }})</span>
+    {% endif %}
+  </h3>
+</a>
