@@ -12,6 +12,10 @@
 import { createCarousel, createConditionalCarousel } from "./lib/carousel.js";
 import { initAllProductGalleries } from "./product/gallery.js";
 import { initCart, initButtons as initCartButtons } from "./cart/add-to-cart.js";
+import { swapCartVariant } from "./cart/variant-swap.js";
+
+// Used by the inline side-cart script (components/header/side-cart.jinja)
+window.ananasSwapCartVariant = swapCartVariant;
 
 // Product modules (self-initializing, register global callbacks)
 import "./product/variants.js";
