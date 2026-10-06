@@ -10,9 +10,6 @@
               "display": true,
               "settings": {
                 "rating": "4.8",
-                "avatar1": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/710256bd-8ac4-48b6-85dd-665f12437d0e.png",
-                "avatar2": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/3edc1f1e-74b8-4768-a11d-78aac0cd9a1f.png",
-                "avatar3": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/c0af4fbe-87c0-4dfd-9398-1455cd91bb3f.png",
                 "avatars": [
                   {
                     "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/5a3bb27d-cbfd-43f2-915a-82cd8100ea0c.png"
@@ -24,7 +21,7 @@
                     "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/6d3f50b3-b1e6-494e-9b9b-47d22b700c05.png"
                   }
                 ],
-                "cta_url": "/categories/1532239/الكترونيات",
+                "cta_url": "/products",
                 "heading": "قهوة تضبط يومك",
                 "cta_text": "تسوّق قهوتك الآن",
                 "bg_mobile": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/7ee3bedf-7e01-4ffb-af7f-90375d0908bf.png",
@@ -35,20 +32,19 @@
                 "rating_stars": 5,
                 "heading_color": "#ffffff",
                 "mobile_height": 460,
-                "badge_bg_color": "#f00000",
                 "cta_text_color": "#ffffff",
                 "desktop_height": 602,
                 "overlay_opacity": 100,
                 "cta_border_color": "#ffffff",
                 "subheading_color": "#ffffff",
-                "badge_border_color": null,
                 "cta_hover_bg_color": "rgba(255,255,255,0.10)",
                 "rating_scroll_target": "star_reviews",
                 "remove_bottom_margin": true,
                 "show_desktop_content": true,
                 "desktop_overlay_opacity": 0,
                 "mobile_content_offset_y": 0,
-                "desktop_content_offset_y": 1
+                "desktop_content_offset_y": 1,
+                "show_rating": true
               },
               "template": "sections/about-hero-banner.jinja",
               "section_id": "02f2f802-893e-4777-9a2b-b45ee5635d86"
@@ -67,7 +63,7 @@
                 "tab_1_text": "الأكثر مبيعا",
                 "tab_2_text": "جديدنا",
                 "text_color": "#000000",
-                "explore_url": "/categories/1540274/عددد",
+                "explore_url": "/products",
                 "muted_color": "#737373",
                 "border_color": "#000000",
                 "display_more": true,
@@ -112,7 +108,7 @@
                 "tab_1_text": "الأكثر مبيعا",
                 "tab_2_text": "جديدنا",
                 "text_color": "#000000",
-                "explore_url": "/categories/1540274/عددد",
+                "explore_url": "/products",
                 "muted_color": "#737373",
                 "border_color": "#000000",
                 "display_more": true,
@@ -242,10 +238,10 @@
                 "photo3": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/f53c737d-1ff8-4fe1-8bce-04ec05237101.png",
                 "photo4": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/42913de1-07ff-48bc-86c8-e05d9b0f9043.png",
                 "mobile_gap": 16,
-                "photo1_url": "/categories/1540274/عددد",
-                "photo2_url": "/categories/1532241/سيارات",
-                "photo3_url": "/categories/1540274/عددد",
-                "photo4_url": "/categories/1536047/ؤبرر",
+                "photo1_url": "/products",
+                "photo2_url": "/products",
+                "photo3_url": "/products",
+                "photo4_url": "/products",
                 "desktop_gap": 1,
                 "title_color": "#000000",
                 "photo1_title": "جودة مضمونة",
@@ -270,7 +266,7 @@
               "settings": {
                 "title": "وش نرشّح لك",
                 "layout": "carousel",
-                "more_url": "/categories/1532241/سيارات",
+                "more_url": "/products",
                 "products": {
                   "id": 0,
                   "type": "recent_products"
@@ -318,10 +314,6 @@
                 "speed": 18,
                 "bg_color": "#D3DB6F",
                 "icon_color": "#000000",
-                "item1_text": "تحميص مظبوط",
-                "item2_text": "تغليف مميز",
-                "item3_text": "شحن سريع",
-                "item4_text": "دفع امن",
                 "text_color": "#000000",
                 "separator_color": "#000000"
               },
@@ -403,8 +395,7 @@
               "display": true,
               "settings": {
                 "title": "تفاصيل تكمل يومك",
-                "cta_url": "/categories/1532239/الكترونيات",
-                "badge_bg": "#F7512B",
+                "cta_url": "/products",
                 "cta_text": "عرض الكل",
                 "hero_alt": "About details image",
                 "products": {
@@ -414,29 +405,18 @@
                 },
                 "show_cta": true,
                 "subtitle": "قطع مختارة بعناية عملية، أنيقة، وتعيش معك",
-                "swatch_1": "#71717B",
-                "swatch_2": "#FFF7ED",
-                "swatch_3": "#3D527E",
-                "action_bg": "#FFFFFF",
                 "mobile_bg": "#fcfaf7",
-                "badge_text": "#FFFFFF",
                 "hero_image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/eaae4d8a-ac2b-4e6d-97c5-810e194237d7.png",
                 "section_bg": "#FCFAF7",
                 "sticky_top": 0,
                 "text_color": "#e01f1f",
-                "card_border": "#E5E5E5",
-                "muted_color": "#525252",
                 "title_color": "#F7512B",
                 "desktop_height": 650,
-                "selected_color": "1",
                 "mobile_nav_text": "تصفّح المنتجات",
-                "badge_text_value": "Limited Stock",
                 "mobile_card_size": 297,
-                "action_bg_opacity": 32,
                 "desktop_card_size": 327,
                 "mobile_hero_image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/9d315078-3ed4-45bb-98a8-747a1f6ea48b.png",
                 "mobile_title_color": "#000000",
-                "product_image_override": null,
                 "mobile_product_text_color": "#FFFFFF"
               },
               "template": "sections/about-details.jinja",
@@ -450,12 +430,8 @@
                 "section_bg": "#ffffff",
                 "star_color": "#F7A52D",
                 "title_color": "#000000",
-                "dark_card_bg": "#171717",
                 "image_card_bg": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/e866d02d-3cef-4aa8-aebd-ab556f51f2c0.png",
-                "light_card_bg": "#EEEEEE",
                 "verified_color": "#25A562",
-                "dark_text_color": "#ffffff",
-                "light_text_color": "#000000",
                 "star_reviews_items": [
                   {
                     "name": "Ahmed Seif",
@@ -463,7 +439,6 @@
                     "stars": 5,
                     "avatar": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/b3894bc7-6ebb-40aa-84e9-0fff9bb14dd7.png",
                     "card_bg": "#000000",
-                    "card_style": "Light",
                     "text_color": "#ffffff"
                   },
                   {
@@ -471,28 +446,32 @@
                     "text": "“Ananas is an amazing coffee shop! The healthy breakfast options and refreshing acai bowls make it my go-to place in Walnut Creek. Highly recommend!”",
                     "stars": 5,
                     "avatar": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/b3894bc7-6ebb-40aa-84e9-0fff9bb14dd7.png",
-                    "card_style": "Dark"
+                    "card_bg": "#171717",
+                    "text_color": "#ffffff"
                   },
                   {
                     "name": "Ahmed Seif",
                     "text": "“Ananas is an amazing coffee shop! The healthy breakfast options and refreshing acai bowls make it my go-to place in Walnut Creek. Highly recommend!”",
                     "stars": 5,
                     "avatar": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/b3894bc7-6ebb-40aa-84e9-0fff9bb14dd7.png",
-                    "card_style": "Light"
+                    "card_bg": "#EEEEEE",
+                    "text_color": "#000000"
                   },
                   {
                     "name": "Ahmed Seif",
                     "text": "“Ananas is an amazing coffee shop! The healthy breakfast options and refreshing acai bowls make it my go-to place in Walnut Creek. Highly recommend!”",
                     "stars": 5,
                     "avatar": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/b3894bc7-6ebb-40aa-84e9-0fff9bb14dd7.png",
-                    "card_style": "Dark"
+                    "card_bg": "#171717",
+                    "text_color": "#ffffff"
                   },
                   {
                     "name": "Ahmed Seif",
                     "text": "“Ananas is an amazing coffee shop! The healthy breakfast options and refreshing acai bowls make it my go-to place in Walnut Creek. Highly recommend!”",
                     "stars": 5,
                     "avatar": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/b3894bc7-6ebb-40aa-84e9-0fff9bb14dd7.png",
-                    "card_style": "Dark"
+                    "card_bg": "#171717",
+                    "text_color": "#ffffff"
                   }
                 ]
               },
@@ -504,22 +483,41 @@
               "display": true,
               "settings": {
                 "title": "تجربة القهوة بعيون عملائنا",
-                "review1_name": "Ahmed Seif",
-                "review1_text": "\"Ananas is an amazing coffee shop! The healthy breakfast options and refreshing acai bowls make it my go-to place in Walnut Creek. Highly recommend!\"",
-                "review2_name": "Ahmed Seif",
-                "review2_text": "\"Ananas is an amazing coffee shop! The healthy breakfast options and refreshing acai bowls make it my go-to place in Walnut Creek. Highly recommend!\"",
-                "review3_name": "Ahmed Seif",
-                "review3_text": "\"Ananas is an amazing coffee shop! The healthy breakfast options and refreshing acai bowls make it my go-to place in Walnut Creek. Highly recommend!\"",
-                "review4_name": "Ahmed Seif",
-                "review4_text": "\"Ananas is an amazing coffee shop! The healthy breakfast options and refreshing acai bowls make it my go-to place in Walnut Creek. Highly recommend!\"",
-                "review5_name": "Ahmed Seif",
-                "review5_text": "\"Ananas is an amazing coffee shop! The healthy breakfast options and refreshing acai bowls make it my go-to place in Walnut Creek. Highly recommend!\"",
-                "image_card_bg": null,
-                "review1_avatar": null,
-                "review2_avatar": null,
-                "review3_avatar": null,
-                "review4_avatar": null,
-                "review5_avatar": null
+                "image_card_bg": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/e866d02d-3cef-4aa8-aebd-ab556f51f2c0.png",
+                "reviews": [
+                  {
+                    "name": "Ahmed Seif",
+                    "text": "\"Ananas is an amazing coffee shop! The healthy breakfast options and refreshing acai bowls make it my go-to place in Walnut Creek. Highly recommend!\"",
+                    "avatar": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/b3894bc7-6ebb-40aa-84e9-0fff9bb14dd7.png",
+                    "stars": 5
+                  },
+                  {
+                    "name": "Ahmed Seif",
+                    "text": "\"Ananas is an amazing coffee shop! The healthy breakfast options and refreshing acai bowls make it my go-to place in Walnut Creek. Highly recommend!\"",
+                    "avatar": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/b3894bc7-6ebb-40aa-84e9-0fff9bb14dd7.png",
+                    "stars": 5
+                  },
+                  {
+                    "name": "Ahmed Seif",
+                    "text": "\"Ananas is an amazing coffee shop! The healthy breakfast options and refreshing acai bowls make it my go-to place in Walnut Creek. Highly recommend!\"",
+                    "avatar": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/b3894bc7-6ebb-40aa-84e9-0fff9bb14dd7.png",
+                    "stars": 5
+                  },
+                  {
+                    "name": "Ahmed Seif",
+                    "text": "\"Ananas is an amazing coffee shop! The healthy breakfast options and refreshing acai bowls make it my go-to place in Walnut Creek. Highly recommend!\"",
+                    "avatar": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/b3894bc7-6ebb-40aa-84e9-0fff9bb14dd7.png",
+                    "stars": 5
+                  },
+                  {
+                    "name": "Ahmed Seif",
+                    "text": "\"Ananas is an amazing coffee shop! The healthy breakfast options and refreshing acai bowls make it my go-to place in Walnut Creek. Highly recommend!\"",
+                    "avatar": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/b3894bc7-6ebb-40aa-84e9-0fff9bb14dd7.png",
+                    "stars": 5
+                  }
+                ],
+                "title_color": "#000000",
+                "show_arrows": true
               },
               "template": "sections/about-reviews-featured.jinja",
               "section_id": "944768e5-2d07-4614-b473-18b34ae30d00"
@@ -564,16 +562,6 @@
               "display": true,
               "settings": {
                 "title": "لحظات من عالم أناناس",
-                "photo1": null,
-                "photo2": null,
-                "photo3": null,
-                "photo4": null,
-                "photo5": null,
-                "photo6": null,
-                "photo7": null,
-                "photo8": null,
-                "photo9": null,
-                "photo10": null,
                 "subtitle": "قهوة مو بس تُشرب… تنعاش",
                 "media_items": [
                   {
@@ -619,9 +607,41 @@
               "display": true,
               "settings": {
                 "title": "تجربة القهوة بعيون عملائنا",
-                "reviews": null,
+                "reviews": [
+                  {
+                    "name": "Ahmed Seif",
+                    "text": "\"Ananas is an amazing coffee shop! The healthy breakfast options and refreshing acai bowls make it my go-to place in Walnut Creek. Highly recommend!\"",
+                    "avatar": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/b3894bc7-6ebb-40aa-84e9-0fff9bb14dd7.png",
+                    "stars": 5
+                  },
+                  {
+                    "name": "Ahmed Seif",
+                    "text": "\"Ananas is an amazing coffee shop! The healthy breakfast options and refreshing acai bowls make it my go-to place in Walnut Creek. Highly recommend!\"",
+                    "avatar": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/b3894bc7-6ebb-40aa-84e9-0fff9bb14dd7.png",
+                    "stars": 5
+                  },
+                  {
+                    "name": "Ahmed Seif",
+                    "text": "\"Ananas is an amazing coffee shop! The healthy breakfast options and refreshing acai bowls make it my go-to place in Walnut Creek. Highly recommend!\"",
+                    "avatar": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/b3894bc7-6ebb-40aa-84e9-0fff9bb14dd7.png",
+                    "stars": 5
+                  },
+                  {
+                    "name": "Ahmed Seif",
+                    "text": "\"Ananas is an amazing coffee shop! The healthy breakfast options and refreshing acai bowls make it my go-to place in Walnut Creek. Highly recommend!\"",
+                    "avatar": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/b3894bc7-6ebb-40aa-84e9-0fff9bb14dd7.png",
+                    "stars": 5
+                  },
+                  {
+                    "name": "Ahmed Seif",
+                    "text": "\"Ananas is an amazing coffee shop! The healthy breakfast options and refreshing acai bowls make it my go-to place in Walnut Creek. Highly recommend!\"",
+                    "avatar": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/b3894bc7-6ebb-40aa-84e9-0fff9bb14dd7.png",
+                    "stars": 5
+                  }
+                ],
                 "title_color": "#000000",
-                "image_card_bg": null
+                "image_card_bg": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/e866d02d-3cef-4aa8-aebd-ab556f51f2c0.png",
+                "show_arrows": true
               },
               "template": "sections/about-reviews-featured.jinja",
               "section_id": "04da72c9-2291-477c-9f76-8292098c39d6"
@@ -661,11 +681,6 @@
               "section_id": "296a9965-8d06-438f-b7db-4293476876ee",
               "settings": {
                 "title": "معرض الصور",
-                "subtitle": "لحظات من عالمنا",
-                "title_color": "#000000",
-                "subtitle_color": "#737373",
-                "columns_desktop": 3,
-                "columns_mobile": 2,
                 "remove_bottom_margin": false,
                 "gallery": [
                   {
@@ -674,7 +689,8 @@
                     "primary_button_text": "",
                     "primary_button_url": "",
                     "secondary_button_text": "",
-                    "secondary_button_url": ""
+                    "secondary_button_url": "",
+                    "src": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/e866d02d-3cef-4aa8-aebd-ab556f51f2c0.png"
                   },
                   {
                     "alt": "",
@@ -682,7 +698,8 @@
                     "primary_button_text": "",
                     "primary_button_url": "",
                     "secondary_button_text": "",
-                    "secondary_button_url": ""
+                    "secondary_button_url": "",
+                    "src": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/e866d02d-3cef-4aa8-aebd-ab556f51f2c0.png"
                   },
                   {
                     "alt": "",
@@ -690,7 +707,8 @@
                     "primary_button_text": "",
                     "primary_button_url": "",
                     "secondary_button_text": "",
-                    "secondary_button_url": ""
+                    "secondary_button_url": "",
+                    "src": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/e866d02d-3cef-4aa8-aebd-ab556f51f2c0.png"
                   }
                 ]
               }
@@ -701,9 +719,6 @@
               "template": "sections/benefits.jinja",
               "section_id": "24f1b784-2b5d-4ea1-82dd-f574e58a169f",
               "settings": {
-                "title": "لماذا أناناس؟",
-                "title_color": "#000000",
-                "section_bg_color": "#ffffff",
                 "remove_bottom_margin": false,
                 "store_features": [
                   {
@@ -722,7 +737,8 @@
                     "title": "تغليف مميز",
                     "description": "تجربة فتح علبة لا تُنسى"
                   }
-                ]
+                ],
+                "background_color": "#ffffff"
               }
             },
             {
@@ -732,8 +748,6 @@
               "section_id": "0cf507d5-2f9a-4c0d-a1d2-117c8aa0a84d",
               "settings": {
                 "title": "شركاؤنا",
-                "title_color": "#000000",
-                "section_bg_color": "#ffffff",
                 "remove_bottom_margin": false,
                 "store_partners": [
                   {
@@ -748,7 +762,8 @@
                     "url": "",
                     "name": "شريك 3"
                   }
-                ]
+                ],
+                "background_color": "#ffffff"
               }
             },
             {
@@ -758,8 +773,6 @@
               "section_id": "09cb9a6b-7a94-442d-aa02-03e36685f976",
               "settings": {
                 "title": "آراء عملائنا",
-                "title_color": "#000000",
-                "section_bg_color": "#ffffff",
                 "remove_bottom_margin": false,
                 "testimonials": [
                   {
@@ -777,7 +790,8 @@
                     "text": "خدمة ممتازة وشحن سريع، أنصح بها بشدة.",
                     "name": "محمد"
                   }
-                ]
+                ],
+                "background_color": "#ffffff"
               }
             },
             {
@@ -787,10 +801,10 @@
               "section_id": "cc31d17e-bbe0-4825-8cdc-f3e5993c1b36",
               "settings": {
                 "title": "تسوّق حسب التصنيف",
-                "title_color": "#000000",
-                "section_bg_color": "#ffffff",
                 "remove_bottom_margin": false,
-                "categories": []
+                "categories": [],
+                "background_color": "#ffffff",
+                "display_more": true
               }
             },
             {
@@ -800,11 +814,13 @@
               "section_id": "bdd97f4d-3be3-45bb-ac47-f0db85e2e059",
               "settings": {
                 "title": "عرض محدود الوقت",
-                "subtitle": "لا تفوّت الفرصة",
-                "title_color": "#ffffff",
-                "subtitle_color": "#ffffff",
-                "section_bg_color": "#000000",
-                "remove_bottom_margin": false
+                "remove_bottom_margin": false,
+                "background_color": "#000000",
+                "description": "لا تفوّت الفرصة",
+                "end_date": "2027-12-31",
+                "button_text": "تسوّق الآن",
+                "button_url": "/products",
+                "badge_text": "عرض خاص"
               }
             },
             {
@@ -814,10 +830,11 @@
               "section_id": "e3c832c6-c495-4d07-80ae-341e9dbe0035",
               "settings": {
                 "title": "شاهد تجربتنا",
-                "subtitle": "من المزرعة إلى كوبك",
-                "title_color": "#000000",
-                "subtitle_color": "#737373",
-                "remove_bottom_margin": false
+                "remove_bottom_margin": false,
+                "video": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/0db8b874-5e5e-4503-8038-17dc28dc8509.mp4",
+                "poster_image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/e866d02d-3cef-4aa8-aebd-ab556f51f2c0.png",
+                "autoplay": true,
+                "controls": false
               }
             },
             {
@@ -826,10 +843,8 @@
               "template": "sections/logo-social.jinja",
               "section_id": "3e11e441-5e6e-4cfb-ad10-5a3e1c814840",
               "settings": {
-                "title": "تابعنا على السوشيال ميديا",
-                "title_color": "#000000",
-                "section_bg_color": "#ffffff",
-                "remove_bottom_margin": false
+                "remove_bottom_margin": false,
+                "background_color": "#ffffff"
               }
             },
             {
@@ -839,20 +854,16 @@
               "section_id": "f4314ce8-0500-4fa1-8147-4d9ed7a7dacc",
               "settings": {
                 "heading": "قهوة تضبط يومك",
-                "subheading": "تجربة جريئة محمصة بعناية",
-                "cta_text": "تسوّق الآن",
-                "cta_url": "/collections/all",
-                "heading_color": "#ffffff",
-                "subheading_color": "#ffffff",
-                "cta_text_color": "#ffffff",
-                "cta_bg_color": "rgba(255,255,255,0)",
-                "cta_border_color": "#ffffff",
-                "cta_hover_bg_color": "rgba(255,255,255,0.10)",
-                "mobile_height": 500,
-                "desktop_height": 600,
                 "overlay_opacity": 30,
-                "desktop_overlay_opacity": 20,
-                "remove_bottom_margin": false
+                "remove_bottom_margin": false,
+                "description": "تجربة جريئة محمصة بعناية",
+                "button_text": "تسوّق الآن",
+                "button_url": "/products",
+                "background_image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/017f17d3-7f3b-4308-94f3-fbb0ac4b7d83.jpg",
+                "background_image_mobile": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/7ee3bedf-7e01-4ffb-af7f-90375d0908bf.png",
+                "min_height_mobile": 500,
+                "min_height_desktop": 600,
+                "is_primary_hero": false
               }
             },
             {
@@ -862,28 +873,26 @@
               "section_id": "3292fb15-43d2-4de1-9019-b8169e9cfaf5",
               "settings": {
                 "heading": "ابدأ رحلتك مع القهوة",
-                "subheading": "تجربة جريئة محمصة بعناية لتجربة تفهم جوك",
-                "cta_text": "تسوّق الآن",
-                "button_url": "/collections/all",
-                "heading_color": "#ffffff",
-                "subheading_color": "#ffffff",
-                "cta_text_color": "#000000",
-                "cta_bg_color": "#ffffff",
-                "rating": "4.8",
+                "button_url": "/products",
                 "rating_stars": 5,
-                "section_bg_color": "#000000",
                 "remove_bottom_margin": false,
                 "avatars": [
                   {
-                    "image": ""
+                    "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/5a3bb27d-cbfd-43f2-915a-82cd8100ea0c.png"
                   },
                   {
-                    "image": ""
+                    "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/8fc3e99b-7c21-48e9-ac06-8d1d6061030c.png"
                   },
                   {
-                    "image": ""
+                    "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/6d3f50b3-b1e6-494e-9b9b-47d22b700c05.png"
                   }
-                ]
+                ],
+                "description": "تجربة جريئة محمصة بعناية لتجربة تفهم جوك",
+                "button_text": "تسوّق الآن",
+                "rating_value": "4.8",
+                "background_color": "#000000",
+                "background_image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/017f17d3-7f3b-4308-94f3-fbb0ac4b7d83.jpg",
+                "background_image_mobile": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/7ee3bedf-7e01-4ffb-af7f-90375d0908bf.png"
               }
             }
           ]
