@@ -61,7 +61,8 @@
    Also fixed: side cart `cart.total` is a totals object on the cart page → broke an inline script.
    **Theme preset on Zid**: `python3 scripts/public-preset.py && cd build/theme && vitrin presets create ../preset.json` (or `presets update <id>`) — current preset
    id `c471c643-3c7b-40c9-8af2-699769061088`. It is the store-agnostic copy of `presets/default.json` (pickers → recent products, store links → `/products`).
-4. **Wishlist**: header/drawer heart goes to `/pages/wishlist`, which needs a merchant-created page with slug `wishlist` and has no share-by-URL. Prefer the platform account wishlist route (confirm the URL live), or document it.
+4. **Wishlist — DONE (2026-10-06)**: header/drawer heart and `wishlistConfig.pageUrl` now go to the platform page `/account/wishlist`
+   (asks guests to log in, then shows Zid's own list). `/pages/wishlist` was a 404 unless the merchant made that page; `/wishlist` exists but errors for guests.
 5. **Section preview images**: Growth ships `sections/<name>.png` for each section; we have none (24 sections). Needs screenshots of each section.
 6. Smaller items from the audit:
    - remaining hard-coded `direction:rtl` rules in `assets/css/components.css` (quick view / wishlist: lines ~665, 682, 1023, 1099, 1280, 1412, 1623, 1837, 2137, 2182) → scope to `[dir="rtl"]`;
