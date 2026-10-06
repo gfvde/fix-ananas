@@ -300,7 +300,6 @@
           ],
           "default": "sidebar"
         },
-
         {
           "id": "category_page_background_color",
           "type": "color",
@@ -558,6 +557,24 @@
             }
           ],
           "default": "start"
+        },
+        {
+          "id": "enable_loop",
+          "type": "checkbox",
+          "label": {
+            "ar": "تكرار الصور بشكل دائري",
+            "en": "Loop gallery images"
+          },
+          "default": false
+        },
+        {
+          "id": "enable_keyboard",
+          "type": "checkbox",
+          "label": {
+            "ar": "التنقل بين الصور بأسهم الكيبورد",
+            "en": "Keyboard arrow navigation"
+          },
+          "default": true
         },
         {
           "id": "details_thumbnail_position",
