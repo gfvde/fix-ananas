@@ -1228,24 +1228,6 @@
           ]
         },
         {
-          "id": "background_color_coffee_cta_section",
-          "type": "color",
-          "label": {
-            "ar": "لون الخلفية",
-            "en": "Background Color"
-          },
-          "default": "#EDEBE8"
-        },
-        {
-          "id": "text_color_coffee_cta_section",
-          "type": "color",
-          "label": {
-            "ar": "لون النص",
-            "en": "Text Color"
-          },
-          "default": "#000000"
-        },
-        {
           "id": "primary_btn_color_coffee_cta_section",
           "type": "color",
           "label": {
