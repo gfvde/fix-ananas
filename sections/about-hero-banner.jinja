@@ -79,7 +79,7 @@
           class="about-hero-banner__rating"
           role="button"
           tabindex="0"
-          aria-label="{{ _('Scroll to reviews (%(rating)s)', rating=rating_value) }}"
+          aria-label="{{ _('Scroll to reviews (%(rating)s)') | format(rating=rating_value) }}"
           data-ahb-rating-scroll-target="{{ rating_scroll_target }}"
         >
           <div class="about-hero-banner__rating-row">

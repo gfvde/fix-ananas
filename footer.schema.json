@@ -130,13 +130,13 @@
           "id": "noise_opacity",
           "type": "range",
           "label": {
-            "ar": "شدة تأثير الـ Noise",
-            "en": "Noise Intensity"
+            "ar": "شدة تأثير الـ Noise (%)",
+            "en": "Noise intensity (%)"
           },
           "min": 0,
-          "max": 1,
-          "step": 0.05,
-          "default": 0.2
+          "max": 100,
+          "step": 5,
+          "default": 20
         }
       ]
     },

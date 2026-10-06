@@ -1772,7 +1772,7 @@
   if (window.zid && window.zid.cart) {
     window.zid.cart.get()
       .then(function (d) {
-        var count = d && (d.cart_items_quantity ?? d.products_count ?? d.items_count ?? 0);
+        var count = d && [d.cart_items_quantity, d.products_count, d.items_count, 0].find(function (v) { return v !== undefined && v !== null; });
         if (count) updateCartBadge(count);
       })
       .catch(function () {});

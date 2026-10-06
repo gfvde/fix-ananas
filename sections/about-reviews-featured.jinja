@@ -130,7 +130,7 @@
         {% if has_multiple %}
           <div class="arf-dots" data-arf-dots aria-label="{{ _('Customer reviews') }}">
             {% for review in reviews %}
-              <button class="arf-dot{% if loop.first %} arf-dot--active{% endif %}" type="button" data-arf-dot="{{ loop.index0 }}" aria-label="{{ _('Review %(number)s', number=loop.index) }}"></button>
+              <button class="arf-dot{% if loop.first %} arf-dot--active{% endif %}" type="button" data-arf-dot="{{ loop.index0 }}" aria-label="{{ _('Review %(number)s') | format(number=loop.index) }}"></button>
             {% endfor %}
           </div>
         {% endif %}

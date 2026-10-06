@@ -1,5 +1,6 @@
 {% set bg_color      = settings.style_bg_color      | default('#0e0d0d') %}
-{% set noise_opacity = settings.style_noise_opacity | default(0.2) | float %}
+{% set noise_opacity = settings.style_noise_opacity | default(20) | float %}
+{% if noise_opacity > 1 %}{% set noise_opacity = noise_opacity / 100 %}{% endif %}
 {% set bg_image      = settings.style_bg_image %}
 {% set bg_style      = settings.style_bg_image_style | default('cover') %}
 {% set desktop_h     = settings.style_desktop_height | default(300) %}

@@ -113,7 +113,7 @@
             data-grid="grid"
           >
             {% for product in products %}
-              {% with index=loop.index0, product_card_variant='pc-card--figma-products pc-card--figma-grid', is_priority=(loop.first and settings.order <= 2) %}
+              {% with index=loop.index0, product_card_variant='pc-card--figma-products pc-card--figma-grid', is_priority=(loop.first and (settings.order | default(3) | int) <= 2) %}
                 {% include 'components/products/product-card.jinja' %}
               {% endwith %}
             {% endfor %}
@@ -129,7 +129,7 @@
               <div class="fp-carousel__container">
                 {% for product in products %}
                   <div class="fp-carousel__slide">
-                    {% with index=loop.index0, product_card_variant='pc-card--figma-products pc-card--figma-carousel', is_priority=(loop.first and settings.order <= 2) %}
+                    {% with index=loop.index0, product_card_variant='pc-card--figma-products pc-card--figma-carousel', is_priority=(loop.first and (settings.order | default(3) | int) <= 2) %}
                       {% include 'components/products/product-card.jinja' %}
                     {% endwith %}
                   </div>
