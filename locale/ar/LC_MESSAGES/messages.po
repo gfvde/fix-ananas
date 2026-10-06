@@ -1593,3 +1593,28 @@ msgstr "تمت إضافة بعض المنتجات فقط"
 
 msgid "Some products are out of stock"
 msgstr "بعض المنتجات غير متوفرة حالياً"
+
+# --- r2 pages ---
+msgid "All Brands"
+msgstr "جميع العلامات التجارية"
+
+msgid "Brands"
+msgstr "العلامات التجارية"
+
+msgid "No brands found"
+msgstr "لا توجد علامات تجارية"
+
+msgid "No products found in this brand"
+msgstr "لا توجد منتجات لهذه العلامة التجارية"
+
+msgid "1 product"
+msgstr "منتج واحد"
+
+msgid "Featured Products"
+msgstr "منتجات مميزة"
+
+msgid "Share on X"
+msgstr "مشاركة عبر X"
+
+msgid "Share on Telegram"
+msgstr "مشاركة عبر تيليجرام"
