@@ -974,6 +974,8 @@
 
                                   {{ _("Preorder now") if product.preorder_campaign else _("Add to cart") }}
                                 </button>
+                                {# Mount point for apps such as WhatsApp inquiry (upstream bcc686e) #}
+                                <span id="product-view-add-to-cart"></span>
                 
                                 {# i need to add buy now button #}
                                 {# {% if store.settings.checkout.enable_buy_now %}
