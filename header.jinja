@@ -185,14 +185,14 @@
         {% if settings.logo_desktop or settings.logo_mobile %}
           {% if settings.logo_desktop %}
             <img src="{{ image_url(settings.logo_desktop, w=200, q=90, f='auto') }}"
-                 style="max-height: {{ s_logo_height }}px;" class="w-auto object-contain" alt="{{ store.name }}" />
+                 height="{{ s_logo_height }}" style="max-height: {{ s_logo_height }}px;" class="w-auto object-contain" alt="{{ store.name }}" />
           {% elif settings.logo_mobile %}
             <img src="{{ image_url(settings.logo_mobile, w=150, q=90, f='auto') }}"
-                 style="max-height: {{ s_logo_height }}px;" class="w-auto object-contain" alt="{{ store.name }}" />
+                 height="{{ s_logo_height }}" style="max-height: {{ s_logo_height }}px;" class="w-auto object-contain" alt="{{ store.name }}" />
           {% endif %}
         {% elif store.logo %}
           <img src="{{ image_url(store.logo, w=200, q=90, f='auto') }}"
-               style="max-height: {{ s_logo_height }}px;" class="w-auto object-contain" alt="{{ store.name }}" />
+               height="{{ s_logo_height }}" style="max-height: {{ s_logo_height }}px;" class="w-auto object-contain" alt="{{ store.name }}" />
         {% else %}
           <span class="ananas-nav__logo-text">{{ store.name }}</span>
         {% endif %}
@@ -355,13 +355,13 @@
       <a href="/" class="ananas-nav__logo" aria-label="{{ store.name }}">
         {% if settings.logo_mobile %}
           <img src="{{ image_url(settings.logo_mobile, w=150, q=90, f='auto') }}"
-               style="max-height: 32px;" class="w-auto object-contain" alt="{{ store.name }}" />
+               height="{{ [s_logo_height | int - 8, 16] | max }}" style="max-height: max(16px, calc(var(--ananas-logo-h) - 8px));" class="w-auto object-contain" alt="{{ store.name }}" />
         {% elif settings.logo_desktop %}
           <img src="{{ image_url(settings.logo_desktop, w=150, q=90, f='auto') }}"
-               style="max-height: 32px;" class="w-auto object-contain" alt="{{ store.name }}" />
+               height="{{ [s_logo_height | int - 8, 16] | max }}" style="max-height: max(16px, calc(var(--ananas-logo-h) - 8px));" class="w-auto object-contain" alt="{{ store.name }}" />
         {% elif store.logo %}
           <img src="{{ image_url(store.logo, w=150, q=90, f='auto') }}"
-               style="max-height: 32px;" class="w-auto object-contain" alt="{{ store.name }}" />
+               height="{{ [s_logo_height | int - 8, 16] | max }}" style="max-height: max(16px, calc(var(--ananas-logo-h) - 8px));" class="w-auto object-contain" alt="{{ store.name }}" />
         {% else %}
           <span class="ananas-nav__logo-text">{{ store.name }}</span>
         {% endif %}
@@ -724,7 +724,7 @@
      hidden on desktop, shown on mobile via media query */
 	  .ananas-nav__inner--mob {
 	    display: none;
-	    height: 56px;
+	    height: 100%;
 	    padding: 0 16px;
 	    align-items: center;
 	    grid-template-columns: 1fr auto 1fr;
@@ -1491,7 +1491,8 @@
   /* ─── Responsive ─────────────────────────────── */
   @media (max-width: 1023px) {
     /* Switch to mobile nav */
-    .ananas-nav { height: 56px; }
+    /* Mobile follows the header settings, 8px shorter (defaults 64/40 → 56/32) */
+    .ananas-nav { height: calc(var(--ananas-nav-height) - 8px); }
     .ananas-nav__inner--desk { display: none !important; }
     .ananas-nav__inner--mob  { display: grid; }
     .ananas-nav__icon-btn, .ananas-mobile-btn { color: var(--ananas-icon-color-mobile); }
@@ -2003,13 +2004,12 @@
       if (searchPopular) searchPopular.style.display = 'none';
 
       searchTimer = setTimeout(function () {
-        fetch(
-          '/search/suggest.json?q=' + encodeURIComponent(q) +
-          '&resources[type]=product&resources[limit]=8'
-        )
-        .then(function (r) { return r.json(); })
+        if (!window.zid || !window.zid.products || !window.zid.products.list) return;
+        window.zid.products.list({ q: q, page_size: 8 }, { showErrorNotification: false })
         .then(function (data) {
-          var items = (data.resources && data.resources.results && data.resources.results.products) || [];
+          /* Ignore a response that arrives after the user kept typing */
+          if (searchInput.value.trim() !== q) return;
+          var items = (data && (data.results || (data.data && data.data.results) || data.products)) || [];
           if (!track) return;
           if (!items.length) {
             var emptyMessage = document.createElement('p');

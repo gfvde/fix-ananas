@@ -62,6 +62,10 @@
                 <span class="ananas-drawer__state" aria-hidden="true"></span>
               </summary>
               <div class="ananas-drawer__sub">
+                <a
+                  href="{{ item.url | localized_url if item.resource_type != 'url' else item.url }}"
+                  class="ananas-drawer__link ananas-drawer__link--all"
+                >{{ item.label }}</a>
                 {% for child in item.items %}
                   {% if child.items | length > 0 %}
                     <details class="ananas-drawer__details ananas-drawer__details--sub">
@@ -70,6 +74,10 @@
                         <span class="ananas-drawer__state" aria-hidden="true"></span>
                       </summary>
                       <div class="ananas-drawer__sub ananas-drawer__sub--deep">
+                        <a
+                          href="{{ child.url | localized_url if child.resource_type != 'url' else child.url }}"
+                          class="ananas-drawer__link ananas-drawer__link--all"
+                        >{{ child.label }}</a>
                         {% for gc in child.items %}
                           <a
                             href="{{ gc.url | localized_url if gc.resource_type != 'url' else gc.url }}"

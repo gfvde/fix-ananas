@@ -47,7 +47,7 @@
       "id": "border_radius",
       "type": "range",
       "label": {
-        "ar": "انحناء الحواف (Border Radius)",
+        "ar": "انحناء الحواف",
         "en": "Border Radius"
       },
       "min": 0,

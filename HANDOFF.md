@@ -67,14 +67,12 @@
 4. **Wishlist — DONE (2026-10-06)**: header/drawer heart and `wishlistConfig.pageUrl` now go to the platform page `/account/wishlist`
    (asks guests to log in, then shows Zid's own list). `/pages/wishlist` was a 404 unless the merchant made that page; `/wishlist` exists but errors for guests.
 5. **Section preview images**: Growth ships `sections/<name>.png` for each section; we have none (24 sections). Needs screenshots of each section.
-6. Smaller items from the audit:
-   - remaining hard-coded `direction:rtl` rules in `assets/css/components.css` (quick view / wishlist: lines ~665, 682, 1023, 1099, 1280, 1412, 1623, 1837, 2137, 2182) → scope to `[dir="rtl"]`;
-   - mobile drawer dynamic mode: add an "all" link for parent categories (`components/header/mobile-drawer.jinja:56-95`, static mode has it at `:108-111`);
-   - header: mobile logo fixed 32px and nav 56px ignore settings; add `width`/`height` to logo `<img>`;
-   - `header.schema.json` `style.search_bg/search_border/search_input_color` are overridden by `nav_search_*` → remove duplicates;
-   - `category_page.filter_layout` select has a single option;
-   - `header.jinja:~2004` fetches Shopify-style `/search/suggest.json` (dead; errors swallowed) — replace with `zid.products.list` or remove;
-   - Arabic labels with English words mixed in (see schema scan); Arabic-only text defaults in `layout.schema.json` (`head_title_feature`, `faq_section_*`, coffee CTA) should be empty with `_()` fallbacks in templates.
+6. **Smaller audit items — DONE (2026-10-06)**: quick view / wishlist `direction` rules in `components.css` scoped to `[dir="rtl"]`;
+   dynamic mobile drawer gets "all" links for parent categories (both levels); mobile header height/logo follow the settings (−8px, defaults stay 56/32)
+   and logos have a `height`; dead `style.search_bg/search_border/search_input_color` removed (always overridden by `nav.search_*`);
+   `category_page.filter_layout` gains a "drawer" option (the existing top-bar layout); live search uses `zid.products.list({q})` instead of the
+   Shopify `/search/suggest.json`; mixed English in Arabic labels cleaned; Arabic-only text defaults in `layout.schema.json` are now empty with
+   `_()` fallbacks whose Arabic matches the old defaults (Arabic storefront unchanged, English no longer shows Arabic).
 7. After each batch: PR into `main` (merge commit, not squash), `make package`, `python3 scripts/demo-settings.py build/theme`, re-preview, re-validate (must stay 39/39).
 8. Publishing (owner does it in the Partner Dashboard → My Themes → Themes Management): upload zip, price/description,
    3–9 images (desktop 4:3 ≤1600×1200, mobile 9:16 ≤720×1280), Submit to Publish. Review ≈ 2 days.

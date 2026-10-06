@@ -1823,3 +1823,15 @@ msgstr "العرض"
 #, python-format
 msgid "Bundle items (%(count)s)"
 msgstr "محتويات الباقة (%(count)s)"
+
+msgid "Choose your brewing method"
+msgstr "اختار طريقتك في التحضير"
+
+msgid "A ready recipe that tunes your coffee for you"
+msgstr "وصفة جاهزة من أتناس تضبط لك القهوة تلقائيًا"
+
+msgid "Try it on an Xbloom machine"
+msgstr "جرّبها على جهاز Xbloom"
+
+msgid "Brew it yourself"
+msgstr "حضّرها بنفسك"

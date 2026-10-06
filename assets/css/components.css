@@ -662,6 +662,8 @@
     gap: 20px !important;
     align-items: flex-start;
     justify-content: flex-end;
+  }
+  [dir="rtl"] #product-quick-view-modal .quick-view-product-section {
     direction: rtl;
   }
 
@@ -670,6 +672,8 @@
     width: 357px;
     min-width: 357px;
     flex: 0 0 357px;
+  }
+  [dir="rtl"] #product-quick-view-modal .product-gallery-column {
     direction: ltr;
   }
 
@@ -679,6 +683,8 @@
     min-width: 0;
     gap: 8px !important;
     align-items: flex-start;
+  }
+  [dir="rtl"] #product-quick-view-modal .product-details-column {
     direction: rtl;
   }
 
@@ -840,9 +846,11 @@
   }
 
   #product-quick-view-modal #header .flex.items-center.gap-2 {
-    direction: ltr;
     flex-direction: row-reverse;
     gap: 6px !important;
+  }
+  [dir="rtl"] #product-quick-view-modal #header .flex.items-center.gap-2 {
+    direction: ltr;
   }
 
   #product-quick-view-modal #header .text-muted-foreground {
@@ -1000,10 +1008,12 @@
     display: flex !important;
     width: 100%;
     height: 48px;
-    direction: ltr;
     flex-direction: row;
     gap: 8px !important;
     padding-top: 0 !important;
+  }
+  [dir="rtl"] #product-quick-view-modal [data-in-stock]:not(.hidden):not([hidden]) {
+    direction: ltr;
   }
 
   #product-quick-view-modal .quick-view-buy-now,
@@ -1020,8 +1030,10 @@
     font-size: 16px;
     font-weight: 500;
     line-height: 24px;
-    direction: rtl;
     white-space: nowrap;
+  }
+  [dir="rtl"] #product-quick-view-modal .quick-view-buy-now, [dir="rtl"] #product-quick-view-modal .quick-view-add-to-cart {
+    direction: rtl;
   }
 
   #product-quick-view-modal .quick-view-add-to-cart {
@@ -1096,6 +1108,8 @@
       flex-direction: column;
       gap: 16px !important;
       align-items: stretch;
+    }
+    [dir="rtl"] #product-quick-view-modal .quick-view-product-section {
       direction: rtl;
     }
 
@@ -1258,8 +1272,10 @@
     #product-quick-view-modal .quick-view-purchase-row {
       align-items: center;
       justify-content: space-between;
-      direction: ltr;
       gap: 12px;
+    }
+    [dir="rtl"] #product-quick-view-modal .quick-view-purchase-row {
+      direction: ltr;
     }
 
     #product-quick-view-modal .quick-view-purchase-row [data-wishlist-btn] {
@@ -1277,10 +1293,12 @@
     }
 
     #product-quick-view-modal [data-quantity-wrapper] {
-      direction: rtl;
       flex-direction: row;
       align-items: center;
       gap: 12px !important;
+    }
+    [dir="rtl"] #product-quick-view-modal [data-quantity-wrapper] {
+      direction: rtl;
     }
 
     #product-quick-view-modal [data-quantity-wrapper] label {
@@ -1313,9 +1331,11 @@
 
     #product-quick-view-modal [data-in-stock]:not(.hidden):not([hidden]) {
       height: 44px;
-      direction: ltr;
       flex-direction: row;
       gap: 8px !important;
+    }
+    [dir="rtl"] #product-quick-view-modal [data-in-stock]:not(.hidden):not([hidden]) {
+      direction: ltr;
     }
 
     #product-quick-view-modal .quick-view-buy-now,
@@ -1409,6 +1429,8 @@
     align-items: center;
     justify-content: flex-start;
     gap: 8px;
+  }
+  [dir="rtl"] #product-quick-view-modal .quick-view-tags {
     direction: rtl;
   }
 
@@ -1620,6 +1642,8 @@
       gap: 20px !important;
       align-items: flex-start;
       justify-content: flex-start;
+    }
+    [dir="rtl"] #product-quick-view-modal .quick-view-product-section {
       direction: rtl;
     }
 
@@ -1627,6 +1651,8 @@
       width: 357px;
       min-width: 357px;
       flex: 0 0 357px;
+    }
+    [dir="rtl"] #product-quick-view-modal .product-gallery-column {
       direction: ltr;
     }
 
@@ -1636,8 +1662,10 @@
       min-height: 418px;
       align-items: flex-start;
       gap: 8px !important;
-      direction: rtl;
       overflow: visible;
+    }
+    [dir="rtl"] #product-quick-view-modal .product-details-column {
+      direction: rtl;
     }
 
     /* Gallery flex container (div.flex.gap-2) */
@@ -1834,6 +1862,8 @@
     #product-quick-view-modal .quick-view-purchase-row {
       width: 100%;
       justify-content: flex-start;
+    }
+    [dir="rtl"] #product-quick-view-modal .quick-view-purchase-row {
       direction: rtl;
     }
 
@@ -1851,8 +1881,10 @@
       width: 100%;
       height: 48px;
       flex-direction: row;
-      direction: ltr;
       gap: 8px !important;
+    }
+    [dir="rtl"] #product-quick-view-modal [data-in-stock]:not(.hidden):not([hidden]) {
+      direction: ltr;
     }
 
     #product-quick-view-modal .quick-view-buy-now,
@@ -1910,6 +1942,8 @@
       flex-direction: column;
       gap: 16px !important;
       align-items: stretch;
+    }
+    [dir="rtl"] #product-quick-view-modal .quick-view-product-section {
       direction: rtl;
     }
 
@@ -1922,6 +1956,8 @@
 
     #product-quick-view-modal .product-gallery-column {
       order: 1;
+    }
+    [dir="rtl"] #product-quick-view-modal .product-gallery-column {
       direction: ltr;
     }
 
@@ -1929,6 +1965,8 @@
       order: 2;
       align-items: flex-start;
       gap: 16px !important;
+    }
+    [dir="rtl"] #product-quick-view-modal .product-details-column {
       direction: rtl;
     }
 
@@ -2115,8 +2153,10 @@
       width: 100%;
       align-items: center;
       justify-content: space-between;
-      direction: ltr;
       gap: 12px;
+    }
+    [dir="rtl"] #product-quick-view-modal .quick-view-purchase-row {
+      direction: ltr;
     }
 
     #product-quick-view-modal .quick-view-purchase-row [data-wishlist-btn] {
@@ -2134,6 +2174,8 @@
       flex-direction: row;
       align-items: center;
       gap: 12px !important;
+    }
+    [dir="rtl"] #product-quick-view-modal [data-quantity-wrapper] {
       direction: rtl;
     }
 
@@ -2160,8 +2202,10 @@
     #product-quick-view-modal [data-in-stock]:not(.hidden):not([hidden]) {
       height: 44px;
       flex-direction: row;
-      direction: ltr;
       gap: 8px !important;
+    }
+    [dir="rtl"] #product-quick-view-modal [data-in-stock]:not(.hidden):not([hidden]) {
+      direction: ltr;
     }
 
     #product-quick-view-modal .quick-view-buy-now,
@@ -2179,8 +2223,10 @@
   .wishlist-page {
     min-height: 60vh;
     background: #fcfaf7;
-    direction: rtl;
     font-family: var(--font-family, sans-serif);
+  }
+  [dir="rtl"] .wishlist-page {
+    direction: rtl;
   }
 
   .wishlist-page__inner {

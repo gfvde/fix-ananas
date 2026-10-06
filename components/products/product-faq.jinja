@@ -31,8 +31,8 @@
   {% set icon_color      = settings.single_product_section_faq_icon_color                | default('#171717') %}
 
   {# ── Text tokens (one field serves both languages) ── #}
-  {% set section_title    = settings.single_product_section_faq_section_title    | default(_('Frequently Asked Questions')) %}
-  {% set section_subtitle = settings.single_product_section_faq_section_subtitle | default(_('We provide comprehensive answers to the most common questions to help you choose the right product.')) %}
+  {% set section_title    = settings.single_product_section_faq_section_title    | default(_('Frequently Asked Questions'), true) %}
+  {% set section_subtitle = settings.single_product_section_faq_section_subtitle | default(_('We provide comprehensive answers to the most common questions to help you choose the right product.'), true) %}
 
   <section
     id="product-faq-section"
