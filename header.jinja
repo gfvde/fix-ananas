@@ -401,7 +401,7 @@
 
         {% if settings.nav_mega_decor %}
           <div class="ananas-mega__decor" aria-hidden="true">
-            <img src="{{ image_url(settings.nav_mega_decor, w=480, f='auto') }}" alt="" />
+            <img src="{{ image_url(settings.nav_mega_decor, w=480, f='auto') }}" alt="" loading="lazy" decoding="async" />
           </div>
         {% endif %}
 
@@ -417,6 +417,10 @@
                 src="{{ image_url(settings.nav_mega_image, w=280, h=330, f='auto') }}"
                 alt="{{ settings.nav_mega_label | default('') }}"
                 class="ananas-mega__img"
+                width="280"
+                height="330"
+                loading="lazy"
+                decoding="async"
               />
               {% if settings.nav_mega_label %}
                 <span class="ananas-mega__img-label ananas-mega__img-label--static">{{ settings.nav_mega_label }}</span>
@@ -427,7 +431,7 @@
           <div class="ananas-mega__static-cols">
             {% if settings.nav_mega_standalone_links %}
               <div class="ananas-mega__col ananas-mega__col--solo">
-                {% for link in settings.nav_mega_standalone_links %}
+                {% for link in safeget(settings, "nav_mega_standalone_links", []) if link and link.label %}
                   <a href="{{ link.url | default('#') }}" class="ananas-mega__link">{{ link.label }}</a>
                 {% endfor %}
               </div>
@@ -506,6 +510,10 @@
                     src="{{ image_url(settings.nav_mega_image, w=280, h=330, f='auto') }}"
                     alt="{{ settings.nav_mega_label | default('') }}"
                     class="ananas-mega__img"
+                    width="280"
+                    height="330"
+                    loading="lazy"
+                    decoding="async"
                   />
                   {% if settings.nav_mega_label %}
                     <span class="ananas-mega__img-label">{{ settings.nav_mega_label }}</span>
@@ -623,7 +631,7 @@
                 {{ settings.nav_popular_title if settings.nav_popular_title else _('Popular searches') }}
               </p>
               <ul class="ananas-search__pop-list">
-                {% for entry in settings.nav_popular_searches %}
+                {% for entry in safeget(settings, "nav_popular_searches", []) if entry and entry.term %}
                   <li>
                     <a href="/products?q={{ entry.term | urlencode }}" class="ananas-search__pop-link">
                       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -1562,28 +1570,6 @@
    SCRIPTS
 ══════════════════════════════════════════════════ #}
 <script>
-  var menuItems = {{ store.settings.menus.main_menu.items | tojson }};
-console.log('Main Menu Items:', menuItems);
-menuItems.forEach(function(item, i) {
-  console.group('📁 ' + item.label + ' (Level 1)');
-  console.log('URL:', item.url);
-  console.log('Resource Type:', item.resource_type);
-
-  if (item.items && item.items.length > 0) {
-    item.items.forEach(function(child, j) {
-      console.group('  📂 ' + child.label + ' (Level 2)');
-      console.log('  URL:', child.url);
-
-      if (child.items && child.items.length > 0) {
-        child.items.forEach(function(gc) {
-          console.log('    📄 ' + gc.label + ' → ' + gc.url);
-        });
-      }
-      console.groupEnd();
-    });
-  }
-  console.groupEnd();
-});
 (function () {
   'use strict';
 
@@ -1759,64 +1745,8 @@ menuItems.forEach(function(item, i) {
   backdrop.addEventListener('click', closeAll);
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(); });
 
-  /* ────────────────────────────────────────────────
-     AUTH STATE
-  ──────────────────────────────────────────────── */
-  var loginBtn     = qs('#header-login-btn');
-  var profileBtn   = qs('#header-profile-btn');
-  var mLoginBtn    = qs('#mobile-login-btn');
-  var mProfileBtn  = qs('#mobile-profile-btn');
-	  var mLoggedIn    = qs('#mobile-logged-in-links');
-
-	  function setAuthState(loggedIn) {
-	    if (loginBtn)    loginBtn.style.display    = loggedIn ? 'none' : '';
-	    if (profileBtn)  profileBtn.style.display  = loggedIn ? 'inline-flex' : 'none';
-	    if (mLoginBtn)   mLoginBtn.style.display   = loggedIn ? 'none' : '';
-	    if (mProfileBtn) mProfileBtn.style.display = loggedIn ? 'inline-flex' : 'none';
-	    if (mLoggedIn)   mLoggedIn.style.display   = loggedIn ? 'flex' : 'none';
-	  }
-
-	  /* handleLoginAction — called by both desktop and mobile login buttons */
-	  window.handleLoginAction = function () {
-	    try {
-	      if (typeof zid !== 'undefined' && zid.customer && zid.customer.isLoggedIn && zid.customer.isLoggedIn()) {
-	        window.location.href = "{{ url_for('profile') }}";
-	        return;
-	      }
-	    } catch (e) {}
-	    if (typeof zid !== 'undefined' && zid.customer && zid.customer.login) {
-	      zid.customer.login();
-	    } else if (typeof zidLogin === 'function') {
-      zidLogin();
-    }
-  };
-
-  /* Listen for Zid auth events */
-  document.addEventListener('zid:customer:loggedIn',  function () { setAuthState(true); });
-  document.addEventListener('zid:customer:loggedOut', function () { setAuthState(false); });
-  document.addEventListener('zid-customer-fetched', function (e) {
-    var customer = e && e.detail && e.detail.customer;
-    setAuthState(!!(customer && customer.name));
-  });
-
-  /* Initial state from cookie / global */
-  function checkInitialAuth() {
-    if (typeof zid !== 'undefined' && zid.customer) {
-      try {
-        var isLogged = zid.customer.isLoggedIn ? zid.customer.isLoggedIn() : false;
-        setAuthState(isLogged);
-        return true;
-      } catch (e) {}
-    }
-    return false;
-  }
-  if (!checkInitialAuth()) {
-    var authRetry = window.setTimeout(function () { checkInitialAuth(); }, 800);
-    document.addEventListener('DOMContentLoaded', function () {
-      window.clearTimeout(authRetry);
-      checkInitialAuth();
-    });
-  }
+  /* AUTH STATE: handled by assets/js/features/layout.js (handleLoginAction,
+     vitrin:auth:success, zid-customer-fetched, customerAuthState). */
 
   /* ────────────────────────────────────────────────
      CART BADGE

@@ -4,6 +4,8 @@
     "ar": "التصنيفات",
     "en": "Categories"
   },
+  "icon": "grid-line",
+  "meta": { "type": "categories" },
   "settings": [
     {
       "id": "title",

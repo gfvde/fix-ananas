@@ -4,6 +4,8 @@
     "ar": "دوّار الصور",
     "en": "Image Carousel"
   },
+  "icon": "carousel-view",
+  "meta": { "type": "slider" },
   "settings": [
     {
       "id": "style_variant",

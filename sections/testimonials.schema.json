@@ -4,6 +4,8 @@
     "ar": "آراء العملاء",
     "en": "Testimonials"
   },
+  "icon": "double-quotes-l",
+  "meta": { "type": "testimonials" },
   "settings": [
     {
       "id": "title",

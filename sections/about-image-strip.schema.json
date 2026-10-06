@@ -4,6 +4,8 @@
     "ar": "شريط الصور (About)",
     "en": "Image Strip (About)"
   },
+  "icon": "layout-column-line",
+  "meta": { "type": "gallery" },
   "settings": [
     {
       "id": "photo1",

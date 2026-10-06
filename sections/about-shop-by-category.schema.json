@@ -4,6 +4,7 @@
     "ar": "تسوّق حسب الفئة (About)",
     "en": "Shop By Category (About)"
   },
+  "icon": "layout-grid-line",
   "settings": [
     {
       "id": "title",

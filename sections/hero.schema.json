@@ -4,6 +4,8 @@
     "ar": "البانر الرئيسي",
     "en": "Hero Banner"
   },
+  "icon": "home-2-line",
+  "meta": { "type": "slider" },
   "settings": [
     {
       "id": "is_primary_hero",

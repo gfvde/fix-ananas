@@ -18,13 +18,22 @@ const entries = {
 };
 
 const config = entries[entry] || entries.main;
+const isProduction = process.env.NODE_ENV === "production";
 
 export default defineConfig({
+  // Production: strip debugger statements and debug logging. console.warn /
+  // console.error are kept so real failures stay visible on stores.
+  esbuild: isProduction
+    ? {
+        drop: ["debugger"],
+        pure: ["console.log", "console.debug", "console.info"]
+      }
+    : {},
   build: {
     outDir: "assets/dist",
     emptyOutDir: entry === "main", // Only empty on main build
-    sourcemap: process.env.NODE_ENV !== "production",
-    minify: process.env.NODE_ENV === "production",
+    sourcemap: !isProduction,
+    minify: isProduction,
 
     // Library mode - outputs a single IIFE bundle for browser <script> tag
     lib: {

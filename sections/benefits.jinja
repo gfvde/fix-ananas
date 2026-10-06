@@ -7,9 +7,10 @@
   style="background-color: {{ settings.background_color | default('transparent') }};"
 >
   <div class="theme-container">
-    {% if settings.store_features %}
+    {% set store_features = safeget(settings, "store_features", []) | select | list %}
+    {% if store_features %}
       <div class="grid grid-cols-2 gap-4 text-center lg:grid-cols-4">
-        {% for feature in settings.store_features %}
+        {% for feature in store_features %}
           <div class="flex flex-col items-center gap-4">
             {% if feature.image %}
               <picture>

@@ -12,10 +12,10 @@
 
 {%
   set cards = [
-    { 'image': settings.card1_image, 'tag': settings.card1_tag | default('شي جديد'), 'title': settings.card1_title | default('قهوة المغامرة'), 'desc': settings.card1_desc | default('اكتشف نكهات جديدة كل مرة'), 'url': settings.card1_url | default('#'), 'fallback': 'https://www.figma.com/api/mcp/asset/IKWpeo2dgGkgnb8o7g4Krc/image/cdb15f9616f8a053fc33b61727490121a5aeaaf8' },
-    { 'image': settings.card2_image, 'tag': settings.card2_tag | default('صفاء ذهني'), 'title': settings.card2_title | default('قهوة التركيز'), 'desc': settings.card2_desc | default('مزاج صافي يساعدك تنجز بدون تشتيت'), 'url': settings.card2_url | default('#'), 'fallback': 'https://www.figma.com/api/mcp/asset/IKWpeo2dgGkgnb8o7g4Krc/image/fc2b0c599cb8eefa2bf83ed620e47cb64c5d9e29' },
-    { 'image': settings.card3_image, 'tag': settings.card3_tag | default('هدوء بطعم غني'), 'title': settings.card3_title | default('قهوة الروقان'), 'desc': settings.card3_desc | default('لحظة لنفسك بعيد عن الزحمة'), 'url': settings.card3_url | default('#'), 'fallback': 'https://www.figma.com/api/mcp/asset/IKWpeo2dgGkgnb8o7g4Krc/image/13a314ebd614521b8b74181a2aff5d2b5cb4271c' },
-    { 'image': settings.card4_image, 'tag': settings.card4_tag | default('بداية يومك'), 'title': settings.card4_title | default('قهوة الصباح'), 'desc': settings.card4_desc | default('بداية خفيفة تضبط يومك من أول كوب'), 'url': settings.card4_url | default('#'), 'fallback': 'https://www.figma.com/api/mcp/asset/IKWpeo2dgGkgnb8o7g4Krc/image/d2c9b177117675e5fce6f9a9de8d971c12bf233a' }
+    { 'image': settings.card1_image, 'tag': settings.card1_tag | default('شي جديد'), 'title': settings.card1_title | default('قهوة المغامرة'), 'desc': settings.card1_desc | default('اكتشف نكهات جديدة كل مرة'), 'url': settings.card1_url | default('#') },
+    { 'image': settings.card2_image, 'tag': settings.card2_tag | default('صفاء ذهني'), 'title': settings.card2_title | default('قهوة التركيز'), 'desc': settings.card2_desc | default('مزاج صافي يساعدك تنجز بدون تشتيت'), 'url': settings.card2_url | default('#') },
+    { 'image': settings.card3_image, 'tag': settings.card3_tag | default('هدوء بطعم غني'), 'title': settings.card3_title | default('قهوة الروقان'), 'desc': settings.card3_desc | default('لحظة لنفسك بعيد عن الزحمة'), 'url': settings.card3_url | default('#') },
+    { 'image': settings.card4_image, 'tag': settings.card4_tag | default('بداية يومك'), 'title': settings.card4_title | default('قهوة الصباح'), 'desc': settings.card4_desc | default('بداية خفيفة تضبط يومك من أول كوب'), 'url': settings.card4_url | default('#') }
   ]
 %}
 
@@ -46,11 +46,14 @@
           class="sbm-card"
         >
           <div class="sbm-card__img">
+            {% if card.image %}
             <img
-              src="{{ image_url(card.image, w=800, f='auto') if card.image else card.fallback }}"
+              src="{{ image_url(card.image, w=800, f='auto') }}"
               alt="{{ card.title }}"
               loading="lazy"
+              decoding="async"
             />
+            {% endif %}
             {% if card.tag %}<span class="sbm-tag">{{ card.tag }}</span>{% endif %}
           </div>
           <div class="sbm-card__info">
@@ -70,7 +73,7 @@
         <button
           class="sbm-arrow"
           data-sbm-prev
-          aria-label="Previous"
+          aria-label="{{ _('Previous') }}"
         >
           <svg
             width="5"
@@ -91,7 +94,7 @@
         <button
           class="sbm-arrow"
           data-sbm-next
-          aria-label="Next"
+          aria-label="{{ _('Next') }}"
         >
           <svg
             width="5"
@@ -120,11 +123,14 @@
           class="sbm-mob-card"
         >
           <div class="sbm-mob-card__img">
+            {% if card.image %}
             <img
-              src="{{ image_url(card.image, w=600, f='auto') if card.image else card.fallback }}"
+              src="{{ image_url(card.image, w=600, f='auto') }}"
               alt="{{ card.title }}"
               loading="lazy"
+              decoding="async"
             />
+            {% endif %}
             {% if card.tag %}<span class="sbm-tag">{{ card.tag }}</span>{% endif %}
           </div>
           <div class="sbm-mob-card__info">

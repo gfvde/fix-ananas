@@ -1166,7 +1166,7 @@
       "path": "layout.jinja",
       "settings": {
         "ar": {
-          "font_family": "Expo+Arabic",
+          "font_family": "IBM+Plex+Sans+Arabic",
           "cart_page_features": [
             {
               "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/687474c3-df84-4183-a278-ebaff513025d.png",
@@ -1245,7 +1245,6 @@
           "cart_page_feature_subtitle_color": "#52525C",
           "category_page_category_page_title": "hguhf",
           "product_card_card_aligned_content": "start",
-          "product_card_show_fake_sold_count": true,
           "cart_page_loyalty_background_color": "#F5F5F5",
           "product_card_truncate_product_name": true,
           "category_page_category_page_enabled": false,

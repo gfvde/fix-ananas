@@ -33,7 +33,8 @@ The default storefront theme for [Zid's Vitrin platform](https://zid.sa). Built 
 ```bash
 npm install
 npm run dev                    # Watch mode (CSS + JS)
-vitrin push -s <store-email> -a   # Push and activate theme
+make package                   # Build + stage a clean theme in build/theme/
+cd build/theme && vitrin push -s <store-id> -a   # Push and activate theme
 ```
 
 ## Build and Deploy
@@ -74,7 +75,40 @@ vitrin push -s <store-email> -a     # Push and activate theme
 vitrin preview -s <store-id>        # Preview in browser
 ```
 
-The `vitrin push` command pushes the entire theme directory. The `-a` flag activates the theme immediately after pushing. There are no `.env` files, API keys, or secrets in this repo -- all authentication is handled by the Vitrin CLI's global login session.
+The `-a` flag activates the theme immediately after pushing.
+
+### Packaging (push from a clean folder)
+
+`vitrin push` and `vitrin build` zip almost **everything** in the current folder. Their ignore lists are hardcoded (push only skips `.git*`, `node_modules`, `.vitrin` and root `*.zip`), and they don't support `.vitrinignore`. Pushing from the repo root would ship `docs/`, `presets/`, `README.md`, the build tooling, and `assets/tailwindcss.css`.
+
+Always package first, then push from the staging folder:
+
+```bash
+make package          # or: scripts/package.sh   (SKIP_BUILD=1 to skip npm run build)
+cd build/theme
+vitrin push -s <store-id> -a                      # update latest version in place
+vitrin push --new-version --bump patch -c "..."   # when asset paths change
+```
+
+`scripts/package.sh` does the following:
+1. Runs `npm run build`, which produces `assets/styles.css` and `assets/dist/*.js`.
+2. Copies only the runtime theme files into `build/theme/`:
+   - `layout.*`, `header.*` and `footer.*`
+   - `templates/`, `sections/`, `components/` and `locale/`
+   - `assets/styles.css`, `assets/css/`, `assets/images/`, `assets/fonts/` and `assets/dist/` (without sourcemaps)
+   - any other asset a template references as `'<path>' | asset_url`, for example `js/time-ago.js`, `js/layout-loyalty.js` and `js/question-form.js`
+
+   Vite source files under `assets/js/` and `assets/tailwindcss.css` are **not** shipped.
+3. Writes `build/theme/theme.json`, using the name, slug and version the CLI would derive from `package.json`, so pushes keep updating the same theme. A root `theme.json` wins if one exists. It also copies `.vitrin/theme.json` (the theme link) when present.
+4. Zips the result to `build/ananas-theme-<date>.zip`. Upload this zip manually if you need to.
+
+`build/` is git-ignored. If the CLI doesn't recognise the staged folder as the linked theme, run `vitrin link` once inside `build/theme`.
+
+### Presets
+
+`presets/default.json` is the demo-store preset, previously `settings.json` at the repo root. It is not part of the theme package. Regenerate it from a configured store with `vitrin presets show <id> --json`.
+
+There are no `.env` files, API keys, or secrets in this repo -- all authentication is handled by the Vitrin CLI's global login session.
 
 ### Build Artifacts
 

@@ -229,7 +229,7 @@
             {% if store.settings.contact.email %}
               <a
                 href="mailto:{{ store.settings.contact.email }}"
-                aria-label="Email"
+                aria-label="{{ _('Email') }}"
                 class="flex items-center justify-center w-8 h-8 rounded-[6px] transition-opacity hover:opacity-80"
                 style="background-color: {{ icon_bg }}; border: 1px solid {{ icon_border }}; color: {{ heading_color }};"
               >
@@ -305,7 +305,7 @@
 		    <div class="footer-legal-strip  py-4 px-0 flex flex-col md:flex-row-reverse items-center justify-between gap-4 md:gap-4 w-full" >
 
       {# Legal Badges #}
-		      <div class="order-1 md:order-2 flex flex-wrap justify-center md:justify-end items-center gap-4 md:gap-6" dir="rtl">
+		      <div class="order-1 md:order-2 flex flex-wrap justify-center md:justify-end items-center gap-4 md:gap-6">
 	        {% if store.settings.general.commercial_registration_number %}
 		          <div class="footer-legal-item--commercial flex items-center gap-2 text-right">
 	            <div class="flex items-center justify-center w-7 h-7">
@@ -326,7 +326,7 @@
         {% if store.settings.contact.business_center %}
 		          <a href="https://eauthenticate.saudibusiness.gov.sa/certificate-details/{{ store.settings.contact.business_center }}" target="_blank" rel="noopener noreferrer" class="ltr:flex-row-reverse footer-legal-item--commerce flex items-center gap-2 text-right transition-opacity hover:opacity-80">
 	            <div class="flex items-center justify-center w-7 h-7">
-	              <img src="{{ 'images/ecommerce-certificate.svg' | asset_url }}" alt="Business Center" class="w-7 h-7 object-contain" />
+	              <img src="{{ 'images/ecommerce-certificate.webp' | asset_url }}" alt="{{ _('E-commerce authentication certificate') }}" width="28" height="28" loading="lazy" decoding="async" class="w-7 h-7 object-contain" />
 	            </div>
 	            <div class="flex flex-col items-start gap-0.5">
               <span class="text-[9px]" style="color: {{ text_color }};">{{ _('E-commerce authentication certificate') }}</span>
@@ -382,12 +382,12 @@
 		      <div class="order-2 md:order-1 flex flex-wrap overflow-hidden justify-center md:justify-start items-center gap-2">
 		        {% for payment_method in store.settings.checkout.payment_methods %}
 		          <div class="footer-payment-item flex items-center justify-center bg-white rounded-[4px] px-1.5 md:px-2">
-		            <img src="{{ image_url(payment_method.icon, w=92, h=40, q=100) }}" alt="{{ payment_method.name }}" class="max-h-7 max-w-full object-contain" />
+		            <img src="{{ image_url(payment_method.icon, w=92, h=40, q=100, f='auto') }}" alt="{{ payment_method.name }}" width="46" height="20" loading="lazy" decoding="async" class="max-h-7 max-w-full object-contain" />
 		          </div>
 		        {% endfor %}
 		        {% for shipping_method in store.settings.checkout.shipping_methods %}
 		          <div class="footer-payment-item flex items-center justify-center bg-white rounded-[4px] px-1.5 md:px-2">
-		            <img src="{{ image_url(shipping_method.icon, w=92, h=40, q=100) }}" alt="{{ shipping_method.name }}" class="max-h-7 max-w-full object-contain" />
+		            <img src="{{ image_url(shipping_method.icon, w=92, h=40, q=100, f='auto') }}" alt="{{ shipping_method.name }}" width="46" height="20" loading="lazy" decoding="async" class="max-h-7 max-w-full object-contain" />
 		          </div>
 	        {% endfor %}
 	      </div>

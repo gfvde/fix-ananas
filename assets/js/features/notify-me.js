@@ -37,11 +37,6 @@ function closeDialog() {
 }
 
 function showToast(message, type = "success") {
-  if (window.zid && window.zid.store && window.zid.store.showMessage) {
-    window.zid.store.showMessage(message, type);
-    return;
-  }
-
   window.dispatchEvent(
     new CustomEvent("toast:show", {
       detail: { message, type }

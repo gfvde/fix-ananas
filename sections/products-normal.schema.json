@@ -4,6 +4,8 @@
     "ar": "قائمة المنتجات (العادي)",
     "en": "Products (Normal)"
   },
+  "icon": "shopping-bag-line",
+  "meta": { "type": "products" },
   "settings": [
     {
       "id": "layout",

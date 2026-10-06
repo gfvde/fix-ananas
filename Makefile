@@ -1,8 +1,12 @@
-.PHONY: build
-default: build
+.PHONY: default package build clean
+default: package
 
-EXCLUDE_PATTERNS := $(shell awk '/^\s*$$/ || /^\s*\#/{next} {sub(/^\//, ""); if (/\/$$/){sub(/\/$$/, "/*"); printf "\047%s\047 ", $$0} else if (/\*/){printf "\047%s\047 ", $$0} else {printf "\047%s\047 \047%s/*\047 ", $$0, $$0}}' .gitignore)
+# Clean, push-ready theme: build/theme/ (push from there) + build/ananas-theme-<date>.zip
+package:
+	./scripts/package.sh
 
-build:
-	mkdir -p build
-	zip -r build/growth-$(shell date +%Y-%m-%d).zip . -x '.git/*' $(EXCLUDE_PATTERNS)
+# Kept for muscle memory: same as `make package`
+build: package
+
+clean:
+	rm -rf build/theme build/*.zip

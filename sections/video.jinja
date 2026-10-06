@@ -15,6 +15,7 @@
         playsinline
         muted
         {% if settings.poster_image %}poster="{{ image_url(settings.poster_image, w=1280, q=70, f='auto') }}"{% endif %}
+        {% if settings.controls | default(false) %} controls {% endif %}
         {% if settings.autoplay %} autoplay {% endif %}
         {% if is_lazy %} preload="none"{% else %} preload="metadata" {% endif %}
       >
@@ -22,7 +23,7 @@
           src="{{ settings.video }}"
           type="video/mp4"
         />
-        Your browser does not support the video tag.
+        {{ _('Your browser does not support the video tag.') }}
       </video>
       {% if not settings.autoplay %}
         <div
@@ -31,7 +32,7 @@
           {% if settings.title %}
             <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-white">{{ settings.title }}</h2>
           {% endif %}
-          <button class="play-button bg-background text-accent rounded-full p-4">
+          <button type="button" class="play-button bg-background text-accent rounded-full p-4" aria-label="{{ _('Play video') }}">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="32"

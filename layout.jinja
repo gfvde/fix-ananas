@@ -17,7 +17,7 @@
     />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+      content="width=device-width, initial-scale=1"
     />
     <style>.no-js-init dialog,.no-js-init el-dialog,.no-js-init .ananas-mega,.no-js-init .ananas-search{visibility:hidden!important;pointer-events:none!important}</style>
     {% vitrin_head %}
@@ -37,44 +37,12 @@
     />
 
 
-    {% if settings.font_family == 'Expo+Arabic' %}
-      <!-- prettier-ignore-start -->
-      <style>
-        /* Note: onlinewebfonts URLs are blocked by CORS. You must upload the font files to the assets/fonts/ directory and reference them locally to fix the console errors. */
-        @font-face {
-          font-family: 'Expo Arabic';
-          /* src: url('https://db.onlinewebfonts.com/t/1b047c9f13e477c4e2e04ced6f65e5e8.woff2') format('woff2'),
-               url('https://db.onlinewebfonts.com/t/1b047c9f13e477c4e2e04ced6f65e5e8.woff') format('woff'); */
-          font-weight: 400;
-          font-style: normal;
-          font-display: swap;
-        }
-        @font-face {
-          font-family: 'Expo Arabic';
-          /* src: url('https://db.onlinewebfonts.com/t/fc1db5810ac27f4ab57ff5ed6c190a1a.woff2') format('woff2'),
-               url('https://db.onlinewebfonts.com/t/fc1db5810ac27f4ab57ff5ed6c190a1a.woff') format('woff'); */
-          font-weight: 500;
-          font-style: normal;
-          font-display: swap;
-        }
-        @font-face {
-          font-family: 'Expo Arabic';
-          /* src: url('https://db.onlinewebfonts.com/t/4cac2b67059c10c8df5e2779c7ca42af.woff2') format('woff2'),
-               url('https://db.onlinewebfonts.com/t/4cac2b67059c10c8df5e2779c7ca42af.woff') format('woff'); */
-          font-weight: 700;
-          font-style: normal;
-          font-display: swap;
-        }
-      </style>
-      <!-- prettier-ignore-end -->
-    {% else %}
-      <link
-        rel="stylesheet"
-        media="print"
-        onload="this.onload=null;this.media='all'"
-        href="https://fonts.googleapis.com/css2?family={{ settings.font_family | default('Roboto') }}:wght@300;400;500;700&display=swap"
-      />
-    {% endif %}
+    <link
+      rel="stylesheet"
+      media="print"
+      onload="this.onload=null;this.media='all'"
+      href="https://fonts.googleapis.com/css2?family={{ settings.font_family | default('Roboto') }}:wght@300;400;500;700&display=swap"
+    />
     {#
       Prettier ignore is needed here because the CSS contains Jinja template variables
       which cause Prettier's PostCSS parser to fail with "Cannot read properties of undefined (reading 'raw')"
@@ -419,6 +387,7 @@
       type="text/css"
       href="{{ 'styles.css' | asset_url }}"
     />
+    <link rel="stylesheet" type="text/css" href="{{ 'css/product-card.css' | asset_url }}" />
 
     {# TailwindPlus Elements - pinned version for better caching #}
     <script
@@ -442,9 +411,6 @@
     data-pc-colors="{{ 'true' if settings.product_card_show_color_options != false else 'false' }}"
     data-pc-rating="{{ 'true' if settings.product_card_show_rating != false else 'false' }}"
     data-pc-stock="{{ 'true' if settings.product_card_show_stock_info != false else 'false' }}"
-    data-pc-fake-sold="{{ 'false' if (settings.product_card_show_fake_sold_count == false or settings.product_card_show_fake_sold_count is not defined) else 'true' }}"
-    data-pc-fake-min="{{ settings.product_card_fake_sold_min | default('100') }}"
-    data-pc-fake-max="{{ settings.product_card_fake_sold_max | default('1000') }}"
     data-pc-aspect="{{ settings.product_card_image_aspect_ratio | default('adapt') }}"
     data-pc-mobile-cta="{{ settings.product_card_mobile_add_to_cart_style | default('button') }}"
     data-show-breadcrumb="{{ 'true' if settings.general_show_breadcrumb != false else 'false' }}"
@@ -671,13 +637,11 @@
 
     {% vitrin_body %}
 
-    {# Loyalty Rewards - loaded AFTER vitrin_body so popup is in DOM #}
+    {# Loyalty Rewards floating button - opens the platform loyalty_rewards_dialog kit #}
     {% if session.template not in ['product_details', 'cart_page', 'page_details'] and store.settings.checkout.is_loyalty_enabled %}
       <script>
         var loyalty_button_direction = "{{ session.locale.language.direction }}";
-        var text_loyalty_rewards = '{{ _("Rewards") }}';
-        var text_loyalty_options = '{{ _("For {points} get a discount {percentage}") }}';
-        var store_currency_code = "{{ session.currency }}";
+        var text_loyalty_rewards = {{ _("Rewards") | tojson }};
       </script>
       <script src="{{ 'js/layout-loyalty.js' | asset_url }}"></script>
     {% endif %}

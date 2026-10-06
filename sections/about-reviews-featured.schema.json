@@ -4,6 +4,8 @@
     "ar": "تقييمات مميزة (About)",
     "en": "Featured Reviews (About)"
   },
+  "icon": "chat-quote-line",
+  "meta": { "type": "testimonials" },
   "settings": [
     {
       "id": "title",

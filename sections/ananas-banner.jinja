@@ -48,17 +48,14 @@
           </div>
         </div>
         
+        {% set avatar_items = safeget(settings, "avatars", []) | selectattr('image') | list %}
+        {% if avatar_items %}
         <div class="flex -space-x-2 rtl:space-x-reverse items-center border-r border-white/20 pr-4">
-          {% if settings.avatars and (settings.avatars | length > 0) %}
-            {% for item in settings.avatars %}
-              <img src="{{ image_url(item.image, w=32, h=32, f='auto') }}" class="h-8 w-8 rounded-full border-2 border-white/20 object-cover" alt="" />
-            {% endfor %}
-          {% else %}
-            <img src="https://i.pravatar.cc/100?u=1" class="h-8 w-8 rounded-full border-2 border-white/20 object-cover" alt="" />
-            <img src="https://i.pravatar.cc/100?u=2" class="h-8 w-8 rounded-full border-2 border-white/20 object-cover" alt="" />
-            <img src="https://i.pravatar.cc/100?u=3" class="h-8 w-8 rounded-full border-2 border-white/20 object-cover" alt="" />
-          {% endif %}
+          {% for item in avatar_items %}
+            <img src="{{ image_url(item.image, w=64, h=64, f='auto') }}" class="h-8 w-8 rounded-full border-2 border-white/20 object-cover" alt="" width="32" height="32" loading="lazy" decoding="async" />
+          {% endfor %}
         </div>
+        {% endif %}
       </div>
 
       {# CTA Button - Reordered to Bottom #}

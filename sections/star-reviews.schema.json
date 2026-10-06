@@ -4,6 +4,8 @@
     "ar": "تقييمات النجوم",
     "en": "Star Reviews"
   },
+  "icon": "star-line",
+  "meta": { "type": "testimonials" },
   "settings": [
     {
       "id": "star_reviews_items",

@@ -20,6 +20,7 @@
 
   <section class="cart-page-bg cart-page-main-section">
     <div class="theme-container">
+      {% set gift_order_enabled = safeget(store, 'settings.checkout.gift_order_settings.is_gift_order_enabled', false) == '1' %}
       {% if cart.products_count > 0 %}
         <div class="cart-with-products">
           <div class="cart-page-header">
@@ -40,9 +41,11 @@
             </div>
 
             <div class="cart-page-layout__products">
+              {% include 'vitrin:cart/progressive_discount.jinja' %}
+
               <div data-cart-products-list>
                 {% include 'components/cart/products-list.jinja' %}
-                {% if store.settings.checkout.gift_order_settings.is_gift_order_enabled == '1' %}
+                {% if gift_order_enabled and not safeget(cart, 'gift_card_details.card_product_id') and not safeget(cart, 'gift_card_details.card_design') %}
                   <div class="mt-4">{% include 'components/cart/gift-card-display.jinja' %}</div>
                 {% endif %}
               </div>
@@ -70,26 +73,42 @@
             </div>
           </div>
 
+          {# Gift dialog: included once per page (cart-summary renders twice: mobile + desktop) #}
+          {% if gift_order_enabled %}
+            {% include 'vitrin:cart/gift-card.jinja' %}
+          {% endif %}
+
           {# MOBILE benefits (loyalty + UVPs + payments) below products #}
           <div class="cart-mobile-only">
             {% include 'components/cart/cart-mobile-benefits.jinja' %}
           </div>
 
           {# MOBILE FIXED CHECKOUT BUTTON #}
-          <div class="cart-mobile-checkout-bar cart-mobile-only">
-            <a
-              href="/checkout"
-              class="cart-mobile-checkout-btn"
-              data-cart-mobile-checkout
-            >
-              <span class="cart-mobile-checkout-btn__prices">
-                <span class="cart-mobile-checkout-btn__compare" data-cart-mobile-compare></span>
-                <span class="cart-mobile-checkout-btn__total" data-cart-mobile-total>
-                  {%- for t in cart.totals if t.code == 'total' -%}{{ t.value_string }}{%- endfor -%}
-                </span>
+          {% set store_closed = safeget(store, 'settings.general.availability.closed_now') %}
+          {% set mobile_checkout_inner %}
+            <span class="cart-mobile-checkout-btn__prices">
+              <span class="cart-mobile-checkout-btn__compare" data-cart-mobile-compare></span>
+              <span class="cart-mobile-checkout-btn__total" data-cart-mobile-total>
+                {%- for t in cart.totals if t.code == 'total' -%}{{ t.value_string }}{%- endfor -%}
               </span>
-              <span class="cart-mobile-checkout-btn__label">{{ _('Complete your order') }}</span>
-            </a>
+            </span>
+            <span class="cart-mobile-checkout-btn__label">{{ _('Store is closed') if store_closed else _('Complete your order') }}</span>
+          {% endset %}
+          <div class="cart-mobile-checkout-bar cart-mobile-only">
+            {% if store_closed %}
+              <button
+                type="button"
+                class="cart-mobile-checkout-btn"
+                disabled
+                data-cart-mobile-checkout
+              >{{ mobile_checkout_inner }}</button>
+            {% else %}
+              <a
+                href="{{ '/auth/login?redirect_to=/checkout' if safeget(session, 'is_guest') else '/checkout' }}"
+                class="cart-mobile-checkout-btn"
+                data-cart-mobile-checkout
+              >{{ mobile_checkout_inner }}</a>
+            {% endif %}
           </div>
         </div>
       {% else %}

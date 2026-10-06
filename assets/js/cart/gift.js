@@ -2,7 +2,11 @@
  * Cart Gift Card Module
  *
  * Handles gift card operations: open dialog, edit, delete, and display updates.
+ * After a gift is submitted or removed the cart page is refreshed so totals and
+ * gifting-product lines match the server (upstream 0536a9c/47632ba/fa28aae).
  */
+
+import { refreshCartPage } from "./refresh.js";
 
 /**
  * Handle login action for unauthenticated users
@@ -79,6 +83,9 @@ export function deleteGiftCard() {
       buttons.forEach((el) => (el.disabled = false));
       icons.forEach((el) => el.classList.remove("hidden"));
       spinners.forEach((el) => el.classList.add("hidden"));
+
+      // Totals / gifting product lines changed server-side (reloads on failure)
+      return refreshCartPage();
     })
     .catch((err) => {
       console.error("Failed to remove gift card:", err);
@@ -169,5 +176,7 @@ export function setupGiftEventListener() {
     if (giftData) {
       updateGiftCardDisplay(giftData);
     }
+    // Gift fees / gifting products change totals: re-render from the server
+    refreshCartPage();
   });
 }

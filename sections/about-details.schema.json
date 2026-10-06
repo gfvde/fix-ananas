@@ -4,6 +4,8 @@
     "ar": "تفاصيل تكمل يومك (About)",
     "en": "About Details"
   },
+  "icon": "information-line",
+  "meta": { "type": "products" },
   "settings": [
     {
       "id": "title",
@@ -90,7 +92,7 @@
         "ar": "رابط الزر",
         "en": "Button URL"
       },
-      "default": "/collections/all"
+      "default": "/products"
     },
     {
       "id": "section_bg",

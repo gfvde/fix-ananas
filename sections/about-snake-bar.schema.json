@@ -4,6 +4,7 @@
     "ar": "شريط المميزات (About)",
     "en": "Features Bar (About)"
   },
+  "icon": "text-wrap",
   "settings": [
     {
       "id": "bg_color",

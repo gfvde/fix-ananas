@@ -1,16 +1,7 @@
-{% set fallback_text = '"Ananas is an amazing coffee shop! The healthy breakfast options and refreshing acai bowls make it my go-to place in Walnut Creek. Highly recommend!"' %}
+{% set fallback_text = '' %}
 {% set title_color = settings.title_color | default('#000000') %}
 {% set show_arrows = settings.show_arrows | default(true) %}
-{% set reviews = safeget(settings, "reviews", []) %}
-{% if not reviews or reviews | length == 0 %}
-  {% set reviews = [
-    {'name': settings.review1_name | default('Ahmed Seif'), 'text': settings.review1_text | default(fallback_text), 'avatar': safeget(settings, 'review1_avatar', none), 'stars': settings.review1_stars | default(5), 'card_style': 'dark', 'background_color': '#E2E899', 'text_color': '#000000'},
-    {'name': settings.review2_name | default('Ahmed Seif'), 'text': settings.review2_text | default(fallback_text), 'avatar': safeget(settings, 'review2_avatar', none), 'stars': settings.review2_stars | default(5), 'card_style': 'light', 'background_color': '#239C5C', 'text_color': '#FFFFFF'},
-    {'name': settings.review3_name | default('Sara Mohamed'), 'text': settings.review3_text | default(fallback_text), 'avatar': safeget(settings, 'review3_avatar', none), 'stars': settings.review3_stars | default(5), 'card_style': 'dark', 'background_color': '#171717', 'text_color': '#FFFFFF'},
-    {'name': settings.review4_name | default('Ahmed Seif'), 'text': settings.review4_text | default(fallback_text), 'avatar': safeget(settings, 'review4_avatar', none), 'stars': settings.review4_stars | default(5), 'card_style': 'light', 'background_color': '#EEEEEE', 'text_color': '#000000'},
-    {'name': settings.review5_name | default('Ahmed Seif'), 'text': settings.review5_text | default(fallback_text), 'avatar': safeget(settings, 'review5_avatar', none), 'stars': settings.review5_stars | default(5), 'card_style': 'dark', 'background_color': '#171717', 'text_color': '#FFFFFF'}
-  ] %}
-{% endif %}
+{% set reviews = safeget(settings, "reviews", []) | select | list %}
 
 {% set review_count = reviews | length %}
 {% set has_multiple = review_count > 1 %}
@@ -20,13 +11,7 @@
 {% set bg4 = reviews[3] if review_count > 3 else bg2 %}
 {% set bg5 = reviews[4] if review_count > 4 else bg1 %}
 
-{% set avatar_fallbacks = [
-  'https://www.figma.com/api/mcp/asset/587f88b3-1a79-4b1e-9a24-c8df451e5d86',
-  'https://www.figma.com/api/mcp/asset/393ca874-98f3-413f-9f56-dc6781d5f73c',
-  'https://www.figma.com/api/mcp/asset/3adaba70-8762-45d5-a7d9-eed7fc2301d6',
-  'https://www.figma.com/api/mcp/asset/65af8839-faed-4d41-b39b-12bbb9c8501e',
-  'https://www.figma.com/api/mcp/asset/e38ca4ad-fda6-40a1-9e28-8ce093aef927'
-] %}
+{% set avatar_fallbacks = ['', '', '', '', ''] %}
 
 {% macro star_icons(size=18, count=5) %}
   <span class="arf-stars" aria-hidden="true">
@@ -48,8 +33,12 @@
   </span>
 {% endmacro %}
 
-{% macro avatar_img(review, size=92, fallback='', class_name='arf-avatar') %}
-  <img class="{{ class_name }}" src="{{ image_url(review.avatar, w=size, h=size, f='auto') if review.avatar else fallback }}" alt="{{ review.name | default('') }}">
+{% macro avatar_img(review, size=92, fallback='', class_name='arf-avatar', always=false) %}
+  {% if review.avatar %}
+  <img class="{{ class_name }}" src="{{ image_url(review.avatar, w=size, h=size, f='auto') }}" alt="{{ review.name | default('') }}" width="{{ size }}" height="{{ size }}" loading="lazy" decoding="async">
+  {% elif always %}
+  <img class="{{ class_name }}" src="data:," alt="" width="{{ size }}" height="{{ size }}" hidden>
+  {% endif %}
 {% endmacro %}
 
 {% macro background_review_card(review, style='dark', fallback='') %}
@@ -66,7 +55,7 @@
     <div class="arf-bg-card__author">
       {{ avatar_img(review, 92, fallback, 'arf-bg-card__avatar') }}
       <div class="arf-bg-card__meta">
-        <p class="arf-bg-card__name">{{ review.name | default('Ahmed Seif') }}</p>
+        <p class="arf-bg-card__name">{{ review.name | default('') }}</p>
         {{ verified_badge() }}
       </div>
     </div>
@@ -77,9 +66,7 @@
   {% set star_count = review.stars | default(5) | int %}
   <article class="arf-bg-card arf-bg-card--image">
     {% if settings.image_card_bg %}
-      <img class="arf-bg-card__image" src="{{ image_url(settings.image_card_bg, w=800, f='auto') }}" alt="">
-    {% else %}
-      <img class="arf-bg-card__image" src="https://www.figma.com/api/mcp/asset/08891877-df65-4214-8b1b-4ea06c8de476" alt="">
+      <img class="arf-bg-card__image" src="{{ image_url(settings.image_card_bg, w=800, f='auto') }}" alt="" loading="lazy" decoding="async">
     {% endif %}
     <div class="arf-bg-card__overlay">
       <div class="arf-bg-card__body">
@@ -89,7 +76,7 @@
       <div class="arf-bg-card__author">
         {{ avatar_img(review, 92, fallback, 'arf-bg-card__avatar') }}
         <div class="arf-bg-card__meta">
-          <p class="arf-bg-card__name">{{ review.name | default('Sara Mohamed') }}</p>
+          <p class="arf-bg-card__name">{{ review.name | default('') }}</p>
           {{ verified_badge() }}
         </div>
       </div>
@@ -133,9 +120,9 @@
         </div>
         <div class="arf-featured-card__footer">
           <div class="arf-featured-card__author">
-            {{ avatar_img(first_review, 92, avatar_fallbacks[0], 'arf-featured-card__avatar') }}
+            {{ avatar_img(first_review, 92, '', 'arf-featured-card__avatar', true) }}
             <div>
-              <p class="arf-featured-card__name" data-arf-name>{{ first_review.name | default('Ahmed Seif') }}</p>
+              <p class="arf-featured-card__name" data-arf-name>{{ first_review.name | default('') }}</p>
               {{ verified_badge() }}
             </div>
           </div>
@@ -153,6 +140,7 @@
   </div>
 {% endmacro %}
 
+{% if review_count > 0 %}
 <section section-id="{{ sectionId }}"
   data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}" class="section-arf"  style="--arf-title-color: {{ title_color }};">
   <div class="arf-desktop">
@@ -204,7 +192,7 @@
         {% set fallback_avatar_index = loop.index0 if loop.index0 < (avatar_fallbacks | length) else 0 %}
         {
           "text": {{ (review.text | default(fallback_text)) | tojson }},
-          "name": {{ (review.name | default('Ahmed Seif')) | tojson }},
+          "name": {{ (review.name | default('')) | tojson }},
           "avatar": {{ (image_url(review.avatar, w=92, h=92, f='auto') if review.avatar else avatar_fallbacks[fallback_avatar_index]) | tojson }},
           "backgroundColor": {{ (review.background_color | default('#E2E899')) | tojson }},
           "textColor": {{ (review.text_color | default('#000000')) | tojson }},
@@ -256,7 +244,7 @@
 
     if (text) text.textContent = review.text;
     if (name) name.textContent = review.name;
-    if (avatar) avatar.src = review.avatar;
+    if (avatar) { if (review.avatar) { avatar.src = review.avatar; avatar.hidden = false; } else { avatar.hidden = true; } }
     if (deck) {
       deck.style.setProperty('--arf-front-bg', review.backgroundColor || '#E2E899');
       deck.style.setProperty('--arf-front-color', review.textColor || '#000000');
@@ -979,3 +967,4 @@
     }
   }
 </style>
+{% endif %}

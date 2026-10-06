@@ -4,6 +4,7 @@
     "ar": "مجتمع أناناس (About)",
     "en": "Ananas Community (About)"
   },
+  "icon": "team-line",
   "settings": [
     {
       "id": "section_bg_color",

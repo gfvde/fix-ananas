@@ -162,6 +162,11 @@ export function updateProductInfo(selectedProduct) {
 export function updateStockStatus(selectedProduct) {
   if (!selectedProduct) return;
 
+  // Preorder (ported from upstream deb8912): the PDP section exposes data-can-preorder
+  const canPreorder =
+    document.querySelector("[data-can-preorder]")?.getAttribute("data-can-preorder") === "true" ||
+    selectedProduct.can_be_preordered === true;
+
   // Update hidden product ID
   const productIdInput = document.querySelector("#product-id");
   if (productIdInput) {
@@ -180,6 +185,11 @@ export function updateStockStatus(selectedProduct) {
     // Update quantity selector
     updateQuantitySelector(selectedProduct);
     if (quantityWrapper) show("[data-quantity-wrapper]");
+  } else if (canPreorder) {
+    // Out of stock but preorderable: keep the buy buttons, hide notify-me and quantity
+    if (inStockSection) show("[data-in-stock]");
+    if (outOfStockSection) hide("[data-out-of-stock]");
+    if (quantityWrapper) hide("[data-quantity-wrapper]");
   } else {
     // Show out-of-stock elements
     if (inStockSection) hide("[data-in-stock]");
@@ -212,159 +222,140 @@ function updateQuantitySelector(selectedProduct) {
 // Gallery Updates
 // ─────────────────────────────────────────────────────────────
 
+function escAttr(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+function mediaKey(media) {
+  return media.map((m) => m?.link || m?.image?.medium || m?.image?.full_size || "").join("|");
+}
+
 /**
- * Update product gallery when variant changes
- * Rebuilds DOM and re-initializes EmblaCarousel
+ * Resolve the gallery that belongs to the product currently being edited:
+ * the quick-view gallery when the quick-view dialog is showing, else the PDP one.
+ */
+function getActiveGalleryWrapper() {
+  const qv = document.querySelector("#quick-view-content .pg-wrapper[data-gallery-id]");
+  if (qv && qv.offsetParent !== null) return qv;
+  return (
+    document.getElementById(`${GALLERY_ID}-wrapper`) || document.querySelector(".pg-wrapper[data-gallery-id]")
+  );
+}
+
+function buildMainSlide(item, index, name) {
+  const isVideo = item.provider && item.link;
+  const src = item.image?.medium || item.image?.full_size || "";
+  const alt = escAttr(item.alt_text || `${name} - ${index + 1}`);
+  const img = `<img src="${escAttr(src)}" alt="${alt}"${isVideo ? "" : ` class="cursor-zoom-in" data-lightbox-trigger="${index}"`}${
+    index > 0 ? ' loading="lazy"' : ""
+  } />`;
+
+  if (!isVideo) {
+    return `<div class="swiper-slide pg-main__slide" data-index="${index}">${img}</div>`;
+  }
+
+  return `<div class="swiper-slide pg-main__slide" data-index="${index}">
+    ${img}
+    <button class="pg-slide__video-overlay" type="button" data-video-play data-video-src="${escAttr(item.link)}" aria-label="Play video">
+      <span class="pg-slide__play-icon" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="30" height="30" style="margin-left:4px; color:#0B0A09;"><path d="M8 5.14v14l11-7-11-7z"/></svg>
+      </span>
+    </button>
+    <div class="pg-slide__video-container hidden" data-video-container>
+      <button type="button" class="pg-slide__video-close" data-video-close aria-label="Close video">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+      <iframe src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>`;
+}
+
+function buildThumbSlide(item, index, cls) {
+  const isVideo = item.provider && item.link;
+  const src = item.image?.thumbnail || item.image?.medium || "";
+  return `<div class="swiper-slide ${cls}" role="button" tabindex="0" aria-label="Thumbnail ${index + 1}">
+    <img src="${escAttr(src)}" alt="Thumbnail ${index + 1}" loading="lazy" />
+    ${
+      isVideo
+        ? `<span class="pg-thumb__video-badge" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="16" height="16"><path d="M8 5.14v14l11-7-11-7z"/></svg></span>`
+        : ""
+    }
+  </div>`;
+}
+
+/**
+ * Update the Swiper product gallery (components/products/product-gallery.jinja)
+ * when the selected variant has its own media. Rebuilds main/thumb slides and
+ * the hidden PhotoSwipe list, then re-initializes the gallery.
  */
 export function updateProductImages(selectedProduct) {
   if (!selectedProduct) return;
 
-  const media = selectedProduct.media || [];
-  const galleryContainer = document.querySelector(
-    `.product-gallery[data-gallery-id="${GALLERY_ID}"] .product-gallery__container`
-  );
-  const thumbsContainer = document.querySelector(
-    `.product-gallery-thumbs[data-gallery-id="${GALLERY_ID}"] .product-gallery-thumbs__container`
-  );
-  const thumbsWrapper = document.querySelector(`.product-gallery-thumbs[data-gallery-id="${GALLERY_ID}"]`);
-  const lightboxGallery = document.getElementById("product-gallery-lightbox");
+  const media = (selectedProduct.media || []).filter((m) => m && (m.image || m.link));
+  if (media.length === 0) return; // keep current images
 
-  if (!galleryContainer) return;
+  const wrapper = getActiveGalleryWrapper();
+  if (!wrapper) return;
+  const galleryId = wrapper.dataset.galleryId;
 
-  // Destroy existing carousel instance
-  if (typeof window.destroyProductGallery === "function") {
-    window.destroyProductGallery(GALLERY_ID);
+  // Seed with the server-rendered media so re-selecting it is a no-op
+  if (!wrapper.dataset.mediaKey) {
+    const initial = window.productObj?.selected_product?.media || window.productObj?.images;
+    if (Array.isArray(initial) && initial.length) wrapper.dataset.mediaKey = mediaKey(initial);
   }
 
-  if (media.length > 0) {
-    // Build main gallery slides (with video support)
-    galleryContainer.innerHTML = media
+  const key = mediaKey(media);
+  if (wrapper.dataset.mediaKey === key) return;
+
+  const mainWrapper = document.querySelector(`#${galleryId}-swiper-main .swiper-wrapper`);
+  if (!mainWrapper) return;
+
+  if (typeof window.destroyProductGallery === "function") {
+    window.destroyProductGallery(galleryId);
+  }
+
+  const name = selectedProduct.name || window.productObj?.name || "";
+  mainWrapper.innerHTML = media.map((item, i) => buildMainSlide(item, i, name)).join("");
+
+  const thumbsV = document.querySelector(`#${galleryId}-swiper-thumbs-v .swiper-wrapper`);
+  const thumbsH = document.querySelector(`#${galleryId}-swiper-thumbs-h .swiper-wrapper`);
+  if (thumbsV) thumbsV.innerHTML = media.map((item, i) => buildThumbSlide(item, i, "pg-thumbs__slide")).join("");
+  if (thumbsH) thumbsH.innerHTML = media.map((item, i) => buildThumbSlide(item, i, "pg-thumbs-h__slide")).join("");
+
+  const multiple = media.length > 1;
+  document.getElementById(`${galleryId}-thumbs-v`)?.classList.toggle("hidden", !multiple);
+  document.getElementById(`${galleryId}-thumbs-h`)?.classList.toggle("hidden", !multiple);
+  document.getElementById(`${galleryId}-progress`)?.classList.toggle("hidden", !multiple);
+  document.getElementById(`${galleryId}-main-prev`)?.classList.toggle("hidden", !multiple);
+  document.getElementById(`${galleryId}-main-next`)?.classList.toggle("hidden", !multiple);
+
+  const lightboxGallery = document.getElementById(`${galleryId}-lightbox`);
+  if (lightboxGallery) {
+    lightboxGallery.innerHTML = media
+      .filter((item) => !(item.provider && item.link))
       .map((item, index) => {
-        const isVideo = item.provider && item.link;
-        const imgSrc = item.image?.medium || item.image?.full_size || "";
-
-        console.log("item", item);
-        console.log("isVideo", isVideo);
-        if (isVideo) {
-          return `
-          <div class="product-gallery__slide relative min-w-0 flex-[0_0_100%] md:flex-[0_0_calc(100%-8px)] min-h-[clamp(20.75rem,16.6747rem+17.3878vw,34.0625rem)] max-h-[clamp(20.75rem,16.6747rem+17.3878vw,34.0625rem)]" >
-            <img
-              src="${imgSrc}"
-              alt="${selectedProduct.name || ""} - Image ${index + 1}"
-              class="aspect-[3/4] w-full rounded object-cover"
-              ${index > 0 ? 'loading="lazy"' : ""}
-            />
-            <button
-              type="button"
-              class="absolute inset-0 flex cursor-pointer items-center justify-center bg-black/20 transition-colors hover:bg-black/30"
-              data-video-play
-              data-video-src="${item.link}"
-              aria-label="Play video"
-            >
-              <span class="bg-background/90 flex size-16 items-center justify-center rounded-full shadow-lg">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="text-foreground size-8 rtl:rotate-180">
-                  <path d="M8 5.14v14l11-7-11-7z" />
-                </svg>
-              </span>
-            </button>
-            <div class="absolute inset-0 hidden rounded bg-black" data-video-container>
-              <button
-                type="button"
-                class="bg-background/80 text-foreground absolute end-2 top-2 z-10 flex size-8 items-center justify-center rounded-full"
-                data-video-close
-                aria-label="Close video"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-5">
-                  <path d="M18 6L6 18M6 6l12 12" />
-                </svg>
-              </button>
-              <iframe class="size-full rounded" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
-          </div>
-        `;
-        }
-
-        return `
-        <div class="product-gallery__slide relative min-w-0 flex-[0_0_100%] md:flex-[0_0_calc(100%-8px)] min-h-[clamp(20.75rem,16.6747rem+17.3878vw,34.0625rem)] max-h-[clamp(20.75rem,16.6747rem+17.3878vw,34.0625rem)]">
-          <img
-            src="${imgSrc}"
-            alt="${selectedProduct.name || ""} - Image ${index + 1}"
-            class="min-h-[clamp(20.75rem,16.6747rem+17.3878vw,34.0625rem)] max-h-[clamp(20.75rem,16.6747rem+17.3878vw,34.0625rem)] w-full cursor-zoom-in rounded object-cover"
-            data-lightbox-trigger="${index}"
-            ${index > 0 ? 'loading="lazy"' : ""}
-          />
-        </div>
-      `;
+        const full = item.image?.full_size || item.image?.medium || "";
+        return `<a href="${escAttr(full)}" data-pswp-width="1600" data-pswp-height="2133"><img src="${escAttr(
+          item.image?.thumbnail || item.image?.medium || ""
+        )}" alt="${escAttr(name)} - ${index + 1}" data-lightbox-item data-lightbox-src="${escAttr(
+          full
+        )}" data-lightbox-width="1600" data-lightbox-height="2133" /></a>`;
       })
       .join("");
-
-    // Build hidden lightbox gallery for PhotoSwipe (images only, no videos)
-    if (lightboxGallery) {
-      lightboxGallery.innerHTML = media
-        .filter((item) => !(item.provider && item.link)) // Exclude videos
-        .map(
-          (item, index) => `
-          <a
-            href="${item.image?.full_size || item.image?.medium || ""}"
-            data-pswp-width="1600"
-            data-pswp-height="2133"
-          >
-            <img
-              src="${item.image?.thumbnail || item.image?.medium || ""}"
-              alt="${selectedProduct.name || ""} - Image ${index + 1}"
-            />
-          </a>
-        `
-        )
-        .join("");
-    }
-
-    // Build thumbnails (if more than 1 image, with video indicator)
-    if (thumbsContainer) {
-      if (media.length > 1) {
-        thumbsContainer.innerHTML = media
-          .map((item, index) => {
-            const isVideo = item.provider && item.link;
-            const thumbSrc = item.image?.thumbnail || item.image?.medium || "";
-
-            return `
-            <button
-              class="w-[69px] h-[71px] product-gallery-thumbs__slide hover:border-primary relative min-w-0 flex-[0_0_calc(25%-8px)] overflow-hidden rounded border-1 border-transparent transition-colors"
-              data-gallery-id="${GALLERY_ID}"
-              type="button"
-            >
-              <img
-                src="${thumbSrc}"
-                alt="Thumbnail ${index + 1}"
-                class="aspect-square w-full object-cover"
-                loading="lazy"
-              />
-              ${isVideo
-                ? `<span class="bg-background/80 absolute inset-0 flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="text-foreground size-6 rtl:rotate-180">
-                    <path d="M8 5.14v14l11-7-11-7z" />
-                  </svg>
-                </span>`
-                : ""
-              }
-            </button>
-          `;
-          })
-          .join("");
-
-        if (thumbsWrapper) thumbsWrapper.classList.remove("hidden");
-      } else {
-        if (thumbsWrapper) thumbsWrapper.classList.add("hidden");
-      }
-    }
-
-    // Re-initialize carousel after DOM update
-    requestAnimationFrame(() => {
-      if (typeof window.initProductGallery === "function") {
-        window.initProductGallery(GALLERY_ID);
-      }
-    });
   }
+
+  wrapper.dataset.mediaKey = key;
+
+  requestAnimationFrame(() => {
+    if (typeof window.initProductGallery === "function") {
+      window.initProductGallery(galleryId);
+    }
+    window.dispatchEvent(new CustomEvent("product:gallery-updated", { detail: { galleryId } }));
+  });
 }
 
 // Expose for external use

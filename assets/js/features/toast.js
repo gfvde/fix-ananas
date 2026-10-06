@@ -11,7 +11,7 @@ function ensureToastStyles() {
     #${TOAST_ROOT_ID} {
       position: fixed;
       top: 18px;
-      right: 18px;
+      inset-inline-end: 18px;
       z-index: 100000;
       display: flex;
       flex-direction: column;
@@ -32,23 +32,21 @@ function ensureToastStyles() {
       transform: translateY(-8px);
       transition: opacity 0.2s ease, transform 0.2s ease;
       pointer-events: auto;
-      direction: rtl;
     }
     .ananas-toast.is-visible {
       opacity: 1;
       transform: translateY(0);
     }
     .ananas-toast--success {
-      border-right: 4px solid #25a562;
+      border-inline-start: 4px solid #25a562;
     }
     .ananas-toast--error {
-      border-right: 4px solid #c70036;
+      border-inline-start: 4px solid #c70036;
     }
     @media (max-width: 767px) {
       #${TOAST_ROOT_ID} {
         top: 12px;
-        right: 12px;
-        left: 12px;
+        inset-inline: 12px;
       }
       .ananas-toast {
         width: 100%;
@@ -68,6 +66,8 @@ function ensureToastRoot() {
     root.id = TOAST_ROOT_ID;
     root.setAttribute("aria-live", "polite");
     root.setAttribute("aria-atomic", "true");
+    // Follow the document direction (Arabic RTL / English LTR)
+    root.dir = document.documentElement.dir || document.body.dir || "auto";
     document.body.appendChild(root);
   }
   return root;
