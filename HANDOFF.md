@@ -61,6 +61,9 @@
    Also fixed: side cart `cart.total` is a totals object on the cart page → broke an inline script.
    **Theme preset on Zid**: `python3 scripts/public-preset.py && cd build/theme && vitrin presets create ../preset.json` (or `presets update <id>`) — current preset
    id `c471c643-3c7b-40c9-8af2-699769061088`. It is the store-agnostic copy of `presets/default.json` (pickers → recent products, store links → `/products`).
+   It shows in the theme editor under "تغيير القوالب / معاينة القوالب" (as "الافتراضي") on installs of the partner theme — NOT on a zip uploaded
+   through the store's "Upload new theme" (that is a separate private theme without presets). Preview images live in `IMAGES` in the script.
+   Drafts from `vitrin preview` are not live until someone presses نشر in the editor; `vitrin activate 3255406 <installation>` switches the active theme.
 4. **Wishlist — DONE (2026-10-06)**: header/drawer heart and `wishlistConfig.pageUrl` now go to the platform page `/account/wishlist`
    (asks guests to log in, then shows Zid's own list). `/pages/wishlist` was a 404 unless the merchant made that page; `/wishlist` exists but errors for guests.
 5. **Section preview images**: Growth ships `sections/<name>.png` for each section; we have none (24 sections). Needs screenshots of each section.
