@@ -38,7 +38,7 @@
         {% set item = items_list[i] %}
         <div class="relative w-full aspect-square overflow-hidden ag-media-cell" style="border-radius: {{ border_radius }}px;">
           {% if item.video %}
-            <video src="{{ item.video }}" playsinline class="w-full h-full object-cover ag-video"></video>
+            <video src="{{ item.video }}" playsinline preload="metadata" class="w-full h-full object-cover ag-video"></video>
             <button class="ag-play-btn" aria-label="{{ _('Play video') }}">
               <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
                 <circle cx="28" cy="28" r="28" fill="rgba(0,0,0,0.45)"/>
@@ -67,7 +67,7 @@
                     {% set item = items_list[i] %}
                     <div class="relative w-full aspect-square overflow-hidden ag-media-cell" style="border-radius: {{ border_radius }}px;">
                       {% if item.video %}
-                        <video src="{{ item.video }}" playsinline class="w-full h-full object-cover ag-video"></video>
+                        <video src="{{ item.video }}" playsinline preload="metadata" class="w-full h-full object-cover ag-video"></video>
                         <button class="ag-play-btn" aria-label="{{ _('Play video') }}">
                           <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
                             <circle cx="28" cy="28" r="28" fill="rgba(0,0,0,0.45)"/>

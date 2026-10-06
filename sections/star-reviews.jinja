@@ -31,7 +31,7 @@
       <div class="sr-stars">
         {% for i in range(num_stars) %}{{ star_svg() }}{% endfor %}
       </div>
-      <p class="sr-text" style="color: {{ color }};">
+      <p class="sr-text" dir="auto" style="color: {{ color }};">
         "{{ review.text | default('') }}"
       </p>
     </div>
@@ -59,7 +59,7 @@
       {% set num_stars_mid = mid.stars | default(5) | int %}
       <div class="sr-card__body">
         <div class="sr-stars">{% for i in range(num_stars_mid) %}{{ star_svg() }}{% endfor %}</div>
-        <p class="sr-text" style="color:#fff;">"{{ mid.text | default('') }}"</p>
+        <p class="sr-text" dir="auto" style="color:#fff;">"{{ mid.text | default('') }}"</p>
       </div>
       <div class="sr-author">
         {% if mid.avatar %}

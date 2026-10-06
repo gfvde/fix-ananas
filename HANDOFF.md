@@ -20,7 +20,7 @@
 | Zid theme id (already created on Zid) | `48f8b24f-4253-4785-9deb-c8f34f3b1217` — linked via `.vitrin/theme.json` |
 | Dev store | `labeih-test-store`, store id **3255406**, https://9bow2h.zid.store/ (installation `f25967f3-5358-44f9-8a5d-9ee6c2f834b4`) |
 | Preview | https://9bow2h.dev.zid.store?theme=f25967f3-5358-44f9-8a5d-9ee6c2f834b4 |
-| Zid validator | https://9bow2h.dev.zid.store/validate?theme=f25967f3-5358-44f9-8a5d-9ee6c2f834b4 — **39/39 templates pass** |
+| Zid validator | https://9bow2h.dev.zid.store/validate?theme=f25967f3-5358-44f9-8a5d-9ee6c2f834b4 — **39/39 templates pass** (v1.0.7, 2026-10-06; side cart must not assume `cart` exists) |
 | Zid review checklist | Notion DB "Zid Theme Test Cases" (124 test cases): https://buttoned-source-357.notion.site/1dcf18d990158001a921d92eaa79b0db |
 | Translations | `locale/ar/LC_MESSAGES/messages.po` → compile `.mo` with babel (`write_mo`). Zid uses trimmed `{% trans %}`; `_()` takes **no kwargs** — use `_('x %(n)s') \| format(n=...)` |
 
@@ -45,10 +45,24 @@
 ## Open work (in priority order)
 1. **Demo content in the preview — DONE (partly)**: `python3 scripts/demo-settings.py build/theme` writes `templates/home.json`, `header.json`, `footer.json`, `layout.json` from `presets/default.json` into the preview folder only (not shipped), then `vitrin preview 3255406 .` uploads them as drafted settings.
    Home now renders 25 sections (all 24 types), 0 JS errors desktop + mobile (screenshots: `build/home-desktop.png`, `build/home-mobile.png`, not committed).
-   Still to do: the preset is **stale** — 16 sections use old setting keys (e.g. about-gallery `photo1..6`, about-reviews-featured `review1_*`, hero `subheading/cta_*`, benefits/partners/testimonials/categories `title_color/section_bg_color`), so those sections show schema defaults. `about-reviews-featured` renders nothing. Update `presets/default.json` to the current schema ids (compare with each `sections/*.schema.json`) and point product/category pickers at the demo products from step 2.
+   Preset keys now match every section schema (0 stale sections; old keys renamed or dropped, reviews moved to the `reviews` list,
+   hero/banner/countdown/video got demo images/video, links point to `/products`).
+   Pickers and links now point at the demo categories/products on store 3255406 (categories section, products tabs, about-details, shop-by-category/mood links, product bundle).
 2. **Demo products on the dev store** (owner approved): use the Zid store connector (`mcp__zid_store__*`) on store 3255406 only — at least: simple product, product with variants (size/grind), discounted product, out-of-stock product, low-stock product, preorder product, bundle offer, a few reviews and Q&A, categories with 3 levels. Then walk the checklist live.
-3. **Cart items (checklist #15, #18)**: `components/cart/products-list.jinja` shows no per-item out-of-stock/error state and no bundle name/offer. Growth uses `{% include 'vitrin:v2/cart/products_list.jinja' %}` (`templates/cart.jinja:39`). Either switch (design changes — ask owner) or add availability + bundle markup (`data-bundle-arrow`, handler exists in `assets/js/cart/controller.js:952`).
-4. **Wishlist**: header/drawer heart goes to `/pages/wishlist`, which needs a merchant-created page with slug `wishlist` and has no share-by-URL. Prefer the platform account wishlist route (confirm the URL live), or document it.
+   **Partly done (2026-10-06)** on store 3255406: categories قهوة(1744425) > قهوة مختصة(1744422) > إثيوبيا(1744423), أدوات التحضير(1744424);
+   products RST-001 simple (Ethiopia, 3-level), RST-002 discounted 95→69, RST-003 out of stock, RST-004 low stock (2), RST-005 House Blend (meant for variants),
+   RST-006/007 tools; one Q&A with answer on RST-001. Not possible through the store connector: product images (Zid fetch of media.zid.store → 403;
+   upload by hand), variants (`add_variants` → 400 "Expected a list"), bundle offers (401 missing scope), creating reviews, preorder. Do those in the Zid dashboard.
+3. **Cart items (checklist #15, #18) — DONE (2026-10-06)**: `components/cart/products-list.jinja` shows a per-item error from the cart flags
+   (`is_original_product_available`, `is_original_quantity_finished`, `is_requested_quantity_enough`, `is_product_price_updated`, `error_message`) using the
+   platform's `error_messages` text, dims the item, lists `sub_items` behind a `bundle-toggle` and names `discount_rules` offers. Verified live (out-of-stock item).
+   Not verified with data: `sub_items` stayed empty for a grouped product (RST-008 "باقة التحضير"), and bundle offers can't be created via the connector, so the
+   offer/bundle markup is defensive. Check both once a bundle offer exists.
+   Also fixed: side cart `cart.total` is a totals object on the cart page → broke an inline script.
+   **Theme preset on Zid**: `python3 scripts/public-preset.py && cd build/theme && vitrin presets create ../preset.json` (or `presets update <id>`) — current preset
+   id `c471c643-3c7b-40c9-8af2-699769061088`. It is the store-agnostic copy of `presets/default.json` (pickers → recent products, store links → `/products`).
+4. **Wishlist — DONE (2026-10-06)**: header/drawer heart and `wishlistConfig.pageUrl` now go to the platform page `/account/wishlist`
+   (asks guests to log in, then shows Zid's own list). `/pages/wishlist` was a 404 unless the merchant made that page; `/wishlist` exists but errors for guests.
 5. **Section preview images**: Growth ships `sections/<name>.png` for each section; we have none (24 sections). Needs screenshots of each section.
 6. Smaller items from the audit:
    - remaining hard-coded `direction:rtl` rules in `assets/css/components.css` (quick view / wishlist: lines ~665, 682, 1023, 1099, 1280, 1412, 1623, 1837, 2137, 2182) → scope to `[dir="rtl"]`;

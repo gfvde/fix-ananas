@@ -276,6 +276,14 @@
       "default": []
     },
     {
+      "id": "text_color",
+      "type": "color",
+      "label": {
+        "ar": "لون النص",
+        "en": "Text Color"
+      }
+    },
+    {
       "id": "background_color",
       "type": "color",
       "label": {

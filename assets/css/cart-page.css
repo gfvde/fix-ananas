@@ -1511,3 +1511,64 @@ html[dir="ltr"] .cart-coupon__form {
     color: #52525c;
   }
 }
+
+/* Per-item availability error and bundle/offer info */
+.ananas-cart-item.is-unavailable .ananas-cart-item__image,
+.ananas-cart-item.is-unavailable .ananas-cart-item__title,
+.ananas-cart-item.is-unavailable .ananas-cart-item__price-row {
+  opacity: 0.5;
+}
+
+.ananas-cart-item__error {
+  width: 100%;
+  margin: 0;
+  padding: 8px 12px;
+  border-inline-start: 3px solid #e7000b;
+  background: #fef2f2;
+  color: #c10007;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: start;
+}
+
+.ananas-cart-item__offer {
+  align-self: flex-end;
+  margin: 0;
+  padding: 2px 8px;
+  background: #d3db6f;
+  color: #000000;
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.ananas-cart-item__bundle {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  width: 100%;
+}
+
+.ananas-cart-item__bundle-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #525252;
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+.ananas-cart-item__bundle-toggle svg {
+  transition: transform 0.2s ease;
+}
+
+.ananas-cart-item__bundle-list {
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: #737373;
+  font-size: 13px;
+  text-align: end;
+}

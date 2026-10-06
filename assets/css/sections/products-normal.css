@@ -183,7 +183,7 @@
   min-width: 100%;
   display: flex;
   gap: 16px;
-  justify-content: flex-end;
+  justify-content: flex-start;
   padding-bottom: 1px;
   /*direction: ltr;*/
 }
@@ -191,7 +191,7 @@
 [data-section="products-normal"] .fp-carousel__slide {
   flex: 0 0 299px;
   min-width: 0;
-  scroll-snap-align: end;
+  scroll-snap-align: start;
   /*direction: rtl;*/
 }
 
@@ -316,7 +316,7 @@
   [data-section="products-normal"] .fp-carousel__container {
     display: flex;
     gap: 16px;
-    justify-content: flex-end;
+    justify-content: flex-start;
   }
 
   [data-section="products-normal"].fp-section--grid .fp-grid {

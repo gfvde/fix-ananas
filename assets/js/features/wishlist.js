@@ -50,7 +50,7 @@ class WishlistManager {
     this.modal = null;
     this.modalItems = null;
     this.isModalOpen = false;
-    this.wishlistPageUrl = window.wishlistConfig?.pageUrl || "/pages/wishlist";
+    this.wishlistPageUrl = window.wishlistConfig?.pageUrl || "/account/wishlist";
 
     this.handleWishlistClick = this.handleWishlistClick.bind(this);
     this.handleModalClick = this.handleModalClick.bind(this);

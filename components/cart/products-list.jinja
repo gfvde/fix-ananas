@@ -99,9 +99,24 @@
         {% set discount_percent = (((compare_value - price_value) / compare_value) * 100) | round(0, 'floor') | int %}
       {% endif %}
       {% set selected_options = item.options | default(item.product_options | default(item.selected_options | default(item.variant_options | default(product.selected_product.options | default(product.selected_product.option_values | default([])))))) %}
+      {# Availability: the platform sends the flags plus localized messages (with <br/>) #}
+      {% set error_texts = item.error_messages or {} %}
+      {% set item_error = '' %}
+      {% if item.is_original_product_available is sameas false %}
+        {% set item_error = error_texts.original_product_not_available | default(_('This product is no longer available. Remove it to complete your order'), true) %}
+      {% elif item.is_original_quantity_finished %}
+        {% set item_error = error_texts.original_quantity_finished | default(_('Out of stock. Remove it to complete your order'), true) %}
+      {% elif item.is_requested_quantity_enough is sameas false %}
+        {% set item_error = error_texts.requested_quantity_not_enough | default(_('Not enough stock for the requested quantity'), true) %}
+      {% elif item.is_product_price_updated %}
+        {% set item_error = error_texts.product_price_updated | default(_('The price of this product has changed'), true) %}
+      {% endif %}
+      {% set item_error = (item_error or item.error_message or '') | replace('<br/>', ' ') | replace('<br />', ' ') | replace('<br>', ' ') | striptags %}
+      {% set sub_items = item.sub_items or [] %}
+      {% set offer_rules = item.discount_rules or [] %}
 
       <article
-        class="ananas-cart-item"
+        class="ananas-cart-item{% if item_error %} is-unavailable{% endif %}"
         data-cart-product-id="{{ cart_item_id }}"
         data-cart-item-product-id="{{ product_id }}"
       >
@@ -240,6 +255,43 @@
                 <span class="ananas-cart-item__discount" data-cart-item-discount>{{ _('%(percent)s discount') | format(percent=(discount_percent ~ '%')) }}</span>
               {% endif %}
             </div>
+
+            {% for rule in offer_rules %}
+              {% set rule_name = rule if rule is string else (rule.name | default(rule.title | default(''), true)) %}
+              {% if rule_name is mapping %}
+                {% set rule_name = rule_name[session.language] | default(rule_name.ar | default(rule_name.en | default(''))) %}
+              {% endif %}
+              {% if rule_name %}
+                <p class="ananas-cart-item__offer" data-cart-item-offer>{{ _('Offer') }}: {{ rule_name }}</p>
+              {% endif %}
+            {% endfor %}
+
+            {% if sub_items | length > 0 %}
+              <div class="ananas-cart-item__bundle">
+                <button
+                  type="button"
+                  class="ananas-cart-item__bundle-toggle"
+                  data-action="bundle-toggle"
+                  data-bundle-id="bundle-{{ cart_item_id }}"
+                  aria-controls="bundle-{{ cart_item_id }}"
+                >
+                  <span>{{ _('Bundle items (%(count)s)') | format(count=(sub_items | length)) }}</span>
+                  <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true" data-bundle-arrow="{{ cart_item_id }}">
+                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <ul id="bundle-{{ cart_item_id }}" class="ananas-cart-item__bundle-list hidden">
+                  {% for sub in sub_items %}
+                    {% set sub_name = sub.name | default(sub.product.name | default('')) %}
+                    <li>{{ sub_name }}{% if sub.quantity %} × {{ sub.quantity }}{% endif %}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+
+            {% if item_error %}
+              <p class="ananas-cart-item__error" role="alert" data-cart-item-error>{{ item_error }}</p>
+            {% endif %}
           </div>
         </div>
 

@@ -1,4 +1,5 @@
 {% set products = settings.products.results if settings.products and settings.products.results else [] %}
+{% set products = products[:settings.products_limit | default(12, true) | int] %}
 
 {% if products %}
   {% set layout = settings.layout | default('carousel') %}
@@ -56,6 +57,9 @@
               <p class="fp-subtitle">{{ subtitle }}</p>
             {% endif %}
           </div>
+          {% if settings.display_more and more_text %}
+            <a class="fp-explore" href="{{ more_url }}">{{ more_text }}</a>
+          {% endif %}
         </div>
       {% else %}
         <div class="fp-header fp-header--mobile-carousel">
@@ -79,12 +83,16 @@
                 <path d="M15.2 18.1 9.1 12l6.1-6.1-1.4-1.4L6.3 12l7.5 7.5 1.4-1.4Z" />
               </svg>
             </button>
-            <a
-              class="fp-explore"
-              href="{{ more_url }}"
-            >
-              {{ more_text }}
-            </a>
+            {% if settings.display_more and more_text %}
+              <a
+                class="fp-explore"
+                href="{{ more_url }}"
+              >
+                {{ more_text }}
+              </a>
+            {% else %}
+              <span></span>
+            {% endif %}
             <button
               type="button"
               class="fp-mobile-arrow"

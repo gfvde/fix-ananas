@@ -37,7 +37,8 @@
 
       requestAnimationFrame(function () {
         requestAnimationFrame(function () {
-          viewport.scrollLeft = viewport.scrollWidth;
+          // The viewport follows the page direction, so 0 is the start in RTL and LTR
+          viewport.scrollLeft = 0;
           updateProgress(panel);
           viewport.classList.add("is-ready");
         });
@@ -70,15 +71,17 @@
         Math.min(1, viewport.clientWidth / viewport.scrollWidth),
       );
       var barWidth = Math.max(32, Math.round(trackWidth * visibleRatio));
+      // RTL scrollLeft runs from 0 to -maxScroll; the bar starts at the right
       var scrollRatio = Math.max(
         0,
-        Math.min(1, viewport.scrollLeft / maxScroll),
+        Math.min(1, Math.abs(viewport.scrollLeft) / maxScroll),
       );
       var maxTravel = Math.max(0, trackWidth - barWidth);
+      var isRTL = getComputedStyle(viewport).direction === "rtl";
+      var offset = isRTL ? maxTravel * (1 - scrollRatio) : maxTravel * scrollRatio;
 
       bar.style.width = barWidth + "px";
-      bar.style.transform =
-        "translateX(" + Math.round(maxTravel * scrollRatio) + "px)";
+      bar.style.transform = "translateX(" + Math.round(offset) + "px)";
     }
 
     function bindCarouselProgress(panel) {

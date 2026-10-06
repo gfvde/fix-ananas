@@ -48,8 +48,36 @@
       });
     }
 
+    // The pinned section stays sticky until the end of the page; once the section after
+    // it has scrolled past, hide it so transparent sections further down don't show it.
+    var nextSection = null;
+    var all = document.querySelectorAll("[section-id]");
+    for (var i = 0; i < all.length; i++) {
+      if (all[i] === prev && all[i + 1]) nextSection = all[i + 1];
+    }
+    var ticking = false;
+    function updateVisibility() {
+      ticking = false;
+      if (!nextSection || window.innerWidth < 992) {
+        prev.style.visibility = "";
+        return;
+      }
+      var passed = nextSection.getBoundingClientRect().bottom <= 0;
+      prev.style.visibility = passed ? "hidden" : "";
+    }
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(updateVisibility);
+    }
+
     applyEffect();
-    window.addEventListener("resize", applyEffect);
+    updateVisibility();
+    window.addEventListener("resize", function () {
+      applyEffect();
+      updateVisibility();
+    });
+    window.addEventListener("scroll", onScroll, { passive: true });
   }
 
   function initAll() {

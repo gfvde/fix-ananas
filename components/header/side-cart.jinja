@@ -41,7 +41,12 @@
       </button>
     </div>
 
-    {% set side_cart_subtotal_condition = cart.free_shipping_rule.subtotal_condition if cart.free_shipping_rule else none %}
+    {# The validator renders the header without a cart in context #}
+    {% set side_cart = cart if cart is defined and cart else {'products': [], 'products_count': 0, 'free_shipping_rule': none, 'currency': none, 'total_string': none, 'total': 0} %}
+    {# cart.total is a totals entry ({value, value_string}) on some pages, a number on others #}
+    {% set side_cart_total = side_cart.total.value if side_cart.total.value is defined else side_cart.total %}
+    {% set side_cart_total_string = side_cart.total_string or (side_cart.total.value_string if side_cart.total.value_string is defined else side_cart.total) %}
+    {% set side_cart_subtotal_condition = side_cart.free_shipping_rule.subtotal_condition if side_cart.free_shipping_rule else none %}
     {% set side_cart_free_shipping_status = side_cart_subtotal_condition.status | default('') if side_cart_subtotal_condition else '' %}
     {% set side_cart_free_shipping_remaining = side_cart_subtotal_condition.remaining | default('') if side_cart_subtotal_condition else '' %}
     {% set side_cart_free_shipping_percent = side_cart_subtotal_condition.products_subtotal_percentage_from_min | default(0) if side_cart_subtotal_condition else 0 %}
@@ -77,15 +82,15 @@
       class="ananas-side-cart__items"
       id="side-cart-items"
     >
-      {% if cart.products and cart.products | length > 0 %}
-        {% for item in cart.products %}
+      {% if side_cart.products and side_cart.products | length > 0 %}
+        {% for item in side_cart.products %}
           {% set product_image = '' %}
           {% if item.product and item.product.images and item.product.images[0] %}
             {% set product_image = item.product.images[0].image.full_size | default(item.product.images[0].image.medium | default(item.product.images[0].image.thumbnail | default(item.product.images[0].image.url | default(item.product.images[0].url | default(item.product.images[0].image_url | default('')))))) %}
           {% endif %}
           {% if not product_image %}
           {% endif %}
-          {% set _currency = cart.currency.cart_currency.code if (cart.currency and cart.currency.cart_currency) else session.currency %}
+          {% set _currency = side_cart.currency.cart_currency.code if (side_cart.currency and side_cart.currency.cart_currency) else session.currency %}
           {% set _price_num = item.price | float if item.price else 0 %}
           {% set _compare_num = item.compare_at_price | float if item.compare_at_price else 0 %}
           {% set current_price = ('%.2f' | format(_price_num) ~ ' ' ~ _currency) if _price_num else (item.price_string | default(item.price_formatted | default(item.product.selected_product.formatted_sale_price | default(item.product.formatted_sale_price | default(''))))) %}
@@ -222,21 +227,21 @@
       {% endif %}
     </div>
 
-    <div class="ananas-side-cart__footer{{ '' if (cart.products_count | default(0)) > 0 else ' hidden' }}" data-side-cart-footer>
+    <div class="ananas-side-cart__footer{{ '' if (side_cart.products_count | default(0)) > 0 else ' hidden' }}" data-side-cart-footer>
       <div class="ananas-side-cart__summary">
         <div class="ananas-side-cart__summary-copy">
           <span class="font-expo text-lg font-medium text-black">{{ _('Total') }}</span>
           <span
             class="font-expo text-sm font-normal text-gray-500"
             id="side-cart-count"
-            >({{ _('%(count)s items in cart') | format(count=(cart.products_count | default(0))) }})</span
+            >({{ _('%(count)s items in cart') | format(count=(side_cart.products_count | default(0))) }})</span
           >
         </div>
         <div class="ananas-side-cart__summary-total">
           <span
             class="font-expo text-lg font-medium text-black"
             id="side-cart-total"
-            >{{ cart.total_string | default(cart.total) | default('0.00') }}</span
+            >{{ side_cart_total_string | default('0.00', true) }}</span
           >
         </div>
       </div>
@@ -704,7 +709,7 @@
     const shippingRemainingEl = document.getElementById("side-cart-shipping-remaining");
     const shippingProgressEl = document.getElementById("side-cart-shipping-progress");
     const shippingWrapperEl = document.querySelector(".ananas-side-cart__shipping-wrapper");
-    const initialFreeShippingRule = {{ cart.free_shipping_rule | default(none) | tojson }};
+    const initialFreeShippingRule = {{ side_cart.free_shipping_rule | default(none) | tojson }};
     const currencyCode = {{ session.currency | default('SAR') | tojson }};
     const sideCartTranslations = {
       freeShippingApplied: {{ _('Free shipping applied!') | tojson }},
@@ -722,7 +727,7 @@
 
     // Initialize free shipping bar on load
     drawer.inert = true;
-    updateShippingBar(Number("{{ cart.total | default(0, true) }}") || 0, { free_shipping_rule: initialFreeShippingRule });
+    updateShippingBar(Number("{{ side_cart_total | default(0, true) }}") || 0, { free_shipping_rule: initialFreeShippingRule });
 
     // Pre-fetch cart data in background so it's ready when drawer opens
     function prefetchCartData() {

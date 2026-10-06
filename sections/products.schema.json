@@ -191,6 +191,18 @@
       "default": "tab_2"
     },
     {
+      "id": "products_limit",
+      "type": "range",
+      "label": {
+        "ar": "عدد المنتجات المعروضة",
+        "en": "Number of products"
+      },
+      "min": 4,
+      "max": 24,
+      "step": 4,
+      "default": 12
+    },
+    {
       "id": "mobile_tabs_layout",
       "type": "select",
       "label": {

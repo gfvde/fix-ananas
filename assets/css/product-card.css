@@ -41,6 +41,12 @@
     object-position: center;
     transition: transform 0.35s ease;
   }
+  /* No product image: the gray placeholder fills the frame even where sections use contain */
+  .pc-card .pc-img-wrap .pc-img.pc-img--placeholder {
+    top: 0;
+    height: 100%;
+    object-fit: cover;
+  }
   .pc-card:hover .pc-img {
     transform: scale(1.04);
   }

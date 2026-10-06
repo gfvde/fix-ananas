@@ -27,7 +27,7 @@
       ></div>
     </div>
   {% endif %}
-  <div class="theme-container">
+  <div class="theme-container"{% if settings.text_color %} style="--foreground: {{ settings.text_color }};"{% endif %}>
     <div class="countdown-content grid gap-x-20 gap-y-8 lg:grid-cols-12 lg:items-center">
       <div class="space-y-6 lg:col-span-6">
         <div>

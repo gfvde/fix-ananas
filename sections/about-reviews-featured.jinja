@@ -50,7 +50,7 @@
   <article class="arf-bg-card arf-bg-card--{{ style }}" style="--arf-card-bg: {{ bg_color }}; --arf-card-color: {{ text_color }};">
     <div class="arf-bg-card__body">
       {{ star_icons(18, star_count) }}
-      <p class="arf-bg-card__text">{{ review.text | default(fallback_text) }}</p>
+      <p class="arf-bg-card__text" dir="auto">{{ review.text | default(fallback_text) }}</p>
     </div>
     <div class="arf-bg-card__author">
       {{ avatar_img(review, 92, fallback, 'arf-bg-card__avatar') }}
@@ -71,7 +71,7 @@
     <div class="arf-bg-card__overlay">
       <div class="arf-bg-card__body">
         {{ star_icons(18, star_count) }}
-        <p class="arf-bg-card__text">{{ review.text | default(fallback_text) }}</p>
+        <p class="arf-bg-card__text" dir="auto">{{ review.text | default(fallback_text) }}</p>
       </div>
       <div class="arf-bg-card__author">
         {{ avatar_img(review, 92, fallback, 'arf-bg-card__avatar') }}
@@ -116,7 +116,7 @@
       <article class="arf-featured-card" aria-live="polite">
         <div class="arf-featured-card__body">
           {{ star_icons(18, first_stars) }}
-          <p class="arf-featured-card__text" data-arf-text>{{ first_review.text | default(fallback_text) }}</p>
+          <p class="arf-featured-card__text" dir="auto" data-arf-text>{{ first_review.text | default(fallback_text) }}</p>
         </div>
         <div class="arf-featured-card__footer">
           <div class="arf-featured-card__author">
