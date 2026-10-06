@@ -2275,9 +2275,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', closeShareMenu);
 
     window.product = {{ product | tojson | safe }};
-    window.sett = {{ settings | tojson | safe }};
-
-    console.log(window.sett, "window.settings");
 
 });
 </script>
