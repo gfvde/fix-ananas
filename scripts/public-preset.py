@@ -47,9 +47,17 @@ for entry in src["presets"]:
             lang["single_product_section_bundle_products_with_selection"] = []
     presets.append({"path": entry["path"], "settings": with_english(settings)})
 
+# Preview shots shown under "معاينة القوالب" in the theme editor
+# (uploaded with `vitrin presets upload-image`; desktop first)
+IMAGES = [
+    "https://media.zid.store/48f8b24f425347859debc8f34f3b1217/presets/7b20c81547644c63bec1ef4ae48f8e72.jpg",
+    "https://media.zid.store/48f8b24f425347859debc8f34f3b1217/presets/d3cdff98302e404680774154a6aea429.jpg",
+]
+
 out = {
     "type": "default",
     "name": {"en": "Roast", "ar": "روست"},
+    "images": IMAGES,
     "presets": presets,
 }
 path = os.path.join(ROOT, "build", "preset.json")
