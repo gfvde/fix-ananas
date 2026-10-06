@@ -709,7 +709,7 @@
                 "ar": "مميزات المنتج",
                 "en": "Products have features"
               },
-              "maxItems": 4,
+              "max_items": 4,
               "settings": [
                 {
                   "id": "war_products",
@@ -852,7 +852,7 @@
                 "ar": "المنتجات المرتبطة",
                 "en": "Bundle Items"
               },
-              "maxItems": 5,
+              "max_items": 5,
               "settings": [
                 {
                   "id": "product",
@@ -919,7 +919,7 @@
                 "ar": "تحديد المنتجات التي تظهر لها مميزات المتجر",
                 "en": "Select products that will display store features"
               },
-              "maxItems": 4,
+              "max_items": 4,
               "settings": [
                 {
                   "id": "products_store_features_shown",
@@ -1094,7 +1094,7 @@
                 "ar": "تحديد المنتجات التي تظهر لها خصائص القهوة",
                 "en": "Select products to show coffee attributes"
               },
-              "maxItems": 4,
+              "max_items": 4,
               "settings": [
                 {
                   "id": "selected_products",

@@ -1,4 +1,4 @@
-{% set is_lazy = settings.order > 2 %}
+{% set is_lazy = (settings.order | default(3) | int) > 2 %}
 
 <link rel="stylesheet" href="{{ 'css/sections/categories.css' | asset_url }}">
 <section

@@ -1,4 +1,4 @@
-{% set is_lazy_section = settings.order > 2 %}
+{% set is_lazy_section = (settings.order | default(3) | int) > 2 %}
 
 <section
   section-id="{{ sectionId }}"

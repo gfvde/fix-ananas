@@ -5,7 +5,9 @@
     "en": "Home Banner (Figma)"
   },
   "icon": "image-line",
-  "meta": { "type": "slider" },
+  "meta": {
+    "type": "slider"
+  },
   "settings": [
     {
       "id": "background_image",
@@ -67,13 +69,13 @@
       "id": "rating_stars",
       "type": "range",
       "label": {
-        "ar": "النجوم",
-        "en": "Stars"
+        "ar": "النجوم (×10، مثلاً 48 = 4.8)",
+        "en": "Stars (×10, e.g. 48 = 4.8)"
       },
       "min": 0,
-      "max": 5,
-      "step": 0.1,
-      "default": 4.8
+      "max": 50,
+      "step": 1,
+      "default": 48
     },
     {
       "id": "avatars",

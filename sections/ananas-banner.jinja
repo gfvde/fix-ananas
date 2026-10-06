@@ -43,7 +43,8 @@
       <div class="flex flex-wrap items-center justify-center gap-4 py-2 px-6 rounded-full bg-white/5 backdrop-blur-md border border-white/10 md:flex-row-reverse md:justify-start">
         <div class="flex items-center gap-2">
           <span class="text-white font-bold text-sm">({{ settings.rating_value | default('4.8') }})</span>
-          {% set rating = settings.rating_stars | default(4.8) %}
+          {% set rating = settings.rating_stars | default(48) | float %}
+          {% if rating > 5 %}{% set rating = rating / 10 %}{% endif %}
           {% set size = 18 %}
           <div class="text-[#FFB800]">
              {% include 'components/rating-stars.jinja' %}
