@@ -37,7 +37,8 @@
 
   {# Review Comment #}
   {% if review.comment %}
-    <p class="text-foreground text-sm">{{ review.comment|safe }}</p>
+    {# Customer text: autoescaped, line breaks kept via pre-line (was |safe = stored XSS) #}
+    <p class="text-foreground text-sm" style="white-space: pre-line;">{{ review.comment }}</p>
   {% endif %}
 
   {# Review Images #}
@@ -91,7 +92,7 @@
 
       {# Reply Text #}
       {% if review.reply.text %}
-        <p class="text-foreground text-sm">{{ review.reply.text|safe }}</p>
+        <p class="text-foreground text-sm" style="white-space: pre-line;">{{ review.reply.text }}</p>
       {% endif %}
 
       {# Reply Images #}
