@@ -1,0 +1,27 @@
+/* sections/about-gallery.jinja styles (moved from an inline <style>). Scoped by [data-section="about-gallery"]. */
+[data-section="about-gallery"] .ag-media-cell {
+  cursor: pointer;
+}
+[data-section="about-gallery"] .ag-play-btn {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: opacity 0.2s;
+}
+[data-section="about-gallery"] .ag-play-btn svg {
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+}
+[data-section="about-gallery"] .ag-media-cell.is-playing .ag-play-btn {
+  opacity: 0;
+}
+[data-section="about-gallery"] .ag-media-cell.is-playing:hover .ag-play-btn {
+  opacity: 1;
+}
