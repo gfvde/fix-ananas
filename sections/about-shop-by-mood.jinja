@@ -1,6 +1,6 @@
-{% set title_text = settings.title | default('اختار قهوتك علي مزاجك') %}
-{% set subtitle_text = settings.subtitle | default('لكل مزاج تجربة مختلفة هنا تلقى اللي يناسبك') %}
-{% set cta_text = settings.cta_text | default('تسوّق حسب مزاجك') %}
+{% set title_text = settings.title | default(_('Choose your coffee to match your mood')) %}
+{% set subtitle_text = settings.subtitle | default(_('Every mood has its own experience, here you will find what suits you')) %}
+{% set cta_text = settings.cta_text | default(_('Shop by mood')) %}
 {% set cta_url = settings.cta_url | default('#') %}
 {% set section_bg_color = settings.section_bg_color | default('#ffffff') %}
 {% set text_color = settings.text_color | default('#000000') %}
@@ -12,10 +12,10 @@
 
 {%
   set cards = [
-    { 'image': settings.card1_image, 'tag': settings.card1_tag | default('شي جديد'), 'title': settings.card1_title | default('قهوة المغامرة'), 'desc': settings.card1_desc | default('اكتشف نكهات جديدة كل مرة'), 'url': settings.card1_url | default('#') },
-    { 'image': settings.card2_image, 'tag': settings.card2_tag | default('صفاء ذهني'), 'title': settings.card2_title | default('قهوة التركيز'), 'desc': settings.card2_desc | default('مزاج صافي يساعدك تنجز بدون تشتيت'), 'url': settings.card2_url | default('#') },
-    { 'image': settings.card3_image, 'tag': settings.card3_tag | default('هدوء بطعم غني'), 'title': settings.card3_title | default('قهوة الروقان'), 'desc': settings.card3_desc | default('لحظة لنفسك بعيد عن الزحمة'), 'url': settings.card3_url | default('#') },
-    { 'image': settings.card4_image, 'tag': settings.card4_tag | default('بداية يومك'), 'title': settings.card4_title | default('قهوة الصباح'), 'desc': settings.card4_desc | default('بداية خفيفة تضبط يومك من أول كوب'), 'url': settings.card4_url | default('#') }
+    { 'image': settings.card1_image, 'tag': settings.card1_tag | default(_('Something new')), 'title': settings.card1_title | default(_('Adventure coffee')), 'desc': settings.card1_desc | default(_('Discover new flavors every time')), 'url': settings.card1_url | default('#') },
+    { 'image': settings.card2_image, 'tag': settings.card2_tag | default(_('Clear mind')), 'title': settings.card2_title | default(_('Focus coffee')), 'desc': settings.card2_desc | default(_('A clear mood that helps you get things done without distraction')), 'url': settings.card2_url | default('#') },
+    { 'image': settings.card3_image, 'tag': settings.card3_tag | default(_('Calm with a rich taste')), 'title': settings.card3_title | default(_('Relaxation coffee')), 'desc': settings.card3_desc | default(_('A moment for yourself, away from the rush')), 'url': settings.card3_url | default('#') },
+    { 'image': settings.card4_image, 'tag': settings.card4_tag | default(_('Start of your day')), 'title': settings.card4_title | default(_('Morning coffee')), 'desc': settings.card4_desc | default(_('A light start that sets your day right from the first cup')), 'url': settings.card4_url | default('#') }
   ]
 %}
 
@@ -91,7 +91,7 @@
             />
           </svg>
         </button>
-        <p class="sbm-mob-subtitle">{{ settings.mobile_subtitle | default('لكل مزاج تجربة مختلفة') }}</p>
+        <p class="sbm-mob-subtitle">{{ settings.mobile_subtitle | default(_('Every mood has its own experience')) }}</p>
         <button
           class="sbm-arrow"
           data-sbm-next

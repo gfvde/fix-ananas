@@ -130,7 +130,7 @@
         {% if has_multiple %}
           <div class="arf-dots" data-arf-dots aria-label="{{ _('Customer reviews') }}">
             {% for review in reviews %}
-              <button class="arf-dot{% if loop.first %} arf-dot--active{% endif %}" type="button" data-arf-dot="{{ loop.index0 }}" aria-label="{{ _('Review') }} {{ loop.index }}"></button>
+              <button class="arf-dot{% if loop.first %} arf-dot--active{% endif %}" type="button" data-arf-dot="{{ loop.index0 }}" aria-label="{{ _('Review %(number)s', number=loop.index) }}"></button>
             {% endfor %}
           </div>
         {% endif %}
@@ -146,7 +146,7 @@
   data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}" class="section-arf"  style="--arf-title-color: {{ title_color }}; --arf-section-bg: {{ settings.section_background_color | default('#FCFAF7') }};">
   <div class="arf-desktop">
     <div class="arf-header">
-      <h2 class="arf-title">{{ settings.title | default('تجربة القهوة بعيون عملائنا') }}</h2>
+      <h2 class="arf-title">{{ settings.title | default(_('The coffee experience through our customers’ eyes')) }}</h2>
     </div>
 
     <div class="arf-stage">
@@ -169,7 +169,7 @@
   </div>
 
   <div class="arf-mobile">
-    <h2 class="arf-title arf-title--mobile">{{ settings.title | default('تجربة القهوة بعيون عملائنا') }}</h2>
+    <h2 class="arf-title arf-title--mobile">{{ settings.title | default(_('The coffee experience through our customers’ eyes')) }}</h2>
 
     <div class="arf-stage arf-stage--mobile">
       <div class="arf-bg-grid arf-bg-grid--mobile" aria-hidden="true">

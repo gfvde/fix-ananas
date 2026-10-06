@@ -5,7 +5,7 @@
 {% set cta_text_color = settings.cta_text_color | default('#000000') %}
 {% set cta_bg_color = settings.cta_bg_color | default(section_bg_color) %}
 {% set cta_border_color = settings.cta_border_color | default('#000000') %}
-{% set cta_text = settings.cta_text | default('تعرّف على عالم أناناس') %}
+{% set cta_text = settings.cta_text | default(_('Discover the world of Ananas')) %}
 {% set media_type = settings.media_type | default('image') %}
 {% set mobile_media_position = settings.mobile_media_position | default('after') %}
 
@@ -37,18 +37,18 @@
 {% macro community_content(is_mobile=false) %}
   <div class="{% if is_mobile %}ac-mobile__text{% else %}ac-text{% endif %}">
     <div class="ac-text__inner">
-      <h2 class="ac-title">{{ settings.title | default('مجتمع أناناس') }}</h2>
+      <h2 class="ac-title">{{ settings.title | default(_('The Ananas community')) }}</h2>
       <p class="ac-body ac-body--lead">
-        {{ settings.body1 | default('في أناناس، التجربة أكبر من كوب قهوة.') }}<br>
-        {{ settings.body2 | default('هي لحظات تعيشها وتفاصيل تختارها تعبّر عنك') }}
+        {{ settings.body1 | default(_('At Ananas, the experience is bigger than a cup of coffee.')) }}<br>
+        {{ settings.body2 | default(_('It is moments you live and details you choose that express who you are')) }}
       </p>
       <p class="ac-body ac-body--normal">
         {% if is_mobile and (settings.body3_mobile or settings.body4_mobile or settings.body5_mobile) %}
-          {{ settings.body3_mobile | default('من القهوة إلى كل ما يحيط يومك،') }}<br>
-          {{ settings.body4_mobile | default('نصمم تجربة تجمع ناس يشاركون نفس الذوق.') }}<br>
-          {{ settings.body5_mobile | default('أناناس… مجتمع تعيش فيه القهوة بأسلوبك.') }}
+          {{ settings.body3_mobile | default(_('From coffee to everything around your day,')) }}<br>
+          {{ settings.body4_mobile | default(_('we design an experience that brings together people who share the same taste.')) }}<br>
+          {{ settings.body5_mobile | default(_('Ananas… a community where coffee is lived your way.')) }}
         {% else %}
-          {{ settings.body3 | default('من القهوة إلى كل ما يحيط يومك، نصمم تجربة تجمع ناس يشاركون نفس الذوق. أناناس… مجتمع تعيش فيه القهوة بأسلوبك.') }}
+          {{ settings.body3 | default(_('From coffee to everything around your day, we design an experience that brings together people who share the same taste. Ananas… a community where coffee is lived your way.')) }}
         {% endif %}
       </p>
     </div>

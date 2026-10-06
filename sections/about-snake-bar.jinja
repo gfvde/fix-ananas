@@ -8,10 +8,10 @@
 
 {% if not items or items | length == 0 %}
   {% set items = [
-    { 'text': 'تحميص مظبوط', 'icon_image': none },
-    { 'text': 'تغليف مميز', 'icon_image': none },
-    { 'text': 'شحن سريع', 'icon_image': none },
-    { 'text': 'دفع امن', 'icon_image': none }
+    { 'text': _('Perfectly roasted'), 'icon_image': none },
+    { 'text': _('Distinctive packaging'), 'icon_image': none },
+    { 'text': _('Fast shipping'), 'icon_image': none },
+    { 'text': _('Secure payment'), 'icon_image': none }
   ] %}
 {% endif %}
 
@@ -52,7 +52,7 @@
     {% for item in items %}
       <div class="snake-bar__item">
         {{ render_icon(item, loop.index0) }}
-        <span class="snake-bar__text">{{ item.text | default('تحميص مظبوط') }}</span>
+        <span class="snake-bar__text">{{ item.text | default(_('Perfectly roasted')) }}</span>
       </div>
       <span class="snake-bar__sep"></span>
     {% endfor %}

@@ -32,16 +32,16 @@
     --sbc-mobile-overlay-bg: {{ mobile_overlay_bg_color }};
   "
 >
-  <h2 class="shop-by-category__title">{{ settings.title | default('تسوّق حسب اختيارك') }}</h2>
+  <h2 class="shop-by-category__title">{{ settings.title | default(_('Shop by your choice')) }}</h2>
   <div class="sbc-grid">
 
     {% set cats = [
-      { 'name': settings.cat1_name | default('أظرف القهوه'),   'url': settings.cat1_url | default('', true), 'img': settings.cat1_img, 'text_color': settings.cat1_text_color | default(card_text_color) },
-      { 'name': settings.cat2_name | default('محاصيل القهوه'), 'url': settings.cat2_url | default('', true), 'img': settings.cat2_img, 'text_color': settings.cat2_text_color | default(card_text_color) },
-      { 'name': settings.cat3_name | default('البكجــات'),     'url': settings.cat3_url | default('', true), 'img': settings.cat3_img, 'text_color': settings.cat3_text_color | default(card_text_color) },
-      { 'name': settings.cat4_name | default('عروض الربيع'),   'url': settings.cat4_url | default('', true), 'img': settings.cat4_img, 'text_color': settings.cat4_text_color | default(card_text_color) },
-      { 'name': settings.cat5_name | default('منتجات أناناس'), 'url': settings.cat5_url | default('', true), 'img': settings.cat5_img, 'text_color': settings.cat5_text_color | default(card_text_color) },
-      { 'name': settings.cat6_name | default('أدوات القهوة'),  'url': settings.cat6_url | default('', true), 'img': settings.cat6_img, 'text_color': settings.cat6_text_color | default(card_text_color) }
+      { 'name': settings.cat1_name | default(_('Coffee drip bags')),   'url': settings.cat1_url | default('', true), 'img': settings.cat1_img, 'text_color': settings.cat1_text_color | default(card_text_color) },
+      { 'name': settings.cat2_name | default(_('Coffee harvests')), 'url': settings.cat2_url | default('', true), 'img': settings.cat2_img, 'text_color': settings.cat2_text_color | default(card_text_color) },
+      { 'name': settings.cat3_name | default(_('Bundles')),     'url': settings.cat3_url | default('', true), 'img': settings.cat3_img, 'text_color': settings.cat3_text_color | default(card_text_color) },
+      { 'name': settings.cat4_name | default(_('Spring offers')),   'url': settings.cat4_url | default('', true), 'img': settings.cat4_img, 'text_color': settings.cat4_text_color | default(card_text_color) },
+      { 'name': settings.cat5_name | default(_('Ananas products')), 'url': settings.cat5_url | default('', true), 'img': settings.cat5_img, 'text_color': settings.cat5_text_color | default(card_text_color) },
+      { 'name': settings.cat6_name | default(_('Coffee tools')),  'url': settings.cat6_url | default('', true), 'img': settings.cat6_img, 'text_color': settings.cat6_text_color | default(card_text_color) }
     ] %}
 
     {% for cat in cats if cat.img %}

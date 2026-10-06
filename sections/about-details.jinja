@@ -45,12 +45,12 @@
 
     <div class="about-details__content">
       <div class="about-details__header">
-        <h2>{{ settings.title | default('تفاصيل تكمل يومك', true) }}</h2>
-        <p>{{ settings.subtitle | default('قطع مختارة بعناية عملية، أنيقة، وتعيش معك', true) }}</p>
+        <h2>{{ settings.title | default(_('Details that complete your day'), true) }}</h2>
+        <p>{{ settings.subtitle | default(_('Carefully selected pieces: practical, elegant and made to last'), true) }}</p>
       </div>
 
       <div class="about-details__mobile-nav">
-        <span>{{ settings.mobile_nav_text | default('تصفّح المنتجات', true) }}</span>
+        <span>{{ settings.mobile_nav_text | default(_('Browse products'), true) }}</span>
       </div>
 
       <div class="about-details__mobile-hero">
@@ -82,7 +82,7 @@
 
       {% if settings.show_cta | default(true) %}
         <a class="about-details__cta" href="{{ settings.cta_url | default('/products', true) }}">
-          {{ settings.cta_text | default('عرض الكل', true) }}
+          {{ settings.cta_text | default(_('View all'), true) }}
         </a>
       {% endif %}
     </div>

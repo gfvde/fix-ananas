@@ -7,15 +7,15 @@
 {% if desktop_bg %}
 <link rel="preload" as="image" href="{{ image_url(desktop_bg, w=1920, q=90, f='auto') }}" media="(min-width: 768px)" fetchpriority="high">
 {% endif %}
-{% set heading = settings.heading | default('قهوة تضبط يومك', true) %}
-{% set subheading = settings.subheading | default('تجربة جريئة محمصة بعناية لتجربة تفهم جوك', true) %}
+{% set heading = settings.heading | default(_('Coffee that sets your day right'), true) %}
+{% set subheading = settings.subheading | default(_('A bold, carefully roasted experience that gets your mood'), true) %}
 {% set rating_value = settings.rating | default('4.8', true) %}
 {% set star_count = settings.rating_stars | default(5, true) %}
 {% set rating_scroll_target = settings.rating_scroll_target | default('about_reviews_featured', true) %}
 {% set avatar_items = safeget(settings, "avatars", []) | selectattr('image') | list %}
-{% set cta_text = settings.cta_text | default('تسوّق قهوتك الآن', true) %}
+{% set cta_text = settings.cta_text | default(_('Shop your coffee now'), true) %}
 {% set cta_url = settings.cta_url | default('/products', true) %}
-{% set rating_count = settings.rating_count | default('عميل مروق', true) %}
+{% set rating_count = settings.rating_count | default(_('Happy customers'), true) %}
 {% set rating_label = settings.rating_label | default('+13K', true) %}
 {% set link_on_banner = settings.cta_link_on_banner and cta_url %}
 
@@ -76,7 +76,7 @@
           class="about-hero-banner__rating"
           role="button"
           tabindex="0"
-          aria-label="{{ _('Scroll to reviews') }} {{ rating_value }}"
+          aria-label="{{ _('Scroll to reviews (%(rating)s)', rating=rating_value) }}"
           data-ahb-rating-scroll-target="{{ rating_scroll_target }}"
         >
           <div class="about-hero-banner__rating-row">
