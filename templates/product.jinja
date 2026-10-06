@@ -608,7 +608,7 @@
                   font-size: {{ settings.single_product_section_features_title_font_size | default(16) }}px;
                 "
               >
-                {{ settings.single_product_section_head_title_feature | default(_('A unique blend of flavors')) }}
+                {{ settings.single_product_section_head_title_feature | default(_('A unique blend of flavors'), true) }}
               </h2>
             </div>
 
@@ -725,7 +725,7 @@
         {# Acidity Section #}
         <div class="mb-5">
           <div class="flex justify-between text-sm font-medium mb-[6px]">
-            <span class="text-start text-gray-900">{{settings.single_product_section_coffee_acidity_level | default(_('Acidity'))}}</span>
+            <span class="text-start text-gray-900">{{settings.single_product_section_coffee_acidity_level | default(_('Acidity'), true)}}</span>
           </div>
 
           <div class="relative flex items-center">
@@ -784,7 +784,7 @@
         {# Body Section #}
         <div>
           <div class="flex justify-between text-sm font-medium mb-[6px]">
-            <span class="text-start text-gray-900">{{settings.single_product_section_coffee_body_level | default(_('Body'))}}</span>
+            <span class="text-start text-gray-900">{{settings.single_product_section_coffee_body_level | default(_('Body'), true)}}</span>
           </div>
 
           <div class="relative flex items-center">
@@ -1070,7 +1070,7 @@
     <div class="">
 
       <h2 class="text-base font-medium text-start mb-4">
-        {{ ns.current_bundle.section_title | default(_('Frequently bought together')) }}
+        {{ ns.current_bundle.section_title | default(_('Frequently bought together'), true) }}
       </h2>
 
       <div id="bundle-skeleton" class="flex flex-wrap gap-3 justify-end">
@@ -1093,7 +1093,7 @@
                   type="button"
                   class="px-6 py-3  text-sm font-medium border-2 transition-all duration-200 flex items-center gap-2"
                   style="border-color: {{ ns.current_bundle.bundle_btn_color | default('#e63b3b') }}; color: {{ ns.current_bundle.bundle_btn_color | default('#e63b3b') }};">
-            <span>{{ ns.current_bundle.bundle_btn_text | default(_('Buy together for')) }}</span>
+            <span>{{ ns.current_bundle.bundle_btn_text | default(_('Buy together for'), true) }}</span>
             <span id="bundle-total-display" class="font-bold"></span>
             <span id="bundle-add-loader" class="hidden">
               <svg class="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
@@ -1403,9 +1403,9 @@
           {% endif %}
         {% endfor %}
 
-        {% set cta_primary_label   = cta_data.primary_label %}
+        {% set cta_primary_label   = cta_data.primary_label or _('Try it on an Xbloom machine') %}
         {% set cta_primary_url     = cta_data.primary_url %}
-        {% set cta_secondary_label = cta_data.secondary_label %}
+        {% set cta_secondary_label = cta_data.secondary_label or _('Brew it yourself') %}
         {% set cta_secondary_url   = cta_data.secondary_url %}
 
         {% set cta_has_primary     = cta_primary_label and cta_primary_url %}
@@ -1457,7 +1457,7 @@
             class="tab-button whitespace-nowrap px-4 py-3 text-sm font-medium text-muted-foreground border-b-2 border-transparent hover:text-foreground transition-colors"
             data-tab="coffee-cta"
           >
-            {{ settings.single_product_section_title_coffee_cta_section | default(_("Preparation methods")) }}
+            {{ settings.single_product_section_title_coffee_cta_section | default(_("Choose your brewing method"), true) }}
           </button>
           {% endif %}
         </div>
@@ -1630,16 +1630,14 @@
               class="accordion-button w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-foreground transition-colors"
               data-accordion="coffee-cta"
             >
-              <span>{{ settings.single_product_section_title_coffee_cta_section | default(_("Preparation methods")) }}</span>
+              <span>{{ settings.single_product_section_title_coffee_cta_section | default(_("Choose your brewing method"), true) }}</span>
               <svg width="13" height="7" viewBox="0 0 13 7" fill="none" class="accordion-icon transition-transform duration-300" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1 1L6.5009 6L12 1" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
             <div class="accordion-content hidden max-h-0 overflow-hidden transition-all duration-300" data-accordion-content="coffee-cta">
               <div class="px-4 py-4 border-t border-border">
-                {% if settings.single_product_section_subtitle_coffee_cta_section %}
-                <p class="text-sm text-muted-foreground mb-3">{{ settings.single_product_section_subtitle_coffee_cta_section }}</p>
-                {% endif %}
+                <p class="text-sm text-muted-foreground mb-3">{{ settings.single_product_section_subtitle_coffee_cta_section | default(_('A ready recipe that tunes your coffee for you'), true) }}</p>
                 <div class="flex flex-col gap-2">
                   {% if cta_has_primary %}
                   <button type="button"
@@ -1748,9 +1746,7 @@
           {# Coffee CTA Tab Panel #}
           {% if show_coffee_cta %}
           <div class="tab-content my-6 hidden pb-3 mt-6 opacity-0 text-center transition-opacity duration-300" id="coffee-cta-tab">
-            {% if settings.single_product_section_subtitle_coffee_cta_section %}
-            <p class="text-sm text-muted-foreground mb-4">{{ settings.single_product_section_subtitle_coffee_cta_section }}</p>
-            {% endif %}
+            <p class="text-sm text-muted-foreground mb-4">{{ settings.single_product_section_subtitle_coffee_cta_section | default(_('A ready recipe that tunes your coffee for you'), true) }}</p>
             <div class="flex flex-wrap gap-3 justify-center">
               {% if cta_has_primary %}
               <button type="button"

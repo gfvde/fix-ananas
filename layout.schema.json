@@ -16,7 +16,7 @@
           "id": "enable_theme_loader",
           "type": "checkbox",
           "label": {
-            "ar": "تفعيل شاشة التحميل (Theme Loader)",
+            "ar": "تفعيل شاشة التحميل",
             "en": "Enable Theme Loader"
           },
           "default": true
@@ -25,7 +25,7 @@
           "id": "show_breadcrumb",
           "type": "checkbox",
           "label": {
-            "ar": "إظهار مسار التنقل (Breadcrumb)",
+            "ar": "إظهار مسار التنقل",
             "en": "Show Breadcrumb"
           },
           "default": true
@@ -295,6 +295,13 @@
               "label": {
                 "ar": "ثابت داخل الصفحة",
                 "en": "Static sidebar in page"
+              }
+            },
+            {
+              "value": "drawer",
+              "label": {
+                "ar": "شريط علوي مع قائمة منبثقة",
+                "en": "Top bar with filters drawer"
               }
             }
           ],
@@ -627,7 +634,7 @@
             "ar": "العنوان الرئيسي لقسم المميزات",
             "en": "Title Section"
           },
-          "default": "مزيج نكهات فريد"
+          "default": ""
         },
         {
           "id": "features_section_background",
@@ -766,7 +773,7 @@
                   "id": "feat_animate_icon",
                   "type": "text",
                   "label": {
-                    "ar": "اسم الايقون من موقع lordicon",
+                    "ar": "اسم الأيقونة من موقع lordicon",
                     "en": "Animated Icon URL"
                   }
                 },
@@ -878,7 +885,7 @@
                 "ar": "عنوان القسم",
                 "en": "Section Title"
               },
-              "default": "عادة ما يتم شراؤها معا"
+              "default": ""
             },
             {
               "id": "bundle_btn_text",
@@ -887,7 +894,7 @@
                 "ar": "نص زر الشراء",
                 "en": "Button Text"
               },
-              "default": "اشتري معاً بسعر"
+              "default": ""
             },
             {
               "id": "bundle_btn_color",
@@ -922,7 +929,7 @@
                   "id": "products_store_features_shown",
                   "type": "product",
                   "label": {
-                    "ar": "سيتم عرض مميزات المتجر في صفحة أي منتج يتم اختياره هنا (بناءً على Product ID)",
+                    "ar": "سيتم عرض مميزات المتجر في صفحة أي منتج يتم اختياره هنا (بناءً على رقم المنتج)",
                     "en": "Store features will be shown on the selected products' pages (based on product ID)"
                   }
                 }
@@ -974,7 +981,7 @@
                   "id": "feat_animate_icon_store",
                   "type": "text",
                   "label": {
-                    "ar": "اسم الايقون من موقع lordicon",
+                    "ar": "اسم الأيقونة من موقع lordicon",
                     "en": "Animated Icon URL"
                   }
                 },
@@ -1063,7 +1070,7 @@
             "ar": "درجة الحموضة",
             "en": "Acidity Level"
           },
-          "default": "الحموضة"
+          "default": ""
         },
         {
           "id": "coffee_body_level",
@@ -1072,7 +1079,7 @@
             "ar": "نص درجة القوام",
             "en": "Body Level"
           },
-          "default": "القوام"
+          "default": ""
         },
         {
           "id": "coffee_attributes_selection",
@@ -1159,7 +1166,7 @@
             "ar": "العنوان",
             "en": "Title"
           },
-          "default": "اختار طريقتك في التحضير"
+          "default": ""
         },
         {
           "id": "subtitle_coffee_cta_section",
@@ -1168,14 +1175,14 @@
             "ar": "الوصف",
             "en": "Subtitle"
           },
-          "default": "وصفة جاهزة من أتناس تضبط لك القهوة تلقائيًا"
+          "default": ""
         },
         {
           "id": "coffee_cta_iframe_by_product",
           "type": "list",
           "max_items": 50,
           "label": {
-            "ar": "أزرار الـ CTA حسب المنتج",
+            "ar": "أزرار الإجراء حسب المنتج",
             "en": "CTA Buttons by Product"
           },
           "settings": [
@@ -1194,13 +1201,13 @@
                 "ar": "نص الزر الأساسي",
                 "en": "Primary Button Text"
               },
-              "default": "جرّبها على جهاز Xbloom"
+              "default": ""
             },
             {
               "id": "primary_btn_iframe_url",
               "type": "url",
               "label": {
-                "ar": "رابط iframe للزر الأساسي",
+                "ar": "رابط الإطار المضمّن للزر الأساسي",
                 "en": "Primary Iframe URL"
               }
             },
@@ -1211,13 +1218,13 @@
                 "ar": "نص الزر الثانوي",
                 "en": "Secondary Button Text"
               },
-              "default": "حضّرها بنفسك"
+              "default": ""
             },
             {
               "id": "secondary_btn_iframe_url",
               "type": "url",
               "label": {
-                "ar": "رابط iframe للزر الثانوي",
+                "ar": "رابط الإطار المضمّن للزر الثانوي",
                 "en": "Secondary Iframe URL"
               }
             }
@@ -1275,7 +1282,7 @@
             "ar": "العنوان الرئيسي للقسم",
             "en": "Main section title"
           },
-          "default": "الأسئلة الشائعة"
+          "default": ""
         },
         {
           "id": "faq_section_subtitle",
@@ -1284,7 +1291,7 @@
             "ar": "الوصف النصي أسفل العنوان الرئيسي",
             "en": "Section subtitle text"
           },
-          "default": "نقدم لك إجابات شاملة على أكثر الاستفسارات شيوعًا لمساعدتك على اختيار المنتج المناسب وتجربة استخدام سلسة"
+          "default": ""
         },
         {
           "id": "faq_section_background_color",

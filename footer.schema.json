@@ -48,7 +48,7 @@
             {
               "value": "repeat",
               "label": {
-                "ar": "تكرار (نقش / Pattern)",
+                "ar": "تكرار (نقش)",
                 "en": "Repeat (Pattern)"
               }
             }
@@ -130,7 +130,7 @@
           "id": "noise_opacity",
           "type": "range",
           "label": {
-            "ar": "شدة تأثير الـ Noise (%)",
+            "ar": "شدة تأثير التشويش (%)",
             "en": "Noise intensity (%)"
           },
           "min": 0,

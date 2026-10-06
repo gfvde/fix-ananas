@@ -98,24 +98,6 @@
           "type": "color",
           "label": { "ar": "لون عناوين أعمدة الميجا منيو", "en": "Mega Menu Column Header Color" },
           "default": "#d4d4d4"
-        },
-        {
-          "id": "search_bg",
-          "type": "color",
-          "label": { "ar": "خلفية لوحة البحث", "en": "Search Panel Background" },
-          "default": "#000000"
-        },
-        {
-          "id": "search_border",
-          "type": "color",
-          "label": { "ar": "لون حدود البحث", "en": "Search Panel Border" },
-          "default": "#27272a"
-        },
-        {
-          "id": "search_input_color",
-          "type": "color",
-          "label": { "ar": "لون نص البحث", "en": "Search Input Text Color" },
-          "default": "#a1a1a1"
         }
       ]
     },
@@ -514,7 +496,7 @@
         {
           "id": "search_placeholder",
           "type": "text",
-          "label": { "ar": "نص placeholder حقل البحث", "en": "Search Input Placeholder" },
+          "label": { "ar": "النص الإرشادي في حقل البحث", "en": "Search Input Placeholder" },
           "default": ""
         },
         {
