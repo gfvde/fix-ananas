@@ -1,7 +1,7 @@
 {% set is_lazy = settings.order > 2 %}
 
 <section
-  section-id="{{ sectionId }}"
+  section-id="{{ sectionId }}" data-section="video"
   data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
   class="section-video px-4 py-8 md:px-16 md:py-12"
   style="background-color: {{ settings.background_color | default('transparent') }};"
@@ -51,23 +51,6 @@
     </div>
   {% endif %}
   {% if not settings.autoplay and settings.video %}
-    <script>
-      (function () {
-        const section = document.querySelector('[section-id="{{ sectionId }}"]');
-        const video = section.querySelector("video");
-        const overlay = section.querySelector(".video-overlay");
-        const playButton = section.querySelector(".play-button");
-
-        if (playButton && video && overlay) {
-          playButton.addEventListener("click", function () {
-            video.play();
-            overlay.style.opacity = "0";
-            setTimeout(() => {
-              overlay.style.display = "none";
-            }, 500);
-          });
-        }
-      })();
-    </script>
+    <script defer src="{{ 'js/sections/video.js' | asset_url }}"></script>
   {% endif %}
 </section>

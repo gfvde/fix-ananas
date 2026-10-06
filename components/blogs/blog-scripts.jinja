@@ -1,0 +1,41 @@
+{# Blog post scripts: localized dates + copy-link button #}
+<script>
+  (function () {
+    var locale = document.documentElement.lang || 'ar';
+    var formatter;
+    try {
+      formatter = new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'long', year: 'numeric' });
+    } catch (e) {
+      formatter = new Intl.DateTimeFormat('en', { day: 'numeric', month: 'long', year: 'numeric' });
+    }
+    document.querySelectorAll('[data-blog-date]').forEach(function (el) {
+      var d = new Date(el.getAttribute('data-blog-date'));
+      if (!isNaN(d)) el.textContent = formatter.format(d);
+    });
+
+    var checkIcon = '<polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>';
+    document.querySelectorAll('[data-copy-link]').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        var url = btn.getAttribute('data-copy-url') || window.location.href;
+        var icon = btn.querySelector('svg');
+        var original = icon ? icon.innerHTML : '';
+        var done = function () {
+          if (!icon) return;
+          icon.innerHTML = checkIcon;
+          setTimeout(function () { icon.innerHTML = original; }, 2000);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).then(done).catch(function () {});
+        } else {
+          var input = document.createElement('input');
+          input.value = url;
+          document.body.appendChild(input);
+          input.select();
+          try { document.execCommand('copy'); done(); } catch (err) {}
+          document.body.removeChild(input);
+        }
+      });
+    });
+  })();
+</script>

@@ -19,7 +19,7 @@
         alt="{{ settings.heading | default('') }}"
         class="h-full w-full object-cover"
         style="object-position: {{ settings.background_position | default('center') }}"
-        {% if is_lazy %}loading="lazy"{% else %}fetchpriority="high"{% endif %}
+        {% if is_lazy %}loading="lazy" decoding="async"{% else %}fetchpriority="high"{% endif %}
       />
     </picture>
     <div

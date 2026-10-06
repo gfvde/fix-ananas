@@ -1,0 +1,103 @@
+/* sections/about-snake-bar.jinja styles (moved from an inline <style>). Scoped by [data-section="about-snake-bar"]. */
+[data-section="about-snake-bar"].snake-bar {
+  background: var(--snake-bg, #d3db6f);
+  min-height: 40px;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  direction: rtl;
+}
+
+[data-section="about-snake-bar"] .snake-bar__viewport {
+  width: 100%;
+  overflow: hidden;
+  padding-block: 8px;
+}
+
+[data-section="about-snake-bar"] .snake-bar__track {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  will-change: transform;
+  contain: layout style;
+}
+
+[data-section="about-snake-bar"] .snake-bar__sequence {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+[data-section="about-snake-bar"] .snake-bar__group {
+  display: flex;
+  align-items: center;
+  gap: 72px;
+  flex: 0 0 auto;
+  padding-inline: 80px 0;
+  white-space: nowrap;
+}
+
+[data-section="about-snake-bar"] .snake-bar__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--snake-icon, #000);
+  flex-shrink: 0;
+}
+
+[data-section="about-snake-bar"] .snake-bar__text {
+  color: var(--snake-text, #000);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0;
+}
+
+[data-section="about-snake-bar"] .snake-bar__icon-svg,
+[data-section="about-snake-bar"] .snake-bar__icon-img {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+}
+
+[data-section="about-snake-bar"] .snake-bar__icon-img {
+  object-fit: contain;
+}
+
+[data-section="about-snake-bar"] .snake-bar__sep {
+  width: 2px;
+  height: 19px;
+  background: var(--snake-separator, #000);
+  flex: 0 0 auto;
+}
+
+@media (max-width: 767px) {
+  [data-section="about-snake-bar"].snake-bar {
+    min-height: 40px;
+  }
+
+  [data-section="about-snake-bar"] .snake-bar__group {
+    gap: 20px;
+    padding-inline: 16px 20px;
+  }
+
+  [data-section="about-snake-bar"] .snake-bar__text {
+    color: var(--snake-mobile-text, #404040);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+
+  [data-section="about-snake-bar"] .snake-bar__icon-svg,
+  [data-section="about-snake-bar"] .snake-bar__icon-img {
+    width: 20px;
+    height: 20px;
+  }
+
+  [data-section="about-snake-bar"] .snake-bar__sep {
+    width: 1px;
+    height: 11px;
+  }
+}

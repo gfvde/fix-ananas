@@ -4,7 +4,8 @@
 {% set is_lazy = settings.order > 2 %}
 
 <section
-  section-id="{{ sectionId }}"
+  section-id="{{ sectionId }}" data-section="countdown"
+  data-end-date="{{ settings.end_date }}"
   data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
   class="section-countdown relative flex min-h-[700px] items-center justify-center overflow-hidden px-4 py-6 md:min-h-[480px] md:px-16 md:py-32"
   style="background-color: {{ settings.background_color | default('transparent') }};"
@@ -17,7 +18,7 @@
           src="{{ mobile_image }}"
           alt="{{ settings.title | default('') }}"
           class="h-full w-full object-cover md:object-bottom"
-          {% if is_lazy %}loading="lazy"{% else %}fetchpriority="high"{% endif %}
+          {% if is_lazy %}loading="lazy" decoding="async"{% else %}fetchpriority="high"{% endif %}
         />
       </picture>
       <div
@@ -91,45 +92,5 @@
       </div>
     </div>
   </div>
-  <script>
-    (function () {
-      const section = document.querySelector('[section-id="{{ sectionId }}"]');
-      const endDate = new Date("{{ settings.end_date }}").getTime();
-      const daysEl = section.querySelector(".days-value");
-      const hoursEl = section.querySelector(".hours-value");
-      const minutesEl = section.querySelector(".minutes-value");
-      const secondsEl = section.querySelector(".seconds-value");
-      const contentEl = section.querySelector(".countdown-content");
-
-      if (!endDate || isNaN(endDate) || endDate <= new Date().getTime()) {
-        contentEl.style.display = "none";
-        return;
-      }
-
-      function updateCountdown() {
-        const now = new Date().getTime();
-        const distance = endDate - now;
-
-        if (distance < 0) {
-          if (interval) clearInterval(interval);
-          section.style.display = "none";
-          return;
-        }
-
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        daysEl.textContent = String(days).padStart(2, "0");
-        hoursEl.textContent = String(hours).padStart(2, "0");
-        minutesEl.textContent = String(minutes).padStart(2, "0");
-        secondsEl.textContent = String(seconds).padStart(2, "0");
-      }
-
-      let interval;
-      updateCountdown();
-      interval = setInterval(updateCountdown, 1000);
-    })();
-  </script>
+  <script defer src="{{ 'js/sections/countdown.js' | asset_url }}"></script>
 </section>

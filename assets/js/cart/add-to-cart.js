@@ -13,10 +13,19 @@
 
 import { showSpinner, hideSpinner } from "../utils/loading.js";
 import { dispatch } from "../utils/events.js";
+import { requestRequiredCustomerLocation } from "../utils/customer-location.js";
 import { refreshBadge } from "./badge.js";
 
 // Track initialized buttons
 const initialized = new WeakSet();
+const CUSTOMER_LOCATION_REQUIRED_ERROR_CODE = "CUSTOMER_LOCATION_SELECTION_REQUIRED";
+
+// The SDK rejects with this code when the location dialog takes over; not a failure
+function logUnexpectedCartError(message, error) {
+  if (error?.code !== CUSTOMER_LOCATION_REQUIRED_ERROR_CODE) {
+    console.error(message, error);
+  }
+}
 
 function showCartToast(key, type = "success") {
   const labels = window.cartToastTranslations || {};
@@ -52,6 +61,7 @@ async function waitForZid(maxAttempts = 20) {
 async function addToCart(btn) {
   const productId = btn.dataset.addToCart;
   if (!productId || btn.disabled) return;
+  if (requestRequiredCustomerLocation()) return;
 
   showSpinner(btn);
 
@@ -63,7 +73,7 @@ async function addToCart(btn) {
     showAddButton(productId);
     showCartToast("addedToCart");
   } catch (err) {
-    console.error("[Cart] Add to cart failed:", err);
+    logUnexpectedCartError("[Cart] Add to cart failed:", err);
   } finally {
     hideSpinner(btn);
   }
@@ -76,6 +86,10 @@ async function addToCart(btn) {
 async function addToCartFromForm(btn) {
   const formId = btn.dataset.addToCartForm;
   if (!formId || btn.disabled) return;
+  if (requestRequiredCustomerLocation()) {
+    dispatch("cart:error", { formId, reason: "location-required" });
+    return;
+  }
 
   const originalContent = btn.innerHTML;
   showSpinner(btn, { replaceContent: true });
@@ -101,7 +115,9 @@ async function addToCartFromForm(btn) {
       btn.disabled = false;
     }, 1500);
   } catch (err) {
-    console.error("[Cart] Add to cart failed:", err);
+    logUnexpectedCartError("[Cart] Add to cart failed:", err);
+    // Lets the sticky bar leave its loading state
+    dispatch("cart:error", { formId, error: err });
     btn.innerHTML = originalContent;
     btn.disabled = false;
   }
@@ -114,6 +130,7 @@ async function addToCartFromForm(btn) {
 async function buyNowFromForm(btn) {
   const formId = btn.dataset.buyNowForm;
   if (!formId || btn.disabled) return;
+  if (requestRequiredCustomerLocation()) return;
 
   showSpinner(btn, { replaceContent: true });
 
@@ -133,7 +150,7 @@ async function buyNowFromForm(btn) {
     }
     // buyNow handles redirect / checkout dialog
   } catch (err) {
-    console.error("[Cart] Buy now failed:", err);
+    logUnexpectedCartError("[Cart] Buy now failed:", err);
     hideSpinner(btn);
   }
 }
@@ -144,6 +161,7 @@ async function buyNowFromForm(btn) {
 async function addVariantToCart(btn) {
   const variantId = btn.dataset.addVariantToCart;
   if (!variantId || btn.disabled) return;
+  if (requestRequiredCustomerLocation()) return;
 
   const originalContent = btn.innerHTML;
   showSpinner(btn, { replaceContent: true });
@@ -165,7 +183,7 @@ async function addVariantToCart(btn) {
       btn.disabled = false;
     }, 1500);
   } catch (err) {
-    console.error("[Cart] Add variant to cart failed:", err);
+    logUnexpectedCartError("[Cart] Add variant to cart failed:", err);
     btn.innerHTML = originalContent;
     btn.disabled = false;
   }
@@ -175,6 +193,8 @@ async function addVariantToCart(btn) {
  * Open quick view modal for products with options
  */
 function openQuickView(btn) {
+  if (requestRequiredCustomerLocation()) return;
+
   const card = btn.closest("[data-product-card]");
   const link = card?.querySelector("a[href]");
   const productUrl = link?.getAttribute("href");
@@ -297,6 +317,9 @@ async function handleQtyChange(wrapper, newQty) {
     if (input) input.disabled = false;
   }
 }
+
+// Inline scripts (e.g. the PDP bundle add) use the same gate
+window.requestRequiredCustomerLocation = requestRequiredCustomerLocation;
 
 /**
  * Initialize all cart buttons

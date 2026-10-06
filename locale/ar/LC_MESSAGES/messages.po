@@ -1593,3 +1593,170 @@ msgstr "تمت إضافة بعض المنتجات فقط"
 
 msgid "Some products are out of stock"
 msgstr "بعض المنتجات غير متوفرة حالياً"
+
+# --- r2 pages ---
+msgid "All Brands"
+msgstr "جميع العلامات التجارية"
+
+msgid "Brands"
+msgstr "العلامات التجارية"
+
+msgid "No brands found"
+msgstr "لا توجد علامات تجارية"
+
+msgid "No products found in this brand"
+msgstr "لا توجد منتجات لهذه العلامة التجارية"
+
+msgid "1 product"
+msgstr "منتج واحد"
+
+msgid "Featured Products"
+msgstr "منتجات مميزة"
+
+msgid "Share on X"
+msgstr "مشاركة عبر X"
+
+msgid "Share on Telegram"
+msgstr "مشاركة عبر تيليجرام"
+
+# --- r2 sections ---
+
+msgid "Discover the world of Ananas"
+msgstr "تعرّف على عالم أناناس"
+
+msgid "The Ananas community"
+msgstr "مجتمع أناناس"
+
+msgid "At Ananas, the experience is bigger than a cup of coffee."
+msgstr "في أناناس، التجربة أكبر من كوب قهوة."
+
+msgid "It is moments you live and details you choose that express who you are"
+msgstr "هي لحظات تعيشها وتفاصيل تختارها تعبّر عنك"
+
+msgid "From coffee to everything around your day,"
+msgstr "من القهوة إلى كل ما يحيط يومك،"
+
+msgid "we design an experience that brings together people who share the same taste."
+msgstr "نصمم تجربة تجمع ناس يشاركون نفس الذوق."
+
+msgid "Ananas… a community where coffee is lived your way."
+msgstr "أناناس… مجتمع تعيش فيه القهوة بأسلوبك."
+
+msgid "From coffee to everything around your day, we design an experience that brings together people who share the same taste. Ananas… a community where coffee is lived your way."
+msgstr "من القهوة إلى كل ما يحيط يومك، نصمم تجربة تجمع ناس يشاركون نفس الذوق. أناناس… مجتمع تعيش فيه القهوة بأسلوبك."
+
+msgid "Details that complete your day"
+msgstr "تفاصيل تكمل يومك"
+
+msgid "Carefully selected pieces: practical, elegant and made to last"
+msgstr "قطع مختارة بعناية عملية، أنيقة، وتعيش معك"
+
+msgid "Browse products"
+msgstr "تصفّح المنتجات"
+
+msgid "Moments from the world of Ananas"
+msgstr "لحظات من عالم أناناس"
+
+msgid "Coffee is not just for drinking… it is for living"
+msgstr "قهوة مو بس تُشرب… تنعاش"
+
+msgid "Coffee that sets your day right"
+msgstr "قهوة تضبط يومك"
+
+msgid "A bold, carefully roasted experience that gets your mood"
+msgstr "تجربة جريئة محمصة بعناية لتجربة تفهم جوك"
+
+msgid "Shop your coffee now"
+msgstr "تسوّق قهوتك الآن"
+
+msgid "Happy customers"
+msgstr "عميل مروق"
+
+msgid "The coffee experience through our customers’ eyes"
+msgstr "تجربة القهوة بعيون عملائنا"
+
+msgid "Shop by your choice"
+msgstr "تسوّق حسب اختيارك"
+
+msgid "Coffee drip bags"
+msgstr "أظرف القهوه"
+
+msgid "Coffee harvests"
+msgstr "محاصيل القهوه"
+
+msgid "Bundles"
+msgstr "البكجــات"
+
+msgid "Spring offers"
+msgstr "عروض الربيع"
+
+msgid "Ananas products"
+msgstr "منتجات أناناس"
+
+msgid "Coffee tools"
+msgstr "أدوات القهوة"
+
+msgid "Choose your coffee to match your mood"
+msgstr "اختار قهوتك علي مزاجك"
+
+msgid "Every mood has its own experience, here you will find what suits you"
+msgstr "لكل مزاج تجربة مختلفة هنا تلقى اللي يناسبك"
+
+msgid "Shop by mood"
+msgstr "تسوّق حسب مزاجك"
+
+msgid "Something new"
+msgstr "شي جديد"
+
+msgid "Adventure coffee"
+msgstr "قهوة المغامرة"
+
+msgid "Discover new flavors every time"
+msgstr "اكتشف نكهات جديدة كل مرة"
+
+msgid "Clear mind"
+msgstr "صفاء ذهني"
+
+msgid "Focus coffee"
+msgstr "قهوة التركيز"
+
+msgid "A clear mood that helps you get things done without distraction"
+msgstr "مزاج صافي يساعدك تنجز بدون تشتيت"
+
+msgid "Calm with a rich taste"
+msgstr "هدوء بطعم غني"
+
+msgid "Relaxation coffee"
+msgstr "قهوة الروقان"
+
+msgid "A moment for yourself, away from the rush"
+msgstr "لحظة لنفسك بعيد عن الزحمة"
+
+msgid "Start of your day"
+msgstr "بداية يومك"
+
+msgid "Morning coffee"
+msgstr "قهوة الصباح"
+
+msgid "A light start that sets your day right from the first cup"
+msgstr "بداية خفيفة تضبط يومك من أول كوب"
+
+msgid "Every mood has its own experience"
+msgstr "لكل مزاج تجربة مختلفة"
+
+msgid "Perfectly roasted"
+msgstr "تحميص مظبوط"
+
+msgid "Distinctive packaging"
+msgstr "تغليف مميز"
+
+msgid "Fast shipping"
+msgstr "شحن سريع"
+
+#, python-format
+msgid "Scroll to reviews (%(rating)s)"
+msgstr "الانتقال إلى التقييمات (%(rating)s)"
+
+#, python-format
+msgid "Review %(number)s"
+msgstr "تقييم %(number)s"

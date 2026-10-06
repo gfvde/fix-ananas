@@ -7,6 +7,8 @@
  * Quantity handling is delegated to qty-input.js
  */
 
+import { isSelectedProductBuyable } from "./variants.js";
+
 // ─────────────────────────────────────────────────────────────
 // State
 // ─────────────────────────────────────────────────────────────
@@ -22,6 +24,7 @@ let btnDefault = null;
 let btnLoading = null;
 let btnSuccess = null;
 let inStockSection = null;
+let quantitySection = null;
 let outOfStockSection = null;
 let footer = null;
 let isVisible = false;
@@ -86,6 +89,7 @@ function updateStockState(inStock) {
 
 function handleAddToCart() {
   if (isAddingToCart) return;
+  if (!mainAddToCartBtn || mainAddToCartBtn.disabled) return;
   isAddingToCart = true;
   setButtonState("loading");
   if (mainAddToCartBtn) mainAddToCartBtn.click();
@@ -114,7 +118,10 @@ function handleVariantChange(event) {
     return;
   }
 
-  updateStockState(selectedProduct.in_stock);
+  // Preorder (port of upstream deb8912/cd1639c/757f343): an out-of-stock but
+  // preorderable variant keeps the CTA; quantity is only offered for real stock.
+  updateStockState(isSelectedProductBuyable(selectedProduct));
+  quantitySection?.classList.toggle("hidden", !selectedProduct.in_stock);
 
   if (stickyPriceEl) {
     stickyPriceEl.textContent = selectedProduct.formatted_sale_price || selectedProduct.formatted_price;
@@ -161,6 +168,7 @@ export function init() {
   btnSuccess = document.querySelector("[data-sticky-cta-btn-success]");
   inStockSection = document.querySelector("[data-sticky-cta-in-stock]");
   outOfStockSection = document.querySelector("[data-sticky-cta-out-of-stock]");
+  quantitySection = document.querySelector("[data-sticky-quantity-wrapper]");
 
   // Intersection Observer for show/hide
   if (productActions) {

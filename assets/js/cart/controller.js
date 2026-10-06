@@ -28,6 +28,7 @@ import {
 import { updateCartTotals, updateFreeShippingProgress } from "./totals.js";
 import { setupQuantityInputHandlers, updateQuantity } from "./quantity.js";
 import { refreshCartPage, setCartLoadingState, setupZidCartEventListeners } from "./refresh.js";
+import { swapCartVariant } from "./variant-swap.js";
 import { handleLoginAction } from "../features/layout.js";
 
 // ===== State =====
@@ -843,14 +844,16 @@ async function handleCartVariantChange(select) {
   setCartLoadingState(true, cartProductId);
 
   try {
-    await window.zid.cart.addProduct({ product_id: nextVariantId, quantity }, { showErrorNotification: true });
-    await window.zid.cart.removeProduct({ product_id: cartProductId }, { showErrorNotification: true });
+    // Old line is removed only after the add succeeded; a failed remove rolls the add back
+    await swapCartVariant({ lineId: cartProductId, variantId: nextVariantId, quantity });
     await refreshAndHydrateCart();
   } catch (error) {
     console.error("Error changing cart variant:", error);
     select.value = currentVariantId;
     select.disabled = false;
     setCartLoadingState(false, cartProductId);
+    // Re-sync in case the cart changed part-way
+    refreshAndHydrateCart().catch(() => {});
   }
 }
 

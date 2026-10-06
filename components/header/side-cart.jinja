@@ -1573,14 +1573,21 @@
       setItemLoading(select, true);
 
       try {
-        await window.zid.cart.addProduct({ product_id: nextVariantId, quantity: qty }, { showErrorNotification: true });
-        await window.zid.cart.removeProduct({ product_id: cartItemId }, { showErrorNotification: true });
+        // Shared, rollback-safe swap from theme.js (assets/js/cart/variant-swap.js):
+        // the old line is removed only after the add succeeded.
+        if (typeof window.ananasSwapCartVariant !== "function") throw new Error("Variant swap unavailable");
+        await window.ananasSwapCartVariant({ lineId: cartItemId, variantId: nextVariantId, quantity: qty });
 
         const cartData = await fetchCartData();
         if (cartData) notifyCartUpdated(cartData);
       } catch (err) {
         console.error("Error changing side cart variant:", err);
         select.value = currentVariantId;
+        // Re-sync in case the cart changed part-way
+        try {
+          const cartData = await fetchCartData();
+          if (cartData) notifyCartUpdated(cartData);
+        } catch (e) {}
       } finally {
         isMutating = false;
         setItemLoading(select, false);

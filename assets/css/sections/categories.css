@@ -1,0 +1,24 @@
+/* sections/categories.jinja styles (moved from an inline <style>). Scoped by [data-section="categories"]. */
+[data-section="categories"] .embla {
+  --slide-spacing: 1rem; /* 16px gap from design */
+  --slide-size: 320px; /* Mobile card width */
+}
+
+[data-section="categories"] .embla__container {
+  display: flex;
+  touch-action: pan-y pinch-zoom;
+  margin-inline-start: calc(var(--slide-spacing) * -1);
+}
+
+[data-section="categories"] .embla__slide {
+  transform: translate3d(0, 0, 0);
+  flex: 0 0 var(--slide-size);
+  min-width: 0;
+  padding-inline-start: var(--slide-spacing);
+}
+
+@media (min-width: 1024px) {
+  [data-section="categories"] .embla {
+    --slide-size: 380px; /* Desktop card width */
+  }
+}
