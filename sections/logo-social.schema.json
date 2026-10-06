@@ -7,6 +7,30 @@
   "icon": "share-line",
   "settings": [
     {
+      "id": "logo_logo_desktop",
+      "type": "image",
+      "label": {
+        "ar": "الشعار (سطح المكتب)",
+        "en": "Logo (Desktop)"
+      },
+      "info": {
+        "ar": "اتركه فارغًا لاستخدام شعار المتجر",
+        "en": "Leave empty to use the store logo"
+      }
+    },
+    {
+      "id": "logo_logo_mobile",
+      "type": "image",
+      "label": {
+        "ar": "الشعار (الجوال)",
+        "en": "Logo (Mobile)"
+      },
+      "info": {
+        "ar": "اتركه فارغًا لاستخدام شعار سطح المكتب",
+        "en": "Leave empty to use the desktop logo"
+      }
+    },
+    {
       "id": "min_height_mobile",
       "type": "range",
       "label": {

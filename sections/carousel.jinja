@@ -49,6 +49,7 @@
             {% if has_content %}
               <div
                 class="theme-container {% if slide.text_alignment == 'center' %}items-center{% elif slide.text_alignment == 'end' %}items-end{% else %}items-start{% endif %} flex w-full max-w-[960px] flex-col gap-20"
+                {% if settings.text_color %} style="--foreground: {{ settings.text_color }};"{% endif %}
               >
                 <div
                   class="{% if slide.text_alignment == 'center' %}

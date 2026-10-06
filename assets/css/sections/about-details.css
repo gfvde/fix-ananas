@@ -238,6 +238,8 @@
   [data-section="about-details"].about-details {
     background: var(--about-details-mobile-bg);
     color: var(--about-details-mobile-product-text);
+    /* the sticky hero's ::before reaches 20px past each edge; clip keeps sticky working */
+    overflow-x: clip;
   }
 
   [data-section="about-details"] .about-details__sticky {
