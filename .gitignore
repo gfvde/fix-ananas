@@ -15,3 +15,4 @@ msgfmt
 pnpm-workspace.yaml
 .npmrc
 build/
+pnpm-lock.yaml
