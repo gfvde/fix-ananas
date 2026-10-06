@@ -1,0 +1,128 @@
+{% extends "layout.jinja" %}
+
+{# Zid passes the post as `blog` (docs); keep `post` as a fallback #}
+{% set blog = blog if blog is defined and blog else (post if post is defined else none) %}
+{% set blog_title = blog.title if blog and blog.title else '' %}
+{% set blog_slug = blog.slug if blog and blog.slug else '' %}
+{% set cover = blog.cover if blog and blog.cover else none %}
+{% set cover_image = (cover.image.large or cover.image.full_size) if cover and cover.image else none %}
+{% set blog_category = blog.category if blog and blog.category else none %}
+{% set all_tags = (blog.tags if blog and blog.tags else []) | default([]) %}
+{% set related_products = (blog.related_products if blog else none) | default([], true) %}
+{% set related_posts = (blog.related_posts if blog else none) | default([], true) %}
+{% set store_permalink = (store.permalink if store and store.permalink else '/') %}
+{% set share_url = store_permalink ~ ('' if store_permalink.endswith('/') else '/') ~ 'blogs/' ~ blog_slug %}
+
+{% block title %}{{ blog_title }} – {{ store.name }}{% endblock %}
+
+{% block content %}
+  {# Breadcrumb #}
+  <section class="pc-breadcrumb-section px-4 py-6 md:px-16">
+    <div class="theme-container">
+      {% set breadcrumb_items = [
+        {'href': url_for('home'), 'label': _("Home")},
+        {'href': '/blogs', 'label': _("Blog")}
+      ] %}
+      {% if blog_category and blog_category.name and blog_category.slug %}
+        {% set breadcrumb_items = breadcrumb_items + [{'href': '/blogs?category=' ~ blog_category.slug, 'label': blog_category.name | e}] %}
+      {% endif %}
+      {% set breadcrumb_items = breadcrumb_items + [{'label': blog_title | e}] %}
+      {% with items=breadcrumb_items %}
+        {% include 'components/ui/breadcrumb.jinja' %}
+      {% endwith %}
+    </div>
+  </section>
+
+  {# Post #}
+  <section class="px-4 pb-12 md:px-16 md:pb-16">
+    <div class="theme-container">
+      <article class="mx-auto max-w-[900px]">
+        {% if cover_image %}
+          <div class="mb-6 w-full overflow-hidden rounded aspect-[16/9] md:aspect-[21/9] bg-gray-50">
+            <img
+              src="{{ cover_image }}"
+              alt="{{ cover.alt_text if cover.alt_text else blog_title }}"
+              class="h-full w-full object-cover"
+              fetchpriority="high"
+            />
+          </div>
+        {% endif %}
+
+        <header class="mb-6 text-center">
+          {% if blog_category and blog_category.name %}
+            <a
+              href="/blogs?category={{ blog_category.slug }}"
+              class="text-primary mb-2 inline-block text-sm font-medium hover:underline"
+            >{{ blog_category.name }}</a>
+          {% endif %}
+          <h1 class="text-foreground text-xl md:text-2xl font-semibold tracking-tight">{{ blog_title }}</h1>
+          {% if blog and blog.published_at %}
+            <time class="text-muted mt-2 block text-sm" datetime="{{ blog.published_at }}" data-blog-date="{{ blog.published_at }}">{{ blog.published_at }}</time>
+          {% endif %}
+        </header>
+
+        <div class="prose prose-theme mx-auto max-w-[900px]">
+          {{ blog.content | default('', true) | safe }}
+        </div>
+
+        {% if blog and blog.metafields %}
+          {% set entity = blog %}
+          {% include 'vitrin:shared/metafields.jinja' %}
+        {% endif %}
+
+        {# Tags + share #}
+        <div class="mt-8 flex flex-col gap-4 border-t pt-6 md:flex-row md:items-center md:justify-between">
+          <div class="flex flex-wrap items-center gap-2">
+            {% for tag in all_tags %}
+              {% if tag.slug %}
+                <a
+                  href="/blogs?tags={{ tag.slug }}"
+                  class="px-3 py-1 rounded-full border text-sm text-gray-600 hover:border-primary hover:text-primary"
+                >#{{ tag.name }}</a>
+              {% elif tag.name %}
+                <span class="px-3 py-1 rounded-full border text-sm text-gray-600">#{{ tag.name }}</span>
+              {% endif %}
+            {% endfor %}
+          </div>
+          {% with share_title=blog_title, share_url=share_url %}
+            {% include 'components/blogs/blog-share.jinja' %}
+          {% endwith %}
+        </div>
+      </article>
+    </div>
+  </section>
+
+  {# Related products #}
+  {% if related_products | length > 0 %}
+    <section class="px-4 pb-12 md:px-16 md:pb-16">
+      <div class="theme-container">
+        {%
+          with
+          products=related_products,
+          title=_("Featured Products"),
+          carousel_id='blog-related-products'
+        %}
+          {% include 'components/products/products-carousel.jinja' %}
+        {% endwith %}
+      </div>
+    </section>
+  {% endif %}
+
+  {# Related posts #}
+  {% if related_posts | length > 0 %}
+    <section class="px-4 pb-16 md:px-16">
+      <div class="theme-container">
+        <h2 class="text-foreground mb-6 text-center text-xl md:text-2xl font-semibold tracking-tight">{{ _("You may also like") }}</h2>
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {% for item in related_posts[:3] %}
+            {% with blog=item, index=loop.index0 %}
+              {% include 'components/blogs/blog-card.jinja' %}
+            {% endwith %}
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  {% endif %}
+
+  {% include 'components/blogs/blog-scripts.jinja' %}
+{% endblock %}
