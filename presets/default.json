@@ -673,7 +673,8 @@
                     "heading": "قهوة تضبط يومك",
                     "description": "تجربة جريئة محمصة بعناية لتجربة تفهم جوك",
                     "button_text": "تسوّق الآن",
-                    "button_url": ""
+                    "button_url": "/products",
+                    "background_image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/79a85344-1064-4855-a94f-2328cc89b365.png"
                   }
                 ]
               }

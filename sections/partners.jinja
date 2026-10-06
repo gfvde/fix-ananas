@@ -32,6 +32,7 @@
                       href="{{ partner.url }}"
                       class="flex h-full w-full items-center justify-center"
                     >
+                      {% if partner.image or partner.image_mobile %}
                       <picture>
                         {% if partner.image_mobile %}
                           <source
@@ -40,7 +41,7 @@
                           />
                         {% endif %}
                         <img
-                          src="{{ image_url(partner.image, w=160, q=75, f='auto') }}"
+                          src="{{ image_url(partner.image or partner.image_mobile, w=160, q=75, f='auto') }}"
                           alt="{{ partner.name }}"
                           width="160"
                           height="40"
@@ -48,8 +49,12 @@
                           {% if is_lazy %}loading="lazy" decoding="async"{% endif %}
                         />
                       </picture>
+                      {% else %}
+                        <span class="text-foreground text-sm font-medium">{{ partner.name }}</span>
+                      {% endif %}
                     </a>
                   {% else %}
+                    {% if partner.image or partner.image_mobile %}
                     <picture>
                       {% if partner.image_mobile %}
                         <source
@@ -58,7 +63,7 @@
                         />
                       {% endif %}
                       <img
-                        src="{{ image_url(partner.image, w=160, q=75, f='auto') }}"
+                        src="{{ image_url(partner.image or partner.image_mobile, w=160, q=75, f='auto') }}"
                         alt="{{ partner.name }}"
                         width="160"
                         height="40"
@@ -66,6 +71,9 @@
                         {% if is_lazy %}loading="lazy" decoding="async"{% endif %}
                       />
                     </picture>
+                    {% else %}
+                      <span class="text-foreground text-sm font-medium">{{ partner.name }}</span>
+                    {% endif %}
                   {% endif %}
                 </div>
               </div>

@@ -27,7 +27,8 @@
 
       requestAnimationFrame(function () {
         requestAnimationFrame(function () {
-          viewport.scrollLeft = viewport.scrollWidth;
+          // The viewport follows the page direction, so 0 is the start in RTL and LTR
+          viewport.scrollLeft = 0;
           updateProgress(panel);
           viewport.classList.add("is-ready");
         });
@@ -62,7 +63,8 @@
 
       var barWidth = Math.max(32, Math.round(trackWidth * visibleRatio));
 
-      var isRTL = document.documentElement.dir === "rtl";
+      // RTL scrollLeft runs from 0 to -maxScroll; the bar starts at the right
+      var isRTL = getComputedStyle(viewport).direction === "rtl";
 
       var currentScroll = Math.abs(viewport.scrollLeft);
 
@@ -70,13 +72,13 @@
 
       var maxTravel = Math.max(0, trackWidth - barWidth);
 
-      var translate = Math.round(maxTravel * scrollRatio);
+      var translate = Math.round(
+        isRTL ? maxTravel * (1 - scrollRatio) : maxTravel * scrollRatio,
+      );
 
       bar.style.width = barWidth + "px";
 
-      if (isRTL) {
-        bar.style.transform = "translateX(" + -translate + "px)";
-      } else {
+      {
         bar.style.transform = "translateX(" + translate + "px)";
       }
     }
@@ -177,10 +179,10 @@
         ? slide.getBoundingClientRect().width
         : viewport.clientWidth * 0.8;
       var amount = Math.max(120, Math.round(slideWidth + 16));
-      var isRTL = document.documentElement.dir === "rtl";
 
+      // The arrow row is always left-to-right: the left arrow scrolls left, the right one right
       viewport.scrollBy({
-        left: (isRTL ? -step : step) * amount,
+        left: step * amount,
         behavior: "smooth",
       });
     }

@@ -20,9 +20,10 @@
         <div class="embla__slide relative flex items-center justify-center overflow-hidden">
           <!-- Background image for this slide (responsive, optimized) -->
           {% set mobile_image = image_url(slide.background_image_mobile or slide.background_image, w=768, q=80, f='auto') %}
-          {% set desktop_image = image_url(slide.background_image, w=1920, q=85, f='auto') %}
+          {% set desktop_image = image_url(slide.background_image or slide.background_image_mobile, w=1920, q=85, f='auto') %}
           {% set is_first_slide = loop.first %}
           <div class="absolute inset-0 -z-10">
+            {% if slide.background_image or slide.background_image_mobile %}
             <picture>
               <source media="(min-width: 768px)" srcset="{{ desktop_image }}" />
               <img
@@ -33,6 +34,7 @@
                 {% if is_lazy_section or not is_first_slide %}loading="lazy" decoding="async"{% else %}fetchpriority="high"{% endif %}
               />
             </picture>
+            {% endif %}
             <div
               class="bg-primary absolute inset-0"
               style="opacity: {{ slide.overlay_opacity | default(20) / 100 }}"
