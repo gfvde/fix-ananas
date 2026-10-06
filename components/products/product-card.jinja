@@ -58,6 +58,12 @@
       {% if product.is_taxable == false %}
         <span class="pc-badge-pill">{{ _("Tax free") }}</span>
       {% endif %}
+      {# Quick-commerce shipping badges (port of upstream e1b082f) #}
+      {% for badge in product.shipping_badges or [] %}
+        {% with badge=badge, variant='card' %}
+          {% include 'components/products/shipping-badge.jinja' %}
+        {% endwith %}
+      {% endfor %}
       <span
         class="bundle-offer-badge hidden"
         data-bundle-offer-product-id="{{ product.id }}"

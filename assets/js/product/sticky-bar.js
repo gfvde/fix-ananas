@@ -89,6 +89,7 @@ function updateStockState(inStock) {
 
 function handleAddToCart() {
   if (isAddingToCart) return;
+  if (!mainAddToCartBtn || mainAddToCartBtn.disabled) return;
   isAddingToCart = true;
   setButtonState("loading");
   if (mainAddToCartBtn) mainAddToCartBtn.click();

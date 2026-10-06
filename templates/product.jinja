@@ -916,6 +916,17 @@
               {% include 'vitrin:products/bundle-products.jinja' %}
             {% endif %}
 
+            {# Quick-commerce shipping badges (port of upstream e1b082f) #}
+            {% if product.shipping_badges %}
+              <div class="flex flex-col gap-2">
+                {% for badge in product.shipping_badges %}
+                  {% with badge=badge, variant='details' %}
+                    {% include 'components/products/shipping-badge.jinja' %}
+                  {% endwith %}
+                {% endfor %}
+              </div>
+            {% endif %}
+
             {# Checkout dialog (Buy Now popup) - included once on the PDP #}
             {% include 'vitrin:checkout/checkout_dialog.jinja' %}
 
@@ -1296,6 +1307,7 @@
     if (addBtn) {
       addBtn.addEventListener('click', async function (event) {
         event.preventDefault();
+        if (typeof window.requestRequiredCustomerLocation === 'function' && window.requestRequiredCustomerLocation()) return;
         const btn = this;
         const loader = document.getElementById('bundle-add-loader');
         btn.disabled = true;
