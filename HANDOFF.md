@@ -39,12 +39,13 @@
 - Payment widgets/Apple Pay/bank discounts/wallet, preorder, coupon toggle, gallery (Swiper), quick view, gifting, side cart, auth popup, XSS fix in reviews, i18n (`_()` everywhere), section CSS/JS moved to `assets/{css,js}/sections`, blog/brands pages, deps (npm only, Tailwind ~4.2.4, vite 7.3.7).
 - About-us page (`templates/page.jinja`, slug `about-us`) is driven by the **"About Us Page" settings group** (`about_page_*` in `layout.schema.json`); empty fields fall back to the Ananas copy (default render identical to before).
 - Zid validator fixes (12 → 0 failures): `settings.order | default(3)`, gettext kwargs, integer range steps (footer noise 0–100 %, banner stars ×10), `maxItems → max_items`.
-- Checklist pass 1 (branch `claude/epic-lovelace-z0iebn`, commit `d826e2e`, **not yet merged to main**):
+- Checklist pass 1 (merged to main in PR #36):
   cart loyalty redemption, `/checkout` links, side cart empty/free-shipping fixes, Q&A gated by `questions_enabled`, variant price updates all copies, footer address/VAT/copyright "صنع بواسطة زد"/linked payment logos, category hero+breadcrumb+subcategories when banner off, region dialog for multi-inventory, 1023px mobile breakpoint, forced-RTL removed (drawer, filters, banner, product column), header font uses `var(--font-family)`.
 
 ## Open work (in priority order)
-1. **Demo content in the preview**: create `templates/home.json`, `header.json`, `footer.json` from `presets/default.json`
-   (`presets[].path` = `templates/home.jinja` / `header.jinja` / `footer.jinja`, `settings` per language) so `vitrin preview` uploads them as drafted settings; include every section. Then re-preview.
+1. **Demo content in the preview — DONE (partly)**: `python3 scripts/demo-settings.py build/theme` writes `templates/home.json`, `header.json`, `footer.json`, `layout.json` from `presets/default.json` into the preview folder only (not shipped), then `vitrin preview 3255406 .` uploads them as drafted settings.
+   Home now renders 25 sections (all 24 types), 0 JS errors desktop + mobile (screenshots: `build/home-desktop.png`, `build/home-mobile.png`, not committed).
+   Still to do: the preset is **stale** — 16 sections use old setting keys (e.g. about-gallery `photo1..6`, about-reviews-featured `review1_*`, hero `subheading/cta_*`, benefits/partners/testimonials/categories `title_color/section_bg_color`), so those sections show schema defaults. `about-reviews-featured` renders nothing. Update `presets/default.json` to the current schema ids (compare with each `sections/*.schema.json`) and point product/category pickers at the demo products from step 2.
 2. **Demo products on the dev store** (owner approved): use the Zid store connector (`mcp__zid_store__*`) on store 3255406 only — at least: simple product, product with variants (size/grind), discounted product, out-of-stock product, low-stock product, preorder product, bundle offer, a few reviews and Q&A, categories with 3 levels. Then walk the checklist live.
 3. **Cart items (checklist #15, #18)**: `components/cart/products-list.jinja` shows no per-item out-of-stock/error state and no bundle name/offer. Growth uses `{% include 'vitrin:v2/cart/products_list.jinja' %}` (`templates/cart.jinja:39`). Either switch (design changes — ask owner) or add availability + bundle markup (`data-bundle-arrow`, handler exists in `assets/js/cart/controller.js:952`).
 4. **Wishlist**: header/drawer heart goes to `/pages/wishlist`, which needs a merchant-created page with slug `wishlist` and has no share-by-URL. Prefer the platform account wishlist route (confirm the URL live), or document it.
@@ -57,7 +58,7 @@
    - `category_page.filter_layout` select has a single option;
    - `header.jinja:~2004` fetches Shopify-style `/search/suggest.json` (dead; errors swallowed) — replace with `zid.products.list` or remove;
    - Arabic labels with English words mixed in (see schema scan); Arabic-only text defaults in `layout.schema.json` (`head_title_feature`, `faq_section_*`, coffee CTA) should be empty with `_()` fallbacks in templates.
-7. Merge branch `claude/epic-lovelace-z0iebn` into `main` via PR (merge commit, not squash), run `make package`, re-preview, re-validate.
+7. After each batch: PR into `main` (merge commit, not squash), `make package`, `python3 scripts/demo-settings.py build/theme`, re-preview, re-validate (must stay 39/39).
 8. Publishing (owner does it in the Partner Dashboard → My Themes → Themes Management): upload zip, price/description,
    3–9 images (desktop 4:3 ≤1600×1200, mobile 9:16 ≤720×1280), Submit to Publish. Review ≈ 2 days.
 
