@@ -20,7 +20,7 @@
 | Zid theme id (already created on Zid) | `48f8b24f-4253-4785-9deb-c8f34f3b1217` — linked via `.vitrin/theme.json` |
 | Dev store | `labeih-test-store`, store id **3255406**, https://9bow2h.zid.store/ (installation `f25967f3-5358-44f9-8a5d-9ee6c2f834b4`) |
 | Preview | https://9bow2h.dev.zid.store?theme=f25967f3-5358-44f9-8a5d-9ee6c2f834b4 |
-| Zid validator | https://9bow2h.dev.zid.store/validate?theme=f25967f3-5358-44f9-8a5d-9ee6c2f834b4 — **39/39 templates pass** |
+| Zid validator | https://9bow2h.dev.zid.store/validate?theme=f25967f3-5358-44f9-8a5d-9ee6c2f834b4 — **39/39 templates pass** (v1.0.7, 2026-10-06; side cart must not assume `cart` exists) |
 | Zid review checklist | Notion DB "Zid Theme Test Cases" (124 test cases): https://buttoned-source-357.notion.site/1dcf18d990158001a921d92eaa79b0db |
 | Translations | `locale/ar/LC_MESSAGES/messages.po` → compile `.mo` with babel (`write_mo`). Zid uses trimmed `{% trans %}`; `_()` takes **no kwargs** — use `_('x %(n)s') \| format(n=...)` |
 
@@ -49,6 +49,10 @@
    hero/banner/countdown/video got demo images/video, links point to `/products`).
    Still to do: product/category pickers (`products`, `categories` lists) still reference the old store's ids — point them at the demo products from step 2.
 2. **Demo products on the dev store** (owner approved): use the Zid store connector (`mcp__zid_store__*`) on store 3255406 only — at least: simple product, product with variants (size/grind), discounted product, out-of-stock product, low-stock product, preorder product, bundle offer, a few reviews and Q&A, categories with 3 levels. Then walk the checklist live.
+   **Partly done (2026-10-06)** on store 3255406: categories قهوة(1744425) > قهوة مختصة(1744422) > إثيوبيا(1744423), أدوات التحضير(1744424);
+   products RST-001 simple (Ethiopia, 3-level), RST-002 discounted 95→69, RST-003 out of stock, RST-004 low stock (2), RST-005 House Blend (meant for variants),
+   RST-006/007 tools; one Q&A with answer on RST-001. Not possible through the store connector: product images (Zid fetch of media.zid.store → 403;
+   upload by hand), variants (`add_variants` → 400 "Expected a list"), bundle offers (401 missing scope), creating reviews, preorder. Do those in the Zid dashboard.
 3. **Cart items (checklist #15, #18)**: `components/cart/products-list.jinja` shows no per-item out-of-stock/error state and no bundle name/offer. Growth uses `{% include 'vitrin:v2/cart/products_list.jinja' %}` (`templates/cart.jinja:39`). Either switch (design changes — ask owner) or add availability + bundle markup (`data-bundle-arrow`, handler exists in `assets/js/cart/controller.js:952`).
 4. **Wishlist**: header/drawer heart goes to `/pages/wishlist`, which needs a merchant-created page with slug `wishlist` and has no share-by-URL. Prefer the platform account wishlist route (confirm the URL live), or document it.
 5. **Section preview images**: Growth ships `sections/<name>.png` for each section; we have none (24 sections). Needs screenshots of each section.
