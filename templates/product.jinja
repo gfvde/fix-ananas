@@ -725,7 +725,7 @@
         {# Acidity Section #}
         <div class="mb-5">
           <div class="flex justify-between text-sm font-medium mb-[6px]">
-            <span class="text-right text-gray-900">{{settings.single_product_section_coffee_acidity_level | default(_('Acidity'))}}</span>
+            <span class="text-start text-gray-900">{{settings.single_product_section_coffee_acidity_level | default(_('Acidity'))}}</span>
           </div>
 
           <div class="relative flex items-center">
@@ -784,7 +784,7 @@
         {# Body Section #}
         <div>
           <div class="flex justify-between text-sm font-medium mb-[6px]">
-            <span class="text-right text-gray-900">{{settings.single_product_section_coffee_body_level | default(_('Body'))}}</span>
+            <span class="text-start text-gray-900">{{settings.single_product_section_coffee_body_level | default(_('Body'))}}</span>
           </div>
 
           <div class="relative flex items-center">
@@ -851,20 +851,6 @@
 
 
 
-                {% set qty = product.quantity %}
-                  {% set low_stock_threshold = 10 %}
-
-                  {% if qty and qty <= low_stock_threshold %}
-                    <div class="inline-flex items-center gap-2 w-fit text-sm font-medium text-red-600 bg-red-100 border border-red-200 px-3 py-1 rounded-full shadow-sm animate-pulse">
-                      
-                      <span>🔥</span>
-                      
-                      <span>
-                        {{ _("Only %s left in stock!") | format(qty) }}
-                      </span>
-
-                    </div>
-                  {% endif %}
 
 
 
@@ -1083,7 +1069,7 @@
   <section class="bundle-section mt-6 mb-6">
     <div class="">
 
-      <h2 class="text-base font-medium text-right mb-4">
+      <h2 class="text-base font-medium text-start mb-4">
         {{ ns.current_bundle.section_title | default(_('Frequently bought together')) }}
       </h2>
 
@@ -1155,7 +1141,7 @@
     function showSkeletonError() {
       const skeleton = document.getElementById('bundle-skeleton');
       if (skeleton) {
-        skeleton.innerHTML = '<p class="text-sm text-gray-400 text-right"></p>';
+        skeleton.innerHTML = '<p class="text-sm text-gray-400 text-start"></p>';
         skeleton.firstChild.textContent = I18N.loadError;
       }
     }
@@ -1458,12 +1444,14 @@
             {{ _("Reviews") }}
           </button>
           {% endif %}
+          {% if store.settings.products.questions_enabled %}
           <button
             class="tab-button whitespace-nowrap px-4 py-3 text-sm font-medium text-muted-foreground border-b-2 border-transparent hover:text-foreground transition-colors"
             data-tab="faq"
           >
             {{ _("FAQ") }}
           </button>
+          {% endif %}
           {% if show_coffee_cta %}
           <button
             class="tab-button whitespace-nowrap px-4 py-3 text-sm font-medium text-muted-foreground border-b-2 border-transparent hover:text-foreground transition-colors"
@@ -1611,7 +1599,8 @@
           {% endif %}
 
           {# FAQ Accordion Item #}
-          <div class="border-b border-[#E5E5E5] last:border-b-0"">
+          {% if store.settings.products.questions_enabled %}
+          <div class="border-b border-[#E5E5E5] last:border-b-0">
             <button
               class="accordion-button w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-foreground transition-colors"
               data-accordion="faq"
@@ -1632,6 +1621,7 @@
               </div>
             </div>
           </div>
+          {% endif %}
 
           {# Coffee CTA Accordion Item #}
           {% if show_coffee_cta %}
@@ -1746,12 +1736,14 @@
           </div>
           {% endif %}
 
+          {% if store.settings.products.questions_enabled %}
           <div class="tab-content my-6 hidden mt-6 opacity-0 transition-opacity duration-300" id="faq-tab">
             {% with questions=product.questions %}
               {% include 'components/products/product-questions.jinja' %}
             {% endwith %}
             {% include 'components/products/question-form.jinja' %}
           </div>
+          {% endif %}
 
           {# Coffee CTA Tab Panel #}
           {% if show_coffee_cta %}

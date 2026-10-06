@@ -168,7 +168,9 @@
   {% include 'components/header-announcement-bar.jinja' %}
 
   {# Shared: region visibility (used in both desktop + mobile) #}
-  {% set show_region = ((store.countries | length > 1) and not settings.header_hide_country) or ((store.languages | length > 1) and not settings.header_hide_language) %}
+  {# Multi-inventory stores need the dialog to pick a location even with one country/language (same rule as the Zid starter theme) #}
+  {% set show_region_location = safeget(store, "settings.zones.selection_enabled", false) or safeget(store, "settings.products.filter_by_nearest_inventory", false) %}
+  {% set show_region = show_region_location or ((store.countries | length > 1) and not settings.header_hide_country) or ((store.languages | length > 1) and not settings.header_hide_language) %}
 
   {# ── Main Navbar ── #}
   <header class="ananas-nav">
@@ -696,7 +698,7 @@
     box-sizing: border-box;
   }
   #ananas-header {
-    font-family: 'GE SS Two', 'Expo Arabic', sans-serif;
+    font-family: var(--font-family, sans-serif);
   }
 
   /* ─── Navbar ─────────────────────────────────── */
@@ -1016,7 +1018,7 @@
     color: var(--ananas-mega-link);
     font-size: 18px;
     font-weight: 500;
-    font-family: 'Expo Arabic', sans-serif;
+    font-family: var(--font-family, sans-serif);
     white-space: nowrap;
     /*direction: rtl;*/
     pointer-events: none;
@@ -1049,7 +1051,7 @@
     color: var(--ananas-mega-head);
     font-size: 14px;
     font-weight: 400;
-    font-family: 'Expo Arabic', sans-serif;
+    font-family: var(--font-family, sans-serif);
     margin: 0;
     text-align: right;
     white-space: nowrap;
@@ -1063,7 +1065,7 @@
     color: var(--ananas-mega-link);
     font-size: 16px;
     font-weight: 400;
-    font-family: 'Expo Arabic', sans-serif;
+    font-family: var(--font-family, sans-serif);
     text-decoration: none;
     text-align: right;
     white-space: nowrap;
@@ -1134,7 +1136,7 @@
     color: var(--ananas-mega-link);
     font-size: 18px;
     font-weight: 500;
-    font-family: 'Expo Arabic', sans-serif;
+    font-family: var(--font-family, sans-serif);
     white-space: nowrap;
     /*direction: rtl;*/
     pointer-events: none;
@@ -1215,7 +1217,7 @@
     outline: none;
     color: var(--ananas-search-input);
     font-size: 18px;
-    font-family: 'Expo Arabic', sans-serif;
+    font-family: var(--font-family, sans-serif);
     text-align: right;
     /*direction: rtl;*/
     width: 100%;
@@ -1374,7 +1376,7 @@
   }
   .ananas-pcard__name {
     color: #FFFFFF;
-    font-family: 'Expo Arabic', sans-serif;
+    font-family: var(--font-family, sans-serif);
     font-size: 12px;
     font-weight: 500;
     line-height: 16px;
@@ -1389,7 +1391,7 @@
   }
   .ananas-pcard__price {
     color: #FFFFFF;
-    font-family: 'Expo Arabic', sans-serif;
+    font-family: var(--font-family, sans-serif);
     font-size: 16px;
     font-weight: 500;
     line-height: 24px;
@@ -1445,7 +1447,7 @@
     color: var(--ananas-search-results);
     font-size: 14px;
     font-weight: 500;
-    font-family: 'Expo Arabic', sans-serif;
+    font-family: var(--font-family, sans-serif);
     text-align: start;
     margin: 0;
     width: 100%;
@@ -1463,7 +1465,7 @@
   .ananas-search__pop-link {
     color: var(--ananas-search-results);
     font-size: 14px;
-    font-family: 'Expo Arabic', sans-serif;
+    font-family: var(--font-family, sans-serif);
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -1487,7 +1489,7 @@
   .ananas-backdrop.is-active { opacity: 1; pointer-events: auto; }
 
   /* ─── Responsive ─────────────────────────────── */
-  @media (max-width: 1024px) {
+  @media (max-width: 1023px) {
     /* Switch to mobile nav */
     .ananas-nav { height: 56px; }
     .ananas-nav__inner--desk { display: none !important; }

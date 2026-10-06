@@ -1,5 +1,5 @@
 /* sections/ananas-banner.jinja styles (moved from an inline <style>). Scoped by [data-section="ananas-banner"]. */
-.section-home-banner {
+[dir="rtl"] .section-home-banner {
   direction: rtl;
 }
 .banner-ghost-btn {

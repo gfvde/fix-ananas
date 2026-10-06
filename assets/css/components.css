@@ -2180,7 +2180,7 @@
     min-height: 60vh;
     background: #fcfaf7;
     direction: rtl;
-    font-family: "Expo Arabic", var(--font-family, sans-serif);
+    font-family: var(--font-family, sans-serif);
   }
 
   .wishlist-page__inner {
@@ -2197,7 +2197,7 @@
     gap: 8px;
     margin: 0;
     color: #000;
-    font-family: "Expo Arabic", var(--font-family, sans-serif);
+    font-family: var(--font-family, sans-serif);
     font-size: 24px;
     font-weight: 500;
     line-height: 32px;
@@ -2258,7 +2258,7 @@
   }
 
   @media (max-width: 1023px) {
-    .product-details-column.flex.flex-col.gap-3.md\:gap-4 {
+    [dir="rtl"] .product-details-column.flex.flex-col.gap-3.md\:gap-4 {
       direction: rtl;
     }
     .wishlist-page__inner {

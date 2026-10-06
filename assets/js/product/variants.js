@@ -40,17 +40,14 @@ function hide(selector) {
 export function updatePrice(selectedProduct) {
   if (!selectedProduct) return;
 
-  const priceEl = document.querySelector("[data-product-price]");
-  const priceOldEl = document.querySelector("[data-product-price-old]");
-  const discountEl = document.querySelector("[data-product-discount]");
-
+  // The product page can render the price block twice (mobile + desktop layouts), so update every copy.
   const hasDiscount = !!selectedProduct.formatted_sale_price;
 
-  if (priceEl) {
+  document.querySelectorAll("[data-product-price]").forEach((priceEl) => {
     priceEl.textContent = hasDiscount ? selectedProduct.formatted_sale_price : selectedProduct.formatted_price;
-  }
+  });
 
-  if (priceOldEl) {
+  document.querySelectorAll("[data-product-price-old]").forEach((priceOldEl) => {
     if (hasDiscount) {
       priceOldEl.textContent = selectedProduct.formatted_price;
       priceOldEl.classList.remove("hidden");
@@ -58,9 +55,9 @@ export function updatePrice(selectedProduct) {
       priceOldEl.textContent = "";
       priceOldEl.classList.add("hidden");
     }
-  }
+  });
 
-  if (discountEl) {
+  document.querySelectorAll("[data-product-discount]").forEach((discountEl) => {
     if (hasDiscount && selectedProduct.discount_percentage) {
       const discountText = window.productTranslations?.discount || "Discount";
       discountEl.textContent = `${discountText} ${selectedProduct.discount_percentage}%`;
@@ -69,7 +66,7 @@ export function updatePrice(selectedProduct) {
       discountEl.textContent = "";
       discountEl.classList.add("hidden");
     }
-  }
+  });
 }
 
 // ─────────────────────────────────────────────────────────────

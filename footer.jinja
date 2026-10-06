@@ -294,6 +294,19 @@
           </a>
         {% endif %}
 
+        {% set business_address = store.settings.general.business_address if store.settings.general and store.settings.general.business_address else none %}
+        {% if business_address and business_address.show_location %}
+          <a {% if business_address.latitude %}href="https://maps.google.com/?q={{ business_address.latitude }},{{ business_address.longitude }}" target="_blank" rel="noopener noreferrer"{% endif %} class="flex items-start gap-2 text-xs transition-opacity hover:opacity-100" style="color: {{ text_color }}; opacity: 0.85;">
+            <svg viewBox="0 0 20 20" fill="currentColor" class="size-4 shrink-0 mt-0.5">
+              <path fill-rule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.355 7.584a13.731 13.731 0 002.273 1.765 11.842 11.842 0 00.976.544l.062.029.018.008.006.003zM10 11.25a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" clip-rule="evenodd"/>
+            </svg>
+            <span>
+              {%- set addr_parts = [business_address.street, business_address.district, business_address.city.name if business_address.city else '', business_address.city.country.name if business_address.city and business_address.city.country else ''] | select | list -%}
+              {{ addr_parts | join('، ' if session.lang == 'ar' else ', ') }}
+            </span>
+          </a>
+        {% endif %}
+
       </div>
 
     </div>
@@ -336,8 +349,8 @@
           </a>
         {% endif %}
 
-        {% if store.settings.general.tax_settings.is_certificate_visible %}
-		          <a {% if store.settings.general.tax_settings.tax_registration_certificate %}href="{{ store.settings.general.tax_settings.tax_registration_certificate }}" target="_blank" rel="noopener noreferrer"{% endif %} class="footer-legal-item--tax flex items-center gap-2 text-right transition-opacity hover:opacity-80">
+        {% if store.settings.general.tax_settings.is_certificate_visible or store.settings.general.tax_settings.tax_number %}
+		          <a {% if store.settings.general.tax_settings.is_certificate_visible and store.settings.general.tax_settings.tax_registration_certificate %}href="{{ store.settings.general.tax_settings.tax_registration_certificate }}" target="_blank" rel="noopener noreferrer"{% endif %} class="footer-legal-item--tax flex items-center gap-2 text-right transition-opacity hover:opacity-80">
             <div class="flex items-center justify-center w-7 h-7 rounded-full" >
               <svg width="22" height="28" viewBox="0 0 22 28" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-6">
 <g clip-path="url(#clip0_364_35401)">
@@ -382,14 +395,14 @@
       {# Payment Methods #}
 		      <div class="order-2 md:order-1 flex flex-wrap overflow-hidden justify-center md:justify-start items-center gap-2">
 		        {% for payment_method in store.settings.checkout.payment_methods %}
-		          <div class="footer-payment-item flex items-center justify-center bg-white rounded-[4px] px-1.5 md:px-2">
+		          <a href="/shipping-and-payment" class="footer-payment-item flex items-center justify-center bg-white rounded-[4px] px-1.5 md:px-2">
 		            <img src="{{ image_url(payment_method.icon, w=92, h=40, q=100, f='auto') }}" alt="{{ payment_method.name }}" width="46" height="20" loading="lazy" decoding="async" class="max-h-7 max-w-full object-contain" />
-		          </div>
+		          </a>
 		        {% endfor %}
 		        {% for shipping_method in store.settings.checkout.shipping_methods %}
-		          <div class="footer-payment-item flex items-center justify-center bg-white rounded-[4px] px-1.5 md:px-2">
+		          <a href="/shipping-and-payment" class="footer-payment-item flex items-center justify-center bg-white rounded-[4px] px-1.5 md:px-2">
 		            <img src="{{ image_url(shipping_method.icon, w=92, h=40, q=100, f='auto') }}" alt="{{ shipping_method.name }}" width="46" height="20" loading="lazy" decoding="async" class="max-h-7 max-w-full object-contain" />
-		          </div>
+		          </a>
 	        {% endfor %}
 	      </div>
 
@@ -436,7 +449,7 @@
       {% elif store.settings.branding.copyrights %}
         {{ store.settings.branding.copyrights | safe }}
       {% else %}
-        © {{ store.name }}
+        {{ _('Made by Zid') }}
       {% endif %}
     </p>
 

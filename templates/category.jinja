@@ -33,6 +33,37 @@
 
   {% if category_page_enabled_value in ['true', '1', 'on', 'yes'] %}
     {% include 'components/categories/category-page-banner.jinja' %}
+  {% else %}
+    {# Banner off: same hero, breadcrumb and subcategories as the Zid starter theme #}
+    {% with title=category.name, description=category.description, image=category.cover_image or category.image %}
+      {% include 'components/categories/category-hero.jinja' %}
+    {% endwith %}
+
+    <section class="px-4 py-6 md:px-16">
+      <div class="theme-container">
+        {% set breadcrumb_items = [{'href': url_for('home'), 'label': _("Home")}, {'href': url_for('list_categories'), 'label': _("Categories")}] %}
+        {% if category.parent_category %}
+          {% if category.parent_category.parent_category %}
+            {% set breadcrumb_items = breadcrumb_items + [{'href': url_for('category_details', category_id=category.parent_category.parent_category.id, slug=category.parent_category.parent_category.slug), 'label': category.parent_category.parent_category.name}] %}
+          {% endif %}
+          {% set breadcrumb_items = breadcrumb_items + [{'href': url_for('category_details', category_id=category.parent_category.id, slug=category.parent_category.slug), 'label': category.parent_category.name}] %}
+        {% endif %}
+        {% set breadcrumb_items = breadcrumb_items + [{'label': category.name}] %}
+        {% with items=breadcrumb_items %}
+          {% include 'components/ui/breadcrumb.jinja' %}
+        {% endwith %}
+      </div>
+    </section>
+
+    {% if category.sub_categories and category.sub_categories|length > 0 %}
+      <section class="px-4 pb-8 md:px-16">
+        <div class="theme-container">
+          {% with subcategories=category.sub_categories, title=category.name, carousel_id='category-' ~ category.id ~ '-subcategories' %}
+            {% include 'components/categories/subcategories-carousel.jinja' %}
+          {% endwith %}
+        </div>
+      </section>
+    {% endif %}
   {% endif %}
 
   {# Products Section #}

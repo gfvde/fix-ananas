@@ -1,8 +1,8 @@
 {
   "template": "sections/ananas-banner.jinja",
   "name": {
-    "ar": "بانر الهوم (فيجما)",
-    "en": "Home Banner (Figma)"
+    "ar": "بانر الصفحة الرئيسية",
+    "en": "Home Banner"
   },
   "icon": "image-line",
   "meta": {

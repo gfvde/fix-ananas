@@ -19,7 +19,7 @@
 
 {# Drawer #}
 {% if drawer_part in ['all', 'drawer'] %}
-<div id="mobile-drawer" class="ananas-drawer" aria-hidden="true" inert dir="rtl">
+<div id="mobile-drawer" class="ananas-drawer" aria-hidden="true" inert>
   <div class="ananas-drawer__panel">
 
     <div class="ananas-drawer__header">
@@ -231,15 +231,15 @@
     width: min(340px, 100vw);
     height: 100%;
     background: var(--ananas-nav-bg);
-    border-left: 1px solid var(--ananas-nav-border);
+    border-inline-end: 1px solid var(--ananas-nav-border);
     display: flex;
     flex-direction: column;
     overflow-y: auto;
 	    transform: translateX(100%);
     transition: transform .35s cubic-bezier(.4,0,.2,1);
-    direction: rtl;
   }
   .ananas-drawer.is-open .ananas-drawer__panel { transform: translateX(0); }
+  [dir="ltr"] .ananas-drawer:not(.is-open) .ananas-drawer__panel { transform: translateX(-100%); }
 
   /* ─── Nav items ───────────────────────────────── */
   .ananas-drawer__nav {
@@ -255,7 +255,7 @@
     font-size: 15px;
     text-decoration: none;
     padding: 13px 24px;
-    text-align: right;
+    text-align: start;
     transition: background .15s;
   }
   .ananas-drawer__link--top:hover { background: color-mix(in srgb, var(--ananas-nav-bg) 80%, white 20%); }
@@ -271,7 +271,7 @@
     font-size: 15px;
     cursor: pointer;
     list-style: none;
-    text-align: right;
+    text-align: start;
     transition: background .15s;
   }
   .ananas-drawer__summary::-webkit-details-marker { display: none; }
@@ -307,7 +307,7 @@
     font-size: 14px;
     text-decoration: none;
     padding: 10px 16px;
-    text-align: right;
+    text-align: start;
     opacity: .85;
     transition: opacity .15s;
   }
@@ -342,7 +342,7 @@
     color: var(--ananas-link-color);
     font-size: 14px;
     text-decoration: none;
-    text-align: right;
+    text-align: start;
     direction: rtl;
     transition: background .15s;
   }
@@ -370,7 +370,7 @@
 	    height: 100dvh;
 	    min-height: 100dvh;
 	    background: #fcfaf7;
-    border-left: 1px solid #e5e5e5;
+    border-inline-end: 1px solid #e5e5e5;
     color: #000;
     padding-bottom: 40px;
   }
@@ -472,7 +472,7 @@
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
-    text-align: right;
+    text-align: start;
     text-decoration: none;
   }
   .ananas-drawer__plain-link {
@@ -486,7 +486,7 @@
     font-size: 16px;
     font-weight: 500;
     line-height: 24px;
-    text-align: right;
+    text-align: start;
     text-decoration: none;
   }
   .ananas-drawer__action-link {
@@ -504,7 +504,7 @@
     font-size: 16px;
     font-weight: 500;
     line-height: 24px;
-    text-align: right;
+    text-align: start;
     text-decoration: none;
     cursor: pointer;
   }

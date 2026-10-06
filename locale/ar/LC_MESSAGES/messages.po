@@ -1801,3 +1801,6 @@ msgstr "نقدم لك إجابات شاملة على أكثر الاستفسار
 
 msgid "Preparation methods"
 msgstr "طرق التحضير"
+
+msgid "Made by Zid"
+msgstr "صنع بواسطة زد"
