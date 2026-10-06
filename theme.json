@@ -1,0 +1,16 @@
+{
+  "name": {
+    "en": "Roast",
+    "ar": "روست"
+  },
+  "description": {
+    "en": "A modern Zid theme for coffee roasters, cafes and specialty stores",
+    "ar": "ثيم زد عصري لمحامص القهوة والمقاهي والمتاجر المتخصصة"
+  },
+  "version": "1.0.0",
+  "slug": "roast",
+  "changelog": {
+    "en": "Initial release",
+    "ar": "الإصدار الأول"
+  }
+}

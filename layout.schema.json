@@ -1228,24 +1228,6 @@
           ]
         },
         {
-          "id": "background_color_coffee_cta_section",
-          "type": "color",
-          "label": {
-            "ar": "لون الخلفية",
-            "en": "Background Color"
-          },
-          "default": "#EDEBE8"
-        },
-        {
-          "id": "text_color_coffee_cta_section",
-          "type": "color",
-          "label": {
-            "ar": "لون النص",
-            "en": "Text Color"
-          },
-          "default": "#000000"
-        },
-        {
           "id": "primary_btn_color_coffee_cta_section",
           "type": "color",
           "label": {
@@ -1647,6 +1629,315 @@
           "step": 1,
           "unit": "px",
           "default": 4
+        }
+      ]
+    },
+    {
+      "id": "about_page",
+      "icon": "fa fa-info-circle",
+      "name": {
+        "ar": "صفحة من نحن",
+        "en": "About Us Page"
+      },
+      "settings": [
+        {
+          "id": "enabled",
+          "type": "checkbox",
+          "label": {
+            "ar": "تفعيل تصميم صفحة من نحن (لصفحة رابطها about-us)",
+            "en": "Use the designed About Us layout (page with slug about-us)"
+          },
+          "default": true
+        },
+        {
+          "id": "show_intro",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار قسم المقدمة",
+            "en": "Show intro"
+          },
+          "default": true
+        },
+        {
+          "id": "intro_title",
+          "type": "text",
+          "label": {
+            "ar": "عنوان المقدمة",
+            "en": "Intro title"
+          }
+        },
+        {
+          "id": "intro_lead",
+          "type": "text",
+          "label": {
+            "ar": "السطر الأول في المقدمة",
+            "en": "Intro lead line"
+          }
+        },
+        {
+          "id": "intro_body",
+          "type": "textarea",
+          "label": {
+            "ar": "نص المقدمة",
+            "en": "Intro text"
+          }
+        },
+        {
+          "id": "intro_image",
+          "type": "image",
+          "label": {
+            "ar": "صورة المقدمة (عرض كامل)",
+            "en": "Intro image (full width)"
+          }
+        },
+        {
+          "id": "show_journey",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار قسم الرحلة",
+            "en": "Show journey timeline"
+          },
+          "default": true
+        },
+        {
+          "id": "journey_title",
+          "type": "text",
+          "label": {
+            "ar": "عنوان قسم الرحلة",
+            "en": "Journey title"
+          }
+        },
+        {
+          "id": "journey_steps",
+          "type": "list",
+          "label": {
+            "ar": "خطوات الرحلة",
+            "en": "Journey steps"
+          },
+          "max_items": 8,
+          "settings": [
+            {
+              "id": "title",
+              "type": "text",
+              "label": {
+                "ar": "العنوان",
+                "en": "Title"
+              }
+            },
+            {
+              "id": "title_mobile",
+              "type": "text",
+              "label": {
+                "ar": "العنوان في الجوال (اختياري)",
+                "en": "Mobile title (optional)"
+              }
+            },
+            {
+              "id": "text",
+              "type": "textarea",
+              "label": {
+                "ar": "النص",
+                "en": "Text"
+              }
+            },
+            {
+              "id": "text_mobile",
+              "type": "textarea",
+              "label": {
+                "ar": "النص في الجوال (اختياري)",
+                "en": "Mobile text (optional)"
+              }
+            },
+            {
+              "id": "image",
+              "type": "image",
+              "label": {
+                "ar": "الصورة",
+                "en": "Image"
+              }
+            }
+          ]
+        },
+        {
+          "id": "show_principles",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار قسم المبادئ",
+            "en": "Show principles"
+          },
+          "default": true
+        },
+        {
+          "id": "principles_title",
+          "type": "text",
+          "label": {
+            "ar": "عنوان قسم المبادئ",
+            "en": "Principles title"
+          }
+        },
+        {
+          "id": "principles",
+          "type": "list",
+          "label": {
+            "ar": "بطاقات المبادئ",
+            "en": "Principle cards"
+          },
+          "max_items": 8,
+          "settings": [
+            {
+              "id": "image",
+              "type": "image",
+              "label": {
+                "ar": "الصورة",
+                "en": "Image"
+              }
+            },
+            {
+              "id": "title",
+              "type": "text",
+              "label": {
+                "ar": "العنوان",
+                "en": "Title"
+              }
+            },
+            {
+              "id": "text",
+              "type": "textarea",
+              "label": {
+                "ar": "النص",
+                "en": "Text"
+              }
+            }
+          ]
+        },
+        {
+          "id": "show_why",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار قسم لماذا نحن",
+            "en": "Show “Why us”"
+          },
+          "default": true
+        },
+        {
+          "id": "why_title",
+          "type": "text",
+          "label": {
+            "ar": "عنوان قسم لماذا نحن",
+            "en": "“Why us” title"
+          }
+        },
+        {
+          "id": "why_cup_image",
+          "type": "image",
+          "label": {
+            "ar": "الصورة المتحركة في المنتصف",
+            "en": "Center animated image"
+          }
+        },
+        {
+          "id": "why_items",
+          "type": "list",
+          "label": {
+            "ar": "المميزات",
+            "en": "Features"
+          },
+          "max_items": 6,
+          "settings": [
+            {
+              "id": "icon",
+              "type": "image",
+              "label": {
+                "ar": "الأيقونة",
+                "en": "Icon"
+              }
+            },
+            {
+              "id": "text",
+              "type": "text",
+              "label": {
+                "ar": "النص",
+                "en": "Text"
+              }
+            }
+          ]
+        },
+        {
+          "id": "show_partners",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار بطاقات الشراكة",
+            "en": "Show partner cards"
+          },
+          "default": true
+        },
+        {
+          "id": "partner_cards",
+          "type": "list",
+          "label": {
+            "ar": "بطاقات الشراكة",
+            "en": "Partner cards"
+          },
+          "max_items": 4,
+          "settings": [
+            {
+              "id": "image",
+              "type": "image",
+              "label": {
+                "ar": "الصورة",
+                "en": "Image"
+              }
+            },
+            {
+              "id": "title",
+              "type": "text",
+              "label": {
+                "ar": "العنوان",
+                "en": "Title"
+              }
+            },
+            {
+              "id": "text",
+              "type": "textarea",
+              "label": {
+                "ar": "النص (كل سطر في سطر جديد)",
+                "en": "Text (one line per row)"
+              }
+            }
+          ]
+        },
+        {
+          "id": "show_grow",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار قسم الختام",
+            "en": "Show closing section"
+          },
+          "default": true
+        },
+        {
+          "id": "grow_title",
+          "type": "text",
+          "label": {
+            "ar": "عنوان الختام",
+            "en": "Closing title"
+          }
+        },
+        {
+          "id": "grow_text_1",
+          "type": "textarea",
+          "label": {
+            "ar": "نص الختام 1",
+            "en": "Closing text 1"
+          }
+        },
+        {
+          "id": "grow_text_2",
+          "type": "textarea",
+          "label": {
+            "ar": "نص الختام 2",
+            "en": "Closing text 2"
+          }
         }
       ]
     }

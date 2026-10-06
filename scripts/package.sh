@@ -5,7 +5,7 @@
 # (their ignore lists are hardcoded: no .vitrinignore support), so running them
 # from the repo root ships docs, build tooling, presets and old zips.
 # This script copies ONLY the files the storefront needs into build/theme/
-# and zips them to build/ananas-theme-<date>.zip.
+# and zips them to build/roast-theme-<date>.zip.
 #
 # Usage:
 #   scripts/package.sh            # npm run build + stage + zip
@@ -18,7 +18,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 OUT="$ROOT/build"
 STAGE="$OUT/theme"
-ZIP="$OUT/ananas-theme-$(date +%Y-%m-%d).zip"
+ZIP="$OUT/roast-theme-$(date +%Y-%m-%d).zip"
 
 cd "$ROOT"
 

@@ -1,7 +1,7 @@
 .PHONY: default package build clean
 default: package
 
-# Clean, push-ready theme: build/theme/ (push from there) + build/ananas-theme-<date>.zip
+# Clean, push-ready theme: build/theme/ (push from there) + build/roast-theme-<date>.zip
 package:
 	./scripts/package.sh
 
