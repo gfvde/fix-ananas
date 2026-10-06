@@ -631,8 +631,7 @@
                 gap: {{ settings.single_product_section_features_items_gap | default(24) }}px;
               "
             >
-              {% for feature in matching_features %}
-              {% if loop.index0 >= 4 %}{% continue %}{% endif %}
+              {% for feature in matching_features[:4] %}
                 <div class="feature-card rounded-lg transition-all duration-300">
 
                   {# Icon Container #}
