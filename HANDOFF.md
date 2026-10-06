@@ -47,7 +47,7 @@
    Home now renders 25 sections (all 24 types), 0 JS errors desktop + mobile (screenshots: `build/home-desktop.png`, `build/home-mobile.png`, not committed).
    Preset keys now match every section schema (0 stale sections; old keys renamed or dropped, reviews moved to the `reviews` list,
    hero/banner/countdown/video got demo images/video, links point to `/products`).
-   Still to do: product/category pickers (`products`, `categories` lists) still reference the old store's ids — point them at the demo products from step 2.
+   Pickers and links now point at the demo categories/products on store 3255406 (categories section, products tabs, about-details, shop-by-category/mood links, product bundle).
 2. **Demo products on the dev store** (owner approved): use the Zid store connector (`mcp__zid_store__*`) on store 3255406 only — at least: simple product, product with variants (size/grind), discounted product, out-of-stock product, low-stock product, preorder product, bundle offer, a few reviews and Q&A, categories with 3 levels. Then walk the checklist live.
    **Partly done (2026-10-06)** on store 3255406: categories قهوة(1744425) > قهوة مختصة(1744422) > إثيوبيا(1744423), أدوات التحضير(1744424);
    products RST-001 simple (Ethiopia, 3-level), RST-002 discounted 95→69, RST-003 out of stock, RST-004 low stock (2), RST-005 House Blend (meant for variants),

@@ -55,7 +55,7 @@
               "settings": {
                 "title": "وش نرشّح لك",
                 "layout": "grid",
-                "more_url": "/products/من-ايزابيلا-كوستاريكا-300g-كولومبيا-1",
+                "more_url": "/categories/1744425/قهوة",
                 "products": null,
                 "subtitle": "نكهات متنوعة تناسب ذوقك",
                 "more_text": "عرض الكل",
@@ -76,8 +76,9 @@
                   "type": "recent_products"
                 },
                 "tab_2_products": {
-                  "id": 0,
-                  "type": "recent_products"
+                  "id": 1744422,
+                  "name": "قهوة مختصة",
+                  "type": "products_category"
                 },
                 "button_bg_color": "#FCFAF7",
                 "products_source": "tabs",
@@ -100,7 +101,7 @@
               "settings": {
                 "title": "وش نرشّح لك",
                 "layout": "carousel",
-                "more_url": "/products/من-ايزابيلا-كوستاريكا-300g-كولومبيا-1",
+                "more_url": "/categories/1744425/قهوة",
                 "products": null,
                 "subtitle": "نكهات متنوعة تناسب ذوقك",
                 "more_text": "عرض الكل",
@@ -121,8 +122,9 @@
                   "type": "recent_products"
                 },
                 "tab_2_products": {
-                  "id": 0,
-                  "type": "recent_products"
+                  "id": 1744422,
+                  "name": "قهوة مختصة",
+                  "type": "products_category"
                 },
                 "button_bg_color": "#FCFAF7",
                 "products_source": "tabs",
@@ -144,17 +146,17 @@
               "settings": {
                 "title": "تسوّق حسب اختيارك",
                 "cat1_img": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/79a85344-1064-4855-a94f-2328cc89b365.png",
-                "cat1_url": "",
+                "cat1_url": "/categories/1744425/قهوة",
                 "cat2_img": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/28f0be2e-78e9-4f0c-846d-6aca1a34a2b6.png",
-                "cat2_url": "",
+                "cat2_url": "/categories/1744422/قهوة-مختصة",
                 "cat3_img": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/5288b220-23be-4ef7-ba77-401576110fbd.png",
-                "cat3_url": "#",
+                "cat3_url": "/categories/1744423/إثيوبيا",
                 "cat4_img": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/e5088558-e405-43f6-9f4b-9e5d9365d3f9.png",
-                "cat4_url": "#",
+                "cat4_url": "/categories/1744424/أدوات-التحضير",
                 "cat5_img": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/ca18ce9b-4e38-4ce8-90e8-d15ef915c778.png",
-                "cat5_url": "#",
+                "cat5_url": "/products/قهوة-البيت-خلطة-يومية",
                 "cat6_img": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/6ff26247-5d3c-422e-987e-7c50ef699776.png",
-                "cat6_url": "",
+                "cat6_url": "/products/قهوة-كولومبيا-هويلا",
                 "cat1_name": "البكجــات",
                 "cat2_name": "محاصيل القهوه",
                 "cat3_name": "أظرف القهوه",
@@ -190,17 +192,17 @@
               "settings": {
                 "title": "تسوّق حسب اختيارك",
                 "cat1_img": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/79a85344-1064-4855-a94f-2328cc89b365.png",
-                "cat1_url": "",
+                "cat1_url": "/categories/1744425/قهوة",
                 "cat2_img": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/28f0be2e-78e9-4f0c-846d-6aca1a34a2b6.png",
-                "cat2_url": "",
+                "cat2_url": "/categories/1744422/قهوة-مختصة",
                 "cat3_img": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/5288b220-23be-4ef7-ba77-401576110fbd.png",
-                "cat3_url": "#",
+                "cat3_url": "/categories/1744423/إثيوبيا",
                 "cat4_img": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/e5088558-e405-43f6-9f4b-9e5d9365d3f9.png",
-                "cat4_url": "#",
+                "cat4_url": "/categories/1744424/أدوات-التحضير",
                 "cat5_img": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/ca18ce9b-4e38-4ce8-90e8-d15ef915c778.png",
-                "cat5_url": "#",
+                "cat5_url": "/products/قهوة-البيت-خلطة-يومية",
                 "cat6_img": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/6ff26247-5d3c-422e-987e-7c50ef699776.png",
-                "cat6_url": "",
+                "cat6_url": "/products/قهوة-كولومبيا-هويلا",
                 "cat1_name": "البكجــات",
                 "cat2_name": "محاصيل القهوه",
                 "cat3_name": "أظرف القهوه",
@@ -268,8 +270,9 @@
                 "layout": "carousel",
                 "more_url": "/products",
                 "products": {
-                  "id": 0,
-                  "type": "recent_products"
+                  "id": 1744424,
+                  "name": "أدوات التحضير",
+                  "type": "products_category"
                 },
                 "subtitle": "نكهات متنوعة تناسب ذوقك",
                 "more_text": "عرض الكل",
@@ -325,17 +328,17 @@
               "display": true,
               "settings": {
                 "title": "اختار قهوتك علي مزاجك",
-                "cta_url": "#",
+                "cta_url": "/categories/1744425/قهوة",
                 "cta_text": "تسوّق حسب مزاجك",
                 "subtitle": "لكل مزاج تجربة مختلفة هنا تلقى اللي يناسبك",
                 "card1_tag": "شي جديد",
-                "card1_url": "#",
+                "card1_url": "/products/قهوة-كينيا-aa",
                 "card2_tag": "صفاء ذهني",
-                "card2_url": "#",
+                "card2_url": "/products/قهوة-إثيوبيا-يرغاتشيفي",
                 "card3_tag": "هدوء بطعم غني",
-                "card3_url": "#",
+                "card3_url": "/products/قهوة-كولومبيا-هويلا",
                 "card4_tag": "بداية يومك",
-                "card4_url": "#",
+                "card4_url": "/products/قهوة-البيت-خلطة-يومية",
                 "card1_desc": "اكتشف نكهات جديدة كل مرة",
                 "card2_desc": "مزاج صافي يساعدك تنجز بدون تشتيت",
                 "card3_desc": "لحظة لنفسك بعيد عن الزحمة",
@@ -395,12 +398,12 @@
               "display": true,
               "settings": {
                 "title": "تفاصيل تكمل يومك",
-                "cta_url": "/products",
+                "cta_url": "/categories/1744422/قهوة-مختصة",
                 "cta_text": "عرض الكل",
                 "hero_alt": "About details image",
                 "products": {
-                  "id": 1540275,
-                  "name": "ؤبرر٢",
+                  "id": 1744422,
+                  "name": "قهوة مختصة",
                   "type": "products_category"
                 },
                 "show_cta": true,
@@ -802,7 +805,36 @@
               "settings": {
                 "title": "تسوّق حسب التصنيف",
                 "remove_bottom_margin": false,
-                "categories": [],
+                "categories": [
+                  {
+                    "category": {
+                      "id": 1744425,
+                      "name": "قهوة",
+                      "slug": "قهوة"
+                    }
+                  },
+                  {
+                    "category": {
+                      "id": 1744422,
+                      "name": "قهوة مختصة",
+                      "slug": "قهوة-مختصة"
+                    }
+                  },
+                  {
+                    "category": {
+                      "id": 1744423,
+                      "name": "إثيوبيا",
+                      "slug": "إثيوبيا"
+                    }
+                  },
+                  {
+                    "category": {
+                      "id": 1744424,
+                      "name": "أدوات التحضير",
+                      "slug": "أدوات-التحضير"
+                    }
+                  }
+                ],
                 "background_color": "#ffffff",
                 "display_more": true
               }
@@ -1280,29 +1312,29 @@
               "bundle_items": [
                 {
                   "product": {
-                    "id": "7f93ae9a-ba07-42f8-9f24-9ec35844f1c3",
-                    "name": "نسخة من نسخة من سونى A7 الاصدار التالت",
+                    "id": "0d1e87f5-192f-4511-96bd-0f4ace2cc209",
+                    "name": "قمع تقطير V60",
                     "type": "product"
                   }
                 },
                 {
                   "product": {
-                    "id": "c47b6a2d-c2b9-43cb-837d-40a275d20f36",
-                    "name": "نسخة من نسخة من نسخة من سونى A7 الاصدار التالت",
+                    "id": "998f7f3d-d143-4f1c-afb8-f11c44eb443f",
+                    "name": "إبريق تقطير بعنق رفيع",
                     "type": "product"
                   }
                 },
                 {
                   "product": {
-                    "id": "b8e30eb0-1ab8-41d7-8e12-68268eb84518",
-                    "name": "نسخة من نسخة من عددد",
+                    "id": "62933deb-a604-40e2-a021-dd6e9ddab0e7",
+                    "name": "قهوة إثيوبيا يرغاتشيفي",
                     "type": "product"
                   }
                 }
               ],
               "main_product": {
-                "id": "5b4db474-2353-4878-b198-5ec04fd4dfcf",
-                "name": "منتج الوان كمية ",
+                "id": "98146e48-eec1-4d89-9ccf-e512641e8778",
+                "name": "قهوة البيت - خلطة يومية",
                 "type": "product"
               },
               "section_title": "تست",
