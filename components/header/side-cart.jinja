@@ -43,6 +43,9 @@
 
     {# The validator renders the header without a cart in context #}
     {% set side_cart = cart if cart is defined and cart else {'products': [], 'products_count': 0, 'free_shipping_rule': none, 'currency': none, 'total_string': none, 'total': 0} %}
+    {# cart.total is a totals entry ({value, value_string}) on some pages, a number on others #}
+    {% set side_cart_total = side_cart.total.value if side_cart.total.value is defined else side_cart.total %}
+    {% set side_cart_total_string = side_cart.total_string or (side_cart.total.value_string if side_cart.total.value_string is defined else side_cart.total) %}
     {% set side_cart_subtotal_condition = side_cart.free_shipping_rule.subtotal_condition if side_cart.free_shipping_rule else none %}
     {% set side_cart_free_shipping_status = side_cart_subtotal_condition.status | default('') if side_cart_subtotal_condition else '' %}
     {% set side_cart_free_shipping_remaining = side_cart_subtotal_condition.remaining | default('') if side_cart_subtotal_condition else '' %}
@@ -238,7 +241,7 @@
           <span
             class="font-expo text-lg font-medium text-black"
             id="side-cart-total"
-            >{{ side_cart.total_string | default(side_cart.total) | default('0.00') }}</span
+            >{{ side_cart_total_string | default('0.00', true) }}</span
           >
         </div>
       </div>
@@ -724,7 +727,7 @@
 
     // Initialize free shipping bar on load
     drawer.inert = true;
-    updateShippingBar(Number("{{ side_cart.total | default(0, true) }}") || 0, { free_shipping_rule: initialFreeShippingRule });
+    updateShippingBar(Number("{{ side_cart_total | default(0, true) }}") || 0, { free_shipping_rule: initialFreeShippingRule });
 
     // Pre-fetch cart data in background so it's ready when drawer opens
     function prefetchCartData() {

@@ -53,7 +53,14 @@
    products RST-001 simple (Ethiopia, 3-level), RST-002 discounted 95→69, RST-003 out of stock, RST-004 low stock (2), RST-005 House Blend (meant for variants),
    RST-006/007 tools; one Q&A with answer on RST-001. Not possible through the store connector: product images (Zid fetch of media.zid.store → 403;
    upload by hand), variants (`add_variants` → 400 "Expected a list"), bundle offers (401 missing scope), creating reviews, preorder. Do those in the Zid dashboard.
-3. **Cart items (checklist #15, #18)**: `components/cart/products-list.jinja` shows no per-item out-of-stock/error state and no bundle name/offer. Growth uses `{% include 'vitrin:v2/cart/products_list.jinja' %}` (`templates/cart.jinja:39`). Either switch (design changes — ask owner) or add availability + bundle markup (`data-bundle-arrow`, handler exists in `assets/js/cart/controller.js:952`).
+3. **Cart items (checklist #15, #18) — DONE (2026-10-06)**: `components/cart/products-list.jinja` shows a per-item error from the cart flags
+   (`is_original_product_available`, `is_original_quantity_finished`, `is_requested_quantity_enough`, `is_product_price_updated`, `error_message`) using the
+   platform's `error_messages` text, dims the item, lists `sub_items` behind a `bundle-toggle` and names `discount_rules` offers. Verified live (out-of-stock item).
+   Not verified with data: `sub_items` stayed empty for a grouped product (RST-008 "باقة التحضير"), and bundle offers can't be created via the connector, so the
+   offer/bundle markup is defensive. Check both once a bundle offer exists.
+   Also fixed: side cart `cart.total` is a totals object on the cart page → broke an inline script.
+   **Theme preset on Zid**: `python3 scripts/public-preset.py && cd build/theme && vitrin presets create ../preset.json` (or `presets update <id>`) — current preset
+   id `c471c643-3c7b-40c9-8af2-699769061088`. It is the store-agnostic copy of `presets/default.json` (pickers → recent products, store links → `/products`).
 4. **Wishlist**: header/drawer heart goes to `/pages/wishlist`, which needs a merchant-created page with slug `wishlist` and has no share-by-URL. Prefer the platform account wishlist route (confirm the URL live), or document it.
 5. **Section preview images**: Growth ships `sections/<name>.png` for each section; we have none (24 sections). Needs screenshots of each section.
 6. Smaller items from the audit:

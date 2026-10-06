@@ -1804,3 +1804,22 @@ msgstr "طرق التحضير"
 
 msgid "Made by Zid"
 msgstr "صنع بواسطة زد"
+
+msgid "This product is no longer available. Remove it to complete your order"
+msgstr "لم يعد هذا المنتج متوفرًا، احذفه لإتمام الشراء"
+
+msgid "Out of stock. Remove it to complete your order"
+msgstr "نفدت الكمية، احذف المنتج لإتمام الشراء"
+
+msgid "Not enough stock for the requested quantity"
+msgstr "الكمية المتاحة لا تكفي الكمية المطلوبة"
+
+msgid "The price of this product has changed"
+msgstr "تغيّر سعر هذا المنتج"
+
+msgid "Offer"
+msgstr "العرض"
+
+#, python-format
+msgid "Bundle items (%(count)s)"
+msgstr "محتويات الباقة (%(count)s)"
