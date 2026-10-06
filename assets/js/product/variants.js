@@ -362,6 +362,36 @@ export function updateProductImages(selectedProduct) {
 window.updateProductImages = updateProductImages;
 
 // ─────────────────────────────────────────────────────────────
+// Selected Option Labels (port of upstream 01a34d2)
+// Color swatches hide their choice text, so show the active value next to
+// each option group's label on load and on every variant change.
+// ─────────────────────────────────────────────────────────────
+
+export function updateSelectedOptionLabels() {
+  document.querySelectorAll(".product-options__group").forEach((group) => {
+    const label = group.querySelector(".product-options__label");
+    if (!label) return;
+
+    const activeOption = group.querySelector(".product-options__item.active[value]");
+    const selectedValue = activeOption?.getAttribute("value");
+    let selectedValueElement = label.querySelector("[data-selected-option-value]");
+
+    if (!selectedValue) {
+      selectedValueElement?.remove();
+      return;
+    }
+
+    if (!selectedValueElement) {
+      selectedValueElement = document.createElement("span");
+      selectedValueElement.setAttribute("data-selected-option-value", "");
+      label.append(selectedValueElement);
+    }
+
+    selectedValueElement.textContent = `: ${selectedValue}`;
+  });
+}
+
+// ─────────────────────────────────────────────────────────────
 // Main Callback (Called by platform's product.js)
 // ─────────────────────────────────────────────────────────────
 
@@ -370,6 +400,8 @@ window.updateProductImages = updateProductImages;
  * @param {Object} selectedProduct - The selected variant data from API
  */
 window.productOptionsChanged = function (selectedProduct) {
+  updateSelectedOptionLabels();
+
   if (!selectedProduct) {
     // Variant doesn't exist - show out of stock
     hide("[data-in-stock]");
@@ -412,6 +444,12 @@ function initProductObjSync() {
 
 export function init() {
   initProductObjSync();
+  updateSelectedOptionLabels();
+  window.addEventListener("content:loaded", updateSelectedOptionLabels);
+  // Instant feedback: the platform toggles .active on click, before the variant API returns
+  document.addEventListener("click", (e) => {
+    if (e.target.closest?.(".product-options__item")) requestAnimationFrame(updateSelectedOptionLabels);
+  });
 }
 
 if (document.readyState === "loading") {
