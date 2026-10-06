@@ -138,13 +138,29 @@ export function createCarousel(container, options = {}) {
  * Setup navigation buttons
  */
 function setupNavigation(container, embla) {
+  // Controls may be siblings of the viewport (e.g. conditional carousel layout),
+  // so also look in the parent - but never pick another carousel's buttons.
+  // (port of upstream 7fe3581/82e520f)
+  const fromParent = (selector) => {
+    const scope = container.parentElement;
+    if (!scope) return null;
+    return (
+      Array.from(scope.querySelectorAll(selector)).find((btn) => {
+        const owner = btn.closest("[data-carousel]");
+        return !owner || owner === container || owner.contains(container);
+      }) || null
+    );
+  };
+
   const prevBtn =
     container.querySelector("[data-carousel-prev]") ||
+    fromParent("[data-carousel-prev]") ||
     container.querySelector(".embla__prev") ||
     container.querySelector(".product-gallery__prev");
 
   const nextBtn =
     container.querySelector("[data-carousel-next]") ||
+    fromParent("[data-carousel-next]") ||
     container.querySelector(".embla__next") ||
     container.querySelector(".product-gallery__next");
 

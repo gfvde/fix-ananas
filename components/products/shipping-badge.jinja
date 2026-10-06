@@ -1,0 +1,59 @@
+{#
+  Shipping Badge Component (port of upstream e1b082f, quick-commerce)
+
+  Parameters:
+  - badge (required): a backend-provided shipping badge (text, description, badge_type)
+  - variant (optional): "card" (pill in the product-card badge stack) or "details" (PDP callout)
+
+  Colors are inline so the component does not depend on a Tailwind rebuild.
+#}
+
+{% set variant = variant | default('card') %}
+{% set badge_text = badge.text %}
+{% set badge_description = badge.description or '' %}
+
+{% if badge_text %}
+  {% if badge.badge_type == 'pickup' %}
+    {% set badge_fg = '#7A4BC1' %}{% set badge_border = '#DDC9FF' %}{% set badge_bg = '#F5F0FF' %}{% set callout_bg = '#FAF7FF' %}
+  {% else %}
+    {% set badge_fg = '#F26322' %}{% set badge_border = '#FFD6C2' %}{% set badge_bg = '#FFF4ED' %}{% set callout_bg = '#FFF8F4' %}
+  {% endif %}
+
+  {% if variant == 'details' %}
+    <div
+      class="flex items-start gap-3 rounded border p-4"
+      style="border-color: {{ badge_border }}; background-color: {{ callout_bg }};"
+      data-shipping-badge="{{ badge.badge_type or 'delivery' }}"
+    >
+      <span class="shrink-0" style="color: {{ badge_fg }}; margin-top: 2px;">
+        {% if badge.badge_type == 'pickup' %}
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9l2-5h14l2 5" />
+            <path d="M5 13v7h14v-7" />
+            <path d="M9 20v-6h6v6" />
+            <path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0" />
+          </svg>
+        {% else %}
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M10 17h4V5H2v12h3" />
+            <path d="M14 9h4l4 4v4h-3" />
+            <circle cx="7.5" cy="17.5" r="2.5" />
+            <circle cx="16.5" cy="17.5" r="2.5" />
+          </svg>
+        {% endif %}
+      </span>
+      <div class="min-w-0">
+        <p class="text-sm font-semibold">{{ badge_text }}</p>
+        {% if badge_description %}
+          <p class="text-sm" style="opacity: .75;">{{ badge_description }}</p>
+        {% endif %}
+      </div>
+    </div>
+  {% else %}
+    <span
+      class="pc-badge-pill"
+      style="width: auto !important; padding: 2px 6px; white-space: nowrap; color: {{ badge_fg }}; background-color: {{ badge_bg }}; border: 1px solid {{ badge_border }};"
+      data-shipping-badge="{{ badge.badge_type or 'delivery' }}"
+    >{{ badge_text }}</span>
+  {% endif %}
+{% endif %}
