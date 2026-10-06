@@ -1,0 +1,47 @@
+/* sections/partners.jinja styles (moved from an inline <style>). Scoped by [data-section="partners"]. */
+.fade-left {
+  background: linear-gradient(
+    to right,
+    var(--color-background) 0%,
+    transparent 100%
+  );
+}
+
+.fade-right {
+  background: linear-gradient(
+    to left,
+    var(--color-background) 0%,
+    transparent 100%
+  );
+}
+
+[dir="rtl"] .fade-left {
+  background: linear-gradient(
+    to left,
+    var(--color-background) 0%,
+    transparent 100%
+  );
+}
+
+[dir="rtl"] .fade-right {
+  background: linear-gradient(
+    to right,
+    var(--color-background) 0%,
+    transparent 100%
+  );
+}
+[data-section="partners"] .embla {
+  --slide-spacing: 2rem; /* gap-8 = 32px from Figma */
+}
+
+[data-section="partners"] .embla__container {
+  display: flex;
+  touch-action: pan-y pinch-zoom;
+}
+
+[data-section="partners"] .embla__slide {
+  transform: translate3d(0, 0, 0);
+  flex: 0 0 auto;
+  min-width: 0;
+  padding-left: var(--slide-spacing);
+}

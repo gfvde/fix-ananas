@@ -1,3 +1,4 @@
+{% set is_lazy = (settings.order | default(3) | int) > 2 %}
 {% set section_bg_color = settings.section_bg_color | default('#ffffff') %}
 {% set title_color = settings.title_color | default('#000000') %}
 {% set card_text_color = settings.card_text_color | default('#ffffff') %}
@@ -12,8 +13,9 @@
 {% set scroll_effect_strength = settings.scroll_effect_strength | default(18) %}
 {% set mobile_image_height = settings.mobile_image_height | default(150) %}
 
+<link rel="stylesheet" href="{{ 'css/sections/about-shop-by-category.css' | asset_url }}">
 <section
-  section-id="{{ sectionId }}"
+  section-id="{{ sectionId }}" data-section="about-shop-by-category"
   data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
   class="shop-by-category"
   data-mobile-layout="{{ mobile_layout }}"
@@ -21,6 +23,7 @@
   data-scroll-strength="{{ scroll_effect_strength }}"
   style="
     --sbc-bg: {{ section_bg_color }};
+    --sbc-mobile-image-height: {{ mobile_image_height }}px;
     --sbc-title-color: {{ title_color }};
     --sbc-card-text: {{ card_text_color }};
     --sbc-hover-text: {{ hover_text_color }};
@@ -30,16 +33,16 @@
     --sbc-mobile-overlay-bg: {{ mobile_overlay_bg_color }};
   "
 >
-  <h2 class="shop-by-category__title">{{ settings.title | default('تسوّق حسب اختيارك') }}</h2>
+  <h2 class="shop-by-category__title">{{ settings.title | default(_('Shop by your choice')) }}</h2>
   <div class="sbc-grid">
 
     {% set cats = [
-      { 'name': settings.cat1_name | default('أظرف القهوه'),   'url': settings.cat1_url | default('', true), 'img': settings.cat1_img, 'text_color': settings.cat1_text_color | default(card_text_color) },
-      { 'name': settings.cat2_name | default('محاصيل القهوه'), 'url': settings.cat2_url | default('', true), 'img': settings.cat2_img, 'text_color': settings.cat2_text_color | default(card_text_color) },
-      { 'name': settings.cat3_name | default('البكجــات'),     'url': settings.cat3_url | default('', true), 'img': settings.cat3_img, 'text_color': settings.cat3_text_color | default(card_text_color) },
-      { 'name': settings.cat4_name | default('عروض الربيع'),   'url': settings.cat4_url | default('', true), 'img': settings.cat4_img, 'text_color': settings.cat4_text_color | default(card_text_color) },
-      { 'name': settings.cat5_name | default('منتجات أناناس'), 'url': settings.cat5_url | default('', true), 'img': settings.cat5_img, 'text_color': settings.cat5_text_color | default(card_text_color) },
-      { 'name': settings.cat6_name | default('أدوات القهوة'),  'url': settings.cat6_url | default('', true), 'img': settings.cat6_img, 'text_color': settings.cat6_text_color | default(card_text_color) }
+      { 'name': settings.cat1_name | default(_('Coffee drip bags')),   'url': settings.cat1_url | default('', true), 'img': settings.cat1_img, 'text_color': settings.cat1_text_color | default(card_text_color) },
+      { 'name': settings.cat2_name | default(_('Coffee harvests')), 'url': settings.cat2_url | default('', true), 'img': settings.cat2_img, 'text_color': settings.cat2_text_color | default(card_text_color) },
+      { 'name': settings.cat3_name | default(_('Bundles')),     'url': settings.cat3_url | default('', true), 'img': settings.cat3_img, 'text_color': settings.cat3_text_color | default(card_text_color) },
+      { 'name': settings.cat4_name | default(_('Spring offers')),   'url': settings.cat4_url | default('', true), 'img': settings.cat4_img, 'text_color': settings.cat4_text_color | default(card_text_color) },
+      { 'name': settings.cat5_name | default(_('Ananas products')), 'url': settings.cat5_url | default('', true), 'img': settings.cat5_img, 'text_color': settings.cat5_text_color | default(card_text_color) },
+      { 'name': settings.cat6_name | default(_('Coffee tools')),  'url': settings.cat6_url | default('', true), 'img': settings.cat6_img, 'text_color': settings.cat6_text_color | default(card_text_color) }
     ] %}
 
     {% for cat in cats if cat.img %}
@@ -49,8 +52,9 @@
           <img
             src="{{ image_url(cat.img, w=900, f='auto') }}"
             alt="{{ cat.name }}"
-            loading="lazy"
-            decoding="async"
+            width="900"
+            height="1044"
+            {% if is_lazy %}loading="lazy" {% endif %}decoding="async"
             data-sbc-parallax-img
           />
           <span class="category-card__name">{{ cat.name }}</span>
@@ -70,306 +74,5 @@
   </div>
 </section>
 
-<style>
-  [section-id="{{ sectionId }}"].shop-by-category {
-    background: var(--sbc-bg);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    padding: 24px 56px;
-    /*direction: rtl;*/
-  }
 
-  [section-id="{{ sectionId }}"] .shop-by-category__title {
-    font-size: 30px;
-    font-weight: 500;
-    color: var(--sbc-title-color);
-    line-height: 36px;
-    /*text-align: right;*/
-    margin: 0;
-    width: 100%;
-  }
-
-  [section-id="{{ sectionId }}"] .sbc-grid {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
-  }
-
-  [section-id="{{ sectionId }}"] .category-card {
-    position: relative;
-    display: block;
-    color: inherit;
-  }
-
-  [section-id="{{ sectionId }}"] .category-card__media {
-    position: relative;
-    display: block;
-    aspect-ratio: 1 / 1;
-    overflow: hidden;
-    background: #f5f2ed;
-    color: inherit;
-    text-decoration: none;
-  }
-
-  [section-id="{{ sectionId }}"] .category-card__media::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--sbc-overlay);
-    opacity: var(--sbc-overlay-opacity);
-    z-index: 1;
-  }
-
-  [section-id="{{ sectionId }}"] .category-card img {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: -8%;
-    width: 100%;
-    height: 116%;
-    object-fit: cover;
-    transform: translate3d(0, var(--sbc-parallax-y, 0px), 0);
-    transition: transform 160ms linear;
-    will-change: transform;
-  }
-
-  [section-id="{{ sectionId }}"][data-scroll-effect="false"] .category-card img,
-  [section-id="{{ sectionId }}"][data-scroll-effect="false"] .category-card:hover img {
-    height: 100%;
-    top: 0;
-    transform: none;
-    transition: none;
-    will-change: auto;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    [section-id="{{ sectionId }}"] .category-card img,
-    [section-id="{{ sectionId }}"] .category-card:hover img {
-      height: 100%;
-      top: 0;
-      transform: none;
-      transition: none;
-      will-change: auto;
-    }
-  }
-
-  [section-id="{{ sectionId }}"] .category-card__name {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 16px;
-    text-align: center;
-    font-size: 24px;
-    font-weight: 500;
-    color: var(--sbc-item-text, var(--sbc-card-text));
-    line-height: 32px;
-  }
-
-  [section-id="{{ sectionId }}"] .category-card__hover-cta {
-    position: absolute;
-    left: 50%;
-    bottom: 24px;
-    z-index: 3;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    color: var(--sbc-hover-text);
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
-    letter-spacing: 0;
-    text-transform: uppercase;
-    white-space: nowrap;
-    direction: ltr;
-    opacity: 0;
-    transform: translate(-50%, 10px);
-    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  [section-id="{{ sectionId }}"] .category-card__hover-cta svg {
-    width: 20px;
-    height: 20px;
-    flex: 0 0 20px;
-  }
-
-  [section-id="{{ sectionId }}"] .category-card:hover .category-card__hover-cta,
-  [section-id="{{ sectionId }}"] .category-card:focus-within .category-card__hover-cta {
-    opacity: 1;
-    transform: translate(-50%, 0);
-  }
-
-  [section-id="{{ sectionId }}"] .category-card__mobile-name { display: none; }
-
-  @media (max-width: 767px) {
-    [section-id="{{ sectionId }}"].shop-by-category {
-      gap: 16px;
-      padding: 0 16px;
-    }
-
-    [section-id="{{ sectionId }}"] .shop-by-category__title {
-      font-size: 24px;
-      line-height: 32px;
-      text-align: center;
-      margin: 0;
-    }
-
-    [section-id="{{ sectionId }}"] .sbc-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      column-gap: 8px;
-      row-gap: 16px;
-    }
-
-    [section-id="{{ sectionId }}"] .category-card__media {
-      display: block !important;
-      width: 100%;
-      height: {{ mobile_image_height }}px;
-      aspect-ratio: unset;
-      flex: 0 0 auto;
-      overflow: hidden;
-      background: #f5f2ed;
-    }
-
-    [section-id="{{ sectionId }}"] .category-card img {
-      display: block !important;
-      width: 100%;
-      height: 100%;
-      inset: 0;
-      object-fit: cover;
-      opacity: 1;
-      visibility: visible;
-    }
-
-    [section-id="{{ sectionId }}"] .category-card {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-    }
-
-    [section-id="{{ sectionId }}"] .category-card__media::after,
-    [section-id="{{ sectionId }}"] .category-card__name,
-    [section-id="{{ sectionId }}"] .category-card__hover-cta {
-      display: none;
-    }
-
-    [section-id="{{ sectionId }}"] .category-card__mobile-name {
-      display: block;
-      font-size: 16px;
-      font-weight: 500;
-      color: var(--sbc-mobile-text);
-      line-height: 24px;
-      text-align: center;
-      text-decoration: none;
-    }
-
-    [section-id="{{ sectionId }}"][data-mobile-layout="overlay"] .sbc-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-    }
-
-    [section-id="{{ sectionId }}"][data-mobile-layout="overlay"] .category-card__media {
-      height: {{ mobile_image_height }}px;
-    }
-
-    [section-id="{{ sectionId }}"][data-mobile-layout="overlay"] {
-      background: var(--sbc-mobile-overlay-bg);
-      padding: 0 16px;
-    }
-
-    [section-id="{{ sectionId }}"][data-mobile-layout="overlay"] .shop-by-category__title {
-      display: block;
-      color: var(--sbc-title-color);
-      margin: 0;
-    }
-
-    [section-id="{{ sectionId }}"][data-mobile-layout="overlay"] .category-card {
-      gap: 0;
-    }
-
-    [section-id="{{ sectionId }}"][data-mobile-layout="overlay"] .category-card__media::after,
-    [section-id="{{ sectionId }}"][data-mobile-layout="overlay"] .category-card__name {
-      display: flex;
-    }
-
-    [section-id="{{ sectionId }}"][data-mobile-layout="overlay"] .category-card__name {
-      font-size: 18px;
-      font-weight: 500;
-      line-height: 28px;
-      padding: 0 8px;
-      color: var(--sbc-item-text, #ffffff);
-    }
-
-    [section-id="{{ sectionId }}"][data-mobile-layout="overlay"] .category-card__mobile-name {
-      display: none;
-    }
-  }
-
-  @media (min-width: 768px) and (max-width: 1023px) {
-    [section-id="{{ sectionId }}"].shop-by-category {
-      padding: 32px 24px 24px;
-    }
-
-    [section-id="{{ sectionId }}"] .sbc-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    [section-id="{{ sectionId }}"] .category-card__name {
-      font-size: 20px;
-      line-height: 28px;
-    }
-  }
-</style>
-
-<script>
-  (function () {
-    var section = document.querySelector('[section-id="{{ sectionId }}"].shop-by-category');
-    if (!section || section.dataset.scrollEffect !== 'true') return;
-    if (section.dataset.sbcParallaxBound === 'true') return;
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    section.dataset.sbcParallaxBound = 'true';
-
-    var cards = Array.prototype.slice.call(section.querySelectorAll('[data-sbc-parallax-card]'));
-    var strength = parseFloat(section.dataset.scrollStrength || '18');
-    var ticking = false;
-
-    function update() {
-      var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-
-      cards.forEach(function (card) {
-        var img = card.querySelector('[data-sbc-parallax-img]');
-        if (!img) return;
-
-        var rect = card.getBoundingClientRect();
-        if (rect.bottom < -120 || rect.top > viewportHeight + 120) return;
-
-        var cardCenter = rect.top + rect.height / 2;
-        var progress = (cardCenter - viewportHeight / 2) / (viewportHeight / 2 + rect.height / 2);
-        var clamped = Math.max(-1, Math.min(1, progress));
-        var y = clamped * strength * -1;
-
-        img.style.setProperty('--sbc-parallax-y', y.toFixed(2) + 'px');
-      });
-
-      ticking = false;
-    }
-
-    function requestUpdate() {
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(update);
-    }
-
-    update();
-    window.addEventListener('scroll', requestUpdate, { passive: true });
-    window.addEventListener('resize', requestUpdate);
-    document.addEventListener('theme:resize', requestUpdate);
-  })();
-</script>
+<script defer src="{{ 'js/sections/about-shop-by-category.js' | asset_url }}"></script>

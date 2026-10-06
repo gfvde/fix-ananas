@@ -1,3 +1,4 @@
+{% set is_lazy = (settings.order | default(3) | int) > 2 %}
 {% set section_bg_color = settings.section_bg_color | default('#FFF0EC') %}
 {% set title_color = settings.title_color | default('#F7512B') %}
 {% set lead_color = settings.lead_color | default('#000000') %}
@@ -5,7 +6,7 @@
 {% set cta_text_color = settings.cta_text_color | default('#000000') %}
 {% set cta_bg_color = settings.cta_bg_color | default(section_bg_color) %}
 {% set cta_border_color = settings.cta_border_color | default('#000000') %}
-{% set cta_text = settings.cta_text | default('تعرّف على عالم أناناس') %}
+{% set cta_text = settings.cta_text | default(_('Discover the world of Ananas')) %}
 {% set media_type = settings.media_type | default('image') %}
 {% set mobile_media_position = settings.mobile_media_position | default('after') %}
 
@@ -27,7 +28,7 @@
     {% else %}
       <div class="ac-image">
         {% if settings.photo %}
-        <img src="{{ image_url(settings.photo, w=1440, f='auto') }}" alt="{{ settings.image_alt | default('') }}" loading="lazy" decoding="async">
+        <img src="{{ image_url(settings.photo, w=1440, f='auto') }}" alt="{{ settings.image_alt | default('') }}" width="1440" height="1008" {% if is_lazy %}loading="lazy" {% endif %}decoding="async">
         {% endif %}
       </div>
     {% endif %}
@@ -37,18 +38,18 @@
 {% macro community_content(is_mobile=false) %}
   <div class="{% if is_mobile %}ac-mobile__text{% else %}ac-text{% endif %}">
     <div class="ac-text__inner">
-      <h2 class="ac-title">{{ settings.title | default('مجتمع أناناس') }}</h2>
+      <h2 class="ac-title">{{ settings.title | default(_('The Ananas community')) }}</h2>
       <p class="ac-body ac-body--lead">
-        {{ settings.body1 | default('في أناناس، التجربة أكبر من كوب قهوة.') }}<br>
-        {{ settings.body2 | default('هي لحظات تعيشها وتفاصيل تختارها تعبّر عنك') }}
+        {{ settings.body1 | default(_('At Ananas, the experience is bigger than a cup of coffee.')) }}<br>
+        {{ settings.body2 | default(_('It is moments you live and details you choose that express who you are')) }}
       </p>
       <p class="ac-body ac-body--normal">
         {% if is_mobile and (settings.body3_mobile or settings.body4_mobile or settings.body5_mobile) %}
-          {{ settings.body3_mobile | default('من القهوة إلى كل ما يحيط يومك،') }}<br>
-          {{ settings.body4_mobile | default('نصمم تجربة تجمع ناس يشاركون نفس الذوق.') }}<br>
-          {{ settings.body5_mobile | default('أناناس… مجتمع تعيش فيه القهوة بأسلوبك.') }}
+          {{ settings.body3_mobile | default(_('From coffee to everything around your day,')) }}<br>
+          {{ settings.body4_mobile | default(_('we design an experience that brings together people who share the same taste.')) }}<br>
+          {{ settings.body5_mobile | default(_('Ananas… a community where coffee is lived your way.')) }}
         {% else %}
-          {{ settings.body3 | default('من القهوة إلى كل ما يحيط يومك، نصمم تجربة تجمع ناس يشاركون نفس الذوق. أناناس… مجتمع تعيش فيه القهوة بأسلوبك.') }}
+          {{ settings.body3 | default(_('From coffee to everything around your day, we design an experience that brings together people who share the same taste. Ananas… a community where coffee is lived your way.')) }}
         {% endif %}
       </p>
     </div>
@@ -60,8 +61,9 @@
   </div>
 {% endmacro %}
 
+<link rel="stylesheet" href="{{ 'css/sections/about-community.css' | asset_url }}">
 <section
-  section-id="{{ sectionId }}"
+  section-id="{{ sectionId }}" data-section="about-community"
   data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
   class="section-about-community"
   style="
@@ -95,228 +97,5 @@
 
 </section>
 
-<script>
-(function() {
-  var section = document.querySelector('[section-id="{{ sectionId }}"].section-about-community');
-  if (!section) return;
+<script defer src="{{ 'js/sections/about-community.js' | asset_url }}"></script>
 
-  section.querySelectorAll('[data-ac-video-trigger]').forEach(function(trigger) {
-    var video = trigger.querySelector('video');
-    var overlay = trigger.querySelector('[data-ac-video-overlay]');
-    if (!video) return;
-
-    trigger.addEventListener('click', function() {
-      if (video.paused) {
-        video.play();
-        trigger.classList.add('ac-video--playing');
-        if (overlay) overlay.style.opacity = '0';
-      } else {
-        video.pause();
-        trigger.classList.remove('ac-video--playing');
-        if (overlay) overlay.style.opacity = '1';
-      }
-    });
-
-    video.addEventListener('ended', function() {
-      trigger.classList.remove('ac-video--playing');
-      if (overlay) overlay.style.opacity = '1';
-    });
-  });
-})();
-</script>
-
-<style>
-  [section-id="{{ sectionId }}"].section-about-community {
-    background: var(--ac-section-bg, #FFF0EC);
-  }
-
-  .ac-desktop {
-    display: flex;
-    align-items: stretch;
-    flex-direction: row-reverse;
-    min-height: 400px;
-  }
-
-  .ac-text {
-    flex: 1 1 calc(100% - var(--ac-media-width));
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 20px;
-    padding: 48px 56px;
-    align-items: flex-start;
-  }
-
-  .ac-text__inner {
-    width: 100%;
-    max-width: 502px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    align-items: flex-start;
-  }
-
-  .ac-title {
-    width: 100%;
-    margin: 0;
-    color: var(--ac-title-color, #F7512B);
-    font-size: 30px;
-    font-weight: 500;
-    line-height: 36px;
-    text-align: start;
-  }
-   [dir="ltr"] [section-id="{{ sectionId }}"] .ac-title {
-    text-align: left;}
-
-  .ac-body {
-    max-width: 502px;
-    margin: 0;
-    font-size: 18px;
-    line-height: 28px;
-    text-align: right;
-  }
-    [dir="ltr"] [section-id="{{ sectionId }}"] .ac-body {
-      text-align: left;
-    }
-
-  .ac-body--lead {
-    color: var(--ac-lead-color, #000);
-    font-weight: 500;
-  }
-
-  .ac-body--normal {
-    color: var(--ac-body-color, #000);
-    font-weight: 400;
-  }
-
-  .ac-cta {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 42px;
-    border: 1px solid var(--ac-cta-border, #000);
-    background: var(--ac-cta-bg, var(--ac-section-bg, #FFF0EC));
-    padding: 8px 16px;
-    color: var(--ac-cta-text, #000);
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 24px;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: transform 0.2s ease, background 0.2s ease;
-  }
-
-  .ac-cta:hover {
-    transform: translateY(-1px);
-  }
-
-  .ac-media {
-    flex: 0 0 var(--ac-media-width);
-    min-width: 0;
-    position: relative;
-    min-height: var(--ac-media-height);
-  }
-
-  .ac-image,
-  .ac-video {
-    position: relative;
-    display: block;
-    width: 100%;
-    height: 100%;
-    min-height: var(--ac-media-height);
-    overflow: hidden;
-    border: 0;
-    padding: 0;
-    background: #111;
-  }
-
-  .ac-image img,
-  .ac-video__player {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .ac-video {
-    cursor: pointer;
-  }
-
-  .ac-video__overlay {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.18);
-    transition: opacity 0.25s ease;
-  }
-
-  .ac-video__play {
-    width: 64px;
-    height: 64px;
-    border-radius: 999px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: #111;
-    background: rgba(255, 255, 255, 0.86);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
-  }
-
-  .ac-mobile {
-    display: none;
-  }
-
-  @media (max-width: 767px) {
-    .ac-desktop {
-      display: none;
-    }
-
-    .ac-mobile {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      padding: 24px 16px 16px;
-    }
-
-    .ac-mobile__text {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .ac-mobile__text .ac-text__inner {
-      max-width: 100%;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .ac-mobile__text .ac-title {
-      font-size: 20px;
-      line-height: 28px;
-      text-align: center;
-    }
-
-    .ac-mobile__text .ac-body {
-      max-width: 100%;
-      font-size: 16px;
-      line-height: 24px;
-      text-align: center;
-    }
-
-    .ac-mobile__media {
-      width: 100%;
-    }
-
-    .ac-mobile__media .ac-image,
-    .ac-mobile__media .ac-video {
-      width: 100%;
-      min-height: var(--ac-mob-media-height);
-      aspect-ratio: auto;
-    }
-  }
-</style>

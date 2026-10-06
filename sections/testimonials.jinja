@@ -1,5 +1,6 @@
+<link rel="stylesheet" href="{{ 'css/sections/testimonials.css' | asset_url }}">
 <section
-  section-id="{{ sectionId }}"
+  section-id="{{ sectionId }}" data-section="testimonials"
   data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
   class="section-testimonials px-4 py-6 md:px-16 md:py-16"
   style="background-color: {{ settings.background_color | default('#ffffff') }};"
@@ -112,41 +113,5 @@
   </div>
 </section>
 
-<style>
-  [section-id="{{ sectionId }}"] .embla {
-    --slide-spacing: 1rem; /* gap 4 = 1rem */
-    --slide-size-xs: 83.3333%;
-    --slide-size-sm: 50%;
-    --slide-size-lg: 33.3333%;
-  }
-
-  [section-id="{{ sectionId }}"] .embla__container {
-    display: flex;
-    touch-action: pan-y pinch-zoom;
-    margin-inline-start: calc(var(--slide-spacing) * -1);
-    align-items: stretch;
-  }
-
-  [section-id="{{ sectionId }}"] .embla__slide {
-    transform: translate3d(0, 0, 0);
-    flex: 0 0 var(--slide-size-xs);
-    min-width: 0;
-    padding-inline-start: var(--slide-spacing);
-  }
-
-  @media (min-width: 640px) {
-    /* sm */
-    [section-id="{{ sectionId }}"] .embla__slide {
-      flex-basis: var(--slide-size-sm);
-    }
-  }
-
-  @media (min-width: 1024px) {
-    /* lg */
-    [section-id="{{ sectionId }}"] .embla__slide {
-      flex-basis: var(--slide-size-lg);
-    }
-  }
-</style>
 
 {# Carousel is now initialized by main.js using data-carousel attributes #}

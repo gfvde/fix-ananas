@@ -1,6 +1,7 @@
-{% set title_text = settings.title | default('اختار قهوتك علي مزاجك') %}
-{% set subtitle_text = settings.subtitle | default('لكل مزاج تجربة مختلفة هنا تلقى اللي يناسبك') %}
-{% set cta_text = settings.cta_text | default('تسوّق حسب مزاجك') %}
+{% set is_lazy = (settings.order | default(3) | int) > 2 %}
+{% set title_text = settings.title | default(_('Choose your coffee to match your mood')) %}
+{% set subtitle_text = settings.subtitle | default(_('Every mood has its own experience, here you will find what suits you')) %}
+{% set cta_text = settings.cta_text | default(_('Shop by mood')) %}
 {% set cta_url = settings.cta_url | default('#') %}
 {% set section_bg_color = settings.section_bg_color | default('#ffffff') %}
 {% set text_color = settings.text_color | default('#000000') %}
@@ -12,15 +13,16 @@
 
 {%
   set cards = [
-    { 'image': settings.card1_image, 'tag': settings.card1_tag | default('شي جديد'), 'title': settings.card1_title | default('قهوة المغامرة'), 'desc': settings.card1_desc | default('اكتشف نكهات جديدة كل مرة'), 'url': settings.card1_url | default('#') },
-    { 'image': settings.card2_image, 'tag': settings.card2_tag | default('صفاء ذهني'), 'title': settings.card2_title | default('قهوة التركيز'), 'desc': settings.card2_desc | default('مزاج صافي يساعدك تنجز بدون تشتيت'), 'url': settings.card2_url | default('#') },
-    { 'image': settings.card3_image, 'tag': settings.card3_tag | default('هدوء بطعم غني'), 'title': settings.card3_title | default('قهوة الروقان'), 'desc': settings.card3_desc | default('لحظة لنفسك بعيد عن الزحمة'), 'url': settings.card3_url | default('#') },
-    { 'image': settings.card4_image, 'tag': settings.card4_tag | default('بداية يومك'), 'title': settings.card4_title | default('قهوة الصباح'), 'desc': settings.card4_desc | default('بداية خفيفة تضبط يومك من أول كوب'), 'url': settings.card4_url | default('#') }
+    { 'image': settings.card1_image, 'tag': settings.card1_tag | default(_('Something new')), 'title': settings.card1_title | default(_('Adventure coffee')), 'desc': settings.card1_desc | default(_('Discover new flavors every time')), 'url': settings.card1_url | default('#') },
+    { 'image': settings.card2_image, 'tag': settings.card2_tag | default(_('Clear mind')), 'title': settings.card2_title | default(_('Focus coffee')), 'desc': settings.card2_desc | default(_('A clear mood that helps you get things done without distraction')), 'url': settings.card2_url | default('#') },
+    { 'image': settings.card3_image, 'tag': settings.card3_tag | default(_('Calm with a rich taste')), 'title': settings.card3_title | default(_('Relaxation coffee')), 'desc': settings.card3_desc | default(_('A moment for yourself, away from the rush')), 'url': settings.card3_url | default('#') },
+    { 'image': settings.card4_image, 'tag': settings.card4_tag | default(_('Start of your day')), 'title': settings.card4_title | default(_('Morning coffee')), 'desc': settings.card4_desc | default(_('A light start that sets your day right from the first cup')), 'url': settings.card4_url | default('#') }
   ]
 %}
 
+<link rel="stylesheet" href="{{ 'css/sections/about-shop-by-mood.css' | asset_url }}">
 <section
-  section-id="{{ sectionId }}"
+  section-id="{{ sectionId }}" data-section="about-shop-by-mood"
   data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
   class="sbm-section"
   style="--mc-bg:{{ section_bg_color }};--mc-text:{{ text_color }};--mc-tag-bg:{{ tag_bg_color }};--mc-tag-text:{{ tag_text_color }};--mc-cta-border:{{ cta_border_color }};--mc-cta-text:{{ cta_text_color }};--mc-hover-text:{{ hover_text_color }};"
@@ -50,8 +52,9 @@
             <img
               src="{{ image_url(card.image, w=800, f='auto') }}"
               alt="{{ card.title }}"
-              loading="lazy"
-              decoding="async"
+              width="800"
+              height="640"
+              {% if is_lazy %}loading="lazy" {% endif %}decoding="async"
             />
             {% endif %}
             {% if card.tag %}<span class="sbm-tag">{{ card.tag }}</span>{% endif %}
@@ -90,7 +93,7 @@
             />
           </svg>
         </button>
-        <p class="sbm-mob-subtitle">{{ settings.mobile_subtitle | default('لكل مزاج تجربة مختلفة') }}</p>
+        <p class="sbm-mob-subtitle">{{ settings.mobile_subtitle | default(_('Every mood has its own experience')) }}</p>
         <button
           class="sbm-arrow"
           data-sbm-next
@@ -127,8 +130,9 @@
             <img
               src="{{ image_url(card.image, w=600, f='auto') }}"
               alt="{{ card.title }}"
-              loading="lazy"
-              decoding="async"
+              width="600"
+              height="598"
+              {% if is_lazy %}loading="lazy" {% endif %}decoding="async"
             />
             {% endif %}
             {% if card.tag %}<span class="sbm-tag">{{ card.tag }}</span>{% endif %}
@@ -155,393 +159,5 @@
   </div>
 </section>
 
-<style>
-  [section-id="{{ sectionId }}"].sbm-section {
-    background: var(--mc-bg, #fff);
-    overflow: hidden;
-  }
 
-  /* DESKTOP */
-  [section-id="{{ sectionId }}"] .sbm-desktop {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding: 32px 56px 40px;
-  }
-  [section-id="{{ sectionId }}"] .sbm-header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-  [section-id="{{ sectionId }}"] .sbm-header__right {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 8px;
-    width: 327px;
-  }
-  [section-id="{{ sectionId }}"] .sbm-title {
-    margin: 0;
-    width: 100%;
-    font-size: 30px;
-    font-weight: 500;
-    line-height: 36px;
-    color: var(--mc-text, #000);
-    text-align: right;
-  }
-  [dir="ltr"] [section-id="{{ sectionId }}"] .sbm-title {
-    text-align: left;
-  }
-  [section-id="{{ sectionId }}"] .sbm-subtitle {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
-    color: var(--mc-text, #000);
-    text-align: right;
-  }
-   [dir="ltr"] [section-id="{{ sectionId }}"] .sbm-subtitle {
-    text-align: left;}
-
-  [section-id="{{ sectionId }}"] .sbm-cta {
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 8px 24px;
-    border: 1px solid var(--mc-cta-border, #000);
-    background: transparent;
-    color: var(--mc-cta-text, #000);
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 24px;
-    text-decoration: none;
-    white-space: nowrap;
-    transition:
-      background 0.2s,
-      transform 0.2s;
-    cursor: pointer;
-  }
-  [section-id="{{ sectionId }}"] .sbm-cta:hover {
-    background: rgba(0, 0, 0, 0.04);
-    transform: translateY(-1px);
-  }
-  [section-id="{{ sectionId }}"] .sbm-cards {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 16px;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-  [section-id="{{ sectionId }}"] .sbm-cards::-webkit-scrollbar {
-    display: none;
-  }
-  [section-id="{{ sectionId }}"] .sbm-card {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    flex: 1 1 0%;
-    min-width: 0;
-    text-decoration: none;
-    color: inherit;
-  }
-  [section-id="{{ sectionId }}"] .sbm-card__img {
-    position: relative;
-    width: 100%;
-    height: 320px;
-    overflow: hidden;
-    background: #f0f0f0;
-  }
-  [section-id="{{ sectionId }}"] .sbm-card__img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.35s ease;
-  }
-  [section-id="{{ sectionId }}"] .sbm-card:hover .sbm-card__img img {
-    transform: scale(1.04);
-  }
-  [section-id="{{ sectionId }}"] .sbm-tag {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    padding: 3px 6px;
-    background: var(--mc-tag-bg, #f7512b);
-    color: var(--mc-tag-text, #fff);
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 16px;
-    white-space: nowrap;
-    z-index: 2;
-  }
-  [section-id="{{ sectionId }}"] .sbm-card__info {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  [section-id="{{ sectionId }}"] .sbm-card__name {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 28px;
-    color: var(--mc-text, #000);
-    text-align: right;
-    transition: color 0.25s ease;
-  }
-   [dir="ltr"] [section-id="{{ sectionId }}"] .sbm-card__name {
-    text-align: left;
-  }
-  [section-id="{{ sectionId }}"] .sbm-card__desc {
-    margin: 0;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
-    color: var(--mc-text, #000);
-    text-align: right;
-    transition: color 0.25s ease;
-  }
-    [dir="ltr"] [section-id="{{ sectionId }}"] .sbm-card__desc {
-      text-align: left;
-    }
-  [section-id="{{ sectionId }}"] .sbm-card:hover .sbm-card__name,
-  [section-id="{{ sectionId }}"] .sbm-card:hover .sbm-card__desc {
-    color: var(--mc-hover-text, #fff);
-  }
-
-  /* Hide mobile on desktop */
-  [section-id="{{ sectionId }}"] .sbm-mobile {
-    display: none;
-  }
-
-  /* MOBILE */
-  @media (max-width: 767px) {
-    [section-id="{{ sectionId }}"] .sbm-desktop {
-      display: none;
-    }
-    [section-id="{{ sectionId }}"] .sbm-mobile {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-      padding: 24px 16px 16px;
-    }
-    [section-id="{{ sectionId }}"] .sbm-mob-header {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      gap: 8px;
-      width: 100%;
-    }
-    [section-id="{{ sectionId }}"] .sbm-mob-title {
-      margin: 0;
-      font-size: 24px;
-      font-weight: 500;
-      line-height: 32px;
-      color: var(--mc-text, #000);
-      text-align: center;
-      width: 100%;
-    }
-    [section-id="{{ sectionId }}"] .sbm-mob-sub-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-    }
-    [dir="ltr"] [section-id="{{ sectionId }}"] .sbm-mob-sub-row {
-      flex-direction: row-reverse;
-    }
-
-    [section-id="{{ sectionId }}"] .sbm-arrow {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 24px;
-      height: 24px;
-      background: #f5f5f5;
-      border: none;
-      cursor: pointer;
-      flex-shrink: 0;
-      padding: 0;
-      color: #000;
-      transition: opacity 0.2s;
-    }
-    [section-id="{{ sectionId }}"] .sbm-arrow:hover {
-      opacity: 0.7;
-    }
-    html[dir="ltr"] [section-id="{{ sectionId }}"] [data-sbm-prev] svg,
-    html[dir="ltr"] [section-id="{{ sectionId }}"] [data-sbm-next] svg {
-      transform: scaleX(-1);
-    }
-    [section-id="{{ sectionId }}"] .sbm-mob-subtitle {
-      margin: 0;
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 24px;
-      color: var(--mc-text, #000);
-      text-align: center;
-    }
-    [section-id="{{ sectionId }}"] .sbm-track {
-      display: flex;
-      flex-direction: row;
-      gap: 16px;
-      width: 100%;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-      -webkit-overflow-scrolling: touch;
-      touch-action: pan-x pan-y;
-    }
-    [section-id="{{ sectionId }}"] .sbm-track::-webkit-scrollbar {
-      display: none;
-    }
-    [section-id="{{ sectionId }}"] .sbm-mob-card {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      flex: 0 0 299px;
-      width: 299px;
-      scroll-snap-align: start;
-      text-decoration: none;
-      color: inherit;
-    }
-    [section-id="{{ sectionId }}"] .sbm-mob-card__img {
-      position: relative;
-      width: 100%;
-      height: 299px;
-      overflow: hidden;
-      background: #f0f0f0;
-    }
-    [section-id="{{ sectionId }}"] .sbm-mob-card__img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      user-select: none;
-      -webkit-user-drag: none;
-    }
-    [section-id="{{ sectionId }}"] .sbm-mob-card__info {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    [section-id="{{ sectionId }}"] .sbm-mob-card__name {
-      margin: 0;
-      font-size: 18px;
-      font-weight: 500;
-      line-height: 28px;
-      color: var(--mc-text, #000);
-      text-align: center;
-    }
-    [section-id="{{ sectionId }}"] .sbm-mob-card__desc {
-      margin: 0;
-      font-size: 14px;
-      font-weight: 400;
-      line-height: 20px;
-      color: var(--mc-text, #000);
-      text-align: center;
-    }
-    [section-id="{{ sectionId }}"] .sbm-scrollbar {
-      display: flex;
-      justify-content: center;
-      margin-top: 0;
-    }
-    [section-id="{{ sectionId }}"] .sbm-scrollbar__track {
-      width: 180px;
-      height: 2px;
-      background: #e5e5e5;
-      position: relative;
-      overflow: hidden;
-      border-radius: 1px;
-    }
-    [section-id="{{ sectionId }}"] .sbm-scrollbar__thumb {
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: 100%;
-      background: #737373;
-      border-radius: 1px;
-      transition:
-        width 0.3s,
-        right 0.3s;
-    }
-    [section-id="{{ sectionId }}"] .sbm-mob-cta {
-      display: block;
-      text-align: center;
-      font-size: 16px;
-      font-weight: 500;
-      line-height: 24px;
-      color: var(--mc-cta-text, #000);
-      text-decoration: underline;
-      margin-top: 4px;
-    }
-  }
-
-  /* TABLET */
-  @media (min-width: 768px) and (max-width: 1023px) {
-    [section-id="{{ sectionId }}"] .sbm-desktop {
-      padding: 24px 24px 32px;
-    }
-    [section-id="{{ sectionId }}"] .sbm-header__right {
-      width: auto;
-      max-width: 300px;
-    }
-    [section-id="{{ sectionId }}"] .sbm-card__img {
-      height: 240px;
-    }
-    [section-id="{{ sectionId }}"] .sbm-title {
-      font-size: 24px;
-      line-height: 32px;
-    }
-  }
-</style>
-
-<script>
-  (function () {
-    var s = document.querySelector('[section-id="{{ sectionId }}"].sbm-section');
-    if (!s) return;
-    var track = s.querySelector("[data-sbm-track]"),
-      thumb = s.querySelector("[data-sbm-thumb]"),
-      prev = s.querySelector("[data-sbm-prev]"),
-      next = s.querySelector("[data-sbm-next]");
-    if (!track) return;
-    var cards = track.querySelectorAll(".sbm-mob-card");
-    if (!cards.length) return;
-    function updateThumb() {
-      if (!thumb) return;
-      var max = track.scrollWidth - track.clientWidth;
-      if (max <= 0) {
-        thumb.style.width = "100%";
-        thumb.style.right = "0";
-        return;
-      }
-      var pos = Math.abs(track.scrollLeft),
-        ratio = pos / max,
-        tw = (track.clientWidth / track.scrollWidth) * 100;
-      thumb.style.width = tw + "%";
-      thumb.style.right = ratio * (100 - tw) + "%";
-    }
-    function scroll(dir) {
-      var w = cards[0].offsetWidth + 16;
-      var isRTL = document.documentElement.dir === "rtl";
-      var amount = isRTL ? (dir === "next" ? -w : w) : (dir === "next" ? w : -w);
-      track.scrollBy({ left: amount, behavior: "smooth" });
-    }
-    if (prev)
-      prev.addEventListener("click", function () {
-        scroll("prev");
-      });
-    if (next)
-      next.addEventListener("click", function () {
-        scroll("next");
-      });
-    track.addEventListener("scroll", updateThumb, { passive: true });
-    window.addEventListener("resize", updateThumb);
-    setTimeout(updateThumb, 100);
-  })();
-</script>
+<script defer src="{{ 'js/sections/about-shop-by-mood.js' | asset_url }}"></script>

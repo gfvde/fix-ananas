@@ -1,0 +1,345 @@
+/* sections/about-shop-by-mood.jinja styles (moved from an inline <style>). Scoped by [data-section="about-shop-by-mood"]. */
+[data-section="about-shop-by-mood"].sbm-section {
+  background: var(--mc-bg, #fff);
+  overflow: hidden;
+}
+
+/* DESKTOP */
+[data-section="about-shop-by-mood"] .sbm-desktop {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 32px 56px 40px;
+}
+[data-section="about-shop-by-mood"] .sbm-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+[data-section="about-shop-by-mood"] .sbm-header__right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 8px;
+  width: 327px;
+}
+[data-section="about-shop-by-mood"] .sbm-title {
+  margin: 0;
+  width: 100%;
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 36px;
+  color: var(--mc-text, #000);
+  text-align: right;
+}
+[dir="ltr"] [data-section="about-shop-by-mood"] .sbm-title {
+  text-align: left;
+}
+[data-section="about-shop-by-mood"] .sbm-subtitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--mc-text, #000);
+  text-align: right;
+}
+[dir="ltr"] [data-section="about-shop-by-mood"] .sbm-subtitle {
+  text-align: left;
+}
+
+[data-section="about-shop-by-mood"] .sbm-cta {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 24px;
+  border: 1px solid var(--mc-cta-border, #000);
+  background: transparent;
+  color: var(--mc-cta-text, #000);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background 0.2s,
+    transform 0.2s;
+  cursor: pointer;
+}
+[data-section="about-shop-by-mood"] .sbm-cta:hover {
+  background: rgba(0, 0, 0, 0.04);
+  transform: translateY(-1px);
+}
+[data-section="about-shop-by-mood"] .sbm-cards {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+[data-section="about-shop-by-mood"] .sbm-cards::-webkit-scrollbar {
+  display: none;
+}
+[data-section="about-shop-by-mood"] .sbm-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1 1 0%;
+  min-width: 0;
+  text-decoration: none;
+  color: inherit;
+}
+[data-section="about-shop-by-mood"] .sbm-card__img {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+  background: #f0f0f0;
+}
+[data-section="about-shop-by-mood"] .sbm-card__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+[data-section="about-shop-by-mood"] .sbm-card:hover .sbm-card__img img {
+  transform: scale(1.04);
+}
+[data-section="about-shop-by-mood"] .sbm-tag {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 3px 6px;
+  background: var(--mc-tag-bg, #f7512b);
+  color: var(--mc-tag-text, #fff);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  white-space: nowrap;
+  z-index: 2;
+}
+[data-section="about-shop-by-mood"] .sbm-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+[data-section="about-shop-by-mood"] .sbm-card__name {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 28px;
+  color: var(--mc-text, #000);
+  text-align: right;
+  transition: color 0.25s ease;
+}
+[dir="ltr"] [data-section="about-shop-by-mood"] .sbm-card__name {
+  text-align: left;
+}
+[data-section="about-shop-by-mood"] .sbm-card__desc {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--mc-text, #000);
+  text-align: right;
+  transition: color 0.25s ease;
+}
+[dir="ltr"] [data-section="about-shop-by-mood"] .sbm-card__desc {
+  text-align: left;
+}
+[data-section="about-shop-by-mood"] .sbm-card:hover .sbm-card__name,
+[data-section="about-shop-by-mood"] .sbm-card:hover .sbm-card__desc {
+  color: var(--mc-hover-text, #fff);
+}
+
+/* Hide mobile on desktop */
+[data-section="about-shop-by-mood"] .sbm-mobile {
+  display: none;
+}
+
+/* MOBILE */
+@media (max-width: 767px) {
+  [data-section="about-shop-by-mood"] .sbm-desktop {
+    display: none;
+  }
+  [data-section="about-shop-by-mood"] .sbm-mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 16px 16px;
+  }
+  [data-section="about-shop-by-mood"] .sbm-mob-header {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    width: 100%;
+  }
+  [data-section="about-shop-by-mood"] .sbm-mob-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 32px;
+    color: var(--mc-text, #000);
+    text-align: center;
+    width: 100%;
+  }
+  [data-section="about-shop-by-mood"] .sbm-mob-sub-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  [dir="ltr"] [data-section="about-shop-by-mood"] .sbm-mob-sub-row {
+    flex-direction: row-reverse;
+  }
+
+  [data-section="about-shop-by-mood"] .sbm-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: #f5f5f5;
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    padding: 0;
+    color: #000;
+    transition: opacity 0.2s;
+  }
+  [data-section="about-shop-by-mood"] .sbm-arrow:hover {
+    opacity: 0.7;
+  }
+  html[dir="ltr"] [data-section="about-shop-by-mood"] [data-sbm-prev] svg,
+  html[dir="ltr"] [data-section="about-shop-by-mood"] [data-sbm-next] svg {
+    transform: scaleX(-1);
+  }
+  [data-section="about-shop-by-mood"] .sbm-mob-subtitle {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: var(--mc-text, #000);
+    text-align: center;
+  }
+  [data-section="about-shop-by-mood"] .sbm-track {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    width: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y;
+  }
+  [data-section="about-shop-by-mood"] .sbm-track::-webkit-scrollbar {
+    display: none;
+  }
+  [data-section="about-shop-by-mood"] .sbm-mob-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 0 0 299px;
+    width: 299px;
+    scroll-snap-align: start;
+    text-decoration: none;
+    color: inherit;
+  }
+  [data-section="about-shop-by-mood"] .sbm-mob-card__img {
+    position: relative;
+    width: 100%;
+    height: 299px;
+    overflow: hidden;
+    background: #f0f0f0;
+  }
+  [data-section="about-shop-by-mood"] .sbm-mob-card__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  [data-section="about-shop-by-mood"] .sbm-mob-card__info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  [data-section="about-shop-by-mood"] .sbm-mob-card__name {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 28px;
+    color: var(--mc-text, #000);
+    text-align: center;
+  }
+  [data-section="about-shop-by-mood"] .sbm-mob-card__desc {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    color: var(--mc-text, #000);
+    text-align: center;
+  }
+  [data-section="about-shop-by-mood"] .sbm-scrollbar {
+    display: flex;
+    justify-content: center;
+    margin-top: 0;
+  }
+  [data-section="about-shop-by-mood"] .sbm-scrollbar__track {
+    width: 180px;
+    height: 2px;
+    background: #e5e5e5;
+    position: relative;
+    overflow: hidden;
+    border-radius: 1px;
+  }
+  [data-section="about-shop-by-mood"] .sbm-scrollbar__thumb {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    background: #737373;
+    border-radius: 1px;
+    transition:
+      width 0.3s,
+      right 0.3s;
+  }
+  [data-section="about-shop-by-mood"] .sbm-mob-cta {
+    display: block;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    color: var(--mc-cta-text, #000);
+    text-decoration: underline;
+    margin-top: 4px;
+  }
+}
+
+/* TABLET */
+@media (min-width: 768px) and (max-width: 1023px) {
+  [data-section="about-shop-by-mood"] .sbm-desktop {
+    padding: 24px 24px 32px;
+  }
+  [data-section="about-shop-by-mood"] .sbm-header__right {
+    width: auto;
+    max-width: 300px;
+  }
+  [data-section="about-shop-by-mood"] .sbm-card__img {
+    height: 240px;
+  }
+  [data-section="about-shop-by-mood"] .sbm-title {
+    font-size: 24px;
+    line-height: 32px;
+  }
+}

@@ -1,7 +1,8 @@
 {% set is_lazy = settings.order > 2 %}
 
+<link rel="stylesheet" href="{{ 'css/sections/categories.css' | asset_url }}">
 <section
-  section-id="{{ sectionId }}"
+  section-id="{{ sectionId }}" data-section="categories"
   data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
   class="section-categories px-4 py-6 md:px-16 md:py-16"
   style="background-color: {{ settings.background_color | default('transparent') }};"
@@ -60,7 +61,7 @@
                       {% endif %}
                       alt="{{ categoryItem.category.name }}"
                       class="aspect-[4/5] w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                      {% if is_lazy or not loop.first %}loading="lazy"{% endif %}
+                      {% if is_lazy or not loop.first %}loading="lazy" decoding="async"{% endif %}
                     />
                   </div>
                   <h3 class="text-foreground text-lg md:text-xl font-semibold text-start md:text-center">
@@ -145,28 +146,3 @@
   </div>
 </section>
 
-<style>
-  [section-id="{{ sectionId }}"] .embla {
-    --slide-spacing: 1rem; /* 16px gap from design */
-    --slide-size: 320px; /* Mobile card width */
-  }
-
-  [section-id="{{ sectionId }}"] .embla__container {
-    display: flex;
-    touch-action: pan-y pinch-zoom;
-    margin-inline-start: calc(var(--slide-spacing) * -1);
-  }
-
-  [section-id="{{ sectionId }}"] .embla__slide {
-    transform: translate3d(0, 0, 0);
-    flex: 0 0 var(--slide-size);
-    min-width: 0;
-    padding-inline-start: var(--slide-spacing);
-  }
-
-  @media (min-width: 1024px) {
-    [section-id="{{ sectionId }}"] .embla {
-      --slide-size: 380px; /* Desktop card width */
-    }
-  }
-</style>
