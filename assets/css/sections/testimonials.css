@@ -1,0 +1,35 @@
+/* sections/testimonials.jinja styles (moved from an inline <style>). Scoped by [data-section="testimonials"]. */
+[data-section="testimonials"] .embla {
+  --slide-spacing: 1rem; /* gap 4 = 1rem */
+  --slide-size-xs: 83.3333%;
+  --slide-size-sm: 50%;
+  --slide-size-lg: 33.3333%;
+}
+
+[data-section="testimonials"] .embla__container {
+  display: flex;
+  touch-action: pan-y pinch-zoom;
+  margin-inline-start: calc(var(--slide-spacing) * -1);
+  align-items: stretch;
+}
+
+[data-section="testimonials"] .embla__slide {
+  transform: translate3d(0, 0, 0);
+  flex: 0 0 var(--slide-size-xs);
+  min-width: 0;
+  padding-inline-start: var(--slide-spacing);
+}
+
+@media (min-width: 640px) {
+  /* sm */
+  [data-section="testimonials"] .embla__slide {
+    flex-basis: var(--slide-size-sm);
+  }
+}
+
+@media (min-width: 1024px) {
+  /* lg */
+  [data-section="testimonials"] .embla__slide {
+    flex-basis: var(--slide-size-lg);
+  }
+}

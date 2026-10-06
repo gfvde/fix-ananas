@@ -1,8 +1,9 @@
 {% set mobile_image = image_url(settings.background_image_mobile or settings.background_image, w=768, q=75, f='auto') %}
 {% set desktop_image = image_url(settings.background_image, w=1920, q=90, f='auto') %}
 
+<link rel="stylesheet" href="{{ 'css/sections/ananas-banner.css' | asset_url }}">
 <section
-  section-id="{{ sectionId }}"
+  section-id="{{ sectionId }}" data-section="ananas-banner"
   data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
   class="section-home-banner relative flex min-h-[500px] items-center overflow-hidden px-4 md:px-16 md:min-h-[468px] animate-fade-in"
   style="background-color: {{ settings.background_color | default('transparent') }};"
@@ -73,26 +74,4 @@
     </div>
   </div>
 
-  <style>
-    .section-home-banner {
-      direction: rtl;
-    }
-    .banner-ghost-btn {
-      border-radius: 2px;
-      backdrop-filter: blur(8px);
-      min-width: 220px;
-    }
-    
-    @keyframes fade-in {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fade-in {
-      animation: fade-in 0.8s ease-out forwards;
-    }
-
-    [section-id="{{ sectionId }}"] .text-warning {
-       color: #FFB800 !important;
-    }
-  </style>
 </section>
