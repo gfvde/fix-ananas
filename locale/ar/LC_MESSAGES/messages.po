@@ -1760,3 +1760,44 @@ msgstr "الانتقال إلى التقييمات (%(rating)s)"
 #, python-format
 msgid "Review %(number)s"
 msgstr "تقييم %(number)s"
+
+# --- product page (hardcoded ar/en switches → gettext) ---
+msgid "SKU"
+msgstr "رقم الموديل"
+
+msgid "A unique blend of flavors"
+msgstr "مزيج نكهات فريد"
+
+msgid "Light"
+msgstr "خفيفة"
+
+msgid "Medium"
+msgstr "متوسطة"
+
+msgid "High"
+msgstr "عالية"
+
+msgid "Smooth"
+msgstr "ناعم"
+
+msgid "Balanced"
+msgstr "متوازن"
+
+msgid "Heavy"
+msgstr "ثقيل"
+
+#, python-format
+msgid "Only %s left in stock!"
+msgstr "متبقي %s عبوات فقط في المخزون!"
+
+msgid "Frequently bought together"
+msgstr "عادة ما يتم شراؤها معا"
+
+msgid "Buy together for"
+msgstr "اشتري معاً بسعر"
+
+msgid "We provide comprehensive answers to the most common questions to help you choose the right product."
+msgstr "نقدم لك إجابات شاملة على أكثر الاستفسارات شيوعًا لمساعدتك على اختيار المنتج المناسب وتجربة استخدام سلسة"
+
+msgid "Preparation methods"
+msgstr "طرق التحضير"

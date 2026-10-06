@@ -278,7 +278,7 @@
                             stroke-width="0.05"
                           ></path>
                         </svg>
-                        <span data-sold-count-text>{{ ('تم بيع أكثر من %s مرة' if session.lang == 'ar' else 'Sold more than %s times') | format(sold_count) if sold_count }}</span>
+                        <span data-sold-count-text>{{ _("Sold more than %s times") | format(sold_count) if sold_count }}</span>
                       </span>
 
                       {# Remaining Stock Badge #}
@@ -299,7 +299,7 @@
                           ></path>
                         </svg>
                         <span data-low-stock-text
-                          >{{ ('متبقي %s فقط' if session.lang == 'ar' else 'Remaining %s only') | format(product.low_stock_quantity) if product.low_stock_quantity }}</span
+                          >{{ _("Remaining %s only") | format(product.low_stock_quantity) if product.low_stock_quantity }}</span
                         >
                       </span>
                     </div>
@@ -546,7 +546,7 @@
             class="text-muted-foreground {{ 'hidden' if not product.sku }} text-sm"
             data-product-sku-wrapper
           >
-            {{ 'رقم الموديل' if session.lang == 'ar' else 'SKU' }} <span data-product-sku>{{ product.sku }}</span>
+            {{ _('SKU') }} <span data-product-sku>{{ product.sku }}</span>
           </span>
            {# Weight #}
                 <div
@@ -609,7 +609,7 @@
                   font-size: {{ settings.single_product_section_features_title_font_size | default(16) }}px;
                 "
               >
-                {{ settings.single_product_section_head_title_feature | default('مزيج نكهات فريد') }}
+                {{ settings.single_product_section_head_title_feature | default(_('A unique blend of flavors')) }}
               </h2>
             </div>
 
@@ -776,9 +776,9 @@
           {# Labels - يدعم RTL #}
           <div class="flex justify-between text-xs text-gray-500 mt-2" 
                data-dir="auto">
-            <span>{{ 'خفيفة' if session.lang == 'ar' else 'Light' }}</span>
-            <span>{{ 'متوسطة' if session.lang == 'ar' else 'Medium' }}</span>
-            <span>{{ 'عالية' if session.lang == 'ar' else 'High' }}</span>
+            <span>{{ _('Light') }}</span>
+            <span>{{ _('Medium') }}</span>
+            <span>{{ _('High') }}</span>
           </div>
         </div>
 
@@ -835,9 +835,9 @@
           {# Labels - يدعم RTL #}
           <div class="flex justify-between text-xs text-gray-500 mt-2" 
                data-dir="auto">
-            <span>{{ 'ناعم' if session.lang == 'ar' else 'Smooth' }}</span>
-            <span>{{ 'متوازن' if session.lang == 'ar' else 'Balanced' }}</span>
-            <span>{{ 'ثقيل' if session.lang == 'ar' else 'Heavy' }}</span>
+            <span>{{ _('Smooth') }}</span>
+            <span>{{ _('Balanced') }}</span>
+            <span>{{ _('Heavy') }}</span>
           </div>
         </div>
 
@@ -861,7 +861,7 @@
                       <span>🔥</span>
                       
                       <span>
-                        {{ 'متبقي ' ~ qty ~ ' عبوات فقط في المخزون!' if session.lang == 'ar' else 'Only ' ~ qty ~ ' left in stock!' }}
+                        {{ _("Only %s left in stock!") | format(qty) }}
                       </span>
 
                     </div>
@@ -904,7 +904,7 @@
               <label
                 for="product-quantity"
                 class="form-label"
-                >{{ 'الكمية' if session.lang == 'ar' else 'Quantity' }}</label
+                >{{ _('Quantity') }}</label
               >
               {% with id='product-quantity', quantity=1, min=1, max=product.quantity if not product.is_infinite and product.quantity and product.quantity > 0 else (1 if can_preorder else none), sync_target='sticky-qty' %}
                 {% include 'components/ui/quantity-input.jinja' %}
@@ -964,7 +964,7 @@
                                 <button
                                   type="button"
                                   data-add-to-cart-form="product-form"
-                                  data-success-text="{{ 'تمت الإضافة!' if session.lang == 'ar' else 'Added!' }}"
+                                  data-success-text="{{ _('Added!') }}"
                                   class="btn btn-filled btn-lg flex-1"
                                   style="background-color: #F7512B; border-radius: 0; border: none;"
                                 >
@@ -1030,7 +1030,7 @@
                                       <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
                                       <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
                                     </svg>
-                                    {{ 'أعلمني عند التوفر' if session.lang == 'ar' else 'Notify me when available' }}
+                                    {{ _('Notify me when available') }}
                                   </button>
                                 </div>
                               </div>
@@ -1085,7 +1085,7 @@
     <div class="">
 
       <h2 class="text-base font-medium text-right mb-4">
-        {{ ns.current_bundle.section_title | default('عادة ما يتم شراؤها معا') }}
+        {{ ns.current_bundle.section_title | default(_('Frequently bought together')) }}
       </h2>
 
       <div id="bundle-skeleton" class="flex flex-wrap gap-3 justify-end">
@@ -1108,7 +1108,7 @@
                   type="button"
                   class="px-6 py-3  text-sm font-medium border-2 transition-all duration-200 flex items-center gap-2"
                   style="border-color: {{ ns.current_bundle.bundle_btn_color | default('#e63b3b') }}; color: {{ ns.current_bundle.bundle_btn_color | default('#e63b3b') }};">
-            <span>{{ ns.current_bundle.bundle_btn_text | default('اشتري معاً بسعر') }}</span>
+            <span>{{ ns.current_bundle.bundle_btn_text | default(_('Buy together for')) }}</span>
             <span id="bundle-total-display" class="font-bold"></span>
             <span id="bundle-add-loader" class="hidden">
               <svg class="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
@@ -1470,7 +1470,7 @@
             class="tab-button whitespace-nowrap px-4 py-3 text-sm font-medium text-muted-foreground border-b-2 border-transparent hover:text-foreground transition-colors"
             data-tab="coffee-cta"
           >
-            {{ settings.single_product_section_title_coffee_cta_section | default(_("Recipes") if session.lang != 'ar' else 'طرق التحضير') }}
+            {{ settings.single_product_section_title_coffee_cta_section | default(_("Preparation methods")) }}
           </button>
           {% endif %}
         </div>
@@ -1641,7 +1641,7 @@
               class="accordion-button w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-foreground transition-colors"
               data-accordion="coffee-cta"
             >
-              <span>{{ settings.single_product_section_title_coffee_cta_section | default(_("Recipes") if session.lang != 'ar' else 'طرق التحضير') }}</span>
+              <span>{{ settings.single_product_section_title_coffee_cta_section | default(_("Preparation methods")) }}</span>
               <svg width="13" height="7" viewBox="0 0 13 7" fill="none" class="accordion-icon transition-transform duration-300" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1 1L6.5009 6L12 1" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -1674,177 +1674,6 @@
           </div>
           {% endif %}
         </div>
-
-        {# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-           Coffee CTA Section – Tabs (Desktop) / Accordion (Mobile)
-           Smart logic: button only shown when label + iframe URL exist
-           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ #}
-        {% if false %}{# Coffee CTA now lives inside the main tabs/accordion above #}
-
-          {# ── Resolve CTA items that have both label AND iframe URL ── #}
-          {% set primary_label    = settings.single_product_section_primary_btn_text_coffee_cta_section %}
-          {% set primary_url      = settings.single_product_section_primary_btn_iframe_url_coffee_cta_section %}
-          {% set secondary_label  = settings.single_product_section_secondary_btn_text_coffee_cta_section %}
-          {% set secondary_url    = settings.single_product_section_secondary_btn_iframe_url_coffee_cta_section %}
-
-          {% set has_primary   = primary_label   and primary_url %}
-          {% set has_secondary = secondary_label and secondary_url %}
-
-          {% if has_primary or has_secondary %}
-          <section
-            id="coffee-cta-section"
-            class="mt-6 rounded-xl overflow-hidden"
-            style="background-color: {{ settings.single_product_section_background_color_coffee_cta_section | default('#EDEBE8') }};"
-          >
-            {# Section header #}
-            {% if settings.single_product_section_title_coffee_cta_section or settings.single_product_section_subtitle_coffee_cta_section %}
-            <div class="px-4 pt-5 pb-3 text-center">
-              {% if settings.single_product_section_title_coffee_cta_section %}
-              <h3
-                class="text-base font-bold mb-1"
-                style="color: {{ settings.single_product_section_text_color_coffee_cta_section | default('#000000') }};"
-              >
-                {{ settings.single_product_section_title_coffee_cta_section }}
-              </h3>
-              {% endif %}
-              {% if settings.single_product_section_subtitle_coffee_cta_section %}
-              <p
-                class="text-sm"
-                style="color: {{ settings.single_product_section_text_color_coffee_cta_section | default('#6B6B6B') }}; opacity: 0.75;"
-              >
-                {{ settings.single_product_section_subtitle_coffee_cta_section }}
-              </p>
-              {% endif %}
-            </div>
-            {% endif %}
-
-            {# ══════════════════════════
-               DESKTOP – Tab Navigation
-               ══════════════════════════ #}
-            <div class="hidden md:block">
-              {# Tab Nav #}
-              <div class="flex border-b border-black/10 px-4">
-                {% if has_primary %}
-                <button
-                  type="button"
-                  class="coffee-tab-btn whitespace-nowrap px-4 py-3 text-sm font-semibold border-b-2 transition-colors"
-                  data-coffee-tab="cta-primary"
-                  style="border-color: {{ settings.single_product_section_primary_btn_color_coffee_cta_section | default('#F7512B') }}; color: {{ settings.single_product_section_primary_btn_color_coffee_cta_section | default('#F7512B') }};"
-                >
-                  {{ primary_label }}
-                </button>
-                {% endif %}
-                {% if has_secondary %}
-                <button
-                  type="button"
-                  class="coffee-tab-btn whitespace-nowrap px-4 py-3 text-sm font-semibold border-b-2 border-transparent transition-colors opacity-60"
-                  data-coffee-tab="cta-secondary"
-                  style="color: {{ settings.single_product_section_secondary_btn_text_color_coffee_cta_section | default('#F7512B') }};"
-                >
-                  {{ secondary_label }}
-                </button>
-                {% endif %}
-              </div>
-
-              {# Tab Panels #}
-              {% if has_primary %}
-              <div class="coffee-tab-panel px-4 py-5" data-coffee-tab-panel="cta-primary">
-                <button
-                  type="button"
-                  class="open-iframe-modal w-full md:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-all duration-200 hover:opacity-90 active:scale-95"
-                  data-iframe-url="{{ primary_url }}"
-                  data-iframe-title="{{ primary_label }}"
-                  style="background-color: {{ settings.single_product_section_primary_btn_color_coffee_cta_section | default('#F7512B') }}; color: {{ settings.single_product_section_primary_btn_text_color_coffee_cta_section | default('#FFFFFF') }};"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                  {{ primary_label }}
-                </button>
-              </div>
-              {% endif %}
-
-              {% if has_secondary %}
-              <div class="coffee-tab-panel hidden px-4 py-5" data-coffee-tab-panel="cta-secondary">
-                <button
-                  type="button"
-                  class="open-iframe-modal w-full md:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-all duration-200 hover:opacity-90 active:scale-95"
-                  data-iframe-url="{{ secondary_url }}"
-                  data-iframe-title="{{ secondary_label }}"
-                  style="background-color: {{ settings.single_product_section_secondary_btn_color_coffee_cta_section | default('#FFFFFF') }}; color: {{ settings.single_product_section_secondary_btn_text_color_coffee_cta_section | default('#F7512B') }}; border: 1px solid {{ settings.single_product_section_secondary_btn_text_color_coffee_cta_section | default('#F7512B') }};"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                  {{ secondary_label }}
-                </button>
-              </div>
-              {% endif %}
-            </div>
-
-            {# ══════════════════════════
-               MOBILE – Accordion
-               ══════════════════════════ #}
-            <div class="md:hidden flex flex-col px-2 pb-3">
-              {% if has_primary %}
-              <div class="coffee-acc-item border-b border-black/10">
-                <button
-                  type="button"
-                  class="coffee-acc-trigger flex w-full items-center justify-between px-2 py-3 text-sm font-semibold"
-                  aria-expanded="false"
-                  data-coffee-acc="cta-primary"
-                  style="color: {{ settings.single_product_section_text_color_coffee_cta_section | default('#000000') }};"
-                >
-                  <span>{{ primary_label }}</span>
-                  <svg class="coffee-acc-icon transition-transform duration-300" width="13" height="7" viewBox="0 0 13 7" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <path d="M1 1L6.5009 6L12 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </button>
-                <div class="coffee-acc-panel hidden pb-3 px-2" data-coffee-acc-panel="cta-primary">
-                  <button
-                    type="button"
-                    class="open-iframe-modal w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 hover:opacity-90 active:scale-95"
-                    data-iframe-url="{{ primary_url }}"
-                    data-iframe-title="{{ primary_label }}"
-                    style="background-color: {{ settings.single_product_section_primary_btn_color_coffee_cta_section | default('#F7512B') }}; color: {{ settings.single_product_section_primary_btn_text_color_coffee_cta_section | default('#FFFFFF') }};"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                    {{ primary_label }}
-                  </button>
-                </div>
-              </div>
-              {% endif %}
-
-              {% if has_secondary %}
-              <div class="coffee-acc-item">
-                <button
-                  type="button"
-                  class="coffee-acc-trigger flex w-full items-center justify-between px-2 py-3 text-sm font-semibold"
-                  aria-expanded="false"
-                  data-coffee-acc="cta-secondary"
-                  style="color: {{ settings.single_product_section_text_color_coffee_cta_section | default('#000000') }};"
-                >
-                  <span>{{ secondary_label }}</span>
-                  <svg class="coffee-acc-icon transition-transform duration-300" width="13" height="7" viewBox="0 0 13 7" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <path d="M1 1L6.5009 6L12 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </button>
-                <div class="coffee-acc-panel hidden pb-3 px-2" data-coffee-acc-panel="cta-secondary">
-                  <button
-                    type="button"
-                    class="open-iframe-modal w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 hover:opacity-90 active:scale-95"
-                    data-iframe-url="{{ secondary_url }}"
-                    data-iframe-title="{{ secondary_label }}"
-                    style="background-color: {{ settings.single_product_section_secondary_btn_color_coffee_cta_section | default('#FFFFFF') }}; color: {{ settings.single_product_section_secondary_btn_text_color_coffee_cta_section | default('#F7512B') }}; border: 1px solid {{ settings.single_product_section_secondary_btn_text_color_coffee_cta_section | default('#F7512B') }};"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                    {{ secondary_label }}
-                  </button>
-                </div>
-              </div>
-              {% endif %}
-            </div>
-
-          </section>
-          {% endif %}
-        {% endif %}
-
         {# Tab Content (Desktop) #}
 
         <div class="hidden md:block">
@@ -1980,7 +1809,7 @@
                 id="coffeeModalClose"
                 type="button"
                 class="absolute top-3 right-3 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-white/20 hover:bg-white/40 transition-colors"
-                aria-label="{{ 'إغلاق' if session.lang == 'ar' else 'Close' }}"
+                aria-label="{{ _('Close') }}"
               >
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" aria-hidden="true">
                   <path d="M1 1l12 12M13 1L1 13"/>
