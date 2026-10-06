@@ -159,13 +159,36 @@ export function updateProductInfo(selectedProduct) {
 // Stock & Quantity Updates
 // ─────────────────────────────────────────────────────────────
 
+/**
+ * Preorder state rendered on #product-main-section (data-has-preorder,
+ * data-can-preorder, data-stock-behavior). Prefers the quick-view copy while
+ * the quick-view dialog is showing.
+ */
+export function getPreorderState() {
+  const qv = document.querySelector("#quick-view-content [data-can-preorder]");
+  const el = (qv && qv.offsetParent !== null ? qv : null) || document.querySelector("[data-can-preorder]");
+  return {
+    hasPreorder: el?.getAttribute("data-has-preorder") === "true",
+    canPreorder: el?.getAttribute("data-can-preorder") === "true",
+    stockBehavior: el?.getAttribute("data-stock-behavior") || ""
+  };
+}
+
+/**
+ * Whether the selected variant can be bought (in stock, or preorderable).
+ * Ports upstream deb8912/c0de952 and the Zid preorder guide: with an
+ * IN_STOCK_ONLY campaign the selected variant itself must be in stock.
+ */
+export function isSelectedProductBuyable(selectedProduct) {
+  if (!selectedProduct) return false;
+  if (selectedProduct.in_stock) return true;
+  const { canPreorder, stockBehavior } = getPreorderState();
+  if (stockBehavior === "IN_STOCK_ONLY") return false;
+  return canPreorder || selectedProduct.can_be_preordered === true;
+}
+
 export function updateStockStatus(selectedProduct) {
   if (!selectedProduct) return;
-
-  // Preorder (ported from upstream deb8912): the PDP section exposes data-can-preorder
-  const canPreorder =
-    document.querySelector("[data-can-preorder]")?.getAttribute("data-can-preorder") === "true" ||
-    selectedProduct.can_be_preordered === true;
 
   // Update hidden product ID
   const productIdInput = document.querySelector("#product-id");
@@ -185,7 +208,7 @@ export function updateStockStatus(selectedProduct) {
     // Update quantity selector
     updateQuantitySelector(selectedProduct);
     if (quantityWrapper) show("[data-quantity-wrapper]");
-  } else if (canPreorder) {
+  } else if (isSelectedProductBuyable(selectedProduct)) {
     // Out of stock but preorderable: keep the buy buttons, hide notify-me and quantity
     if (inStockSection) show("[data-in-stock]");
     if (outOfStockSection) hide("[data-out-of-stock]");

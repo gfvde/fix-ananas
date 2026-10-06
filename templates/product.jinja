@@ -54,15 +54,15 @@
   {# Product Main Section #}
   {% set details_position = store.settings.product_gallery.details_thumbnail_position %}
   <section class="pb-9 md:pb-12 single-product-page"
-  data-has-preorder="{{ 'true' if has_preorder else 'false' }}"
-  data-can-preorder="{{ 'true' if can_preorder else 'false' }}"
-  data-stock-behavior="{{ preorder_stock_behavior or '' }}"
-  
   style="background-color: {{ settings.single_product_section_background_color_page or 'transparent' }};">
     <div class="theme-container overflow-x-hidden">
       {# 2-Column Layout: Gallery + Details #}
       <div
         id="product-main-section"
+        {# Preorder state lives on the section quick view extracts, so it travels with it #}
+        data-has-preorder="{{ 'true' if has_preorder else 'false' }}"
+        data-can-preorder="{{ 'true' if can_preorder else 'false' }}"
+        data-stock-behavior="{{ preorder_stock_behavior or '' }}"
         class="grid grid-cols-1 gap-6 md:grid-cols-2"
       >
         {# Left Column: Product Gallery #}

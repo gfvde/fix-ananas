@@ -1,3 +1,7 @@
+{# Preorder (port of upstream deb8912): can_be_preordered keeps the CTA for out-of-stock variants #}
+{% set sticky_selected = product.selected_product if product.selected_product else product %}
+{% set sticky_in_stock = sticky_selected.in_stock if sticky_selected.in_stock is defined else product.in_stock %}
+{% set sticky_can_buy = sticky_in_stock or product.can_be_preordered %}
 <style>
 @media (max-width: 768px) {
   #sticky-cta{
@@ -63,11 +67,11 @@
       {# In Stock State #}
       
       <div
-        class="{{ 'hidden' if not product.in_stock }} flex flex-1  items-center gap-4"
+        class="{{ 'hidden' if not sticky_can_buy }} flex flex-1  items-center gap-4"
         data-sticky-cta-in-stock
       >
         {# Quantity Input #}
-        <div class=" shrink-0 block">
+        <div class="{{ 'hidden' if not sticky_in_stock }} shrink-0" data-sticky-quantity-wrapper>
           {% with id='sticky-qty', name='sticky_quantity', sync_target='product-quantity' %}
             {% include 'components/ui/quantity-input.jinja' %}
           {% endwith %}
@@ -109,7 +113,7 @@
               ></circle>
               <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
             </svg>
-            <span>{{ _("Add to cart") }}</span>
+            <span>{{ _("Preorder now") if product.preorder_campaign else _("Add to cart") }}</span>
           </span>
           {# Loading state #}
           <span
@@ -151,7 +155,7 @@
 
       {# Out of Stock State #}
       <div
-        class="{{ 'hidden' if product.in_stock }} flex items-center gap-2"
+        class="{{ 'hidden' if sticky_can_buy }} flex items-center gap-2"
         data-sticky-cta-out-of-stock
       >
         {# Notify Me Button #}
