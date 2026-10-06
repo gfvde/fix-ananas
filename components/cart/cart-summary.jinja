@@ -215,7 +215,7 @@
     </button>
   {% else %}
     <a
-      href="{{ '/auth/login?redirect_to=/checkout' if safeget(session, 'is_guest') else '/checkout' }}"
+      href="/checkout"
       class="cart-summary__checkout"
     >
       <span data-cart-summary-checkout-total>{{ money_text(total_text) }}</span>

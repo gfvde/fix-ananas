@@ -9,7 +9,7 @@
 {% set products_start = ((current_page - 1) * page_size) + 1 if products_total > 0 else 0 %}
 {% set products_end = products_start + products_current - 1 if products_current > 0 else 0 %}
 
-<div class="mobile-inline-filters lg:hidden" dir="rtl">
+<div class="mobile-inline-filters lg:hidden">
   <div class="mobile-inline-filters__bar">
     <button
       type="button"

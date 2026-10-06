@@ -605,10 +605,10 @@
     },
     {
       "id": "single_product_section",
-      "icon": "fa fa-envelope",
+      "icon": "fa fa-shopping-bag",
       "name": {
         "ar": "خيارات صفحة المنتج",
-        "en": "single product options"
+        "en": "Product Page Options"
       },
       "settings": [
         {
@@ -704,12 +704,11 @@
             {
               "id": "product_has_features",
               "type": "list",
-              "max_items": 50,
+              "max_items": 4,
               "label": {
                 "ar": "مميزات المنتج",
                 "en": "Products have features"
               },
-              "max_items": 4,
               "settings": [
                 {
                   "id": "war_products",
@@ -847,12 +846,11 @@
             {
               "id": "bundle_items",
               "type": "list",
-              "max_items": 10,
+              "max_items": 5,
               "label": {
                 "ar": "المنتجات المرتبطة",
                 "en": "Bundle Items"
               },
-              "max_items": 5,
               "settings": [
                 {
                   "id": "product",
@@ -914,12 +912,11 @@
             {
               "id": "product_has_features_store",
               "type": "list",
-              "max_items": 50,
+              "max_items": 4,
               "label": {
                 "ar": "تحديد المنتجات التي تظهر لها مميزات المتجر",
                 "en": "Select products that will display store features"
               },
-              "max_items": 4,
               "settings": [
                 {
                   "id": "products_store_features_shown",
@@ -1072,7 +1069,7 @@
           "id": "coffee_body_level",
           "type": "text",
           "label": {
-            "ar": "نص درجة الحموضة",
+            "ar": "نص درجة القوام",
             "en": "Body Level"
           },
           "default": "القوام"
@@ -1089,12 +1086,11 @@
             {
               "id": "products_with_attributes",
               "type": "list",
-              "max_items": 50,
+              "max_items": 4,
               "label": {
                 "ar": "تحديد المنتجات التي تظهر لها خصائص القهوة",
                 "en": "Select products to show coffee attributes"
               },
-              "max_items": 4,
               "settings": [
                 {
                   "id": "selected_products",

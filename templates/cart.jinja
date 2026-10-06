@@ -104,7 +104,7 @@
               >{{ mobile_checkout_inner }}</button>
             {% else %}
               <a
-                href="{{ '/auth/login?redirect_to=/checkout' if safeget(session, 'is_guest') else '/checkout' }}"
+                href="/checkout"
                 class="cart-mobile-checkout-btn"
                 data-cart-mobile-checkout
               >{{ mobile_checkout_inner }}</a>

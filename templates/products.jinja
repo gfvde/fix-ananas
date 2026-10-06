@@ -32,6 +32,14 @@
   {% set category_products_shell_class = 'products-with-sidebar products-with-sidebar--ready' if category_filters_sidebar else 'flex items-center gap-2' %}
   {% if category_page_enabled_value in ['true', '1', 'on', 'yes'] %}
     {% include 'components/categories/category-page-banner.jinja' %}
+  {% else %}
+    <section class="px-4 py-6 md:px-16">
+      <div class="theme-container">
+        {% with items=[{'href': url_for('home'), 'label': _("Home")}, {'label': _("All Products")}] %}
+          {% include 'components/ui/breadcrumb.jinja' %}
+        {% endwith %}
+      </div>
+    </section>
   {% endif %}
 
   <section class="px-4  pb-8 md:px-16 md:py-6">

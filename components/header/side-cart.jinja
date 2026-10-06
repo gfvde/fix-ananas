@@ -43,10 +43,10 @@
 
     {% set side_cart_subtotal_condition = cart.free_shipping_rule.subtotal_condition if cart.free_shipping_rule else none %}
     {% set side_cart_free_shipping_status = side_cart_subtotal_condition.status | default('') if side_cart_subtotal_condition else '' %}
-    {% set side_cart_free_shipping_remaining = side_cart_subtotal_condition.remaining | default('57.00 SAR') if side_cart_subtotal_condition else '57.00 SAR' %}
-    {% set side_cart_free_shipping_percent = side_cart_subtotal_condition.products_subtotal_percentage_from_min | default(0) if side_cart_subtotal_condition else 70 %}
+    {% set side_cart_free_shipping_remaining = side_cart_subtotal_condition.remaining | default('') if side_cart_subtotal_condition else '' %}
+    {% set side_cart_free_shipping_percent = side_cart_subtotal_condition.products_subtotal_percentage_from_min | default(0) if side_cart_subtotal_condition else 0 %}
     {% set side_cart_free_shipping_width = 100 if side_cart_free_shipping_status == 'applied' else side_cart_free_shipping_percent %}
-    <div class="ananas-side-cart__shipping-wrapper">
+    <div class="ananas-side-cart__shipping-wrapper{{ '' if side_cart_subtotal_condition else ' hidden' }}">
       <div class="ananas-side-cart__shipping">
         <div class="flex w-full items-center justify-start   gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="13" viewBox="0 0 18 13" fill="none">
@@ -59,7 +59,7 @@
             {% if side_cart_free_shipping_status == 'applied' %}
               {{ _('Free shipping applied!') }}
             {% else %}
-              {{ _('Add purchases worth %(total)s %(currency)s to get free shipping') | replace('%(total)s', '<span id="side-cart-shipping-remaining"></span>') | replace('%(currency)s', session.currency) }}
+              {{ _('Add purchases worth %(total)s %(currency)s to get free shipping') | replace('%(total)s', '<span id="side-cart-shipping-remaining"></span>') | replace('%(currency)s', '') }}
             {% endif %}
           </span>
         </div>
@@ -222,7 +222,7 @@
       {% endif %}
     </div>
 
-    <div class="ananas-side-cart__footer">
+    <div class="ananas-side-cart__footer{{ '' if (cart.products_count | default(0)) > 0 else ' hidden' }}" data-side-cart-footer>
       <div class="ananas-side-cart__summary">
         <div class="ananas-side-cart__summary-copy">
           <span class="font-expo text-lg font-medium text-black">{{ _('Total') }}</span>
@@ -252,7 +252,7 @@
           </button>
         {% else %}
           <a
-            href="{{ '/auth/login?redirect_to=/checkout' if safeget(session, 'is_guest') else '/checkout' }}"
+            href="/checkout"
             class="ananas-side-cart__btn ananas-side-cart__btn--primary font-expo"
             >{{ _('Checkout page') }}</a
           >
@@ -608,6 +608,10 @@
     flex-direction: column;
     gap: 16px;
   }
+  .ananas-side-cart__footer.hidden,
+  .ananas-side-cart__shipping-wrapper.hidden {
+    display: none;
+  }
   .ananas-side-cart__summary {
     display: flex;
     align-items: center;
@@ -825,7 +829,8 @@
       } else {
         shippingTextEl.innerHTML = sideCartTranslations.addMoreForFreeShipping
           .replace("%(total)s", '<span id="side-cart-shipping-remaining">' + state.remaining + '</span>')
-          .replace("%(currency)s", currencyCode);
+          // remaining is already currency-formatted by the platform (e.g. "57.00 SAR"); only add the code to bare numbers
+          .replace("%(currency)s", /[^\d\s.,\u0660-\u0669\u066B\u066C-]/.test(String(state.remaining)) ? "" : currencyCode);
         shippingProgressEl.style.width = state.percentage + "%";
       }
     }
@@ -1424,6 +1429,10 @@
           itemsContainer.innerHTML = '<p class="text-center mt-8 text-gray-500 font-expo">' + escapeHtml(sideCartTranslations.cartEmpty) + '</p>';
         }
       }
+
+      // No checkout/summary footer for an empty cart
+      var footerEl = document.querySelector("[data-side-cart-footer]");
+      if (footerEl) footerEl.classList.toggle("hidden", products.length === 0);
 
       if (totalEl) totalEl.textContent = totalFormatted;
       if (countEl) countEl.textContent = "(" + sideCartTranslations.itemsInCart.replace("%(count)s", productsCount) + ")";
