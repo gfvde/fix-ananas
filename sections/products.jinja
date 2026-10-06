@@ -20,16 +20,18 @@
   {% set active_tab = settings.active_tab | default('tab_2', true) %}
   {% set mobile_tabs_layout = settings.mobile_tabs_layout | default('arrows', true) %}
   {% set use_single_products = products_source == 'products' %}
+  {% set products_limit = settings.products_limit | default(12, true) | int %}
   {% if use_single_products %}
     {% set active_tab = 'products' %}
-    {% set tabs = [{'id': 'products', 'label': title, 'products': single_products}] %}
+    {% set tabs = [{'id': 'products', 'label': title, 'products': single_products[:products_limit]}] %}
   {% else %}
-    {%
-      set tabs = [
-        {'id': 'tab_1', 'label': tab_1_text, 'products': tab_1_products},
-        {'id': 'tab_2', 'label': tab_2_text, 'products': tab_2_products}
-      ]
-    %}
+    {# Tabs without products are dropped; the active tab falls back to the first one left #}
+    {% set tabs = [] %}
+    {% if tab_1_products %}{% set tabs = tabs + [{'id': 'tab_1', 'label': tab_1_text, 'products': tab_1_products[:products_limit]}] %}{% endif %}
+    {% if tab_2_products %}{% set tabs = tabs + [{'id': 'tab_2', 'label': tab_2_text, 'products': tab_2_products[:products_limit]}] %}{% endif %}
+    {% if active_tab not in tabs | map(attribute='id') | list %}
+      {% set active_tab = tabs[0].id %}
+    {% endif %}
   {% endif %}
 
   <link rel="stylesheet" href="{{ 'css/sections/products.css' | asset_url }}">
@@ -256,6 +258,10 @@
             </div>
           </div>
         {% endfor %}
+      {% endif %}
+
+      {% if settings.display_more and explore_text %}
+        <a href="{{ explore_url }}" class="fp-explore fp-explore--mobile">{{ explore_text }}</a>
       {% endif %}
     </div>
   </section>
