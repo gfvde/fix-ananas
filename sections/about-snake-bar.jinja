@@ -1,3 +1,4 @@
+{% set is_lazy = (settings.order | default(3) | int) > 2 %}
 {% set bg_color = settings.bg_color | default('#D3DB6F') %}
 {% set text_color = settings.text_color | default('#000000') %}
 {% set mobile_text_color = settings.mobile_text_color | default('#404040') %}
@@ -41,7 +42,7 @@
 
 {% macro render_icon(item, index=0) %}
   {% if item.icon_image %}
-    <img class="snake-bar__icon-img" src="{{ image_url(item.icon_image, w=64, h=64, f='auto') }}" alt="">
+    <img class="snake-bar__icon-img" src="{{ image_url(item.icon_image, w=64, h=64, f='auto') }}" alt="" width="24" height="24" {% if is_lazy %}loading="lazy" {% endif %}decoding="async">
   {% else %}
     {{ fallback_icon(index) }}
   {% endif %}

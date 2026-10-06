@@ -1,3 +1,4 @@
+{% set is_lazy = (settings.order | default(3) | int) > 2 %}
 {% set title_text = settings.title | default(_('Choose your coffee to match your mood')) %}
 {% set subtitle_text = settings.subtitle | default(_('Every mood has its own experience, here you will find what suits you')) %}
 {% set cta_text = settings.cta_text | default(_('Shop by mood')) %}
@@ -51,8 +52,9 @@
             <img
               src="{{ image_url(card.image, w=800, f='auto') }}"
               alt="{{ card.title }}"
-              loading="lazy"
-              decoding="async"
+              width="800"
+              height="640"
+              {% if is_lazy %}loading="lazy" {% endif %}decoding="async"
             />
             {% endif %}
             {% if card.tag %}<span class="sbm-tag">{{ card.tag }}</span>{% endif %}
@@ -128,8 +130,9 @@
             <img
               src="{{ image_url(card.image, w=600, f='auto') }}"
               alt="{{ card.title }}"
-              loading="lazy"
-              decoding="async"
+              width="600"
+              height="598"
+              {% if is_lazy %}loading="lazy" {% endif %}decoding="async"
             />
             {% endif %}
             {% if card.tag %}<span class="sbm-tag">{{ card.tag }}</span>{% endif %}

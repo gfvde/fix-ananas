@@ -1,3 +1,4 @@
+{% set is_lazy = (settings.order | default(3) | int) > 2 %}
 {% set section_bg = settings.section_bg | default('#FCFAF7', true) %}
 {% set mobile_bg = settings.mobile_bg | default('#000000', true) %}
 {% set title_color = settings.title_color | default('#F7512B', true) %}
@@ -37,8 +38,7 @@
       <img
         src="{{ image_url(settings.hero_image, w=1440, f='auto') }}"
         alt="{{ hero_alt }}"
-        loading="lazy"
-        decoding="async"
+        {% if is_lazy %}loading="lazy" {% endif %}decoding="async"
       />
       {% endif %}
     </div>
@@ -58,8 +58,7 @@
         <img
           src="{{ image_url(settings.mobile_hero_image or settings.hero_image, w=720, f='auto') }}"
           alt="{{ hero_alt }}"
-          loading="lazy"
-          decoding="async"
+          {% if is_lazy %}loading="lazy" {% endif %}decoding="async"
         />
         {% endif %}
       </div>

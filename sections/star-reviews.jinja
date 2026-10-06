@@ -52,7 +52,7 @@
 {% macro image_review_card(extra_class='') %}
   <div class="sr-card sr-card--image {{ extra_class }}">
     {% if settings.image_card_bg %}
-      <img class="sr-card__bg" src="{{ image_url(settings.image_card_bg, w=800, f='auto') }}" alt="" loading="lazy" decoding="async" />
+      <img class="sr-card__bg" src="{{ image_url(settings.image_card_bg, w=800, f='auto') }}" alt="" width="800" height="1000" loading="lazy" decoding="async" />
     {% endif %}
     <div class="sr-card__content">
       {% set mid = reviews[2] if reviews | length > 2 else reviews[0] %}

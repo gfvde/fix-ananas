@@ -24,7 +24,9 @@
                   src="{{ image_url(feature.image, w=96, q=80, f='auto') }}"
                   alt="{{ feature.title }}"
                   class="h-12 w-12 object-contain"
-                  {% if is_lazy %}loading="lazy"{% endif %}
+                  width="48"
+                  height="48"
+                  {% if is_lazy %}loading="lazy" decoding="async"{% endif %}
                 />
               </picture>
             {% endif %}

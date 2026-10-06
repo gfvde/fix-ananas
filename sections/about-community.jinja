@@ -1,3 +1,4 @@
+{% set is_lazy = (settings.order | default(3) | int) > 2 %}
 {% set section_bg_color = settings.section_bg_color | default('#FFF0EC') %}
 {% set title_color = settings.title_color | default('#F7512B') %}
 {% set lead_color = settings.lead_color | default('#000000') %}
@@ -27,7 +28,7 @@
     {% else %}
       <div class="ac-image">
         {% if settings.photo %}
-        <img src="{{ image_url(settings.photo, w=1440, f='auto') }}" alt="{{ settings.image_alt | default('') }}" loading="lazy" decoding="async">
+        <img src="{{ image_url(settings.photo, w=1440, f='auto') }}" alt="{{ settings.image_alt | default('') }}" width="1440" height="1008" {% if is_lazy %}loading="lazy" {% endif %}decoding="async">
         {% endif %}
       </div>
     {% endif %}

@@ -66,7 +66,7 @@
   {% set star_count = review.stars | default(5) | int %}
   <article class="arf-bg-card arf-bg-card--image">
     {% if settings.image_card_bg %}
-      <img class="arf-bg-card__image" src="{{ image_url(settings.image_card_bg, w=800, f='auto') }}" alt="" loading="lazy" decoding="async">
+      <img class="arf-bg-card__image" src="{{ image_url(settings.image_card_bg, w=800, f='auto') }}" alt="" width="800" height="1000" loading="lazy" decoding="async">
     {% endif %}
     <div class="arf-bg-card__overlay">
       <div class="arf-bg-card__body">

@@ -1,3 +1,4 @@
+{% set is_lazy = (settings.order | default(3) | int) > 2 %}
 {% set section_bg_color = settings.section_bg_color | default('#ffffff') %}
 {% set title_color = settings.title_color | default('#000000') %}
 {% set card_text_color = settings.card_text_color | default('#ffffff') %}
@@ -51,8 +52,9 @@
           <img
             src="{{ image_url(cat.img, w=900, f='auto') }}"
             alt="{{ cat.name }}"
-            loading="lazy"
-            decoding="async"
+            width="900"
+            height="1044"
+            {% if is_lazy %}loading="lazy" {% endif %}decoding="async"
             data-sbc-parallax-img
           />
           <span class="category-card__name">{{ cat.name }}</span>

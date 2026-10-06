@@ -1,3 +1,4 @@
+{% set is_lazy = (settings.order | default(3) | int) > 2 %}
 {% set title_color = settings.title_color | default('#000000') %}
 {% set subtitle_color = settings.subtitle_color | default('#000000') %}
 {% set border_radius = settings.border_radius | default(12) %}
@@ -36,7 +37,7 @@
              data-video-url="{{ vid.video | default('') }}">
           <div class="video-ugc__thumb">
             {% if vid.thumbnail %}
-              <img src="{{ image_url(vid.thumbnail, w=320, f='auto') }}" alt="" class="video-ugc__thumb-img" />
+              <img src="{{ image_url(vid.thumbnail, w=320, f='auto') }}" alt="" class="video-ugc__thumb-img" width="320" height="569" {% if is_lazy %}loading="lazy" {% endif %}decoding="async" />
             {% else %}
               <div class="video-ugc__thumb-placeholder"></div>
             {% endif %}
@@ -66,7 +67,7 @@
             <div class="video-ugc__card" style="border-radius: {{ border_radius }}px;">
               <div class="video-ugc__thumb">
                 {% if vid.thumbnail %}
-                  <img src="{{ image_url(vid.thumbnail, w=200, f='auto') }}" alt="" class="video-ugc__thumb-img" />
+                  <img src="{{ image_url(vid.thumbnail, w=200, f='auto') }}" alt="" class="video-ugc__thumb-img" width="200" height="356" {% if is_lazy %}loading="lazy" {% endif %}decoding="async" />
                 {% else %}
                   <div class="video-ugc__thumb-placeholder"></div>
                 {% endif %}

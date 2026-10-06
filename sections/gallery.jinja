@@ -31,7 +31,7 @@
                   src="{{ image_url(item.src, w=800, q=85, f='auto') }}"
                   alt="{{ item.alt }}"
                   class="h-full w-full object-cover"
-                  {% if is_lazy or not loop.first %}loading="lazy"{% endif %}
+                  {% if is_lazy or not loop.first %}loading="lazy" decoding="async"{% endif %}
                 />
               </picture>
             </div>
