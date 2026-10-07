@@ -30,6 +30,9 @@ function updateQuantity(wrapper, delta) {
 
   if (newValue !== current) {
     input.value = newValue;
+    updateButtonVisibility(wrapper, newValue);
+    // Keep a linked input (product page ↔ sticky bar) in step, as typing does
+    syncWithTarget(wrapper, newValue);
     // Dispatch custom event only - native change would trigger duplicate handling
     // (both platform listener and our own line 113 listener)
     dispatchQtyChange(wrapper, newValue);
