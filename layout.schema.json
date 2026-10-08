@@ -532,7 +532,16 @@
             "ar": "لون زر إكمال الطلب",
             "en": "Checkout Button Color"
           },
-          "default": "#F7512B"
+          "default": "#6B4A39"
+        },
+        {
+          "id": "show_breadcrumb",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار مسار التنقل أعلى صفحة السلة",
+            "en": "Show breadcrumb on the cart page"
+          },
+          "default": false
         },
         {
           "id": "checkout_button_text_color",
@@ -1808,6 +1817,14 @@
           "label": {
             "ar": "عنوان قسم الرحلة",
             "en": "Journey title"
+          }
+        },
+        {
+          "id": "journey_icon",
+          "type": "image",
+          "label": {
+            "ar": "أيقونة متحركة على خط الرحلة (تفصيلة القماش)",
+            "en": "Moving icon on the journey line (fabric detail)"
           }
         },
         {

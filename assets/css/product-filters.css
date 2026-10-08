@@ -249,3 +249,14 @@ details[open] > .product-filter__summary .product-filter__summary-icon {
 .filters--sidebar .product-filter__content {
   padding-bottom: 0;
 }
+
+/* Optional per-option product count "( 10 )" (Dara) */
+.product-filter__count {
+  color: var(--muted);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.product-filter__option:has(.product-filter__count) .product-filter__text {
+  flex: 0 1 auto;
+}

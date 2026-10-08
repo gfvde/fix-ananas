@@ -2,18 +2,9 @@
 {% set sticky_selected = product.selected_product if product.selected_product else product %}
 {% set sticky_in_stock = sticky_selected.in_stock if sticky_selected.in_stock is defined else product.in_stock %}
 {% set sticky_can_buy = sticky_in_stock or product.can_be_preordered %}
-<style>
-@media (max-width: 768px) {
-  #sticky-cta{
-    .qty-input-btn{
-      width: 20px;
-    }
-  }
-}
-</style>
 <div
   id="sticky-cta"
-  class="bg-[#FCF8F2] border-border-light fixed inset-x-0 bottom-0 z-40 hidden border-t px-4 py-4 transition-transform transition-discrete duration-300 md:px-16 starting:translate-y-full"
+  class="pdp-sticky bg-[#FAF7F2] border-border-light fixed inset-x-0 bottom-0 z-40 hidden border-t px-4 py-4 transition-transform transition-discrete duration-300 md:px-16 starting:translate-y-full"
   data-sticky-cta
   aria-hidden="true"
 >
@@ -54,13 +45,16 @@
         </div>
 
         {# Price #}
-        <div class="shrink-0">
+        <div class="shrink-0 pdp-sticky__price">
           <span
-            class="text-foreground text-sm font-semibold"
+            class="text-foreground font-medium"
             data-sticky-cta-price
           >
             {{ product.formatted_sale_price if product.formatted_sale_price else product.formatted_price }}
           </span>
+          {% if product.formatted_sale_price %}
+            <span class="pdp-price-old" data-product-price-old>{{ product.formatted_price }}</span>
+          {% endif %}
         </div>
       </div>
 
@@ -80,8 +74,7 @@
         {# Add to Cart Button #}
         <button
           type="button"
-          class="btn btn-filled btn-lg shrink-0 transition-all duration-200 flex-grow"
-          style="background-color: #F7512B !important;border: 0;border-radius: 0;"
+          class="btn btn-lg shrink-0 transition-all duration-200 flex-grow pdp-btn pdp-btn--primary"
           data-sticky-cta-add-to-cart
         >
           {# Default state #}
@@ -114,6 +107,7 @@
               <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
             </svg>
             <span>{{ _("Preorder now") if product.preorder_campaign else _("Add to cart") }}</span>
+            <span class="pdp-sticky__btn-price" data-product-price>{{ product.formatted_sale_price if product.formatted_sale_price else product.formatted_price }}</span>
           </span>
           {# Loading state #}
           <span
@@ -161,7 +155,7 @@
         {# Notify Me Button #}
         <button
           type="button"
-          class="btn btn-filled btn-lg shrink-0"
+          class="btn btn-lg shrink-0 pdp-btn pdp-btn--primary"
           data-notify-me-trigger="{{ product.selected_product.id if product.selected_product else product.id }}"
         >
           <svg

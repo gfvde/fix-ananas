@@ -20,11 +20,22 @@
     {% set can_buy = false %}
   {% endif %}
 
+  {# ── Dara PDP options (layout.schema.json → single_product_section / product_gallery) ── #}
+  {% set details_on_top = settings.product_gallery_details_thumbnail_position == 'top' %}
+  {% set show_viewers = settings.single_product_section_show_viewers_counter != false %}
+  {% set show_fabric = settings.single_product_section_show_fabric != false %}
+  {% set show_look_details = settings.single_product_section_show_look_details != false %}
+  {% set show_story_texture = settings.single_product_section_show_story_texture != false %}
+  {% set show_low_stock = settings.single_product_section_show_low_stock != false %}
+  {% set show_buy_now = settings.single_product_section_show_buy_now != false %}
+  {% set show_trust = settings.single_product_section_show_trust_badges != false %}
+  {% set sticky_gallery = settings.product_gallery_sticky_gallery != false %}
+
   {# Breadcrumb Section #}
-  <section class="py-[10px]"
+  <section class="dara-pdp-breadcrumb"
   style="background-color: {{ settings.single_product_section_background_color_page or 'transparent' }};"
   >
-    <div class="theme-container"> 
+    <div class="theme-container">
       {% if product.categories and product.categories|length > 0 %}
         {% set category = product.categories[0] %}
         {%
@@ -52,9 +63,9 @@
   </section>
 
   {# Product Main Section #}
-  <section class="pb-9 md:pb-12 single-product-page"
+  <section class="dara-pdp single-product-page pb-9 md:pb-12"
   style="background-color: {{ settings.single_product_section_background_color_page or 'transparent' }};">
-    <div class="theme-container overflow-x-hidden">
+    <div class="theme-container pdp-container">
       {# 2-Column Layout: Gallery + Details #}
       <div
         id="product-main-section"
@@ -62,806 +73,332 @@
         data-has-preorder="{{ 'true' if has_preorder else 'false' }}"
         data-can-preorder="{{ 'true' if can_preorder else 'false' }}"
         data-stock-behavior="{{ preorder_stock_behavior or '' }}"
-        class="grid grid-cols-1 gap-6 md:grid-cols-2"
+        data-sticky-gallery="{{ 'true' if sticky_gallery else 'false' }}"
+        class="pdp-main grid grid-cols-1 gap-6 md:grid-cols-2"
       >
-        {# Left Column: Product Gallery #}
-        <div class="flex flex-col gap-2">
-                  {% if settings.product_gallery_details_thumbnail_position == 'top' %}
-                          <div
-                    id="header"
-                    class=" md:hidden"
-                    data-show="top"
-                  >
-                    <div class="flex flex-wrap items-start justify-between gap-1">
-                      <div class="space-y-1">
-                        <h1 class="text-foreground text-lg font-semibold md:text-xl" data-show="top">{{ product.name }}</h1>
-                        {% if store.settings.products.reviews_enabled %}
-                          {% if product.rating %}
-                            <div class="flex items-center gap-2" data-show="top">
-                              {% with  rating=product.rating.average %}
-                                {% include 'components/rating-stars.jinja' %}
-                              {% endwith %}
-                              <p class="font-medium text-sm leading-5 tracking-normal text-[#737373]">
-                                {{ product.rating.average }} ({{ product.rating.total_count }} {{ _('reviews') }})
-                              </p>
-                            </div>
-                          {% endif %}
-                        {% endif %}
-                      </div>
+        {# Stylesheet sits inside the section so quick view (which injects this section) loads it too #}
+        <link rel="stylesheet" href="{{ 'css/dara/pdp.css' | asset_url }}">
 
-                      <div class="flex items-center gap-2 qv_actions" data-show="top">
-                        {% with product_id=product.id, class="!border !border-[#E5E5E5] rounded-full" %}
-                          {% include 'components/products/wishlist-button.jinja'%}
-                        {% endwith %}
-
-                        <div class="relative">
-                          <button
-                            type="button"
-                            id="share-dropdown-toggle"
-                            style="
-                                  border: 1px solid #E5E5E5 !important;
-                                  border-radius: 50%;
-"
-                            class="btn share-dropdown-toggle btn-icon btn-icon-md border border-border !border !border-[#E5E5E5] rounded-full text-foreground hover:border-foreground hover:text-foreground"
-                            aria-haspopup="menu"
-                            aria-expanded="false"
-                            aria-controls="share-dropdown-menu"
-                            data-share-title="{{ product.name }}"
-                            data-share-url="{{ product.html_url }}"
-                            aria-label="{{ _('Share product') }}"
-                          >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                              <circle cx="18" cy="5" r="3"></circle>
-                              <circle cx="6" cy="12" r="3"></circle>
-                              <circle cx="18" cy="19" r="3"></circle>
-                              <path d="M8.59 13.51l6.83 3.98"></path>
-                              <path d="M8.59 10.49l6.83-3.98"></path>
-                            </svg>
-                          </button>
-
-                          <div
-                            id="share-dropdown-menu"
-                            class="absolute right-[-13px] z-50 mt-2 w-56 overflow-hidden rounded-3xl border w-fit border-border bg-white shadow-xl opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right"
-                            aria-hidden="true"
-                          >
-                            <a
-                              href="https://api.whatsapp.com/send?text={{ _('Check Out this Product') }}: {{ product.name }} {{ product.html_url }}"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              class="flex items-center gap-3 px-2 py-3 text-sm text-foreground transition hover:bg-slate-50"
-                              aria-label="{{ _('Share on WhatsApp') }}"
-                              data-share-action="link"
-                            >
-                              <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#25D366]/10 text-[#25D366]">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                                </svg>
-                              </span>
-                            </a>
-                            <a
-                              href="https://twitter.com/intent/tweet?text={{ product.name }}: {{ product.html_url }}"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              class="flex items-center gap-3 px-2 py-3 text-sm text-foreground transition hover:bg-slate-50"
-                              aria-label="{{ _('Share on Twitter') }}"
-                              data-share-action="link"
-                            >
-                              <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#1DA1F2]/10 text-[#1DA1F2]">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                                </svg>
-                              </span>
-                            </a>
-                            <a
-                              href="https://www.facebook.com/sharer/sharer.php?u={{ product.html_url }}"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              class="flex items-center gap-3 px-2 py-3 text-sm text-foreground transition hover:bg-slate-50"
-                              aria-label="{{ _('Share on Facebook') }}"
-                              data-share-action="link"
-                            >
-                              <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#1877F2]/10 text-[#1877F2]">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                                </svg>
-                              </span>
-                            </a>
-                            <button
-                              type="button"
-                              class="flex w-full items-center gap-3 px-2 py-3 text-sm text-foreground transition hover:bg-slate-50"
-                              aria-label="{{ _('Copy link') }}"
-                              data-share-action="copy"
-                            >
-                              <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-slate-200 text-slate-700">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
-                                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
-                                </svg>
-                              </span>
-                            </button>
-                          </div>
-                          <div id="share-toast" class="pointer-events-none absolute right-0 top-full mt-3 hidden rounded-full bg-foreground px-3 py-2 text-xs font-medium text-white shadow-lg opacity-0 transition-opacity duration-200">
-                            {{ _('Link copied') }}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    {# Price Section #}
-                    <div class="flex flex-wrap items-center justify-between gap-y-1 border-b border-[#E5E5E5] pb-2" data-show="top">
-                      <div class="flex flex-wrap items-center gap-2">
-                        {# Current Price (sale or regular) #}
-                        <p
-                          class="font-medium text-2xl leading-8 tracking-normal align-middle"
-                          data-product-price
-                        >
-                          {{ product.formatted_sale_price if product.formatted_sale_price else product.formatted_price }}
-                        </p>
-                        {# Old Price (if on sale) #}
-                        <span
-                          class="text-[#737373] font-normal text-lg leading-7 tracking-normal align-middle {{ 'hidden' if not product.formatted_sale_price }} text-sm line-through"
-                          data-product-price-old
-                        >
-                          {{ product.formatted_price if product.formatted_sale_price else '' }}
-                        </span>
-                        {# Discount Badge #}
-                        <span
-                          class="bg-success/20 text-success {{ 'hidden' if not (product.discount_percentage and product.discount_percentage > 0) }} rounded px-2 py-1 text-xs tracking-wide uppercase"
-                          data-product-discount
-                        >
-                          {% if product.discount_percentage and product.discount_percentage > 0 %}
-                            {{ _("Discount") }}
-                            {{ product.discount_percentage }}%
-                          {% endif %}
-                        </span>
-                      </div>
-                      {# SKU #}
-                    </div>
-                          </div>
-                  {% endif %}
-                  <div class="product-gallery-column relative">
-                                        {# Product Badges #}
-                    <div
-                      id="product-badges"
-                      class="absolute top-4 right-4 z-20 flex flex-wrap items-center gap-2"
-                    >
-                      {# Merchant Badge (custom product badge) #}
-                      {% if product.badge %}
-                        {% with product=product %}
-                          {% include 'components/products/merchant-badge.jinja' %}
-                        {% endwith %}
-                      {% endif %}
-
-                      {# Preorder Badge #}
-                      {% if has_preorder %}
-                        {% include 'vitrin:products/preorder_badge.jinja' %}
-                      {% endif %}
-
-                      {# Bundle Offer Badge #}
-                      {% if product.bundle_offer %}
-                        <span class="badge badge-outlined text-destructive border-destructive">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 16 16"
-                            fill="none"
-                          >
-                            <path
-                              d="M8.57129 1.25488H13.6562C13.9618 1.25489 14.2228 1.36327 14.4404 1.58105C14.6581 1.79871 14.7666 2.05976 14.7666 2.36523V7.4375C14.7666 7.58599 14.7358 7.72769 14.6738 7.8623C14.6115 7.99756 14.5316 8.11495 14.4346 8.21484L8.2334 14.4287C8.12146 14.5288 7.99845 14.606 7.86426 14.6602C7.73001 14.7143 7.5927 14.7412 7.45312 14.7412C7.31346 14.7412 7.17481 14.7155 7.03711 14.6641C6.89982 14.6127 6.77477 14.5342 6.66309 14.4287L1.5918 9.34082L1.59082 9.33984L1.51367 9.26074C1.4414 9.17848 1.38421 9.08497 1.34277 8.97949C1.28714 8.83758 1.25977 8.69644 1.25977 8.55762C1.25981 8.41792 1.28642 8.27939 1.33984 8.1416C1.39308 8.00461 1.47689 7.88034 1.5918 7.76855V7.76758L7.78027 1.58691H7.78125C7.88159 1.48455 8.00131 1.40329 8.14062 1.34375C8.2797 1.28424 8.42318 1.25489 8.57129 1.25488ZM8.55859 2.35156L2.33984 8.56152L2.32227 8.5791L2.33984 8.59668L7.40723 13.6816L7.42578 13.6992L7.44336 13.6816L13.6738 7.4209L13.6816 7.41406V2.34375H8.56641L8.55859 2.35156ZM11.9102 3.26074C12.1369 3.26074 12.333 3.34394 12.499 3.51074C12.6651 3.67744 12.748 3.87218 12.748 4.09668C12.748 4.32117 12.6653 4.51613 12.499 4.68262C12.3328 4.84889 12.1368 4.93153 11.9102 4.93164C11.6835 4.93164 11.4879 4.84927 11.3232 4.68262C11.1583 4.51565 11.0762 4.31964 11.0762 4.09473C11.0763 3.87001 11.1582 3.67486 11.3232 3.50879C11.4883 3.34293 11.6837 3.26084 11.9102 3.26074Z"
-                              fill="currentColor"
-                              stroke="currentColor"
-                              stroke-width="0.05"
-                            ></path>
-                          </svg>
-                          {{ product.bundle_offer.name }}
-                        </span>
-                      {% endif %}
-
-                      {# Sold Items Badge #}
-                      {% set sold_count = product.sold_products_count or (product.selected_product and product.selected_product.sold_products_count) %}
-                      <span
-                        data-sold-count-badge
-                        class="badge badge-outlined border-foreground {{ '!hidden' if not sold_count }}"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 16 16"
-                          fill="none"
-                        >
-                          <path
-                            d="M9.35059 1.25488C10.0392 1.25488 10.6 1.52568 11.0342 2.06934C11.4687 2.61337 11.6367 3.23657 11.5381 3.94043L11.5342 3.96875H13.8164C14.1051 3.96876 14.344 4.07663 14.5342 4.29199C14.7243 4.50715 14.8017 4.75891 14.7666 5.04883L13.7197 13.5957C13.6752 13.9276 13.5338 14.201 13.2949 14.417C13.0559 14.6331 12.7711 14.7412 12.4404 14.7412H3.5127C3.21892 14.7412 2.98865 14.6304 2.81934 14.4092C2.65316 14.1922 2.56811 13.9412 2.56348 13.6553H12.6152L12.6182 13.6338V13.6328L12.6221 13.6338L13.0283 10.3213C13.0396 10.2451 13.0499 10.1759 13.0596 10.1143V10.1133L13.1074 9.69629L13.2344 8.67188C13.2846 8.26141 13.3261 7.91589 13.3594 7.63574L13.3584 7.63477L13.6729 5.08691L13.6719 5.08594L13.6729 5.08301L13.6758 5.05469H11.3965L11.3936 5.07617L11.2383 6.37305C11.2142 6.53302 11.1441 6.66525 11.0293 6.77148V6.77246C10.9143 6.87874 10.7807 6.93432 10.6279 6.93945C10.4774 6.94455 10.3554 6.89357 10.2598 6.78809C10.164 6.6826 10.1249 6.55764 10.1436 6.41113L10.3076 5.08301L10.3105 5.05469H7.39551L7.39355 5.07617L7.23828 6.37695C7.21418 6.53699 7.1441 6.66853 7.0293 6.77344C6.9143 6.87858 6.78096 6.93431 6.62793 6.93945C6.4787 6.94497 6.35704 6.89375 6.26074 6.78711C6.1645 6.6805 6.12643 6.55631 6.14746 6.41211L6.14844 6.41113L6.31152 5.08301L6.31543 5.05469H3.61719C3.66031 4.7436 3.79943 4.48658 4.03613 4.2832C4.27999 4.07366 4.56352 3.96882 4.8877 3.96875H6.43945L6.44336 3.94922L6.47656 3.78223H6.47754V3.78027C6.5903 2.96648 6.89476 2.34327 7.38965 1.9082C7.88472 1.47312 8.53768 1.25493 9.35059 1.25488ZM1.4834 10.8027H3.8252C3.97895 10.8028 4.10614 10.8558 4.20898 10.9619C4.31202 11.0684 4.36426 11.198 4.36426 11.3525C4.36421 11.5069 4.31246 11.6346 4.20996 11.7373C4.10718 11.84 3.97921 11.8916 3.8252 11.8916H1.4834C1.32969 11.8915 1.20183 11.8391 1.09766 11.7344C0.993475 11.6296 0.941449 11.5012 0.941406 11.3467C0.941406 11.1921 0.993443 11.0633 1.09766 10.959C1.2018 10.8547 1.32973 10.8028 1.4834 10.8027ZM2.81738 8.12012H5.8252C5.97907 8.12016 6.10772 8.17262 6.21191 8.27734C6.31577 8.38194 6.36806 8.51064 6.36816 8.66504C6.36816 8.81963 6.31588 8.94799 6.21191 9.05078C6.10775 9.15367 5.9792 9.20504 5.8252 9.20508H2.81738C2.66355 9.20508 2.5349 9.15262 2.43066 9.04785C2.32656 8.943 2.27441 8.81376 2.27441 8.65918C2.27452 8.50465 2.32675 8.37711 2.43066 8.27441C2.53487 8.17159 2.6634 8.12012 2.81738 8.12012ZM9.22363 2.34375C8.76196 2.34375 8.38493 2.46741 8.09473 2.71582C7.80464 2.96414 7.63033 3.31727 7.57129 3.77246L7.53809 3.93945L7.53223 3.96875H10.4414L10.4443 3.94727C10.498 3.5318 10.4062 3.16059 10.1699 2.83496C9.93317 2.50842 9.61726 2.34378 9.22363 2.34375Z"
-                            fill="currentColor"
-                            stroke="currentColor"
-                            stroke-width="0.05"
-                          ></path>
-                        </svg>
-                        <span data-sold-count-text>{{ _("Sold more than %s times") | format(sold_count) if sold_count }}</span>
-                      </span>
-
-                      {# Remaining Stock Badge #}
-                      <span
-                        data-low-stock-badge
-                        class="badge badge-outlined border-foreground {{ '!hidden' if not product.low_stock_quantity }}"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 16 16"
-                          fill="none"
-                        >
-                          <path
-                            d="M3.33333 2.66667V13.3333H12.6667V2.66667H3.33333ZM2.66667 1.33333H13.3333C13.687 1.33333 14 1.64638 14 2V14C14 14.3536 13.687 14.6667 13.3333 14.6667H2.66667C2.31304 14.6667 2 14.3536 2 14V2C2 1.64638 2.31304 1.33333 2.66667 1.33333ZM8 4.66667C8.36819 4.66667 8.66667 4.96514 8.66667 5.33333V9.33333C8.66667 9.70152 8.36819 10 8 10C7.63181 10 7.33333 9.70152 7.33333 9.33333V5.33333C7.33333 4.96514 7.63181 4.66667 8 4.66667ZM8 10.6667C8.36819 10.6667 8.66667 10.9651 8.66667 11.3333C8.66667 11.7015 8.36819 12 8 12C7.63181 12 7.33333 11.7015 7.33333 11.3333C7.33333 10.9651 7.63181 10.6667 8 10.6667Z"
-                            fill="currentColor"
-                          ></path>
-                        </svg>
-                        <span data-low-stock-text
-                          >{{ _("Remaining %s only") | format(product.low_stock_quantity) if product.low_stock_quantity }}</span
-                        >
-                      </span>
-                    </div>
-                    {% with product=product,gallery_id="product-gallery" %}
-                      {% include 'components/products/product-gallery.jinja' %}
-                    {% endwith %}
-                  </div>
-                  {% if settings.single_product_section_list_features_with_product_selection_store and settings.single_product_section_list_features_with_product_selection_store|length > 0 %}
-
-                  {% set matching_features_store = [] %}
-                  {% for group in settings.single_product_section_list_features_with_product_selection_store %}
-                    {% for item in group.product_has_features_store %}
-                      {% if item.products_store_features_shown and item.products_store_features_shown.id == product.id %}
-                        {% for feature in group.list_features_store %}
-                          {% set _ = matching_features_store.append(feature) %}
-                        {% endfor %}
-                      {% endif %}
-                    {% endfor %}
-                  {% endfor %}
-
-                  {% if matching_features_store|length > 0 %}
-                  <section class="mt-2 Features-Grid">
-                    <div class="">
-                      {# Features Grid #}
-                      <div class="grid grid-cols-3 gap-4 p-2 !border !border-[#E5E5E5]">
-                        {% for feature in matching_features_store %}
-                          <div class="feature-card rounded-lg transition-all duration-300 feature-card relative rounded-lg transition-all duration-300
-                                      after:content-[''] after:absolute after:left-0
-                                      after:top-1/2 after:-translate-y-1/2
-                                      after:h-[34px] after:w-px after:bg-gray-200
-                                      [&:nth-child(3n)]:after:hidden">
-
-                            <div class="flex justify-center mb-2">
-                              <div class="flex items-center justify-center rounded-full w-[38px] h-[38px] md:w-[56px] md:h-[56px] transition-transform duration-300 hover:scale-110">
-
-                                {% if feature.display_type_store == 'image' %}
-                                  {% if feature.feat_image_store %}
-                                    <img src="{{ feature.feat_image_store }}"
-                                        alt="{{ feature.main_text_store | default('') }}"
-                                        class="w-[74px] h-[64px] object-contain"
-                                        loading="lazy">
-                                  {% endif %}
-                                {% else %}
-                                  <lord-icon
-                                    src="https://cdn.lordicon.com/{{ feature.feat_animate_icon_store }}.json"
-                                    trigger="loop"
-                                    delay="800"
-                                    colors="primary:{{ feature.first_icon_color_store | default('#FF6B6B') }},secondary:{{ feature.second_icon_color_store | default('#4ECDC4') }}"
-                                    style="width: 3rem; height: 3rem;">
-                                  </lord-icon>
-                                {% endif %}
-
-                              </div>
-                            </div>
-
-                            {% if feature.main_text_store %}
-                            <div class="text-center">
-                              <h3 class="font-medium text-base leading-6 tracking-normal"
-                                  style="color: {{ feature.main_text_color_store | default('#1b1b1b') }};">
-                                {{ feature.main_text_store }}
-                              </h3>
-                            </div>
-                            {% endif %}
-
-                            {% if feature.sub_text_store %}
-                            <div class="text-center">
-                              <p class="font-normal text-xs leading-4 tracking-normal"
-                                style="color: {{ feature.sub_text_color_store | default('#666666') }};">
-                                {{ feature.sub_text_store }}
-                              </p>
-                            </div>
-                            {% endif %}
-
-                          </div>
-                        {% endfor %}
-                      </div>
-
-                    </div>
-                  </section>
-                  {% endif %}
-
-                {% endif %}
+        {# ── Gallery column ── #}
+        <div class="pdp-gallery-col flex flex-col gap-2">
+          {% if details_on_top %}
+            <div id="header" class="pdp-header pdp-header--top md:hidden" data-show="top">
+              {% with pdp_header_where='top' %}
+                {% include 'components/products/pdp-header.jinja' %}
+              {% endwith %}
             </div>
-        {# Right Column: Product Details #}
-        <div class="product-details-column flex flex-col gap-3 md:gap-4">
-          {# Product Name #} {# Rating + Actions #}
-          
+          {% endif %}
+
+          <div class="product-gallery-column relative" data-thumb-pos="{{ settings.product_gallery_thumbnail_position | default('start') }}" data-thumb-layout="{{ settings.product_gallery_thumbnail_layout | default('vertical') }}" data-thumb-layout-mobile="{{ settings.product_gallery_mobile_thumbnail_layout | default('vertical') }}">
+            {# Product Badges #}
+            <div id="product-badges" class="pdp-badges">
+              {# Merchant Badge (custom product badge) #}
+              {% if product.badge %}
+                {% with product=product %}
+                  {% include 'components/products/merchant-badge.jinja' %}
+                {% endwith %}
+              {% endif %}
+
+              {# Preorder Badge #}
+              {% if has_preorder %}
+                {% include 'vitrin:products/preorder_badge.jinja' %}
+              {% endif %}
+
+              {# Bundle Offer Badge #}
+              {% if product.bundle_offer %}
+                <span class="badge pdp-badge">{{ product.bundle_offer.name }}</span>
+              {% endif %}
+
+              {# Sold Items Badge #}
+              {% set sold_count = product.sold_products_count or (product.selected_product and product.selected_product.sold_products_count) %}
+              <span
+                data-sold-count-badge
+                class="badge pdp-badge pdp-badge--light {{ '!hidden' if not sold_count }}"
+              >
+                <span data-sold-count-text>{{ _("Sold more than %s times") | format(sold_count) if sold_count }}</span>
+              </span>
+            </div>
+
+            {# Out-of-stock ribbon (toggled by variants.js on variant change) #}
+            <span class="pdp-soldout-ribbon {{ 'hidden' if can_buy }}" data-pdp-soldout aria-hidden="{{ 'true' if can_buy else 'false' }}">{{ _('Sold out') }}</span>
+
+            {% with product=product,gallery_id="product-gallery" %}
+              {% include 'components/products/product-gallery.jinja' %}
+            {% endwith %}
+          </div>
+
+          {# ── Trust badges under the gallery: per-product list, else the general list, else defaults ── #}
+          {% if show_trust %}
+            {% set matching_features_store = [] %}
+            {% for group in settings.single_product_section_list_features_with_product_selection_store or [] %}
+              {% for item in group.product_has_features_store or [] %}
+                {% if item.products_store_features_shown and item.products_store_features_shown.id == product.id %}
+                  {% for feature in group.list_features_store %}
+                    {% set _ = matching_features_store.append({'image': feature.feat_image_store if feature.display_type_store == 'image' else '', 'icon': feature.feat_animate_icon_store if feature.display_type_store != 'image' else '', 'c1': feature.first_icon_color_store, 'c2': feature.second_icon_color_store, 'title': feature.main_text_store, 'subtitle': feature.sub_text_store}) %}
+                  {% endfor %}
+                {% endif %}
+              {% endfor %}
+            {% endfor %}
+            {% if matching_features_store | length == 0 %}
+              {% for badge in settings.single_product_section_trust_badges or [] %}
+                {% set _ = matching_features_store.append({'image': badge.image, 'icon': '', 'title': badge.title, 'subtitle': badge.subtitle}) %}
+              {% endfor %}
+            {% endif %}
+            {% if matching_features_store | length == 0 %}
+              {% set matching_features_store = [
+                {'asset': 'images/dara/pdp-trust-quality.svg', 'title': _('Guaranteed quality'), 'subtitle': _('Carefully selected pieces')},
+                {'asset': 'images/dara/pdp-trust-secure.svg', 'title': _('Secure payment'), 'subtitle': _('Flexible and safe payment options')},
+                {'asset': 'images/dara/pdp-trust-shipping.svg', 'title': _('Fast shipping'), 'subtitle': _('Delivered to your door')}
+              ] %}
+            {% endif %}
+            <section class="pdp-trust Features-Grid pdp-qv-hide" aria-label="{{ _('Why shop with us') }}">
+              {% for feature in matching_features_store %}
+                <div class="pdp-trust__item feature-card">
+                  <div class="pdp-trust__icon">
+                    {% if feature.asset %}
+                      <img src="{{ feature.asset | asset_url }}" alt="" width="90" height="80" loading="lazy">
+                    {% elif feature.image %}
+                      <img src="{{ feature.image }}" alt="{{ feature.title | default('') }}" loading="lazy">
+                    {% elif feature.icon %}
+                      <lord-icon
+                        src="https://cdn.lordicon.com/{{ feature.icon }}.json"
+                        trigger="loop"
+                        delay="800"
+                        colors="primary:{{ feature.c1 | default('#6B4A39', true) }},secondary:{{ feature.c2 | default('#C8AE7D', true) }}"
+                        style="width: 3.5rem; height: 3.5rem;">
+                      </lord-icon>
+                    {% endif %}
+                  </div>
+                  {% if feature.title %}<p class="pdp-trust__title">{{ feature.title }}</p>{% endif %}
+                  {% if feature.subtitle %}<p class="pdp-trust__subtitle">{{ feature.subtitle }}</p>{% endif %}
+                </div>
+              {% endfor %}
+            </section>
+          {% endif %}
+        </div>
+
+        {# ── Details column ── #}
+        <div class="product-details-column pdp-details flex flex-col">
           <div
             id="header"
-            class="space-y-4 {% if settings.product_gallery_details_thumbnail_position == 'top' %}hidden md:block{% endif %}"
+            class="pdp-header {% if details_on_top %}hidden md:block{% endif %}"
             data-show="bottom"
           >
-            <div class="flex flex-wrap items-start justify-between gap-4">
-              <div class="space-y-1">
-                <h1 class="text-foreground text-lg font-semibold md:text-xl" data-show="bottom">{{ product.name }}</h1>
-                {% if store.settings.products.reviews_enabled %}
-                  {% if product.rating %}
-                    <div class="flex items-center gap-2" data-show="bottom">
-                      {% with  rating=product.rating.average %}
-                        {% include 'components/rating-stars.jinja' %}
-                      {% endwith %}
-                      <p class="font-medium text-sm leading-5 tracking-normal text-[#737373]">
-                        {{ product.rating.average }} ({{ product.rating.total_count }} {{ _('reviews') }})
-                      </p>
-                    </div>
+            {% with pdp_header_where='bottom' %}
+              {% include 'components/products/pdp-header.jinja' %}
+            {% endwith %}
+          </div>
+
+          <hr class="pdp-divider">
+
+          {# Live viewers counter (optional) #}
+          {% if show_viewers %}
+            {% set v_min = (settings.single_product_section_viewers_min | default(8, true)) | int %}
+            {% set v_max = (settings.single_product_section_viewers_max | default(25, true)) | int %}
+            {% if v_max < v_min %}{% set v_max = v_min %}{% endif %}
+            {% set v_start = v_min + ((product.name | default('') | length) * 7) % (v_max - v_min + 1) %}
+            {% set v_tpl = settings.single_product_section_viewers_text | default(_('%s people are viewing this product now'), true) %}
+            {% if '%s' not in v_tpl %}{% set v_tpl = v_tpl ~ ' %s' %}{% endif %}
+            <p class="pdp-viewers pdp-qv-hide" data-pdp-viewers data-min="{{ v_min }}" data-max="{{ v_max }}">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M12.5 10a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M2.05 10C3.11 6.62 6.27 4.17 10 4.17c3.73 0 6.89 2.45 7.95 5.83-1.06 3.38-4.22 5.83-7.95 5.83-3.73 0-6.89-2.45-7.95-5.83Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>{{ v_tpl | replace('%s', '<b data-pdp-viewers-count>' ~ v_start ~ '</b>') | safe }}</span>
+            </p>
+          {% endif %}
+
+          {# Fabric chip (optional): per-product list, else a product attribute named like the label #}
+          {% if show_fabric %}
+            {% set fabric_label = settings.single_product_section_fabric_label | default(_('Fabric'), true) %}
+            {% set fabric_ns = namespace(value='') %}
+            {% for item in settings.single_product_section_fabric_by_product or [] %}
+              {% if not fabric_ns.value and item.product and item.product.id == product.id and item.fabric %}
+                {% set fabric_ns.value = item.fabric %}
+              {% endif %}
+            {% endfor %}
+            {% if not fabric_ns.value and product.attributes %}
+              {% for attr in product.attributes %}
+                {% if not fabric_ns.value and attr.name and (attr.name | string | lower | trim) == (fabric_label | string | lower | trim) %}
+                  {% if attr.value is string %}
+                    {% set fabric_ns.value = attr.value %}
+                  {% elif attr.value is iterable %}
+                    {% set fabric_ns.value = attr.value | join(', ') %}
                   {% endif %}
                 {% endif %}
+              {% endfor %}
+            {% endif %}
+            {% if fabric_ns.value %}
+              <div class="pdp-fabric">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M17.62 10.48V6.67h-.95V4.76h-5.72V3.81h.96v-1.9h-.96V.95H7.14v.96h-.95v1.9h.95v.95H3.33v.95h10.48v3.81h.95v2.86h.95v5.71H1.43v.96h15.24v-.96h.95v-.95h.95v-.96h.96v-2.86h-.96v-2.85h-.95ZM10 3.81H8.09v-1.9H10v1.9Z" fill="#343A40"/>
+                  <path d="M10.95 12.38h.96v.95h.95v-1.9h-1.91v.95Zm-.95-2.86h1.91v.96H10v-.96Zm0 3.81h1.91v.96H10v-.96Zm-.95-2.85H10v2.85h-.95v-2.85Zm-1.91 2.85h.95v.96h-.95v-.96Zm0-3.81h.95v.96h-.95v-.96Zm-.95 2.86h.95v.95h-.95v-.95Zm0-1.91h.95v.95h-.95v-.95Zm-.96-.95h-.95v4.77h.95v-1.91h.96v-.95h-.96V9.52ZM2.38 5.71h.95v3.81h-.95V5.71Zm-.95 3.81h.95v2.86h-.95V9.52ZM.48 12.38h.95v5.71H.48v-5.71Z" fill="#343A40"/>
+                </svg>
+                <span>{{ fabric_label }}: {{ fabric_ns.value }}</span>
               </div>
+            {% endif %}
+          {% endif %}
 
-              <div class="flex items-center gap-2 qv_actions" data-show="bottom">
-                {% with product_id=product.id, class="!border !border-[#E5E5E5] rounded-full" %}
-                  {% include 'components/products/wishlist-button.jinja' %}
-                {% endwith %}
-
-                <div class="relative">
-                  <button
-                    type="button"
-                    id="share-dropdown-toggle"
-                    style="
-    border: 1px solid #E5E5E5;
-    border-radius: 50%;
-"
-                    class="share-dropdown-toggle btn btn-icon btn-icon-md border text-border  border-[#E5E5E5] rounded-full text-foreground hover:border-foreground hover:text-foreground"
-                    style="
-                            border: 1px solid #E5E5E5;
-                            border-radius: 50%;
-                        "     
-                    aria-haspopup="menu"
-                    aria-expanded="false"
-                    aria-controls="share-dropdown-menu"
-                    data-share-title="{{ product.name }}"
-                    data-share-url="{{ product.html_url }}"
-                    aria-label="{{ _('Share product') }}"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <circle cx="18" cy="5" r="3"></circle>
-                      <circle cx="6" cy="12" r="3"></circle>
-                      <circle cx="18" cy="19" r="3"></circle>
-                      <path d="M8.59 13.51l6.83 3.98"></path>
-                      <path d="M8.59 10.49l6.83-3.98"></path>
-                    </svg>
-                  </button>
-
-                  <div
-                    id="share-dropdown-menu"
-                    class="absolute right-[-13px] z-50 mt-2 w-56 overflow-hidden rounded-3xl border w-fit border-border bg-white shadow-xl opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right"
-                    aria-hidden="true"
-                  >
-                    <a
-                      href="https://api.whatsapp.com/send?text={{ _('Check Out this Product') }}: {{ product.name }} {{ product.html_url }}"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="flex items-center gap-3 px-2 py-3 text-sm text-foreground transition hover:bg-slate-50"
-                      aria-label="{{ _('Share on WhatsApp') }}"
-                      data-share-action="link"
-                    >
-                      <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#25D366]/10 text-[#25D366]">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                        </svg>
-                      </span>
-                    </a>
-                    <a
-                      href="https://twitter.com/intent/tweet?text={{ product.name }}: {{ product.html_url }}"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="flex items-center gap-3 px-2 py-3 text-sm text-foreground transition hover:bg-slate-50"
-                      aria-label="{{ _('Share on Twitter') }}"
-                      data-share-action="link"
-                    >
-                      <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#1DA1F2]/10 text-[#1DA1F2]">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                        </svg>
-                      </span>
-                    </a>
-                    <a
-                      href="https://www.facebook.com/sharer/sharer.php?u={{ product.html_url }}"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="flex items-center gap-3 px-2 py-3 text-sm text-foreground transition hover:bg-slate-50"
-                      aria-label="{{ _('Share on Facebook') }}"
-                      data-share-action="link"
-                    >
-                      <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#1877F2]/10 text-[#1877F2]">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                        </svg>
-                      </span>
-                    </a>
-                    <button
-                      type="button"
-                      class="flex w-full items-center gap-3 px-2 py-3 text-sm text-foreground transition hover:bg-slate-50"
-                      aria-label="{{ _('Copy link') }}"
-                      data-share-action="copy"
-                    >
-                      <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-slate-200 text-slate-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
-                          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
-                        </svg>
-                      </span>
-                    </button>
-                  </div>
-                  <div id="share-toast" class="pointer-events-none absolute right-0 top-full mt-3 hidden rounded-full bg-foreground px-3 py-2 text-xs font-medium text-white shadow-lg opacity-0 transition-opacity duration-200">
-                    {{ _('Link copied') }}
-                  </div>
-                </div>
-              </div>
-            </div>
-            {# Price Section #}
-            <div class="flex flex-wrap items-center justify-between gap-y-1 border-b border-[#E5E5E5] pb-2" data-show="bottom">
-              <div class="flex flex-wrap items-center gap-2 ">
-                {# Current Price (sale or regular) #}
-                 <p
-                          class="font-medium text-2xl leading-8 tracking-normal align-middle"
-                          data-product-price
-                        >
-                          {{ product.formatted_sale_price if product.formatted_sale_price else product.formatted_price }}
-                        </p>
-                        {# Old Price (if on sale) #}
-                        <span
-                          class="text-[#737373] font-normal text-lg leading-7 tracking-normal align-middle {{ 'hidden' if not product.formatted_sale_price }} text-sm line-through"
-                          data-product-price-old
-                        >
-                          {{ product.formatted_price if product.formatted_sale_price else '' }}
-                        </span>
-                {# Discount Badge #}
-                <span
-                  class="bg-success/20 text-success {{ 'hidden' if not (product.discount_percentage and product.discount_percentage > 0) }} rounded px-2 py-1 text-xs tracking-wide uppercase"
-                  data-product-discount
-                >
-                  {% if product.discount_percentage and product.discount_percentage > 0 %}
-                    {{ _("Discount") }}
-                    {{ product.discount_percentage }}%
-                  {% endif %}
-                </span>
-              </div>
-              {# SKU #}
-            </div>
-
-          </div>
           <span
-            class="text-muted-foreground {{ 'hidden' if not product.sku }} text-sm"
+            class="pdp-meta {{ 'hidden' if not product.sku }}"
             data-product-sku-wrapper
           >
             {{ _('SKU') }} <span data-product-sku>{{ product.sku }}</span>
           </span>
-           {# Weight #}
-                <div
-                  class="{{ 'hidden' if not has_weight }} py-1 px-2 bg-[#FCFCF0] w-fit border border-[#D3DB6F] flex items-center gap-2"
-                  data-product-weight-wrapper
-                >
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g clip-path="url(#clip0_364_24378)">
-                <path d="M17.6191 10.4752V6.66894H16.6691V4.76269H10.9504V3.80645H11.9066V1.90645H10.9504V0.950195H7.14414V1.90645H6.19414V3.80645H7.14414V4.76269H3.33164V5.7127H13.8129V9.52519H14.7629V12.3814H15.7129V18.0939H1.43164V19.0502H16.6691V18.0939H17.6191V17.1439H18.5691V16.1877H19.5254V13.3314H18.5691V10.4752H17.6191ZM10.0004 3.80645H8.09414V1.90645H10.0004V3.80645Z" fill="#343A40"/>
-                <path d="M10.9496 12.3816H11.9059V13.3316H12.8559V11.4254H10.9496V12.3816ZM9.99961 9.52539H11.9059V10.4754H9.99961V9.52539ZM9.99961 13.3316H11.9059V14.2879H9.99961V13.3316ZM9.04961 10.4754H9.99961V13.3316H9.04961V10.4754ZM7.14336 13.3316H8.09336V14.2879H7.14336V13.3316ZM7.14336 9.52539H8.09336V10.4754H7.14336V9.52539ZM6.19336 12.3816H7.14336V13.3316H6.19336V12.3816ZM6.19336 10.4754H7.14336V11.4254H6.19336V10.4754ZM5.23711 9.52539H4.28711V14.2879H5.23711V12.3816H6.19336V11.4254H5.23711V9.52539ZM2.38086 5.71289H3.33086V9.52539H2.38086V5.71289ZM1.43086 9.52539H2.38086V12.3816H1.43086V9.52539ZM0.474609 12.3816H1.43086V18.0941H0.474609V12.3816Z" fill="#343A40"/>
-                </g>
-                <defs>
-                <clipPath id="clip0_364_24378">
-                <rect width="20" height="20" fill="white"/>
-                </clipPath>
-                </defs>
-                </svg>
-
-                  <dt class="text-muted-foreground text-sm">{{ _("Weight") }}:</dt>
-                  <dd
-                    class="text-foreground text-sm"
-                    data-product-weight
-                  >
-                    {% if has_weight %}
-                      {{ product.selected_product.weight.value }}
-                      {{ product.selected_product.weight.unit }}
-                    {% endif %}
-                  </dd>
-                </div>
-              {% if settings.single_product_section_list_features_with_product_selection and settings.single_product_section_list_features_with_product_selection|length > 0 %}
-
-  {# إيجاد الـ group المطابق للمنتج الحالي واستخراج list_features منه #}
-  {% set matching_features = [] %}
-  {% for group in settings.single_product_section_list_features_with_product_selection %}
-    {% for item in group.product_has_features %}
-      {% if item.war_products.id == product.id %}
-        {% for feature in group.list_features %}
-          {% set _ = matching_features.append(feature) %}
-        {% endfor %}
-      {% endif %}
-    {% endfor %}
-  {% endfor %}
-
-    {% if matching_features|length > 0 %}
-        <section class="mt-2">
+          {# Weight #}
+          {% set has_weight = product.selected_product and product.selected_product.weight and product.selected_product.weight.value %}
           <div
-            class="py-2 px-4"
-            style="
-              background-color: {{ settings.single_product_section_features_section_background | default('#F9B75724') }};
-              border-radius: {{ settings.single_product_section_features_section_radius | default(16) }}px;
-            "
+            class="{{ 'hidden' if not has_weight }} pdp-fabric"
+            data-product-weight-wrapper
           >
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M17.62 10.48V6.67h-.95V4.76h-5.72V3.81h.96v-1.9h-.96V.95H7.14v.96h-.95v1.9h.95v.95H3.33v.95h10.48v3.81h.95v2.86h.95v5.71H1.43v.96h15.24v-.96h.95v-.95h.95v-.96h.96v-2.86h-.96v-2.85h-.95ZM10 3.81H8.09v-1.9H10v1.9Z" fill="#343A40"/>
+            </svg>
+            <span>{{ _("Weight") }}:</span>
+            <span data-product-weight>
+              {% if has_weight %}
+                {{ product.selected_product.weight.value }}
+                {{ product.selected_product.weight.unit }}
+              {% endif %}
+            </span>
+          </div>
 
-            {# Section Title #}
-            <div class="mb-2">
-              <h2
-                class="font-medium leading-5 tracking-normal"
+          {# ── Look details ("تفاصيل الإطلالة"): per-product features list (optional) ── #}
+          {% if show_look_details and settings.single_product_section_list_features_with_product_selection and settings.single_product_section_list_features_with_product_selection|length > 0 %}
+            {% set matching_features = [] %}
+            {% for group in settings.single_product_section_list_features_with_product_selection %}
+              {% for item in group.product_has_features or [] %}
+                {% if item.war_products and item.war_products.id == product.id %}
+                  {% for feature in group.list_features %}
+                    {% set _ = matching_features.append(feature) %}
+                  {% endfor %}
+                {% endif %}
+              {% endfor %}
+            {% endfor %}
+
+            {% if matching_features|length > 0 %}
+              {% set f_icon = settings.single_product_section_features_icon_size | default(56, true) %}
+              <section
+                class="pdp-look"
                 style="
-                  color: {{ settings.single_product_section_head_title_color | default('#000000') }};
-                  font-size: {{ settings.single_product_section_features_title_font_size | default(16) }}px;
+                  background-color: {{ settings.single_product_section_features_section_background | default('#F9B75724', true) }};
+                  border-radius: {{ settings.single_product_section_features_section_radius | default(0) }}px;
                 "
               >
-                {{ settings.single_product_section_head_title_feature | default(_('A unique blend of flavors'), true) }}
-              </h2>
-            </div>
-
-            {# Features Grid #}
-            {% set visible_features = matching_features[:4] %}
-            {% set feat_count = visible_features | length %}
-            {% if feat_count == 1 %}
-              {% set grid_cols = "grid-cols-1" %}
-            {% elif feat_count == 2 %}
-              {% set grid_cols = "grid-cols-2" %}
-            {% elif feat_count == 3 %}
-              {% set grid_cols = "grid-cols-3" %}
-            {% else %}
-              {% set grid_cols = "grid-cols-2 md:grid-cols-4" %}
-            {% endif %}
-            <div
-              class="grid {{ grid_cols }} justify-items-center"
-              style="
-                gap: {{ settings.single_product_section_features_items_gap | default(24) }}px;
-              "
-            >
-              {% for feature in matching_features[:4] %}
-                <div class="feature-card rounded-lg transition-all duration-300">
-
-                  {# Icon Container #}
-                  <div class="flex justify-center mb-4">
-                    <div
-                      class="flex items-center justify-center rounded-full transition-transform duration-300 hover:scale-110"
-                      style="
-                        width: {{ settings.single_product_section_features_icon_size | default(56) }}px;
-                        height: {{ settings.single_product_section_features_icon_size | default(56) }}px;
-                      "
-                    >
-
-                      {% if feature.display_type == 'image' %}
-
-                        {% if feature.feat_image %}
-                          <img
-                            src="{{ feature.feat_image }}"
-                            alt="{{ feature.main_text | default('') }}"
-                            loading="lazy"
-                            style="
-                              width: {{ settings.single_product_section_features_icon_size | default(56) }}px;
-                              height: {{ settings.single_product_section_features_icon_size | default(56) }}px;
-                              object-fit: contain;
-                            "
-                          >
+                <h2
+                  class="pdp-look__title"
+                  style="
+                    color: {{ settings.single_product_section_head_title_color | default('#000000', true) }};
+                    font-size: {{ settings.single_product_section_features_title_font_size | default(14, true) }}px;
+                  "
+                >
+                  {{ settings.single_product_section_head_title_feature | default(_('Look details'), true) }}
+                </h2>
+                {% set visible_features = matching_features[:4] %}
+                <div
+                  class="pdp-look__grid {{ 'pdp-look__grid--' ~ (visible_features | length) }}"
+                  style="gap: {{ settings.single_product_section_features_items_gap | default(24, true) }}px;"
+                >
+                  {% for feature in visible_features %}
+                    <div class="pdp-look__item feature-card">
+                      <div class="pdp-look__media" style="width: {{ f_icon }}px; height: {{ f_icon }}px;">
+                        {% if feature.display_type == 'image' %}
+                          {% if feature.feat_image %}
+                            <img src="{{ feature.feat_image }}" alt="{{ feature.main_text | default('') }}" loading="lazy">
+                          {% endif %}
+                        {% elif feature.feat_animate_icon %}
+                          <lord-icon
+                            src="https://cdn.lordicon.com/{{ feature.feat_animate_icon }}.json"
+                            trigger="loop"
+                            delay="800"
+                            colors="primary:{{ feature.first_icon_color | default('#6B4A39', true) }},secondary:{{ feature.second_icon_color | default('#C8AE7D', true) }}"
+                            style="width: {{ f_icon }}px; height: {{ f_icon }}px;"
+                          ></lord-icon>
                         {% endif %}
-
-                      {% else %}
-
-                        <lord-icon
-                          src="https://cdn.lordicon.com/{{ feature.feat_animate_icon }}.json"
-                          trigger="loop"
-                          delay="800"
-                          colors="primary:{{ feature.first_icon_color | default('#FF6B6B') }},secondary:{{ feature.second_icon_color | default('#4ECDC4') }}"
-                          style="
-                            width: {{ settings.single_product_section_features_icon_size | default(56) }}px;
-                            height: {{ settings.single_product_section_features_icon_size | default(56) }}px;
-                          "
-                        >
-                        </lord-icon>
-
+                      </div>
+                      {% if feature.main_text %}
+                        <p
+                          class="pdp-look__label"
+                          style="color: {{ feature.main_text_color | default('#404040', true) }}; font-size: {{ settings.single_product_section_features_text_font_size | default(16, true) }}px;"
+                        >{{ feature.main_text }}</p>
                       {% endif %}
                     </div>
-                  </div>
-
-                  {# Text Content #}
-                  {% if feature.main_text %}
-                    <div class="text-center">
-                      <h3
-                        class="font-medium leading-5 md:leading-6 tracking-normal text-center"
-                        style="
-                          color: {{ feature.main_text_color | default('#1b1b1b') }};
-                          font-size: {{ settings.single_product_section_features_text_font_size | default(14) }}px;
-                        "
-                      >
-                        {{ feature.main_text }}
-                      </h3>
-                    </div>
-                  {% endif %}
-
+                  {% endfor %}
                 </div>
+              </section>
+            {% endif %}
+          {% endif %}
+
+          {# ── Story & texture scales (optional). Titles + every label are editable settings ── #}
+          {% if show_story_texture and settings.single_product_section_coffee_attributes_selection and settings.single_product_section_coffee_attributes_selection|length > 0 %}
+            {% set matching_attributes = [] %}
+            {% for group in settings.single_product_section_coffee_attributes_selection %}
+              {% for item in group.products_with_attributes or [] %}
+                {% if item.selected_products and item.selected_products.id == product.id %}
+                  {% for attribute in group.coffee_attributes_list %}
+                    {% set _A = matching_attributes.append(attribute) %}
+                  {% endfor %}
+                {% endif %}
               {% endfor %}
-            </div>
+            {% endfor %}
 
-          </div>
-        </section>
-    {% endif %}
-
-{% endif %}
-
-{% if settings.single_product_section_coffee_attributes_selection and settings.single_product_section_coffee_attributes_selection|length > 0 %}
-
-  {# إيجاد الـ group المطابق للمنتج الحالي واستخراج coffee_attributes_list منه #}
-  {% set matching_attributes = [] %}
-  {% for group in settings.single_product_section_coffee_attributes_selection %}
-    {% for item in group.products_with_attributes %}
-      {% if item.selected_products.id == product.id %}
-        {% for attribute in group.coffee_attributes_list %}
-          {% set _A = matching_attributes.append(attribute) %}
-        {% endfor %}
-      {% endif %}
-    {% endfor %}
-  {% endfor %}
-
-  {% if matching_attributes|length > 0 %}
-  <section class="pb-3 border-b-[1px] border-b-[#E5E5E5]">
-    <div class="rounded-lg w-full">
-
-      {# Coffee Attributes #}
-      {% for attribute in matching_attributes %}
-
-        {# Acidity Section #}
-        <div class="mb-5">
-          <div class="flex justify-between text-sm font-medium mb-[6px]">
-            <span class="text-start text-gray-900">{{settings.single_product_section_coffee_acidity_level | default(_('Acidity'), true)}}</span>
-          </div>
-
-          <div class="relative flex items-center">
-            {# SVG Gradient Background #}
-           <svg 
-              viewBox="0 0 666 8" 
-              fill="none" 
-              xmlns="http://www.w3.org/2000/svg"
-              style="width: 100%; height: 8px; display: block;"
-              preserveAspectRatio="none"
-            >
-              <rect width="666" height="8" rx="4" fill="url(#paint0_linear_0_3)"/>
-              <defs>
-                <linearGradient id="paint0_linear_0_3" x1="0" y1="4" x2="671.5" y2="4" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#5E3216"/>
-                  <stop offset="0.5" stop-color="#5E3216" stop-opacity="0.5"/>
-                  <stop offset="1" stop-color="#5E3216" stop-opacity="0"/>
-                </linearGradient>
-              </defs>
-            </svg>
-
-
-            {# Knob/Slider thumb - في النص (vertical center) #}
-            <div class="absolute top-[15px] -translate-y-1/2 transition-all duration-500 z-10"
-                 style="right: {{ attribute.acidity_level | default(0) }}%; transform: translate(-50%, -50%);">
-              <div class="relative">
-                {# Shadow #}
-                <div class="absolute inset-0 rounded-full bg-black/10 blur-md" style="width: 26px; height: 26px; left: -1px; top: -1px;"></div>
-                
-                {# SVG Knob #}
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="relative z-10">
-                  <rect width="24" height="24" rx="12" fill="#42220D"/>
-                  <g clip-path="url(#clip0_acidity)">
-                    <path d="M6.03832 17.9623C7.24615 19.1702 9.03269 19.7003 11.0049 19.4362C12.9772 19.1721 14.9736 18.1353 16.5549 16.5539C18.1363 14.9726 19.1731 12.9762 19.4372 11.004C19.7013 9.03171 19.1711 7.24517 17.9633 6.03735C16.7555 4.82953 14.969 4.29936 12.9967 4.56349C11.0245 4.82762 9.02808 5.8644 7.44673 7.44575C5.86537 9.0271 4.82859 11.0235 4.56447 12.9957C4.30034 14.968 4.8305 16.7545 6.03832 17.9623Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M17.8518 6.14941C18.0018 13.4994 6.00179 10.4994 6.15179 17.8494" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_acidity">
-                      <rect width="18" height="18" fill="white" transform="translate(3 3)"/>
-                    </clipPath>
-                  </defs>
-                </svg>
-              </div>
-            </div>
-          </div>
-
-          {# Labels - يدعم RTL #}
-          <div class="flex justify-between text-xs text-gray-500 mt-2" 
-               data-dir="auto">
-            <span>{{ _('Light') }}</span>
-            <span>{{ _('Medium') }}</span>
-            <span>{{ _('High') }}</span>
-          </div>
-        </div>
-
-        {# Body Section #}
-        <div>
-          <div class="flex justify-between text-sm font-medium mb-[6px]">
-            <span class="text-start text-gray-900">{{settings.single_product_section_coffee_body_level | default(_('Body'), true)}}</span>
-          </div>
-
-          <div class="relative flex items-center">
-            {# SVG Gradient Background #}
-          <svg 
-  viewBox="0 0 666 8" 
-  fill="none" 
-  xmlns="http://www.w3.org/2000/svg"
-  style="width: 100%; height: 8px; display: block;"
-  preserveAspectRatio="none"
->
-  <rect width="666" height="8" rx="4" fill="url(#paint0_linear_0_3)"/>
-  <defs>
-    <linearGradient id="paint0_linear_0_3" x1="0" y1="4" x2="671.5" y2="4" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#5E3216"/>
-      <stop offset="0.5" stop-color="#5E3216" stop-opacity="0.5"/>
-      <stop offset="1" stop-color="#5E3216" stop-opacity="0"/>
-    </linearGradient>
-  </defs>
-</svg>
-
-
-            {# Knob/Slider thumb - في النص (vertical center) #}
-            <div class="absolute top-[15px] -translate-y-1/2 transition-all duration-500 z-10"
-                 style="right: {{ attribute.body_level | default(0) }}%; transform: translate(-50%, -50%);">
-              <div class="relative">
-                {# Shadow #}
-                <div class="absolute inset-0 rounded-full bg-black/10 blur-md" style="width: 26px; height: 26px; left: -1px; top: -1px;"></div>
-                
-                {# SVG Knob #}
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="relative z-10">
-                  <rect width="24" height="24" rx="12" fill="#42220D"/>
-                  <g clip-path="url(#clip0_body)">
-                    <path d="M6.03832 17.9623C7.24615 19.1702 9.03269 19.7003 11.0049 19.4362C12.9772 19.1721 14.9736 18.1353 16.5549 16.5539C18.1363 14.9726 19.1731 12.9762 19.4372 11.004C19.7013 9.03171 19.1711 7.24517 17.9633 6.03735C16.7555 4.82953 14.969 4.29936 12.9967 4.56349C11.0245 4.82762 9.02808 5.8644 7.44673 7.44575C5.86537 9.0271 4.82859 11.0235 4.56447 12.9957C4.30034 14.968 4.8305 16.7545 6.03832 17.9623Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M17.8518 6.14941C18.0018 13.4994 6.00179 10.4994 6.15179 17.8494" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_body">
-                      <rect width="18" height="18" fill="white" transform="translate(3 3)"/>
-                    </clipPath>
-                  </defs>
-                </svg>
-              </div>
-            </div>
-          </div>
-
-          {# Labels - يدعم RTL #}
-          <div class="flex justify-between text-xs text-gray-500 mt-2" 
-               data-dir="auto">
-            <span>{{ _('Smooth') }}</span>
-            <span>{{ _('Balanced') }}</span>
-            <span>{{ _('Heavy') }}</span>
-          </div>
-        </div>
-
-      {% endfor %}
-
-    </div>
-  </section>
-  {% endif %}
-
-{% endif %}
-
-
-
-
-
-
+            {% if matching_attributes|length > 0 %}
+              {% set scales = [
+                {
+                  'key': 'acidity_level',
+                  'title': settings.single_product_section_coffee_acidity_level | default(_('Cut width'), true),
+                  'labels': [
+                    settings.single_product_section_story_label_low | default(_('Fitted'), true),
+                    settings.single_product_section_story_label_mid | default(_('Relaxed'), true),
+                    settings.single_product_section_story_label_high | default(_('Long'), true)
+                  ]
+                },
+                {
+                  'key': 'body_level',
+                  'title': settings.single_product_section_coffee_body_level | default(_('Fabric feel'), true),
+                  'labels': [
+                    settings.single_product_section_texture_label_low | default(_('Soft'), true),
+                    settings.single_product_section_texture_label_mid | default(_('Flowing'), true),
+                    settings.single_product_section_texture_label_high | default(_('Loose'), true)
+                  ]
+                }
+              ] %}
+              <section class="pdp-scales">
+                {% for attribute in matching_attributes %}
+                  {% for scale in scales %}
+                    {% set raw = (attribute[scale.key] | default(0, true)) | float %}
+                    {% set pct = (raw * 10) if raw <= 10 else raw %}
+                    {% if pct > 100 %}{% set pct = 100 %}{% endif %}
+                    {% if pct < 0 %}{% set pct = 0 %}{% endif %}
+                    <div class="pdp-scale">
+                      <p class="pdp-scale__title">{{ scale.title }}</p>
+                      <div class="pdp-scale__track" role="img" aria-label="{{ scale.title }}: {{ raw | round(0) | int }}/10">
+                        <span class="pdp-scale__knob" style="inset-inline-start: {{ pct }}%;">
+                          <svg width="18" height="18" viewBox="0 0 16.5 16.5" fill="none" aria-hidden="true">
+                            <path d="M2.29 14.22c1.21 1.2 3 1.73 4.97 1.47 1.97-.26 3.97-1.3 5.55-2.88 1.58-1.58 2.62-3.58 2.88-5.55.26-1.97-.27-3.76-1.47-4.97C13 1.08 11.22.55 9.25.82 7.28 1.08 5.28 2.12 3.7 3.7 2.12 5.28 1.08 7.28.82 9.25c-.27 1.97.26 3.76 1.47 4.97Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M14.1 2.4c.15 7.35-11.85 4.35-11.7 11.7" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                        </span>
+                      </div>
+                      <div class="pdp-scale__labels">
+                        {% for label in scale.labels %}<span>{{ label }}</span>{% endfor %}
+                      </div>
+                    </div>
+                  {% endfor %}
+                {% endfor %}
+              </section>
+              <hr class="pdp-divider">
+            {% endif %}
+          {% endif %}
 
           {# Short Description #}
           {% if product.short_description %}
-            <div class="prose prose-sm max-w-none">{{ product.short_description|safe }}</div>
+            <div class="prose prose-sm max-w-none pdp-short-desc">{{ product.short_description|safe }}</div>
           {% endif %}
 
           <form
             id="product-form"
-            class="space-y-4"
+            class="pdp-form"
           >
             <input
               type="hidden"
@@ -876,21 +413,37 @@
             {% endwith %}
             {# Product Options (if available) #}
             {% if product.has_options or product.has_fields %}
+              {% if settings.single_product_section_size_chart_url %}
+                <a href="{{ settings.single_product_section_size_chart_url }}" class="pdp-size-chart" target="_blank" rel="noopener">{{ settings.single_product_section_size_chart_text | default(_('Size chart'), true) }}</a>
+              {% endif %}
               {% with options=product.options, product=product, style='list' %}
                 {% include 'components/products/product-options.jinja' %}
               {% endwith %}
             {% endif %}
 
+            {# Low stock line (optional). Text is refreshed by variants.js on variant change #}
+            {% if show_low_stock %}
+              <p
+                data-low-stock-badge
+                data-template="{{ _('Only %s pieces left in stock!') }}"
+                class="pdp-low-stock {{ 'hidden' if not product.low_stock_quantity }}"
+              >
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M5.56 6.36c-.09.95-.15 2.63.41 3.35 0 0-.26-1.85 2.1-4.16.95-.94 1.17-2.2.84-3.16-.19-.54-.53-.98-.83-1.29-.18-.18-.04-.48.21-.47 1.54.07 4.04.5 5.1 3.16.47 1.17.5 2.38.28 3.6-.14.79-.64 2.53.5 2.74.81.16 1.21-.49 1.38-.96.07-.19.33-.24.47-.08 1.37 1.56 1.49 3.4 1.2 4.99-.55 3.06-3.65 5.3-6.74 5.3-3.85 0-6.92-2.21-7.71-6.2-.32-1.61-.16-4.8 2.32-7.05.19-.17.49-.02.47.23Z" fill="#FF7A00"/>
+                  <path d="M11.89 12.1c-1.42-1.83-.78-3.92-.43-4.75.04-.11-.08-.21-.18-.15-.61.42-1.86 1.4-2.45 2.77-.79 1.86-.73 2.77-.26 3.89.28.67-.05.81-.21.84-.16.02-.31-.08-.42-.19a2.5 2.5 0 0 1-.7-1.19c-.02-.1-.15-.12-.21-.04-.43.6-.66 1.57-.67 2.26-.04 2.12 1.72 3.84 3.84 3.84 2.67 0 4.61-2.95 3.08-5.42-.45-.72-.86-1.19-1.39-1.86Z" fill="#FFE07A"/>
+                </svg>
+                <span data-low-stock-text>{{ _('Only %s pieces left in stock!') | format(product.low_stock_quantity) if product.low_stock_quantity }}</span>
+              </p>
+            {% else %}
+              <span data-low-stock-badge class="!hidden" hidden><span data-low-stock-text></span></span>
+            {% endif %}
+
             {# Quantity Input #}
             <div
-              class="{{ 'hidden' if not is_in_stock }} grid w-full items-center gap-2"
+              class="{{ 'hidden' if not is_in_stock }} pdp-qty"
               data-quantity-wrapper
             >
-              <label
-                for="product-quantity"
-                class="form-label"
-                >{{ _('Quantity') }}</label
-              >
+              <label for="product-quantity" class="sr-only">{{ _('Quantity') }}</label>
               {% with id='product-quantity', quantity=1, min=1, max=product.quantity if not product.is_infinite and product.quantity and product.quantity > 0 else (1 if can_preorder else none), sync_target='sticky-qty' %}
                 {% include 'components/ui/quantity-input.jinja' %}
               {% endwith %}
@@ -915,146 +468,101 @@
             {# Checkout dialog (Buy Now popup) - included once on the PDP #}
             {% include 'vitrin:checkout/checkout_dialog.jinja' %}
 
-            {# Action Buttons #}
-            <div class="flex justify-between gap-2 items-center w-full flex-row-reverse">
-                            {% if not safeget(store, 'settings.general.availability.closed_now') and safeget(store, 'settings.checkout.show_checkout_as_popup') and not product.preorder_campaign and is_in_stock %}
-                            <div class="finish-buy w-full h-full flex-1">
-                               <button
-                                  class="btn !rounded-[0px] btn-buy-now relative flex items-center justify-center gap-2 w-full h-full flex-1
-                                        border border-[#F7512B] text-[#F7512B]
-                                        transition-colors duration-200
-                                        disabled:opacity-60 disabled:cursor-not-allowed py-3 flex items-center justify-center"
-                                  type="button"
-                                  data-buy-now-form="product-form"
-                                >
-                                  <!-- Icon -->
-                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                      <path d="M1.99805 6.28125L2.00195 16.5812C2.00195 17.7595 2.95708 18.7146 4.13529 18.7146H15.8686C17.0468 18.7146 18.002 17.7595 18.002 16.5812V8.04792C18.002 7.06608 17.206 6.27014 16.2242 6.27014H2.01373C2.00667 6.27014 2.00039 6.27459 1.99805 6.28125ZM1.99805 6.28125C1.9987 6.08156 14.002 1.28125 14.002 1.28125V5.78125M13.7492 12.3007L13.7353 12.3146" stroke="#F7512B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
+            {# Action Buttons: add to cart (start) + buy now (end) #}
+            <div class="pdp-actions">
+              <div class="pdp-actions__main" data-product-actions>
+                {# In Stock State #}
+                <div
+                  class="{{ 'hidden' if not can_buy }} pdp-actions__row"
+                  data-in-stock
+                >
+                  <button
+                    type="button"
+                    data-add-to-cart-form="product-form"
+                    data-success-text="{{ _('Added!') }}"
+                    class="btn btn-lg pdp-btn pdp-btn--primary"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                      <path d="M16.2 4.72 1.8 4.72m0 0 2.89-2.88c.17-.17.4-.27.64-.27h7.35c.24 0 .47.1.64.27l2.88 2.88v9.99c0 .95-.78 1.71-1.75 1.71H3.55c-.97 0-1.75-.76-1.75-1.71V4.72Zm9.9 2.7a2.7 2.7 0 0 1-5.4 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>{{ _("Preorder now") if product.preorder_campaign else _("Add to cart") }}</span>
+                  </button>
+                  {# Mount point for apps such as WhatsApp inquiry (upstream bcc686e) #}
+                  <span id="product-view-add-to-cart"></span>
 
-                                  <span class="buy-now-text">{{ _("Buy now") }}</span>
-                                </button>
-                            </div>
-                            {% endif %}
-                            <div
-                              class="flex flex-col gap-3 flex-1"
-                              data-product-actions
-                            >
-                              {# In Stock State #}
-                              <div
-                                class="{{ 'hidden' if not can_buy }} flex items-center gap-2"
-                                data-in-stock
-                              >
-                                {# Add to Cart Button #}
-                                <button
-                                  type="button"
-                                  data-add-to-cart-form="product-form"
-                                  data-success-text="{{ _('Added!') }}"
-                                  class="btn btn-filled btn-lg flex-1"
-                                  style="background-color: #F7512B; border-radius: 0; border: none;"
-                                >
-                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M16.2002 4.72808L1.80069 4.72787L1.79976 4.72813M1.79976 4.72813L4.68616 1.84173C4.85494 1.67295 5.08386 1.57812 5.32255 1.57812H12.677C12.9157 1.57812 13.1446 1.67295 13.3134 1.84173L16.2002 4.72808L16.1998 14.7151C16.1998 15.6612 15.4183 16.4281 14.4543 16.4281H3.54521C2.58123 16.4281 1.79976 15.6612 1.79976 14.7151V4.72813ZM11.6998 7.42813C11.6998 8.9193 10.4909 10.1281 8.99976 10.1281C7.50859 10.1281 6.29976 8.9193 6.29976 7.42813" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
+                  {% if show_buy_now and not safeget(store, 'settings.general.availability.closed_now') and safeget(store, 'settings.checkout.show_checkout_as_popup') and not product.preorder_campaign and is_in_stock %}
+                    <button
+                      class="btn btn-lg btn-buy-now pdp-btn pdp-btn--outline"
+                      type="button"
+                      data-buy-now-form="product-form"
+                    >
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                        <path d="M2 6.28 2 16.58c0 1.18.96 2.14 2.14 2.14h11.73c1.18 0 2.13-.96 2.13-2.14V8.05c0-.98-.8-1.78-1.78-1.78H2.01M2 6.28C2 6.08 14 1.28 14 1.28v4.5m-.25 6.52-.01.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                      <span class="buy-now-text">{{ _("Buy now") }}</span>
+                    </button>
+                  {% endif %}
+                </div>
 
-                                  {{ _("Preorder now") if product.preorder_campaign else _("Add to cart") }}
-                                </button>
-                                {# Mount point for apps such as WhatsApp inquiry (upstream bcc686e) #}
-                                <span id="product-view-add-to-cart"></span>
-                
-                                {# i need to add buy now button #}
-                                {# {% if store.settings.checkout.enable_buy_now %}
-                                  <button
-                                    type="button"
-                                    data-buy-now-form="product-form"
-                                    class="btn btn-outline btn-lg flex-1"
-                                  >
-                                    {{ _("Buy Now") }}
-                                  </button>
-                                {% endif %} #}
-                                {# Wishlist Button #}
-                                {# {% with product_id=product.id, class="btn-lg border-input border" %}
-                                  {% include 'components/products/wishlist-button.jinja' %}
-                                {% endwith %} #}
-                              </div>
-                
-                              {# Out of Stock State #}
-                              <div
-                                class="{{ 'hidden' if can_buy }} flex flex-col gap-3"
-                                data-out-of-stock
-                              >
-                                {# Disabled Add to Cart Button #}
-                                <button
-                                  type="button"
-                                  disabled
-                                  class="btn btn-lg bg-secondary text-muted-foreground w-full cursor-not-allowed border border-transparent"
-                                >
-                                  {{ _("Preorder now") if product.preorder_campaign else _("Add to cart") }}
-                                </button>
-                
-                                {# Notify Me & Wishlist Buttons #}
-                                <div class="flex items-center gap-2">
-                                  <button
-                                    type="button"
-                                    class="btn btn-filled btn-lg flex-1"
-                                    data-notify-me-btn
-                                    command="show-modal"
-                                    commandfor="notify-me-dialog"
-                                  >
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="20"
-                                      height="20"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      stroke-width="2"
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                    >
-                                      <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
-                                      <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
-                                    </svg>
-                                    {{ _('Notify me when available') }}
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
+                {# Out of Stock State #}
+                <div
+                  class="{{ 'hidden' if can_buy }} pdp-actions__oos"
+                  data-out-of-stock
+                >
+                  <p class="pdp-oos-note">{{ _('This item is currently out of stock') }}</p>
+                  <button
+                    type="button"
+                    class="btn btn-lg pdp-btn pdp-btn--primary"
+                    data-notify-me-btn
+                    command="show-modal"
+                    commandfor="notify-me-dialog"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+                      <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+                    </svg>
+                    {{ _('Notify me when available') }}
+                  </button>
+                </div>
+              </div>
             </div>
-{% set cart_settings = settings %}
-{% set payment_methods = safeget(cart_settings, 'cart_page_payment_methods', safeget(cart_settings, 'cart_page_cart_page_payment_methods', [])) %}
-      <div
-        class="cart-payments"
-        aria-label="{{ _('Payment methods') }}"
-      >
-        <div class="cart-payments__track">
-          {% for repeat in range(0,15) %}
+
+            {% include 'vitrin:products/loyalty_points_widget.jinja' %}
+
+            {% set cart_settings = settings %}
+            {% set payment_methods = safeget(cart_settings, 'cart_page_payment_methods', safeget(cart_settings, 'cart_page_cart_page_payment_methods', [])) %}
             <div
-              class="cart-payments__group"
-              {% if repeat == 2 %}aria-hidden="true"{% endif %}
+              class="cart-payments pdp-payments"
+              aria-label="{{ _('Payment methods') }}"
             >
-              {% if payment_methods and payment_methods | length > 0 %}
-                {% for method in payment_methods %}
-                  <span class="cart-payment">
-                    {% if method.image %}
-                      <img
-                        src="{{ image_url(method.image, w=120, h=56, f='auto') }}"
-                        alt="{{ method.title | default('') }}"
-                      />
+              <div class="cart-payments__track">
+                {% for repeat in range(0,15) %}
+                  <div
+                    class="cart-payments__group"
+                    {% if repeat > 0 %}aria-hidden="true"{% endif %}
+                  >
+                    {% if payment_methods and payment_methods | length > 0 %}
+                      {% for method in payment_methods %}
+                        <span class="cart-payment">
+                          {% if method.image %}
+                            <img
+                              src="{{ image_url(method.image, w=120, h=56, f='auto') }}"
+                              alt="{{ method.title | default('') }}"
+                            />
+                          {% else %}
+                            {{ method.title | default(_('Pay')) }}
+                          {% endif %}
+                        </span>
+                      {% endfor %}
                     {% else %}
-                      {{ method.title | default(_('Pay')) }}
+                      {% for label in ['tabby', _('Tamara'), 'VISA', 'mada', 'MasterCard', 'valu', 'Apple Pay'] %}
+                        <span class="cart-payment cart-payment--text">{{ label }}</span>
+                      {% endfor %}
                     {% endif %}
-                  </span>
+                  </div>
                 {% endfor %}
-              {% else %}
-                {% for label in ['tabby', _('Tamara'), 'VISA', 'mada', 'MasterCard', 'valu', 'Apple Pay'] %}
-                  <span class="cart-payment cart-payment--text">{{ label }}</span>
-                {% endfor %}
-              {% endif %}
+              </div>
             </div>
-          {% endfor %}
-        </div>
-      </div>
 {% if settings.single_product_section_bundle_products_with_selection and settings.single_product_section_bundle_products_with_selection|length > 0 %}
 
   {% set ns = namespace(current_bundle=none) %}
@@ -1066,35 +574,35 @@
   {% endfor %}
 
   {% if ns.current_bundle and ns.current_bundle.bundle_items|length > 0 %}
-  <section class="bundle-section mt-6 mb-6">
+  <section class="bundle-section pdp-bundle pdp-qv-hide">
     <div class="">
 
-      <h2 class="text-base font-medium text-start mb-4">
+      <h2 class="pdp-bundle__title">
         {{ ns.current_bundle.section_title | default(_('Frequently bought together'), true) }}
       </h2>
 
-      <div id="bundle-skeleton" class="flex flex-wrap gap-3 justify-end">
+      <div id="bundle-skeleton" class="pdp-bundle__row">
         {% for item in ns.current_bundle.bundle_items %}
-        <div class="flex items-center gap-3">
-          <div class="w-[130px] flex flex-col items-center gap-2">
-            <div class="w-[110px] h-[110px] bg-gray-100 rounded-lg animate-pulse"></div>
+        <div class="pdp-bundle__skel">
+          <div class="pdp-bundle__card">
+            <div class="pdp-bundle__img bg-gray-100 animate-pulse"></div>
             <div class="w-20 h-3 bg-gray-100 rounded animate-pulse"></div>
             <div class="w-14 h-3 bg-gray-100 rounded animate-pulse"></div>
           </div>
-          {% if not loop.last %}<span class="text-gray-300 text-xl self-center mt-[-20px]">+</span>{% endif %}
+          {% if not loop.last %}<span class="pdp-bundle__plus">+</span>{% endif %}
         </div>
         {% endfor %}
       </div>
 
       <div id="bundle-content" class="hidden">
-        <div id="bundle-products-row" class="flex flex-wrap items-start gap-1"></div>
-        <div class="mt-4 flex md:justify-start justify-center">
+        <div id="bundle-products-row" class="pdp-bundle__row"></div>
+        <div class="pdp-bundle__actions">
           <button id="bundle-add-btn"
                   type="button"
-                  class="px-6 py-3  text-sm font-medium border-2 transition-all duration-200 flex items-center gap-2"
-                  style="border-color: {{ ns.current_bundle.bundle_btn_color | default('#e63b3b') }}; color: {{ ns.current_bundle.bundle_btn_color | default('#e63b3b') }};">
+                  class="pdp-bundle__btn"
+                  style="--bundle-color: {{ ns.current_bundle.bundle_btn_color | default('#6B4A39', true) }};">
             <span>{{ ns.current_bundle.bundle_btn_text | default(_('Buy together for'), true) }}</span>
-            <span id="bundle-total-display" class="font-bold"></span>
+            <span id="bundle-total-display" class="pdp-bundle__total"></span>
             <span id="bundle-add-loader" class="hidden">
               <svg class="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
                 <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" stroke-dasharray="60" stroke-dashoffset="20"/>
@@ -1128,7 +636,7 @@
       {% endfor %}
     ];
 
-    const BTN_COLOR = {{ (ns.current_bundle.bundle_btn_color or '#e63b3b') | tojson }};
+    const BTN_COLOR = {{ (ns.current_bundle.bundle_btn_color or '#6B4A39') | tojson }};
     const I18N = {
       loadError: {{ _("Could not load products") | tojson }},
       added: {{ _("Products added to cart") | tojson }},
@@ -1221,7 +729,7 @@
 
       bundleData.forEach(function (item) {
         const plus = document.createElement('div');
-        plus.className = 'flex items-center self-center text-[#737373] text-xl font-light mt-[-20px] select-none';
+        plus.className = 'pdp-bundle__plus';
         plus.textContent = '+';
         row.appendChild(plus);
         row.appendChild(createCard(item, !item.needsOptions));
@@ -1233,13 +741,13 @@
 
     function createCard(item, toggleable) {
       const wrapper = document.createElement('div');
-      wrapper.className = 'bundle-card flex flex-col items-start w-[106px] md:w-[120px]';
+      wrapper.className = 'bundle-card pdp-bundle__card';
       wrapper.dataset.id = item.id;
       wrapper.dataset.price = item.price;
       wrapper.dataset.checked = item.checked ? 'true' : 'false';
 
       const imgOpacity = item.checked ? '1' : '0.4';
-      const checkBg = item.checked ? '#1b1b1b' : '#e5e7eb';
+      const checkBg = item.checked ? '#212121' : '#d4d4d4';
       const cursorClass = toggleable ? 'cursor-pointer' : '';
       const optionsLink = item.needsOptions && item.url
         ? '<a href="' + escapeHtml(item.url) + '" class="text-xs underline mt-1">' + escapeHtml(I18N.selectOptions) + '</a>'
@@ -1249,17 +757,17 @@
         <div class="relative ${cursorClass}" data-bundle-toggle>
           <img src="${escapeHtml(item.image)}"
                alt="${escapeHtml(item.name)}"
-               class="w-[106px] h-[106px] md:w-[120px] md:h-[120px] object-cover transition-opacity duration-200"
+               class="pdp-bundle__img"
                style="opacity:${imgOpacity};">
-          <div class="check-dot absolute top-1 right-1 w-5 h-5 rounded flex items-center justify-center transition-colors duration-200"
+          <div class="check-dot pdp-bundle__check"
                style="background:${checkBg};">
-            <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+            <svg width="12" height="10" viewBox="0 0 10 8" fill="none" aria-hidden="true">
               <path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
             </svg>
           </div>
         </div>
-        <p class="font-medium text-xs leading-4 tracking-normal md:text-sm md:leading-5 line-clamp-2 w-full">${escapeHtml(item.name)}</p>
-        <p class="text-xs font-medium mt-1" style="color:${escapeHtml(BTN_COLOR)};">${escapeHtml(item.formatted_price)}</p>
+        <p class="pdp-bundle__name">${escapeHtml(item.name)}</p>
+        <p class="pdp-bundle__price">${escapeHtml(item.formatted_price)}</p>
         ${optionsLink}
       `;
       if (toggleable) {
@@ -1276,7 +784,7 @@
       const isChecked = card.dataset.checked === 'true';
       card.dataset.checked = isChecked ? 'false' : 'true';
       card.querySelector('img').style.opacity = isChecked ? '0.4' : '1';
-      card.querySelector('.check-dot').style.background = isChecked ? '#e5e7eb' : '#1b1b1b';
+      card.querySelector('.check-dot').style.background = isChecked ? '#d4d4d4' : '#212121';
       const item = bundleData.find(function (i) { return i.id === id; });
       if (item) item.checked = !isChecked;
       updateTotal();
@@ -1359,7 +867,6 @@
 
 {% endif %}
 
-            {% include 'vitrin:products/loyalty_points_widget.jinja' %}
             {% include 'vitrin:shared/bank_discounts.jinja' %}
             {% include 'vitrin:products/payment_widgets.jinja' %}
             {% include 'vitrin:products/preorder_countdown.jinja' %}
@@ -1375,13 +882,13 @@
       </div>
       <div
         id="additional-info"
-        class="mt-1"
+        class="pdp-info"
       >
         {% set has_weight = product.selected_product and product.selected_product.weight and product.selected_product.weight.value %}
         {% set has_metafields = product and product.metafields and store and store.settings.products.is_metafields_enabled and product.metafields|length > 0 %}
         {% set has_description = product.description %}
         {% set has_bundle = product.bundle_offer and product.bundle_offer.products and product.bundle_offer.products.results %}
-        {% set has_options = product.variants and product.variants|length > 0 %}
+        {% set has_options = settings.single_product_section_show_variants_tab == true and product.variants and product.variants|length > 0 %}
         {% set in_stock_variants = [] %}
         {% if has_options %}
           {% for variant in product.variants %}
@@ -1394,8 +901,8 @@
 
         {# ── Coffee CTA variables (fetched from the dynamic list by product) ── #}
         {% set cta_data = namespace(primary_label="", primary_url="", secondary_label="", secondary_url="") %}
-        {% for item in settings.single_product_section_coffee_cta_iframe_by_product %}
-          {% if item.product.id == product.id %}
+        {% for item in settings.single_product_section_coffee_cta_iframe_by_product or [] %}
+          {% if item.product and item.product.id == product.id %}
             {% set cta_data.primary_label = item.primary_btn_text %}
             {% set cta_data.primary_url = item.primary_btn_iframe_url %}
             {% set cta_data.secondary_label = item.secondary_btn_text %}
@@ -1412,362 +919,137 @@
         {% set cta_has_secondary   = cta_secondary_label and cta_secondary_url %}
         {% set show_coffee_cta     = settings.single_product_section_enabled_coffee_cta_section and (cta_has_primary or cta_has_secondary) %}
 
-        {# Desktop: Tab Navigation #}
-        <div class="hidden md:flex overflow-x-auto border-b border-[#E2E8F0] scrollbar-hide justify-center">
-          <button
-            class="tab-button active whitespace-nowrap px-4 py-3 text-sm font-medium text-foreground border-b-2 border-foreground hover:text-foreground transition-colors"
-            data-tab="description"
-          >
-            {{ _("Description") }}
-          </button>
-          {% if has_bundle %}
-          <button
-            class="tab-button whitespace-nowrap px-4 py-3 text-sm font-medium text-muted-foreground border-b-2 border-transparent hover:text-foreground transition-colors"
-            data-tab="bundle"
-          >
-            {{ product.bundle_offer.name }}
-          </button>
-          {% endif %}
-          {% if has_options %}
-          <button
-            class="tab-button whitespace-nowrap px-4 py-3 text-sm font-medium text-muted-foreground border-b-2 border-transparent hover:text-foreground transition-colors"
-            data-tab="options"
-          >
-            {{ _("Options") }}
-          </button>
-          {% endif %}
-          {% if store.settings.products.reviews_enabled %}
-          <button
-            class="tab-button whitespace-nowrap px-4 py-3 text-sm font-medium text-muted-foreground border-b-2 border-transparent hover:text-foreground transition-colors"
-            data-tab="reviews"
-          >
-            {{ _("Reviews") }}
-          </button>
-          {% endif %}
-          {% if store.settings.products.questions_enabled %}
-          <button
-            class="tab-button whitespace-nowrap px-4 py-3 text-sm font-medium text-muted-foreground border-b-2 border-transparent hover:text-foreground transition-colors"
-            data-tab="faq"
-          >
-            {{ _("FAQ") }}
-          </button>
-          {% endif %}
-          {% if show_coffee_cta %}
-          <button
-            class="tab-button whitespace-nowrap px-4 py-3 text-sm font-medium text-muted-foreground border-b-2 border-transparent hover:text-foreground transition-colors"
-            data-tab="coffee-cta"
-          >
-            {{ settings.single_product_section_title_coffee_cta_section | default(_("Choose your brewing method"), true) }}
-          </button>
-          {% endif %}
-        </div>
+        {# ── Dara tabs: shipping + styling & care ── #}
+        {% set shipping_text = settings.single_product_section_shipping_tab_content | default(_('Orders are prepared within 1-2 business days.') ~ '\n' ~ _('Delivery takes 2-5 business days depending on your city.') ~ '\n' ~ _('You can track your order from your account once it ships.'), true) %}
+        {% set show_shipping_tab = settings.single_product_section_show_shipping_tab != false and shipping_text %}
+        {% set show_styling_tab = settings.single_product_section_show_styling_care_tab != false %}
 
-        {# Mobile: Accordion #}
-        <div class="md:hidden flex flex-col gap-2">
-          {# Description Accordion Item #}
-          <div class="border-b border-[#E5E5E5] last:border-b-0"">
-            <button
-              class="accordion-button w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-foreground transition-colors"
-              data-accordion="description"
+        {% set pdp_tabs = [{'id': 'description', 'label': _('Product description')}] %}
+        {% if store.settings.products.reviews_enabled %}{% set _t = pdp_tabs.append({'id': 'reviews', 'label': _('Reviews')}) %}{% endif %}
+        {% if show_shipping_tab %}{% set _t = pdp_tabs.append({'id': 'shipping', 'label': settings.single_product_section_shipping_tab_title | default(_('Shipping & delivery'), true)}) %}{% endif %}
+        {% if show_styling_tab %}{% set _t = pdp_tabs.append({'id': 'styling', 'label': settings.single_product_section_styling_care_tab_title | default(_('Styling & care'), true)}) %}{% endif %}
+        {% if has_bundle %}{% set _t = pdp_tabs.append({'id': 'bundle', 'label': product.bundle_offer.name}) %}{% endif %}
+        {% if has_options %}{% set _t = pdp_tabs.append({'id': 'options', 'label': _('Options')}) %}{% endif %}
+        {% if store.settings.products.questions_enabled %}{% set _t = pdp_tabs.append({'id': 'faq', 'label': _('Questions')}) %}{% endif %}
+        {% if show_coffee_cta %}{% set _t = pdp_tabs.append({'id': 'coffee-cta', 'label': settings.single_product_section_title_coffee_cta_section | default(_('Choose your brewing method'), true)}) %}{% endif %}
+
+        <div class="pdp-tabs" data-pdp-tabs>
+          {# Desktop tab bar #}
+          <div class="pdp-tabs__nav" role="tablist">
+            {% for tab in pdp_tabs %}
+              <button
+                type="button"
+                role="tab"
+                class="pdp-tabs__btn {{ 'is-active' if loop.first }}"
+                id="pdp-tab-btn-{{ tab.id }}"
+                aria-controls="pdp-panel-{{ tab.id }}"
+                aria-selected="{{ 'true' if loop.first else 'false' }}"
+                data-pdp-tab="{{ tab.id }}"
+              >{{ tab.label }}</button>
+            {% endfor %}
+          </div>
+
+          {% for tab in pdp_tabs %}
+            <div
+              class="pdp-tab {{ 'is-active' if loop.first }} {{ 'is-open' if tab.id == 'reviews' }}"
+              id="pdp-panel-{{ tab.id }}"
+              role="tabpanel"
+              aria-labelledby="pdp-tab-btn-{{ tab.id }}"
+              data-pdp-panel="{{ tab.id }}"
             >
-              <span>{{ _("Description") }}</span>
-              
-              <svg width="13" height="7" viewBox="0 0 13 7" fill="none" class="accordion-icon transition-transform duration-300" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1 1L6.5009 6L12 1" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              {# Mobile accordion header #}
+              <button type="button" class="pdp-tab__toggle" data-pdp-acc="{{ tab.id }}" aria-expanded="{{ 'true' if tab.id == 'reviews' else 'false' }}">
+                <span>{{ tab.label }}</span>
+                <svg width="13" height="7" viewBox="0 0 13 7" fill="none" class="pdp-tab__chevron" aria-hidden="true">
+                  <path d="M1 1L6.5 6L12 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
 
-            </button>
-            <div class="accordion-content hidden max-h-0 overflow-hidden transition-all duration-300" data-accordion-content="description">
-              <div class="px-4 py-3 border-t border-border">
-                {% if has_weight or has_metafields or has_description %}
-                  <div class="flex flex-col gap-4">
-                    {# Weight #}
-                    <div
-                      class="{{ 'hidden' if not has_weight }} flex items-center gap-2"
-                      data-product-weight-wrapper
-                    >
-                      <dt class="text-muted-foreground text-sm">{{ _("Weight") }}:</dt>
-                      <dd
-                        class="text-foreground text-sm"
-                        data-product-weight
-                      >
-                        {% if has_weight %}
-                          {{ product.selected_product.weight.value }}
-                          {{ product.selected_product.weight.unit }}
-                        {% endif %}
-                      </dd>
-                    </div>
-
-                    {# Metafields #}
+              <div class="pdp-tab__body">
+                {% if tab.id == 'description' %}
+                  <div class="pdp-desc">
                     {% if has_metafields %}
                       {% with entity=product %}
                         {% include 'components/shared/metafields.jinja' %}
                       {% endwith %}
                     {% endif %}
-
-                    {# Product Description #}
                     {% if has_description %}
                       <div class="text-foreground prose prose-sm max-w-none">{{ product.description|safe }}</div>
+                    {% elif not has_metafields %}
+                      <p class="pdp-muted">{{ _('No description available for this product.') }}</p>
                     {% endif %}
+                  </div>
+
+                {% elif tab.id == 'reviews' %}
+                  {% with product=product, store=store, session=session %}
+                    {% include 'components/products/product-reviews.jinja' %}
+                  {% endwith %}
+
+                {% elif tab.id == 'shipping' %}
+                  <ul class="pdp-shipping">
+                    {% for line in shipping_text.split('\n') %}
+                      {% if line | trim %}<li>{{ line | trim }}</li>{% endif %}
+                    {% endfor %}
+                  </ul>
+
+                {% elif tab.id == 'styling' %}
+                  {% include 'components/products/pdp-guides.jinja' %}
+
+                {% elif tab.id == 'bundle' %}
+                  <div class="flex flex-col gap-4">
+                    {% if product.bundle_offer.description %}
+                      <p class="text-sm text-muted">{{ product.bundle_offer.description }}</p>
+                    {% endif %}
+                    {%
+                      with
+                      products=product.bundle_offer.products.results,
+                      carousel_id="bundle-offer-carousel"
+                    %}
+                      {% include 'components/products/products-carousel.jinja' %}
+                    {% endwith %}
+                  </div>
+
+                {% elif tab.id == 'options' %}
+                  <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    {% for variant in in_stock_variants %}
+                      {% include 'components/products/product-variant.jinja' %}
+                    {% endfor %}
+                  </div>
+
+                {% elif tab.id == 'faq' %}
+                  {% with questions=product.questions %}
+                    {% include 'components/products/product-questions.jinja' %}
+                  {% endwith %}
+                  {% include 'components/products/question-form.jinja' %}
+
+                {% elif tab.id == 'coffee-cta' %}
+                  <div class="text-center">
+                    <p class="text-sm text-muted-foreground mb-4">{{ settings.single_product_section_subtitle_coffee_cta_section | default(_('A ready recipe that tunes your coffee for you'), true) }}</p>
+                    <div class="flex flex-wrap gap-3 justify-center">
+                      {% if cta_has_primary %}
+                      <button type="button"
+                        class="open-iframe-modal pdp-btn pdp-btn--primary"
+                        data-iframe-url="{{ cta_primary_url }}"
+                        data-iframe-title="{{ cta_primary_label }}"
+                        style="background-color:{{ settings.single_product_section_primary_btn_color_coffee_cta_section | default('#6B4A39', true) }};color:{{ settings.single_product_section_primary_btn_text_color_coffee_cta_section | default('#fff', true) }};"
+                      >{{ cta_primary_label }}</button>
+                      {% endif %}
+                      {% if cta_has_secondary %}
+                      <button type="button"
+                        class="open-iframe-modal pdp-btn pdp-btn--outline"
+                        data-iframe-url="{{ cta_secondary_url }}"
+                        data-iframe-title="{{ cta_secondary_label }}"
+                        style="background-color:{{ settings.single_product_section_secondary_btn_color_coffee_cta_section | default('#fff', true) }};color:{{ settings.single_product_section_secondary_btn_text_color_coffee_cta_section | default('#6B4A39', true) }};border-color:{{ settings.single_product_section_secondary_btn_text_color_coffee_cta_section | default('#6B4A39', true) }};"
+                      >{{ cta_secondary_label }}</button>
+                      {% endif %}
+                    </div>
                   </div>
                 {% endif %}
               </div>
             </div>
-          </div>
-
-          {# Bundle Accordion Item #}
-          {% if has_bundle %}
-          <div class="border-b border-[#E5E5E5] last:border-b-0"">
-            <button
-              class="accordion-button w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-foreground transition-colors"
-              data-accordion="bundle"
-            >
-              <span>{{ product.bundle_offer.name }}</span>
-              
-              <svg width="13" height="7" viewBox="0 0 13 7" fill="none" class="accordion-icon transition-transform duration-300" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1 1L6.5009 6L12 1" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-
-            </button>
-            <div class="accordion-content hidden max-h-0 overflow-hidden transition-all duration-300" data-accordion-content="bundle">
-              <div class="px-4 py-3 border-t border-border">
-                {% if product.bundle_offer.description %}
-                  <p class="text-sm text-muted mb-4">{{ product.bundle_offer.description }}</p>
-                {% endif %}
-                {%
-                  with
-                  products=product.bundle_offer.products.results,
-                  carousel_id="bundle-offer-carousel"
-                %}
-                  {% include 'components/products/products-carousel.jinja' %}
-                {% endwith %}
-              </div>
-            </div>
-          </div>
-          {% endif %}
-
-          {# Options Accordion Item #}
-          {% if has_options %}
-          <div class="border-b border-[#E5E5E5] last:border-b-0"">
-            <button
-              class="accordion-button w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-foreground transition-colors"
-              data-accordion="options"
-            >
-              <span>{{ _("Options") }}</span>
-              
-              <svg width="13" height="7" viewBox="0 0 13 7" fill="none" class="accordion-icon transition-transform duration-300" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1 1L6.5009 6L12 1" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-
-            </button>
-            <div class="accordion-content hidden max-h-0 overflow-hidden transition-all duration-300" data-accordion-content="options">
-              <div class="px-4 py-3 border-t border-border">
-                {% set total_variants = in_stock_variants | length %}
-                {% set left_count = ((total_variants + 1) / 2) | int %}
-                <div class="grid grid-cols-1 gap-6">
-                  {% for variant in in_stock_variants %}
-                    {% include 'components/products/product-variant.jinja' %}
-                  {% endfor %}
-                </div>
-              </div>
-            </div>
-          </div>
-          {% endif %}
-
-          {# Reviews Accordion Item #}
-          {% if store.settings.products.reviews_enabled %}
-          <div class="border-b border-[#E5E5E5] last:border-b-0"">
-            <button
-              class="accordion-button w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-foreground transition-colors"
-              data-accordion="reviews"
-            >
-              <span>{{ _("Reviews") }}</span>
-              
-              <svg width="13" height="7" viewBox="0 0 13 7" fill="none" class="accordion-icon transition-transform duration-300" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1 1L6.5009 6L12 1" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-
-            </button>
-            <div class="accordion-content hidden max-h-0 overflow-hidden transition-all duration-300" data-accordion-content="reviews">
-              <div class="px-4 py-3 border-t border-border">
-                {% with product=product, store=store, session=session %}
-                  {% include 'components/products/product-reviews.jinja' %}
-                {% endwith %}
-              </div>
-            </div>
-          </div>
-          {% endif %}
-
-          {# FAQ Accordion Item #}
-          {% if store.settings.products.questions_enabled %}
-          <div class="border-b border-[#E5E5E5] last:border-b-0">
-            <button
-              class="accordion-button w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-foreground transition-colors"
-              data-accordion="faq"
-            >
-              <span>{{ _("FAQ") }}</span>
-              
-              <svg width="13" height="7" viewBox="0 0 13 7" fill="none" class="accordion-icon transition-transform duration-300" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1 1L6.5009 6L12 1" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-
-            </button>
-            <div class="accordion-content hidden max-h-0 overflow-hidden transition-all duration-300" data-accordion-content="faq">
-              <div class="px-4 py-3 border-t border-border">
-                {% with questions=product.questions %}
-                  {% include 'components/products/product-questions.jinja' %}
-                {% endwith %}
-                {% include 'components/products/question-form.jinja' %}
-              </div>
-            </div>
-          </div>
-          {% endif %}
-
-          {# Coffee CTA Accordion Item #}
-          {% if show_coffee_cta %}
-          <div class="border-b border-[#E5E5E5] last:border-b-0">
-            <button
-              class="accordion-button w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-foreground transition-colors"
-              data-accordion="coffee-cta"
-            >
-              <span>{{ settings.single_product_section_title_coffee_cta_section | default(_("Choose your brewing method"), true) }}</span>
-              <svg width="13" height="7" viewBox="0 0 13 7" fill="none" class="accordion-icon transition-transform duration-300" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1 1L6.5009 6L12 1" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-            <div class="accordion-content hidden max-h-0 overflow-hidden transition-all duration-300" data-accordion-content="coffee-cta">
-              <div class="px-4 py-4 border-t border-border">
-                <p class="text-sm text-muted-foreground mb-3">{{ settings.single_product_section_subtitle_coffee_cta_section | default(_('A ready recipe that tunes your coffee for you'), true) }}</p>
-                <div class="flex flex-col gap-2">
-                  {% if cta_has_primary %}
-                  <button type="button"
-                    class="open-iframe-modal w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold transition-all hover:opacity-90"
-                    data-iframe-url="{{ cta_primary_url }}"
-                    data-iframe-title="{{ cta_primary_label }}"
-                    style="background-color:{{ settings.single_product_section_primary_btn_color_coffee_cta_section | default('#F7512B') }};color:{{ settings.single_product_section_primary_btn_text_color_coffee_cta_section | default('#fff') }};"
-                  >{{ cta_primary_label }}</button>
-                  {% endif %}
-                  {% if cta_has_secondary %}
-                  <button type="button"
-                    class="open-iframe-modal w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold transition-all hover:opacity-90"
-                    data-iframe-url="{{ cta_secondary_url }}"
-                    data-iframe-title="{{ cta_secondary_label }}"
-                    style="background-color:{{ settings.single_product_section_secondary_btn_color_coffee_cta_section | default('#fff') }};color:{{ settings.single_product_section_secondary_btn_text_color_coffee_cta_section | default('#F7512B') }};border:1px solid {{ settings.single_product_section_secondary_btn_text_color_coffee_cta_section | default('#F7512B') }};"
-                  >{{ cta_secondary_label }}</button>
-                  {% endif %}
-                </div>
-              </div>
-            </div>
-          </div>
-          {% endif %}
+          {% endfor %}
         </div>
-        {# Tab Content (Desktop) #}
 
-        <div class="hidden md:block">
-
-          <div class="tab-content my-6 mt-6 opacity-100 transition-opacity duration-300" id="description-tab">
-            <!-- Button -->
-
-            {% if has_weight or has_metafields or has_description %}
-              <div class="flex flex-col gap-4">
-               
-
-                {# Metafields #}
-                {% if has_metafields %}
-                  {% with entity=product %}
-                    {% include 'components/shared/metafields.jinja' %}
-                  {% endwith %}
-                {% endif %}
-
-                {# Product Description #}
-                {% if has_description %}
-                  <div class="text-foreground prose prose-sm max-w-none">{{ product.description|safe }}</div>
-                {% endif %}
-              </div>
-            {% endif %}
-          </div>
-
-          {% if has_bundle %}
-          <div class="tab-content my-6 hidden mt-6 opacity-0 transition-opacity duration-300" id="bundle-tab">
-            <div class="flex flex-col gap-4">
-              {% if product.bundle_offer.description %}
-                <p class="text-sm text-muted">{{ product.bundle_offer.description }}</p>
-              {% endif %}
-              {%
-                with
-                products=product.bundle_offer.products.results,
-                carousel_id="bundle-offer-carousel"
-              %}
-                {% include 'components/products/products-carousel.jinja' %}
-              {% endwith %}
-            </div>
-          </div>
-          {% endif %}
-
-          {% if has_options %}
-          <div class="tab-content my-6 hidden mt-6 opacity-0 transition-opacity duration-300" id="options-tab">
-            {% set total_variants = in_stock_variants | length %}
-            {% set left_count = ((total_variants + 1) / 2) | int %}
-            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-              {# Left Column #}
-              <div class="flex flex-col gap-4">
-                {% for variant in in_stock_variants[:left_count] %}
-                  {% include 'components/products/product-variant.jinja' %}
-                {% endfor %}
-              </div>
-
-              {# Right Column #}
-              <div class="flex flex-col gap-4">
-                {% for variant in in_stock_variants[left_count:] %}
-                  {% include 'components/products/product-variant.jinja' %}
-                {% endfor %}
-              </div>
-            </div>
-          </div>
-          {% endif %}
-
-          {% if store.settings.products.reviews_enabled %}
-          <div class="tab-content my-6 hidden mt-6 opacity-0 transition-opacity duration-300" id="reviews-tab">
-            {% with product=product, store=store, session=session %}
-              {% include 'components/products/product-reviews.jinja' %}
-            {% endwith %}
-          </div>
-          {% endif %}
-
-          {% if store.settings.products.questions_enabled %}
-          <div class="tab-content my-6 hidden mt-6 opacity-0 transition-opacity duration-300" id="faq-tab">
-            {% with questions=product.questions %}
-              {% include 'components/products/product-questions.jinja' %}
-            {% endwith %}
-            {% include 'components/products/question-form.jinja' %}
-          </div>
-          {% endif %}
-
-          {# Coffee CTA Tab Panel #}
-          {% if show_coffee_cta %}
-          <div class="tab-content my-6 hidden pb-3 mt-6 opacity-0 text-center transition-opacity duration-300" id="coffee-cta-tab">
-            <p class="text-sm text-muted-foreground mb-4">{{ settings.single_product_section_subtitle_coffee_cta_section | default(_('A ready recipe that tunes your coffee for you'), true) }}</p>
-            <div class="flex flex-wrap gap-3 justify-center">
-              {% if cta_has_primary %}
-              <button type="button"
-                class="open-iframe-modal inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-all hover:opacity-90"
-                data-iframe-url="{{ cta_primary_url }}"
-                data-iframe-title="{{ cta_primary_label }}"
-                style="background-color:{{ settings.single_product_section_primary_btn_color_coffee_cta_section | default('#F7512B') }};color:{{ settings.single_product_section_primary_btn_text_color_coffee_cta_section | default('#fff') }};"
-              >{{ cta_primary_label }}</button>
-              {% endif %}
-              {% if cta_has_secondary %}
-              <button type="button"
-                class="open-iframe-modal inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-all hover:opacity-90"
-                data-iframe-url="{{ cta_secondary_url }}"
-                data-iframe-title="{{ cta_secondary_label }}"
-                style="background-color:{{ settings.single_product_section_secondary_btn_color_coffee_cta_section | default('#fff') }};color:{{ settings.single_product_section_secondary_btn_text_color_coffee_cta_section | default('#F7512B') }};border:1px solid {{ settings.single_product_section_secondary_btn_text_color_coffee_cta_section | default('#F7512B') }};"
-              >{{ cta_secondary_label }}</button>
-              {% endif %}
-            </div>
-          </div>
-          {% endif %}
-        </div>
 
 
         {# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1834,11 +1116,11 @@
 
         {# Related Products Section #}
         {% if product.related_products and product.related_products|length > 0 %}
-          <div class="mt-4 md:mt-10">
+          <div class="pdp-related">
             {%
               with
               products=product.related_products,
-              title=_("You may also like"),
+              title=_("Recommended for you"),
               carousel_id="related-products"
             %}
               {% include 'components/products/products-carousel.jinja' %}
@@ -1846,143 +1128,18 @@
           </div>
         {% endif %}
       </div>
-
+    </div>
   </section>
-
-
 
   <style>
     .single-product-page .cart-payments__track{
-    animation: 122s linear infinite cart-payments-scroll;
+      animation: 122s linear infinite cart-payments-scroll;
     }
-    .product-options__item.colorized {
-  border-radius: 9999px;
-  width: 30px;
-  height: 30px;
-  font-size: 0;
-  display: flex;
-  align-items: center;
-  padding: 0 !important;
-  justify-content: center;
-}
   </style>
-  <style>
-/* Transitions */
-#iframeModal {
-  transition: opacity 0.3s ease-in-out;
-}
-
-#iframeModal.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-#iframeModal:not(.hidden) {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-
-/* Modal Animation */
-#iframeModal:not(.hidden) .bg-white {
-  animation: slideUp 0.3s ease-out;
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-  #iframeModal .bg-white {
-    max-width: calc(100vw - 16px);
-    max-height: 95vh;
-  }
-}
-</style>
   {# Sticky Product Actions - shows when scrolling past the main add-to-cart button #}
   {% with product=product %}
     {% include 'components/products/sticky-product-actions.jinja' %}
   {% endwith %}
-
-      <script>
-        // Accordion Functionality
-        document.addEventListener('DOMContentLoaded', function() {
-          const accordionButtons = document.querySelectorAll('.accordion-button');
-          
-          accordionButtons.forEach(button => {
-            button.addEventListener('click', function() {
-              const accordionId = this.getAttribute('data-accordion');
-              const content = document.querySelector(`[data-accordion-content="${accordionId}"]`);
-              const icon = this.querySelector('.accordion-icon');
-              
-              // Close all other accordions
-              accordionButtons.forEach(otherButton => {
-                if (otherButton !== this) {
-                  const otherContent = document.querySelector(`[data-accordion-content="${otherButton.getAttribute('data-accordion')}"]`);
-                  const otherIcon = otherButton.querySelector('.accordion-icon');
-                  otherContent.classList.add('hidden');
-                  otherContent.style.maxHeight = '0px';
-                  otherIcon.style.transform = 'rotate(0deg)';
-                }
-              });
-              
-              // Toggle current accordion
-              const isOpen = !content.classList.contains('hidden');
-              
-              if (isOpen) {
-                content.classList.add('hidden');
-                content.style.maxHeight = '0px';
-                icon.style.transform = 'rotate(0deg)';
-              } else {
-                content.classList.remove('hidden');
-                content.style.maxHeight = content.scrollHeight + 'px';
-                icon.style.transform = 'rotate(180deg)';
-              }
-            });
-          });
-
-          // Tab functionality for desktop (keep existing code)
-          const tabButtons = document.querySelectorAll('.tab-button');
-          tabButtons.forEach(button => {
-            button.addEventListener('click', function() {
-              const tabName = this.getAttribute('data-tab');
-              
-              // Hide all tabs
-              document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.add('hidden');
-                tab.classList.remove('opacity-100');
-                tab.classList.add('opacity-0');
-              });
-              
-              // Remove active state from all buttons
-              tabButtons.forEach(btn => {
-                btn.classList.remove('text-foreground', 'border-foreground');
-                btn.classList.add('text-muted-foreground', 'border-transparent');
-              });
-              
-              // Show selected tab
-              const selectedTab = document.getElementById(`${tabName}-tab`);
-              if (selectedTab) {
-                selectedTab.classList.remove('hidden');
-                selectedTab.classList.remove('opacity-0');
-                selectedTab.classList.add('opacity-100');
-              }
-              
-              // Add active state to clicked button
-              this.classList.remove('text-muted-foreground', 'border-transparent');
-              this.classList.add('text-foreground', 'border-foreground');
-            });
-          });
-        });
-      </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -2110,6 +1267,29 @@ document.addEventListener('DOMContentLoaded', () => {
     purple: "#a855f7",
     pink: "#ec4899",
     gray: "#6b7280",
+    grey: "#6b7280",
+    beige: "#D8C3A5",
+    brown: "#6B4A39",
+    navy: "#1F2A44",
+    "أحمر": "#ef4444",
+    "أخضر": "#22c55e",
+    "أزرق": "#3b82f6",
+    "أسود": "#111111",
+    "اسود": "#111111",
+    "أبيض": "#ffffff",
+    "ابيض": "#ffffff",
+    "أصفر": "#eab308",
+    "برتقالي": "#f97316",
+    "بنفسجي": "#a855f7",
+    "وردي": "#ec4899",
+    "رمادي": "#737373",
+    "بيج": "#D8C3A5",
+    "رملي": "#C8AE7D",
+    "بني": "#6B4A39",
+    "كحلي": "#1F2A44",
+    "عنابي": "#7B1E2B",
+    "زيتي": "#5B5E3A",
+    "سكري": "#F3EAD7",
   };
 
   document.querySelectorAll('.product-options__item').forEach(el => {
@@ -2215,5 +1395,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 <script src="https://cdn.lordicon.com/lordicon.js"></script>
+  <script src="{{ 'js/product/pdp-dara.js' | asset_url }}" defer></script>
   <script src="{{ 'js/question-form.js' | asset_url }}"></script>
 {% endblock %}

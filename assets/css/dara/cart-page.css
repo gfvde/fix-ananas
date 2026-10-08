@@ -1,0 +1,415 @@
+/* Dara cart page (Figma 11159:15707 desktop, 11159:27367 mobile).
+   Loaded after css/cart-page.css; only overrides what differs from the Roast cart. */
+
+.cart-page-bg {
+  background-color: transparent;
+}
+
+body:has(.cart-with-products),
+body:has(.cart-page-layout) {
+  background-color: var(--background, #faf7f2) !important;
+}
+
+/* The checkout CTA colours are set on .cart-with-products (Cart Page Settings) */
+.cart-summary__checkout,
+.cart-mobile-checkout-btn {
+  background: var(--cart-cta-bg, #6b4a39);
+  color: var(--cart-cta-text, #ffffff);
+}
+
+.cart-mobile-checkout-btn__label,
+.cart-mobile-checkout-btn__total,
+.cart-mobile-checkout-btn__compare {
+  color: var(--cart-cta-text, #ffffff);
+}
+
+.cart-summary__checkout:not(:disabled):hover,
+.cart-mobile-checkout-btn:not(:disabled):hover {
+  opacity: 0.92;
+}
+
+/* Header "عربه التسوق ( 4 منتجات )" */
+@media (min-width: 1024px) {
+  .cart-page-main-section {
+    padding-top: 32px;
+  }
+
+  .cart-page-header {
+    margin-bottom: 24px;
+    padding-inline: 16px;
+  }
+
+  .cart-page-header__title {
+    font-size: 30px;
+    line-height: 36px;
+    font-weight: 500;
+  }
+
+  .cart-page-header__count {
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 500;
+    color: #737373;
+  }
+}
+
+/* Free shipping message row + Figma "free-delivery" illustration */
+.cart-free-shipping__truck {
+  flex: 0 0 auto;
+  width: 30px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.cart-free-shipping--mobile .cart-free-shipping__truck {
+  width: 22px;
+  height: 24px;
+}
+
+.cart-free-shipping__message {
+  color: #262626;
+  font-weight: 500;
+}
+
+/* Summary */
+.cart-summary__title {
+  font-weight: 500;
+  color: #000000;
+}
+
+html[dir="rtl"] .cart-summary__label,
+html[dir="rtl"] .cart-summary__total-label {
+  direction: rtl;
+}
+
+html[dir="ltr"] .cart-summary__label,
+html[dir="ltr"] .cart-summary__total-label {
+  direction: ltr;
+}
+
+.cart-summary__total-label,
+.cart-summary__total-label small {
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.cart-summary__total-label {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 28px;
+  color: #000000;
+}
+
+.cart-summary__total-label small {
+  display: inline;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #737373;
+}
+
+.cart-summary__total-value {
+  font-weight: 500;
+}
+
+.cart-summary__checkout {
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+/* Coupon apply button uses the accent instead of the old green */
+.cart-coupon__form button,
+.cart-coupon__form button:not(:disabled):hover {
+  background: var(--accent, #6b4a39);
+}
+
+.cart-coupon__form button:not(:disabled):hover {
+  opacity: 0.9;
+}
+
+/* Product rows */
+.ananas-cart-item__meta {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.ananas-cart-item__price {
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.ananas-cart-item__price.is-sale {
+  color: #c70036;
+}
+
+.ananas-cart-item__compare {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.ananas-cart-item__discount {
+  min-height: 24px;
+  padding: 2px 8px;
+  background: #e7ddcc;
+  color: #000000;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.ananas-cart-item__price-row {
+  gap: 12px;
+}
+
+/* Variant picker: color swatches + attribute selects (Dara 11522:51472) */
+.ananas-cart-item__variant-picker {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  width: 100%;
+}
+
+.ananas-cart-item__variant-picker.is-loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.ananas-cart-item__variant-picker .ananas-cart-item__option + .ananas-cart-item__option {
+  border-inline-end: 0;
+  border-right: 0;
+  padding-right: 0;
+}
+
+.ananas-cart-item__option--attr {
+  padding-inline-end: 24px;
+  border-right: 1px solid #e5e5e5;
+}
+
+html[dir="ltr"] .ananas-cart-item__option--attr {
+  border-right: 0;
+  border-left: 1px solid #e5e5e5;
+  padding-inline-end: 0;
+  padding-inline-start: 24px;
+}
+
+.ananas-cart-item__option-label {
+  color: #000000;
+  font-weight: 500;
+}
+
+html[dir="rtl"] .ananas-cart-item__swatch-wrap {
+  direction: rtl;
+}
+
+button.ananas-cart-item__swatch-item {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.ananas-cart-item__swatch {
+  position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.ananas-cart-item__swatch-item.is-active .ananas-cart-item__swatch {
+  box-shadow:
+    0 0 0 2px #ffffff,
+    0 0 0 3px #000000;
+}
+
+.ananas-cart-item__swatch-item:focus-visible {
+  outline: 2px solid var(--accent, #6b4a39);
+  outline-offset: 2px;
+}
+
+.ananas-cart-item__option-value {
+  color: #52525c;
+  font-weight: 500;
+}
+
+.ananas-cart-item__variant-select {
+  min-width: 114px;
+  height: 32px;
+  border-color: #d4d4d8;
+  color: #27272a;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* UVPs */
+.cart-feature__image {
+  width: 68px;
+  height: 60px;
+}
+
+.cart-feature h3 {
+  font-weight: 500;
+}
+
+.cart-feature p {
+  font-weight: 500;
+  line-height: 17px;
+}
+
+/* Payment methods: infinite loop on mobile and desktop (Dara 11522:52139).
+   The track is always laid out LTR so the 4 repeated groups loop seamlessly
+   whatever direction the surrounding layout forces. */
+.cart-payments {
+  direction: ltr;
+  height: 40px;
+  border: 1px solid #f5f5f5;
+  background: #ffffff;
+}
+
+.cart-payments__track,
+[dir="ltr"] .cart-payments__track {
+  animation: dara-cart-payments-ltr 24s linear infinite !important;
+}
+
+html[dir="rtl"] .cart-payments__track {
+  animation-name: dara-cart-payments-rtl !important;
+}
+
+.cart-payments__group {
+  gap: 8px;
+  padding-inline: 4px;
+}
+
+.cart-payment img {
+  max-width: 48px;
+  max-height: 24px;
+}
+
+@keyframes dara-cart-payments-ltr {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes dara-cart-payments-rtl {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cart-payments__track,
+  html[dir="rtl"] .cart-payments__track {
+    animation-duration: 60s !important;
+  }
+}
+
+/* Mobile (Figma 390 frame) */
+@media (max-width: 1023px) {
+  .cart-mobile-header__title {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .cart-free-shipping__message {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .cart-summary__title {
+    font-size: 24px;
+    line-height: 32px;
+    color: #000000;
+  }
+
+  .cart-summary__total-label {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .cart-summary__total-label small {
+    display: inline;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .ananas-cart-item__meta {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .ananas-cart-item__price {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .ananas-cart-item__price.is-sale {
+    color: #000000;
+  }
+
+  .ananas-cart-item__compare {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  /* Mobile shows "عرض خاص" as red text */
+  .ananas-cart-item__discount {
+    min-height: 0;
+    padding: 0;
+    background: transparent;
+    color: #e7000b;
+  }
+
+  .ananas-cart-item__variant-picker {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+  }
+
+  .ananas-cart-item__variant-picker .ananas-cart-item__option--color {
+    order: -1;
+  }
+
+  .ananas-cart-item__option--attr,
+  html[dir="ltr"] .ananas-cart-item__option--attr {
+    padding: 0;
+    border: 0;
+  }
+
+  .ananas-cart-item__variant-select {
+    min-width: 104px;
+    height: 28px;
+  }
+
+  .cart-mobile-checkout-btn {
+    font-weight: 500;
+  }
+}
+
+/* Platform-hidden rows (discount without a value) */
+.cart-summary__row.hidden {
+  display: none;
+}
+
+.cart-feature h3 {
+  white-space: normal;
+}
+
+.ananas-cart-item__price-row {
+  flex-wrap: wrap;
+  row-gap: 4px;
+}
+
+@media (max-width: 1023px) {
+  .ananas-cart-item__price-row {
+    gap: 4px 8px;
+  }
+}

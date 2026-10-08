@@ -15,13 +15,13 @@
   - store: Store object (for reply avatar)
 #}
 
-<div class="flex w-full flex-col gap-1">
+<div class="review-card flex w-full flex-col gap-2">
   {# Header: Name + Rating + Date #}
   <div class="flex flex-col gap-1">
-    <div class="flex items-start justify-between gap-4">
-      <p class="text-foreground text-sm font-semibold">{{ review.customer.name or _("Anonymous") }}</p>
+    <div class="review-card__meta">
+      <p class="review-card__name">{{ review.customer.name or _("Anonymous") }}</p>
       <span
-        class="text-muted text-sm shrink-0 whitespace-nowrap"
+        class="review-card__date"
         data-time-ago-date="{{ review.created_at }}"
       >
         {{ review.created_at }}
@@ -38,7 +38,7 @@
   {# Review Comment #}
   {% if review.comment %}
     {# Customer text: autoescaped, line breaks kept via pre-line (was |safe = stored XSS) #}
-    <p class="text-foreground text-sm" style="white-space: pre-line;">{{ review.comment }}</p>
+    <p class="review-card__comment" style="white-space: pre-line;">{{ review.comment }}</p>
   {% endif %}
 
   {# Review Images #}
@@ -49,7 +49,7 @@
     >
       {% for image in review.images %}
         <div
-          class="size-16 cursor-pointer overflow-hidden rounded"
+          class="review-card__img cursor-pointer overflow-hidden"
           data-image-index="{{ loop.index0 }}"
         >
           <img

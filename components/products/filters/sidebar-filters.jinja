@@ -2,7 +2,16 @@
 {% set availability_options = { 'in_stock': _('In stock'), 'out_of_stock': _('Out of stock') } %}
 {% set availability_values = session.query_params.getlist('availability') if session and session.query_params else [] %}
 {% set on_sale_value = session.query_params.get('on_sale') if session and session.query_params else '' %}
-{% set search_value = session.query_params.get('q') if session and session.query_params else '' %}
+{% set search_value = (session.query_params.get('q') if session and session.query_params else '') or '' %}
+{# Unchecking every option of an attribute must drop it from the URL #}
+{% set sidebar_clear_ns = namespace(keys='availability,on_sale') %}
+{% if filters and filters.attributes %}
+  {% for attribute in filters.attributes %}
+    {% if attribute.is_enabled and attribute.data | length > 0 %}
+      {% set sidebar_clear_ns.keys = sidebar_clear_ns.keys ~ ',attributes[' ~ attribute.slug ~ '][]' %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
 
 {# Dara filter sidebar (Figma 11150:15541). Styles: assets/css/dara/plp-listing.css #}
 <aside class="products-filter-sidebar" id="plp-filter-sidebar" aria-label="{{ _('Filters') }}">
@@ -10,7 +19,7 @@
     method="GET"
     action=""
     class="products-filter-sidebar__form"
-    data-clear-empty-params="availability,on_sale"
+    data-clear-empty-params="{{ sidebar_clear_ns.keys }}"
     onsubmit="return window.productFilter.submitDrawerForm(event)"
   >
     <div class="products-filter-sidebar__search">

@@ -1,0 +1,97 @@
+{#
+  PDP "Styling & care" tab body + the two guide dialogs (Dara).
+
+  Settings (layout.schema.json → single_product_section):
+    styling_care_heading / styling_care_subtitle
+    styling_guide_button, styling_guide_button_image, styling_guide_title, styling_guide_tabs[]
+    care_guide_button, care_guide_title, care_guide_tabs[]
+    each *_tabs item: tab_label, image, eyebrow, heading, items (one point per line)
+
+  When a guide list is empty, one default panel is rendered from translations
+  and the bundled images in assets/images/dara/.
+#}
+{% set styling_tabs = settings.single_product_section_styling_guide_tabs or [] %}
+{% if styling_tabs | length == 0 %}
+  {% set styling_tabs = [{
+    'tab_label': _('Everyday'),
+    'asset': 'images/dara/pdp-guide-styling.webp',
+    'eyebrow': store.name,
+    'heading': _('Style your look'),
+    'items': _('Choose the abaya that suits your occasion') ~ '\n' ~ _('A neutral shayla balances the colours of the look') ~ '\n' ~ _('A small bag and calm accessories') ~ '\n' ~ _('Check the size and length of the piece')
+  }] %}
+{% endif %}
+{% set care_tabs = settings.single_product_section_care_guide_tabs or [] %}
+{% if care_tabs | length == 0 %}
+  {% set care_tabs = [{
+    'tab_label': _('Everyday'),
+    'asset': 'images/dara/pdp-guide-care.webp',
+    'eyebrow': store.name,
+    'heading': _('Caring for your abaya'),
+    'items': _('Read the care card first') ~ '\n' ~ _('Follow the recommended cleaning method') ~ '\n' ~ _('Avoid direct heat on embroidery') ~ '\n' ~ _('Keep the piece hung or neatly folded')
+  }] %}
+{% endif %}
+
+<div class="pdp-guides">
+  <p class="pdp-guides__heading">{{ settings.single_product_section_styling_care_heading | default(_('Choose your look guide'), true) }}</p>
+  <p class="pdp-guides__subtitle">{{ settings.single_product_section_styling_care_subtitle | default(_('Simple ideas to style and care for your piece'), true) }}</p>
+  <div class="pdp-guides__buttons">
+    <button type="button" class="pdp-btn pdp-btn--dark pdp-guides__btn" data-pdp-guide-open="pdp-guide-styling">
+      {% if settings.single_product_section_styling_guide_button_image %}
+        <img src="{{ image_url(settings.single_product_section_styling_guide_button_image, w=56, q=85, f='auto') }}" alt="" width="28" height="28">
+      {% endif %}
+      <span>{{ settings.single_product_section_styling_guide_button | default(_('Look styling guide'), true) }}</span>
+    </button>
+    <button type="button" class="pdp-btn pdp-btn--outline-dark pdp-guides__btn" data-pdp-guide-open="pdp-guide-care">
+      <span>{{ settings.single_product_section_care_guide_button | default(_('Piece care guide'), true) }}</span>
+    </button>
+  </div>
+</div>
+
+{% for guide in [
+  {'id': 'pdp-guide-styling', 'title': settings.single_product_section_styling_guide_title | default(_('Styling the abaya and shayla'), true), 'tabs': styling_tabs},
+  {'id': 'pdp-guide-care', 'title': settings.single_product_section_care_guide_title | default(_('Piece care guide'), true), 'tabs': care_tabs}
+] %}
+  <dialog class="pdp-guide" id="{{ guide.id }}" aria-labelledby="{{ guide.id }}-title" data-pdp-guide>
+    <div class="pdp-guide__box">
+      <div class="pdp-guide__head">
+        <p class="pdp-guide__title" id="{{ guide.id }}-title">{{ guide.title }}</p>
+        <button type="button" class="pdp-guide__close" data-pdp-guide-close aria-label="{{ _('Close') }}">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6l12 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      {% if guide.tabs | length > 1 %}
+        <div class="pdp-guide__seg" role="tablist">
+          {% for t in guide.tabs %}
+            <button type="button" role="tab" class="pdp-guide__seg-btn {{ 'is-active' if loop.first }}" aria-selected="{{ 'true' if loop.first else 'false' }}" data-pdp-guide-tab="{{ loop.index0 }}">{{ t.tab_label | default(loop.index, true) }}</button>
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% for t in guide.tabs %}
+        <div class="pdp-guide__panel {{ 'is-active' if loop.first }}" data-pdp-guide-panel="{{ loop.index0 }}" {% if not loop.first %}hidden{% endif %}>
+          <div class="pdp-guide__media">
+            {% if t.asset %}
+              <img src="{{ t.asset | asset_url }}" alt="{{ t.heading | default('') }}" loading="lazy">
+            {% elif t.image %}
+              <img src="{{ image_url(t.image, w=800, q=85, f='auto') }}" alt="{{ t.heading | default('') }}" loading="lazy">
+            {% endif %}
+          </div>
+          <div class="pdp-guide__text">
+            {% if t.eyebrow %}<p class="pdp-guide__eyebrow">{{ t.eyebrow }}</p>{% endif %}
+            {% if t.heading %}<p class="pdp-guide__heading">{{ t.heading }}</p>{% endif %}
+            {% if t.items %}
+              <ol class="pdp-guide__list">
+                {% set n = namespace(i=0) %}
+                {% for line in (t.items | string).split('\n') %}
+                  {% if line | trim %}
+                    {% set n.i = n.i + 1 %}
+                    <li><span class="pdp-guide__num">{{ '%02d' | format(n.i) }}</span><span>{{ line | trim }}</span></li>
+                  {% endif %}
+                {% endfor %}
+              </ol>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </dialog>
+{% endfor %}

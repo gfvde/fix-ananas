@@ -4,7 +4,7 @@
  * Bundled once instead of an inline <script> per card include.
  * - Stock info flip (sold ↔ remaining) driven by ONE global ticker; detached
  *   cards (replaced by AJAX filtering) are pruned on every tick.
- * - Tags overflow arrow visibility.
+ * - Tags strip: overflow hint, ~1s delayed auto-slide loop, manual swipe/drag.
  * - GA select_item tracking on product-card link clicks (zidTracking).
  */
 
@@ -18,7 +18,10 @@ function tickFlip() {
       flipGroups.delete(group);
       return;
     }
-    group.items[group.current].classList.remove("active");
+    const prev = group.items[group.current];
+    prev.classList.remove("active");
+    prev.classList.add("is-leaving");
+    setTimeout(() => prev.classList.remove("is-leaving"), 460);
     group.current = (group.current + 1) % group.items.length;
     group.items[group.current].classList.add("active");
   });
@@ -44,17 +47,202 @@ function initStockFlip(container) {
   if (!flipTimer) flipTimer = setInterval(tickFlip, FLIP_INTERVAL);
 }
 
-function initTagsArrows(root = document) {
-  root.querySelectorAll(".pc-tags-container").forEach((container) => {
-    const wrapper = container.querySelector(".pc-tags-wrapper");
-    const btn = container.querySelector(".pc-tags-scroll-btn");
-    if (!wrapper || !btn) return;
-    btn.style.display = wrapper.scrollWidth > wrapper.clientWidth + 2 ? "flex" : "none";
-  });
+// ─────────────────────────────────────────────────────────────
+// Tags strip — one row; when the tags overflow they are cut at the
+// edge (chevron hint), auto-slide after ~1s in an infinite loop and
+// can be swiped/dragged manually (dev note Figma 11474:25137).
+// Auto-slide follows the "tags_infinite_loop" setting (body[data-pc-tags-loop]).
+// ─────────────────────────────────────────────────────────────
+
+const TAG_SPEED = 22; // px per second
+const TAG_START_DELAY = 1000;
+const TAG_RESUME_DELAY = 2000;
+const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+const strips = new Set();
+let stripRaf = null;
+let lastTs = 0;
+let stripObserver = null;
+
+function autoplayAllowed() {
+  return !reduceMotion && document.body?.dataset.pcTagsLoop !== "false";
 }
 
+function stripTick(ts) {
+  const dt = lastTs ? Math.min(ts - lastTs, 64) / 1000 : 0;
+  lastTs = ts;
+  let active = 0;
+
+  strips.forEach((st) => {
+    if (!st.container.isConnected) {
+      strips.delete(st);
+      stripObserver?.unobserve(st.container);
+      return;
+    }
+    if (!st.visible || st.paused || ts < st.resumeAt) return;
+    active++;
+    st.pos += TAG_SPEED * dt;
+    if (st.setWidth > 0 && st.pos >= st.setWidth) st.pos -= st.setWidth;
+    st.wrapper.scrollLeft = st.sign * st.pos;
+  });
+
+  if (active > 0 || [...strips].some((st) => st.visible && !st.paused)) {
+    stripRaf = requestAnimationFrame(stripTick);
+  } else {
+    stripRaf = null;
+    lastTs = 0;
+  }
+}
+
+function ensureStripLoop() {
+  if (!stripRaf && strips.size) {
+    lastTs = 0;
+    stripRaf = requestAnimationFrame(stripTick);
+  }
+}
+
+function pauseStrip(st) {
+  st.paused = true;
+}
+
+function resumeStripLater(st) {
+  st.paused = false;
+  st.pos = Math.abs(st.wrapper.scrollLeft);
+  if (st.setWidth > 0 && st.pos >= st.setWidth) st.pos -= st.setWidth;
+  st.resumeAt = performance.now() + TAG_RESUME_DELAY;
+  ensureStripLoop();
+}
+
+function measureStrip(container) {
+  const wrapper = container.querySelector(".pc-tags-wrapper");
+  const track = container.querySelector(".pc-tags-track");
+  const set = track?.querySelector(".pc-tags-set");
+  if (!wrapper || !set) return null;
+  const overflowing = set.offsetWidth > wrapper.clientWidth + 2;
+  container.classList.toggle("is-overflowing", overflowing);
+  return { wrapper, track, set, overflowing };
+}
+
+function initTagStrip(container) {
+  if (container.dataset.tagsInit) return;
+  const m = measureStrip(container);
+  if (!m) return;
+  container.dataset.tagsInit = "1";
+
+  const sign = getComputedStyle(m.wrapper).direction === "rtl" ? -1 : 1;
+  const btn = container.querySelector(".pc-tags-scroll-btn");
+  let st = null;
+
+  btn?.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (st) pauseStrip(st);
+    m.wrapper.scrollBy({ left: sign * 80, behavior: "smooth" });
+    if (st) setTimeout(() => resumeStripLater(st), 400);
+  });
+
+  if (!m.overflowing || !autoplayAllowed()) return;
+
+  // Seamless loop: one clone of the set (screen readers skip it)
+  const clone = m.set.cloneNode(true);
+  clone.setAttribute("aria-hidden", "true");
+  m.track.appendChild(clone);
+  container.classList.add("is-cloned");
+
+  st = {
+    container,
+    wrapper: m.wrapper,
+    sign,
+    pos: 0,
+    setWidth: clone.offsetLeft ? Math.abs(clone.offsetLeft - m.set.offsetLeft) : m.set.offsetWidth,
+    paused: false,
+    visible: false,
+    resumeAt: performance.now() + TAG_START_DELAY
+  };
+
+  // Manual swipe / drag / wheel pauses the auto-slide, which resumes from where the user left it
+  const onStart = () => pauseStrip(st);
+  const onEnd = () => resumeStripLater(st);
+  m.wrapper.addEventListener("pointerdown", onStart, { passive: true });
+  m.wrapper.addEventListener("touchstart", onStart, { passive: true });
+  m.wrapper.addEventListener("pointerup", onEnd, { passive: true });
+  m.wrapper.addEventListener("pointercancel", onEnd, { passive: true });
+  m.wrapper.addEventListener("touchend", onEnd, { passive: true });
+  m.wrapper.addEventListener(
+    "wheel",
+    () => {
+      pauseStrip(st);
+      clearTimeout(st.wheelTimer);
+      st.wheelTimer = setTimeout(onEnd, 150);
+    },
+    { passive: true }
+  );
+  // Mouse drag-to-scroll on desktop
+  let dragX = null;
+  m.wrapper.addEventListener("mousedown", (e) => {
+    dragX = { x: e.clientX, left: m.wrapper.scrollLeft };
+  });
+  window.addEventListener("mousemove", (e) => {
+    if (!dragX) return;
+    m.wrapper.scrollLeft = dragX.left - (e.clientX - dragX.x);
+  });
+  window.addEventListener("mouseup", () => {
+    if (dragX) {
+      dragX = null;
+      onEnd();
+    }
+  });
+
+  strips.add(st);
+  if (!stripObserver && "IntersectionObserver" in window) {
+    stripObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        strips.forEach((s) => {
+          if (s.container === entry.target) s.visible = entry.isIntersecting;
+        });
+      });
+      ensureStripLoop();
+    });
+  }
+  st.visible = true;
+  if (stripObserver) stripObserver.observe(container);
+  ensureStripLoop();
+}
+
+// Strips are initialised the first time they scroll into view, so cards in hidden
+// tabs / lazy carousels are measured with their real width.
+let stripInitObserver = null;
+
+function initTagStrips(root = document) {
+  const containers = root.querySelectorAll(".pc-tags-container:not([data-tags-init])");
+  if (!("IntersectionObserver" in window)) {
+    containers.forEach(initTagStrip);
+    return;
+  }
+  if (!stripInitObserver) {
+    stripInitObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting || entry.boundingClientRect.width === 0) return;
+          stripInitObserver.unobserve(entry.target);
+          initTagStrip(entry.target);
+        });
+      },
+      { rootMargin: "100px" }
+    );
+  }
+  containers.forEach((c) => stripInitObserver.observe(c));
+}
+
+let resizeTimer = null;
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    document.querySelectorAll(".pc-tags-container:not(.is-cloned)").forEach((c) => measureStrip(c));
+  }, 200);
+});
+
 export function initProductCards(root = document) {
-  initTagsArrows(root);
+  initTagStrips(root);
   root.querySelectorAll(".pc-stock:not([data-flip-init])").forEach((c) => {
     c.dataset.flipInit = "1";
     initStockFlip(c);

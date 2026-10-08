@@ -19,16 +19,16 @@
   {# Get badge type from product.badge.icon.code #}
   {% set badge_type = product.badge.icon.code if product.badge.icon else '' %}
 
-  {# Color mappings #}
+  {# Dara tones (Figma Tags 10879:16250): espresso = white on #6B4A39, sand = black on #E7DDCC #}
   {%
-    set badge_colors = {
-      'featured_product': 'bg-[#F7512B] border-[#F1EFFE] text-[#fff]',
-      'free_shipping': 'bg-[#F7512B] border-[#E7FAF4] text-[#fff]',
-      'selling_fast': 'bg-[#F7512B] border-[#D1E9FF] text-[#fff]',
-      'on_sale': 'bg-[#F7512B] border-[#FEE4E2] text-[#fff]',
-      'limited_quantity': 'bg-[#F7512B] border-[#FEF8D8] text-[#fff]',
-      'discount_value': 'bg-[#F7512B] border-[#FEE4E2] text-[#fff]',
-      'discount_percent': 'bg-[#F7512B] border-[#FEE4E2] text-[#fff]'
+    set badge_tones = {
+      'featured_product': 'espresso',
+      'selling_fast': 'espresso',
+      'limited_quantity': 'espresso',
+      'free_shipping': 'sand',
+      'on_sale': 'sand',
+      'discount_value': 'sand',
+      'discount_percent': 'sand'
     }
   %}
 
@@ -59,15 +59,15 @@
   %}
 
   {# Get badge classes and icon #}
-  {% set badge_class = badge_colors.get(badge_type, 'bg-[#6f42c1] border-[#6f42c1] text-white') %}
-  {% set icon_color = icon_colors.get(badge_type, '#FFFFFF') %}
+  {% set badge_tone = badge_tones.get(badge_type, 'espresso') %}
+  {% set icon_color = '#000000' if badge_tone == 'sand' else '#FFFFFF' %}
   {% set icon_path = icons.get(badge_type, '') %}
 
   {# Get badge text based on language #}
   {% set badge_text = product.badge.body.ar if session.lang == 'ar' else product.badge.body.en %}
 
   <span
-    class="{{ badge_class }} text-sm inline-flex items-center gap-1.5 rounded-[4px] border px-1.5 py-0.5 whitespace-nowrap"
+    class="merchant-badge merchant-badge--{{ badge_tone }} merchant-badge--{{ badge_type | default('custom', true) }}"
   >
     {% if icon_path %}
       <svg

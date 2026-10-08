@@ -141,7 +141,7 @@ export function updateProductInfo(selectedProduct) {
   if (lowStockBadge) {
     const threshold = window.storeLowStockThreshold || 5;
     if (window.storeLowStockEnabled && !selectedProduct.is_infinite && selectedProduct.quantity <= threshold) {
-      const template = window.productTranslations?.remaining || "Remaining %s only";
+      const template = lowStockBadge.dataset.template || window.productTranslations?.remaining || "Remaining %s only";
       const lowStockText = lowStockBadge.querySelector("[data-low-stock-text]");
       if (lowStockText) {
         lowStockText.textContent = template.replace("%s", selectedProduct.quantity);
@@ -231,6 +231,13 @@ export function updateStockStatus(selectedProduct) {
   const inStockSection = document.querySelector("[data-in-stock]");
   const outOfStockSection = document.querySelector("[data-out-of-stock]");
   const quantityWrapper = document.querySelector("[data-quantity-wrapper]");
+
+  // Dara PDP: "sold out" ribbon over the gallery follows the selected variant
+  document.querySelectorAll("[data-pdp-soldout]").forEach((ribbon) => {
+    const soldOut = !isSelectedProductBuyable(selectedProduct);
+    ribbon.classList.toggle("hidden", !soldOut);
+    ribbon.setAttribute("aria-hidden", soldOut ? "false" : "true");
+  });
 
   if (selectedProduct.in_stock) {
     // Show in-stock elements
