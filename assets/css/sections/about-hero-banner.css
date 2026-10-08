@@ -338,3 +338,96 @@
     line-height: 28px;
   }
 }
+
+/* ── Dara (Figma 10852:19298 desktop, 10802:24887 mobile) ───────────── */
+[data-section="about-hero-banner"] .about-hero-banner__title {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 34px;
+}
+
+[data-section="about-hero-banner"] .about-hero-banner__subtitle {
+  font-weight: 500;
+  line-height: 24px;
+}
+
+[data-section="about-hero-banner"] .about-hero-banner__stars {
+  color: #b59a70;
+}
+
+[data-section="about-hero-banner"] .about-hero-banner__rating {
+  min-height: 42px;
+  padding: 8px 12px 8px 24px;
+  background: rgba(250, 250, 250, 0.06);
+}
+
+[data-section="about-hero-banner"] .about-hero-banner__rating-value {
+  font-weight: 500;
+}
+
+/* "+13K عميل": corner pill on mobile, "( +13K عميل )" above the rating on desktop */
+[data-section="about-hero-banner"] .about-hero-banner__customers {
+  position: absolute;
+  top: 15px;
+  inset-inline-end: 16px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 10px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.29);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+[data-section="about-hero-banner"] .about-hero-banner__customers .ahb-rl__count {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+[data-section="about-hero-banner"] .about-hero-banner__button {
+  min-height: 44px;
+  font-weight: 500;
+}
+
+@media (min-width: 768px) {
+  [data-section="about-hero-banner"] .about-hero-banner__inner {
+    padding: 0 80px;
+  }
+
+  [data-section="about-hero-banner"] .about-hero-banner__title {
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 39px;
+  }
+
+  [data-section="about-hero-banner"] .about-hero-banner__subtitle {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  [data-section="about-hero-banner"] .about-hero-banner__customers {
+    position: static;
+    margin-bottom: -6px;
+    padding: 0 8px;
+    background: transparent;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  [data-section="about-hero-banner"] .about-hero-banner__customers::before {
+    content: "(";
+  }
+
+  [data-section="about-hero-banner"] .about-hero-banner__customers::after {
+    content: ")";
+  }
+
+  [data-section="about-hero-banner"] .about-hero-banner__button {
+    width: 200px;
+  }
+}

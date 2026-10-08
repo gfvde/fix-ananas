@@ -1,0 +1,52 @@
+{# Payment methods row: infinite marquee on mobile and desktop (Dara 11522:52233).
+   Merchant list (Cart Page Settings → payment methods) first, then the store's own checkout
+   payment methods, then plain text labels. The group is repeated so the loop is seamless. #}
+{% set pay_methods = safeget(settings, 'cart_page_payment_methods', safeget(settings, 'cart_page_cart_page_payment_methods', [])) %}
+{% set store_pay_methods = safeget(store, 'settings.checkout.payment_methods', []) or [] %}
+<div
+  class="cart-payments"
+  aria-label="{{ _('Payment methods') }}"
+>
+  <div class="cart-payments__track">
+    {% for repeat in [1, 2, 3, 4] %}
+      <div
+        class="cart-payments__group"
+        {% if repeat > 1 %}aria-hidden="true"{% endif %}
+      >
+        {% if pay_methods and pay_methods | length > 0 %}
+          {% for method in pay_methods %}
+            <span class="cart-payment">
+              {% if method.image %}
+                <img
+                  src="{{ image_url(method.image, w=120, h=56, f='auto') }}"
+                  alt="{{ method.title | default('') }}"
+                  loading="lazy"
+                />
+              {% else %}
+                {{ method.title | default(_('Pay')) }}
+              {% endif %}
+            </span>
+          {% endfor %}
+        {% elif store_pay_methods | length > 0 %}
+          {% for method in store_pay_methods %}
+            <span class="cart-payment">
+              {% if method.icon %}
+                <img
+                  src="{{ image_url(method.icon, w=92, h=40, q=100, f='auto') }}"
+                  alt="{{ method.name | default('') }}"
+                  loading="lazy"
+                />
+              {% else %}
+                {{ method.name | default(_('Pay')) }}
+              {% endif %}
+            </span>
+          {% endfor %}
+        {% else %}
+          {% for label in ['tabby', _('Tamara'), 'VISA', 'mada', 'MasterCard', 'valu', 'Apple Pay'] %}
+            <span class="cart-payment cart-payment--text">{{ label }}</span>
+          {% endfor %}
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>

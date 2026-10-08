@@ -1,5 +1,5 @@
 {% set is_lazy = (settings.order | default(3) | int) > 2 %}
-{% set bg_color = settings.bg_color | default('#D3DB6F') %}
+{% set bg_color = settings.bg_color | default('#E7DDCC', true) %}
 {% set text_color = settings.text_color | default('#000000') %}
 {% set mobile_text_color = settings.mobile_text_color | default('#404040') %}
 {% set icon_color = settings.icon_color | default(text_color) %}
@@ -9,7 +9,7 @@
 
 {% if not items or items | length == 0 %}
   {% set items = [
-    { 'text': _('Perfectly roasted'), 'icon_image': none },
+    { 'text': _('Fine details'), 'icon_image': none },
     { 'text': _('Distinctive packaging'), 'icon_image': none },
     { 'text': _('Fast shipping'), 'icon_image': none },
     { 'text': _('Secure payment'), 'icon_image': none }
@@ -20,19 +20,19 @@
   {% set variant = index % 4 %}
   <svg class="snake-bar__icon-svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
     {% if variant == 1 %}
-      <path d="M4 10H20V20H4V10Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-      <path d="M4 7H20V10H4V7Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-      <path d="M12 7V20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-      <path d="M8.3 7C7.2 6.2 6.8 5 7.5 4.2C8.4 3.2 10.3 4.5 12 7C13.7 4.5 15.6 3.2 16.5 4.2C17.2 5 16.8 6.2 15.7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="2.5" y="4.5" width="19" height="15" rx="2" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M2.5 12H21.5M12 4.5V19.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M12 12C10.5 9.5 8 8.6 7.3 9.6C6.6 10.6 8.4 12 12 12ZM12 12C13.5 9.5 16 8.6 16.7 9.6C17.4 10.6 15.6 12 12 12Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M12 12L9.5 15M12 12L14.5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
     {% elif variant == 2 %}
       <path d="M3 7H14V16H3V7Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
       <path d="M14 11H18L21 14V16H14V11Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
       <path d="M6.5 18.5C7.32843 18.5 8 17.8284 8 17C8 16.1716 7.32843 15.5 6.5 15.5C5.67157 15.5 5 16.1716 5 17C5 17.8284 5.67157 18.5 6.5 18.5Z" stroke="currentColor" stroke-width="1.6"/>
       <path d="M17.5 18.5C18.3284 18.5 19 17.8284 19 17C19 16.1716 18.3284 15.5 17.5 15.5C16.6716 15.5 16 16.1716 16 17C16 17.8284 16.6716 18.5 17.5 18.5Z" stroke="currentColor" stroke-width="1.6"/>
     {% elif variant == 3 %}
-      <path d="M4 7H20V17H4V7Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-      <path d="M4 10H20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-      <path d="M15 14L17 16L21 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M21 10V7C21 5.9 20.1 5 19 5H5C3.9 5 3 5.9 3 7V17C3 18.1 3.9 19 5 19H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M3 9.5H21M6.5 15H9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M18 13L21 14.2V16.6C21 18.4 19.7 19.8 18 20.5C16.3 19.8 15 18.4 15 16.6V14.2L18 13Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
     {% else %}
       <path d="M7.5 6.1C9.7 3.6 13.5 3.4 16 5.6C18.7 8 18.4 12.5 15.5 16.1C13.4 18.8 10.2 20.1 7.9 18.1C5.4 15.9 4.9 9.1 7.5 6.1Z" stroke="currentColor" stroke-width="1.6"/>
       <path d="M10 7.5C11.1 10.2 12.8 12.7 15 14.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
@@ -52,8 +52,8 @@
   <div class="snake-bar__group"{% if hidden %} aria-hidden="true"{% endif %}>
     {% for item in items %}
       <div class="snake-bar__item">
+        <span class="snake-bar__text">{{ item.text | default(_('Fine details'), true) }}</span>
         {{ render_icon(item, loop.index0) }}
-        <span class="snake-bar__text">{{ item.text | default(_('Perfectly roasted')) }}</span>
       </div>
       <span class="snake-bar__sep"></span>
     {% endfor %}

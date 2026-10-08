@@ -2,14 +2,24 @@
 {% set availability_options = { 'in_stock': _('In stock'), 'out_of_stock': _('Out of stock') } %}
 {% set availability_values = session.query_params.getlist('availability') if session and session.query_params else [] %}
 {% set on_sale_value = session.query_params.get('on_sale') if session and session.query_params else '' %}
-{% set search_value = session.query_params.get('q') if session and session.query_params else '' %}
+{% set search_value = (session.query_params.get('q') if session and session.query_params else '') or '' %}
+{# Unchecking every option of an attribute must drop it from the URL #}
+{% set sidebar_clear_ns = namespace(keys='availability,on_sale') %}
+{% if filters and filters.attributes %}
+  {% for attribute in filters.attributes %}
+    {% if attribute.is_enabled and attribute.data | length > 0 %}
+      {% set sidebar_clear_ns.keys = sidebar_clear_ns.keys ~ ',attributes[' ~ attribute.slug ~ '][]' %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
 
-<aside class="products-filter-sidebar hidden lg:block" >
+{# Dara filter sidebar (Figma 11150:15541). Styles: assets/css/dara/plp-listing.css #}
+<aside class="products-filter-sidebar" id="plp-filter-sidebar" aria-label="{{ _('Filters') }}">
   <form
     method="GET"
     action=""
     class="products-filter-sidebar__form"
-    data-clear-empty-params="availability,on_sale"
+    data-clear-empty-params="{{ sidebar_clear_ns.keys }}"
     onsubmit="return window.productFilter.submitDrawerForm(event)"
   >
     <div class="products-filter-sidebar__search">
@@ -98,260 +108,3 @@
     </div>
   </form>
 </aside>
-
-<style>
-  .products-filter-sidebar {
-    display: none;
-    position: sticky;
-    top: calc(var(--header-h, 80px) + 12px);
-    align-self: start;
-    max-height: calc(100vh - var(--header-h, 80px) - 24px);
-    overflow: auto;
-    background: var(--background);
-    color: var(--muted);
-    padding: 0 0 0 16px;
-    scrollbar-width: thin;
-    scrollbar-color: var(--muted) var(--background);
-  }
-
-  .products-filter-sidebar__form {
-    display: flex;
-    min-height: 0;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .products-filter-sidebar__search {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 11px;
-    width: 100%;
-    min-height: 38px;
-    margin-bottom: 16px;
-    padding: 8px 16px;
-    border: 1px solid var(--border);
-    border-radius: 99px;
-    color: var(--muted);
-  }
-
-  .products-filter-sidebar__search input {
-    width: 100%;
-    border: 0;
-    background: transparent;
-    color: var(--foreground);
-    outline: none;
-    text-align: right;
-    font-size: 14px;
-    line-height: 20px;
-  }
-
-  .products-filter-sidebar__search input::placeholder {
-    color: var(--muted);
-  }
-
-  .products-filter-sidebar__body {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .products-filter-sidebar__toggles {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding: 16px 0;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-  }
-
-  html[dir="ltr"] .products-filter-sidebar__toggles {
-    text-align: end;
-  }
-
-  .products-filter-sidebar__toggle {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 8px;
-    color: var(--foreground);
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 24px;
-    cursor: pointer;
-  }
-
-  [dir="ltr"] .products-filter-sidebar__toggle {
-    justify-content: flex-end;
-  }
-
-  .products-filter-sidebar__toggle input {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .products-filter-sidebar__toggle-track {
-    position: relative;
-    width: 33px;
-    height: 20px;
-    flex: 0 0 33px;
-    border-radius: 99px;
-    background: rgba(120, 120, 128, 0.3);
-  }
-
-  .products-filter-sidebar__toggle-track::after {
-    content: "";
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 16px;
-    height: 16px;
-    border-radius: 999px;
-    background: #fff;
-    box-shadow: 0 1.935px 5.161px rgba(0, 0, 0, 0.15), 0 1.935px 0.645px rgba(0, 0, 0, 0.06);
-    transition: transform 160ms ease;
-  }
-
-  .products-filter-sidebar__toggle input:checked + .products-filter-sidebar__toggle-track {
-    background: #85c657;
-  }
-
-  .products-filter-sidebar__toggle input:checked + .products-filter-sidebar__toggle-track::after {
-    transform: translateX(13px);
-  }
-
-  .products-filter-sidebar__section {
-    border-bottom: 1.7px solid var(--border);
-  }
-
-  .products-filter-sidebar__section > div,
-  .products-filter-sidebar__section > details {
-    padding: 16px 0 ;
-  }
-
-  .products-filter-sidebar .filters--sidebar .product-filter {
-    padding: 16px 0 8px;
-    border-color: var(--border);
-  }
-
-  .products-filter-sidebar .form-control,
-  .products-filter-sidebar .product-filter__option {
-    justify-content: flex-start;
-    gap: 6px;
-    color: var(--foreground);
-    font-size: 16px;
-    line-height: 24px;
-    text-align: right;
-  }
-
-  .products-filter-sidebar .product-filter__option {
-    flex-direction: row-reverse;
-  }
-
-  .products-filter-sidebar .product-filter__text {
-    flex: 0 1 auto;
-  }
-
-  .products-filter-sidebar .product-filter__summary {
-    color: var(--foreground);
-  }
-
-  .products-filter-sidebar .product-filter__summary-text {
-    color: var(--foreground);
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 28px;
-  }
-
-  .products-filter-sidebar .product-filter__summary-icon {
-    color: var(--foreground);
-    width: 24px;
-    height: 24px;
-  }
-
-  .products-filter-sidebar .product-filter__checkbox,
-  .products-filter-sidebar .form-checkbox,
-  .products-filter-sidebar .form-radio {
-    width: 18px;
-    height: 18px;
-    border-color: var(--border);
-    background: var(--background);
-    border-radius: 4px;
-  }
-
-  .products-filter-sidebar .product-filter__checkbox:checked,
-  .products-filter-sidebar .form-checkbox:checked,
-  .products-filter-sidebar .form-radio:checked {
-    border-color: #000;
-    background: #000;
-  }
-
-  .products-filter-sidebar .product-filter__checkbox:checked::before,
-  .products-filter-sidebar .form-checkbox:checked::before {
-    color: #fff;
-    opacity: 1;
-  }
-
-  .products-filter-sidebar .form-radio:checked::before {
-    background: #fff;
-    opacity: 1;
-  }
-
-  .products-filter-sidebar .price-range-slider {
-    margin: 36px 0 12px;
-  }
-
-  .products-filter-sidebar__actions {
-    position: sticky;
-    bottom: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    padding: 14px 0 0;
-    background: var(--background);
-  }
-
-  .products-filter-sidebar__apply,
-  .products-filter-sidebar__clear {
-    width: 100%;
-    min-height: 40px;
-    border: 1px solid var(--border);
-    border-radius: 0;
-    font-size: 14px;
-    line-height: 20px;
-    cursor: pointer;
-  }
-
-  .products-filter-sidebar__apply {
-    border-color: var(--primary);
-    background: var(--primary);
-    color: var(--primary-foreground);
-  }
-
-  .products-filter-sidebar__clear {
-    background: transparent;
-    color: var(--foreground);
-  }
-  @media (min-width: 1024px) {
-    .products-filter-sidebar {
-      display: block !important;
-    }
-
-    .products-with-sidebar.products-with-sidebar--ready {
-      gap: 1rem !important;
-    }
-  .flex.items-center.gap-3{
-      flex-direction: row-reverse !important;
-  }
-  }
-  [dir="ltr"] .products-with-sidebar{
-    direction: rtl !important;
-  }
-  summary.product-filter__summary{
-    flex-direction: row-reverse !important;
-  }
-
-  label.flex.w-full.cursor-pointer.items-center.justify-between.gap-3.peer-checked\:\[\&_svg\]\:rotate-0 {
-      flex-direction: row-reverse !important;
-  }
-</style>

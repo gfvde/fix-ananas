@@ -5,7 +5,9 @@
     "en": "Star Reviews"
   },
   "icon": "star-line",
-  "meta": { "type": "testimonials" },
+  "meta": {
+    "type": "testimonials"
+  },
   "settings": [
     {
       "id": "star_reviews_items",
@@ -80,7 +82,7 @@
         "ar": "العنوان",
         "en": "Title"
       },
-      "default": "تجربة القهوة بعيون عملائنا"
+      "default": "دليل الأناقة من دارا"
     },
     {
       "id": "image_card_bg",
@@ -106,7 +108,7 @@
         "ar": "لون خلفية القسم",
         "en": "Section Background"
       },
-      "default": "#ffffff"
+      "default": "#FAF7F2"
     },
     {
       "id": "star_color",
@@ -115,7 +117,7 @@
         "ar": "لون النجوم",
         "en": "Star Color"
       },
-      "default": "#F7A52D"
+      "default": "#B59A70"
     },
     {
       "id": "verified_color",

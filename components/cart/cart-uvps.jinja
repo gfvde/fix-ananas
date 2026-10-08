@@ -1,0 +1,36 @@
+{# Cart UVPs (sidebar + mobile). Merchant list: Cart Page Settings → features; empty → Dara defaults #}
+{% set uvp_features = safeget(settings, 'cart_page_features', safeget(settings, 'cart_page_cart_page_features', [])) %}
+{% if not uvp_features or uvp_features | length == 0 %}
+  {%
+    set uvp_features = [
+      {'title': _('Free shipping'), 'subtitle': _('On every order over 130'), 'asset': 'images/dara/cart-uvp-shipping.svg'},
+      {'title': _('Secure payment'), 'subtitle': _('Flexible and secure payment options'), 'asset': 'images/dara/cart-uvp-secure.svg'},
+      {'title': _('Guaranteed quality'), 'subtitle': _('Carefully selected pieces'), 'asset': 'images/dara/cart-uvp-quality.svg'}
+    ]
+  %}
+{% endif %}
+<div class="cart-features">
+  {% for feature in uvp_features[:3] %}
+    <div class="cart-feature">
+      <div class="cart-feature__image">
+        {% if feature.image %}
+          <img
+            src="{{ image_url(feature.image, w=140, h=120, f='auto') }}"
+            alt=""
+            loading="lazy"
+          />
+        {% elif feature.asset %}
+          <img
+            src="{{ feature.asset | asset_url }}"
+            alt=""
+            width="68"
+            height="60"
+            loading="lazy"
+          />
+        {% endif %}
+      </div>
+      {% if feature.title %}<h3>{{ feature.title }}</h3>{% endif %}
+      {% if feature.subtitle %}<p>{{ feature.subtitle }}</p>{% endif %}
+    </div>
+  {% endfor %}
+</div>

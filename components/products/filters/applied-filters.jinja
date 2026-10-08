@@ -82,12 +82,6 @@
 {% if active_filters %}
   <div class="flex flex-wrap items-center gap-2">
     <div class="flex w-full items-center justify-between md:order-1 md:w-auto">
-      <span class="text-muted-foreground text-sm block md:hidden">
-        {% trans current=products.results|length, total=products.count %}
-          {{ current }}
-          out of {{ total }} products
-        {% endtrans %}
-      </span>
       <button
         type="button"
         class="btn btn-text btn-md h-[40px]"

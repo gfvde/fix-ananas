@@ -110,6 +110,8 @@ function buildSwiperInstances(Swiper, galleryId) {
   const { signal } = controller;
 
   const thumbLayout = wrapper.dataset.thumbLayout || "vertical";
+  // Mobile (<1024px): thumbs beside the image ("vertical") or below it ("horizontal")
+  const mobileVertical = wrapper.dataset.thumbLayoutMobile === "vertical";
   const loop = wrapper.dataset.loop === "true";
   const keyboard = wrapper.dataset.keyboard !== "false";
   const autoplay = wrapper.dataset.autoplay === "true";
@@ -136,7 +138,9 @@ function buildSwiperInstances(Swiper, galleryId) {
       observer: true,
       observeParents: true,
       breakpoints: {
-        0: { slidesPerView: 5, spaceBetween: 6, direction: "horizontal" },
+        0: mobileVertical
+          ? { slidesPerView: 5, spaceBetween: 8, direction: "vertical" }
+          : { slidesPerView: 5, spaceBetween: 6, direction: "horizontal" },
         1024: { slidesPerView: 7, spaceBetween: 8, direction: "vertical" }
       }
     });

@@ -35,116 +35,81 @@
     }
   </script>
 
-  <h2 class="text-foreground text-xl font-semibold tracking-tight md:text-2xl">{{ _("Customer reviews") }}</h2>
-  <div class="mt-6 flex flex gap-4">
-    {# Title #}
+  <div class="pdp-reviews">
+    {# Summary: overall rating, distribution, write-a-review #}
+    <aside class="pdp-reviews__summary">
+      <h3 class="pdp-reviews__heading">{{ _("Overall rating") }}</h3>
+      {% if product.rating %}
+        <div class="pdp-reviews__score">
+          <span class="pdp-reviews__avg">{{ product.rating.average|round(1) }}</span>
+          {% with rating=product.rating.average, size=22 %}
+            {% include 'components/rating-stars.jinja' %}
+          {% endwith %}
+        </div>
+        <p class="pdp-reviews__count">{{ product.rating.total_count or 0 }} {{ _("reviews") }}</p>
 
-    {# Rating Summary Section #}
-    <div class="flex flex gap-6 md:flex-row">
-      {# Left: Overall Rating + Write Review Button #}
-      <div class="flex shrink-0 flex-col gap-4">
-        {% if product.rating %}
-          <div class="flex flex-col gap-1">
-            <p class="text-foreground text-xs tracking-wide uppercase">{{ _("Overall rating") }}</p>
-            <div class="flex h-8 items-center gap-1.5">
-              <p class="text-foreground text-lg font-semibold">{{ product.rating.average|round(1) }}</p>
-              <div class="flex gap-0.5 overflow-clip">
-                {% set rating = product.rating.average %}
-                {% include 'components/rating-stars.jinja' %}
-              </div>
-            </div>
-          </div>
-        {% endif %}
+        {% set total_reviews = product.rating.total_count or 1 %}
+        <ul class="pdp-reviews__bars">
+          {% for i in range(5, 0, -1) %}
+            {% set rating_data = product.rating['ratings_' ~ i] %}
+            {% set count = rating_data.count if rating_data else 0 %}
+            {% set percentage = (count / total_reviews * 100) if total_reviews > 0 else 0 %}
+            <li class="pdp-reviews__bar">
+              <span class="pdp-reviews__bar-label">{{ i }} {{ _("star") if i == 1 else _("stars") }}</span>
+              <span class="pdp-reviews__bar-track"><span style="width: {{ percentage|round(1) }}%"></span></span>
+              <span class="pdp-reviews__bar-count">{{ count }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
 
+      <div class="pdp-reviews__cta">
+        <p>{{ _("Your opinion matters... share your experience with us") }}</p>
         {# Write Review Button - Guest version (shown via JS) #}
         <button
           type="button"
-          class="btn btn-outlined btn-lg"
+          class="pdp-btn pdp-btn--outline-dark"
           data-login-redirect="{{ url_for('add_product_review', slug=product.id) }}"
           data-auth-guest
         >
-          {{ _("Write a review") }}
+          {{ _("Add your review") }}
         </button>
         {# Write Review Button - Authenticated version (shown via JS) #}
         <a
           href="{{ url_for('add_product_review', slug=product.slug) }}"
-          class="btn btn-outlined btn-lg hidden"
+          class="pdp-btn pdp-btn--outline-dark hidden"
           data-auth-user
         >
-          {{ _("Write a review") }}
+          {{ _("Add your review") }}
         </a>
       </div>
+    </aside>
 
-      {# Right: Rating Snapshot #}
-      {% if product.rating %}
-        <div class="flex min-w-0 flex-1 flex-col gap-2">
-          <p class="text-foreground text-xs tracking-wide uppercase">{{ _("Rating snapshot") }}</p>
-
-          {% set total_reviews = product.rating.total_count or 1 %}
-
-          {% for i in range(5, 0, -1) %}
-            {% set rating_key = 'ratings_' ~ i %}
-            {% set rating_data = product.rating[rating_key] %}
-            {% set count = rating_data.count if rating_data else 0 %}
-            {% set percentage = (count / total_reviews * 100) if total_reviews > 0 else 0 %}
-            <div class="flex w-full items-center gap-2">
-              <span class="text-foreground w-[42px] shrink-0 text-sm">
-                {{ i }} {{ _("star") if i == 1 else _("stars") }}
-              </span>
-              <div class="min-w-0 flex-1">
-                <div class="bg-secondary h-1 w-full rounded">
-                  <div
-                    class="bg-accent h-1 rounded-sm"
-                    style="width: {{ percentage|round(1) }}%"
-                  ></div>
-                </div>
-              </div>
-              <span class="text-muted w-10 shrink-0 text-right text-sm">{{ count }}</span>
-            </div>
-          {% endfor %}
-        </div>
-      {% endif %}
-    </div>
-    <div class="flex-grow">
-      {# Divider #}
-      <div class="py-4">
-        {# Review Count #}
-        {% if product.reviews and product.reviews.results %}
-          <p class="text-foreground text-xs tracking-wide uppercase">
-            {{ product.reviews.results|length }} {{ _("out of") }}
-            {{ product.reviews.count or product.reviews.results|length }}
-            {{ _("reviews") }}
-          </p>
-        {% endif %}
-      </div>
-
+    {# Reviews list #}
+    <div class="pdp-reviews__list">
+      <h3 class="pdp-reviews__heading">{{ _("Customer reviews") }}</h3>
       {% if product.reviews and product.reviews.results %}
-        <div class="flex flex-col gap-2">
+        <div class="pdp-reviews__items">
           {% for review in product.reviews.results %}
             {% with review=review, store=store %}
               {% include 'components/products/review-card.jinja' %}
             {% endwith %}
           {% endfor %}
         </div>
-  
-        {# All Reviews Link #}
+
         {% if product.reviews.pages_count > 1 %}
-          <div class="flex justify-end">
-            <a
-              href="{{ url_for('product_reviews', slug=product.id) }}"
-              class="btn btn-outlined btn-sm"
-            >
-              {{ _("All reviews") }}
-            </a>
-          </div>
+          <a href="{{ url_for('product_reviews', slug=product.id) }}" class="pdp-reviews__more">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <circle cx="10" cy="10" r="8.25" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M12.5 7.5 7.5 12.5m0 0h4m-4 0v-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>{{ _("Show more") }}</span>
+          </a>
         {% endif %}
       {% else %}
-        {# No Reviews Message #}
-        <p class="text-muted text-sm">{{ _("There are no reviews yet. Be the first one to review this product") }}</p>
+        <p class="pdp-muted">{{ _("There are no reviews yet. Be the first one to review this product") }}</p>
       {% endif %}
     </div>
-
-    {# Reviews List #}
   </div>
 
   <script src="{{ 'js/time-ago.js' | asset_url }}"></script>

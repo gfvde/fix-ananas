@@ -1,4 +1,6 @@
 {# Quick View Modal - Fetches product page and injects content #}
+{# Dara overrides (Figma 11423:35883 / 11917:33902) #}
+<link rel="stylesheet" href="{{ 'css/dara/card-quick-view.css' | asset_url }}" />
 
 {# Scoped styles — only apply inside the quick-view modal #}
 <style>
@@ -25,14 +27,17 @@
       display: none !important;
     }
     .product-options__item.colorized {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  min-width: 30px;
+  height: 30px;
+  min-height: 30px;
+  flex: 0 0 auto;
   border-radius: 9999px; /* rounded full */
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  border: 2px solid transparent;
+  border: 1px solid #e4e4e7;
   transition: 0.2s ease;
   padding: 0 !important;
   font-size: 0; /* يخفي النص */
@@ -45,8 +50,8 @@
 
 /* active state */
 .product-options__item.active.colorized {
-  border-color: #111;
-  box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
+  border-color: #fff;
+  box-shadow: 0 0 0 1.5px #6b4a39;
 }
 
 /* optional: spacing */

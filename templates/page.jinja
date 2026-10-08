@@ -1206,7 +1206,9 @@
   {% macro ap_img(value, asset, w) %}{% if value %}{{ image_url(value, w=w, f='auto') }}{% else %}{{ asset | asset_url }}{% endif %}{% endmacro %}
   {% macro ap_text(value) %}{{ (value or '') | replace('\r', '') | replace('\n', '<br>' | safe) }}{% endmacro %}
 
-  {% set ap_intro_title = settings.about_page_intro_title or _('About Ananas') %}
+  <link rel="stylesheet" href="{{ 'css/dara/about-page.css' | asset_url }}">
+  {% set ap_intro_title = settings.about_page_intro_title or _('About Dara') %}
+  {% set ap_intro_lead = settings.about_page_intro_lead or (_('Elegance is not just a piece you wear') ~ '\n' ~ _('It is taste, details and a look that suits you every day')) %}
 
   {# About Content Section #}
   {% if ap_on(settings.about_page_show_intro) | trim %}
@@ -1214,12 +1216,12 @@
     <div class="theme-container" style="max-width: 800px; text-align: center;">
       <h3 class="ananas-title" style="color: #F85A3E; font-weight: 900; font-size: 2.5rem; margin-bottom: 1.5rem;">{{ ap_intro_title }}</h3>
       <p class="ananas-subtitle" style="color: #222222; font-weight: 700; font-size: 1.4rem; line-height: 1.8; margin-bottom: 4rem;">
-        <span class="ananas-subtitle__lead">{{ settings.about_page_intro_lead or _('Ananas... More Than Just Coffee') }}</span>
-        <span class="ananas-subtitle__body">{{ settings.about_page_intro_body or _('We are a Saudi roastery that believes great coffee starts with a careful selection and ends with an experience worth repeating. Everything we offer is built on genuine passion and uncompromising quality.') }}</span>
+        <span class="ananas-subtitle__lead">{{ ap_text(ap_intro_lead) }}</span>
+        <span class="ananas-subtitle__body">{{ settings.about_page_intro_body or _('At Dara, we care about every detail so you can choose a look that suits you') }}</span>
       </p>
     </div>
     <div class="ananas-img-wrapper w-full">
-      <img src="{{ ap_img(settings.about_page_intro_image, 'images/about-us/figma-d3380972-304b-40b5-8515-a02c0b0bb090.jpg', 1920) | trim }}" alt="{{ ap_intro_title }}" style="object-fit: cover; max-height: 50vh; width: 100%;" />
+      <img src="{{ ap_img(settings.about_page_intro_image, 'images/about-us/dara-fabric.webp', 1920) | trim }}" alt="{{ ap_intro_title }}" style="object-fit: cover; max-height: 50vh; width: 100%;" />
     </div>
   </section>
   {% endif %}
@@ -1227,17 +1229,20 @@
   {# Coffee Journey #}
   {% if ap_on(settings.about_page_show_journey) | trim %}
   {% set ap_journey = settings.about_page_journey_steps if settings.about_page_journey_steps else [
-    {'title': _('From the Farm... The Beginning'), 'text': _('We carefully select our crops from the finest coffee-growing regions around the world'), 'text_mobile': _('We source from farms we trust, because the beginning is the foundation'), 'asset': 'images/about-us/figma-f0765ba7-3de1-4097-b091-f7840ab8af2e.webp'},
-    {'title': _('Precise Selection'), 'text': _('Every crop passes through meticulous selection stages to ensure the highest quality'), 'text_mobile': _('Every bean goes through careful inspection, because quality has no shortcuts'), 'asset': 'images/about-us/figma-d99f4eee-c9ca-4540-b485-5a8b3cc67e96.webp'},
-    {'title': _('Precise Roasting'), 'title_mobile': _('Calibrated Roasting'), 'text': _('We roast every batch to precise standards to ensure consistent flavor'), 'text_mobile': _('We roast with precision so every cup gives you the same feeling every time'), 'asset': 'images/about-us/figma-3a6dd3ed-f70e-4758-8118-73d6e2190f64.webp'},
-    {'title': _('An Experience Made for You'), 'title_mobile': _('For Every Taste'), 'text': _('We offer multiple options to suit different tastes and moods'), 'text_mobile': _('We make sure to offer you a coffee that suits you'), 'asset': 'images/about-us/figma-49db7e91-046a-4eab-ae53-0a912a7e5b27.webp'}
+    {'title': _('From design... the beginning'), 'text': _('We start with the cut, fabric and color so the look comes together'), 'asset': 'images/about-us/dara-abaya.webp'},
+    {'title': _('Careful selection'), 'text': _('Cuts and details that respect the shape and comfort of the piece'), 'asset': 'images/about-us/dara-still-life.webp'},
+    {'title': _('Refined details'), 'text': _('Attention to tailoring and a balanced cut in every piece'), 'asset': 'images/about-us/dara-abaya.webp'},
+    {'title': _('For every taste'), 'text': _('Abayas and fashion for every occasion'), 'asset': 'images/about-us/dara-still-life.webp'}
   ] %}
   <section class="coffee-journey-section">
     <div class="theme-container">
-      <h2 class="journey-title">{{ settings.about_page_journey_title or _('Coffee Journey from Source to Your Cup') }}</h2>
+      <h2 class="journey-title">{{ settings.about_page_journey_title or _('The journey of elegance from design to your look') }}</h2>
       <div class="timeline-wrapper">
         <div class="timeline-line"></div>
         <div class="scrolling-bean">
+          {% if settings.about_page_journey_icon %}
+          <img src="{{ image_url(settings.about_page_journey_icon, w=96, f='auto') }}" alt="" class="scrolling-bean__img">
+          {% else %}
           <svg width="33" height="37" viewBox="0 0 33 37" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M8.61943 4.21244C9.22593 4.13121 9.83823 4.12079 10.4457 4.19842L10.4428 4.20453C9.9926 5.18754 9.72931 6.2658 9.54755 7.34729C9.16406 9.74965 9.39738 12.2472 10.0819 14.5562C10.8044 17.0121 12.1241 19.2042 12.7009 21.7186C13.008 23.1373 13.1895 24.6023 13.117 26.0637C13.078 27.3353 12.8437 28.5907 12.5124 29.8056C12.2404 30.7717 11.8437 31.6853 11.4257 32.5821C10.8369 32.687 10.2372 32.6698 9.64488 32.6184C10.601 30.1592 10.953 27.3989 10.5778 24.7457C10.3938 23.3562 10.0164 22.0062 9.5295 20.7126C9.09122 19.5862 8.57979 18.4975 8.15085 17.3664C7.68711 16.2052 7.33842 14.9871 7.13733 13.7345C6.63105 10.5033 7.18341 7.09714 8.60944 4.23401L8.61943 4.21244Z" fill="#4F2614"/>
             <path d="M7.41008 4.52191C7.80131 4.3918 8.19802 4.26133 8.60762 4.23438C7.18191 7.0975 6.62923 10.5034 7.13551 13.7349C7.3366 14.9871 7.68529 16.2052 8.14903 17.3668C8.57797 18.4979 9.08908 19.5866 9.52769 20.713C10.0146 22.0062 10.392 23.3562 10.576 24.746C10.9511 27.3993 10.5992 30.1592 9.64306 32.6187C8.39299 32.452 7.189 31.9344 6.14841 31.148C4.4085 29.8329 3.13039 27.868 2.29443 25.7388C1.2548 23.0413 0.767861 20.0905 0.793964 17.1594C0.789775 15.6581 0.956708 14.1565 1.2851 12.7016C1.68084 11.0335 2.32118 9.4269 3.23384 8.02984C4.27927 6.44228 5.71818 5.13508 7.41008 4.52191Z" fill="#884C2E"/>
@@ -1247,6 +1252,7 @@
             <path d="M28.2399 7.80664C28.7275 8.16031 29.2005 8.54632 29.6072 9.01213C30.2469 9.75828 30.7758 10.622 31.1709 11.5557C31.7294 12.8748 32.0336 14.3157 32.1518 15.7649C32.2904 17.3754 32.1464 18.9982 31.8956 20.5865C31.4864 22.9878 30.7278 25.3355 29.5309 27.3921C28.5979 29.0159 27.372 30.4583 25.8757 31.442C24.9663 32.0484 23.9492 32.4642 22.8957 32.6058C21.9976 32.7187 21.0817 32.6493 20.2109 32.3776C20.327 32.2428 20.4459 32.1116 20.5696 31.9858C21.4007 31.1717 22.1233 30.2214 22.734 29.1939C24.052 26.9701 24.7491 24.309 24.7426 21.6461C24.7658 20.4115 24.6083 19.184 24.6218 17.9502C24.607 16.3209 24.8045 14.6827 25.2567 13.1314C25.8345 11.1158 26.8751 9.27487 28.2399 7.80664Z" fill="#67341F"/>
             <path d="M17.7844 11.3175C18.143 10.7428 18.551 10.2084 18.9925 9.71094C19.1566 9.98086 19.2813 10.2763 19.3896 10.5786C20.1675 12.5813 20.6261 14.7324 20.7995 16.904C20.9403 18.0818 20.881 19.274 20.8794 20.4594C20.7444 22.4818 20.4308 24.5089 19.7637 26.4031C19.3857 27.6305 18.8372 28.7864 18.1901 29.8625C17.9864 30.187 17.7521 30.4861 17.543 30.8059C17.0941 30.3987 16.7051 29.9185 16.3516 29.4096C16.9084 28.6746 17.3567 27.844 17.7425 26.986C18.7837 24.5262 19.2004 21.782 19.1717 19.0745C19.1166 16.4274 18.7025 13.7681 17.7844 11.3175Z" fill="#572B18"/>
           </svg>
+          {% endif %}
         </div>
 
         {% for step in ap_journey %}
@@ -1280,14 +1286,14 @@
   {# Principles Section #}
   {% if ap_on(settings.about_page_show_principles) | trim %}
   {% set ap_principles = settings.about_page_principles if settings.about_page_principles else [
-    {'title': _('Quality First'), 'text': _('We commit to precise standards in selecting and roasting coffee, to ensure a balanced and consistent experience'), 'asset': 'images/about-us/figma-bdbbc05e-1b36-4510-bef0-637a426b6c26.webp'},
-    {'title': _('An Experience That Matters'), 'text': _('We design every detail with care, from product selection to the moment of enjoyment'), 'asset': 'images/about-us/figma-8ce8b929-6242-4b06-9672-81b3f0da878d.webp'},
-    {'title': _('Passion for Coffee'), 'text': _('We work with genuine passion that reflects in every small detail'), 'asset': 'images/about-us/figma-6d154614-974e-4214-8bcc-f6495031cef0.webp'},
-    {'title': _('A Lasting Relationship'), 'text': _('We build long-term trust with our customers and partners through quality and care'), 'asset': 'images/about-us/figma-c7d1bb43-764a-4ab3-a023-00034d7a9c25.webp'}
+    {'title': _('Quality First'), 'text': _('We care about the cut, fabric and details so you can choose the right piece for your look'), 'asset': 'images/about-us/dara-abaya.webp'},
+    {'title': _('An experience we care about'), 'text': _('We design every detail with care, from choosing the piece to the moment you enjoy it'), 'asset': 'images/about-us/dara-abaya.webp'},
+    {'title': _('A passion for elegance'), 'text': _('We work with real passion that shows in every small detail'), 'asset': 'images/about-us/dara-abaya.webp'},
+    {'title': _('A Lasting Relationship'), 'text': _('We build long-term trust with our customers and partners through quality and care'), 'asset': 'images/about-us/dara-still-life.webp'}
   ] %}
   <section class="principles-section">
     <div class="theme-container">
-      <h2 class="section-title">{{ settings.about_page_principles_title or _('Our Principles in Every Cup') }}</h2>
+      <h2 class="section-title">{{ settings.about_page_principles_title or _('Our principles in every piece') }}</h2>
       <div class="principles-carousel-wrapper">
         <div class="principles-carousel" data-principles-carousel>
           {% for card in ap_principles %}
@@ -1311,19 +1317,19 @@
   {# Why Ananas Section #}
   {% if ap_on(settings.about_page_show_why) | trim %}
   {% set ap_why = settings.about_page_why_items if settings.about_page_why_items else [
-    {'text': _('Consistent quality in every cup'), 'asset': 'images/about-us/figma-601ecff7-d00f-4881-ba16-d13f751435eb.svg'},
-    {'text': _('Technology that ensures the best results'), 'asset': 'images/about-us/figma-d088e391-64f0-40bb-a62f-6ccc6a75b620.svg'},
-    {'text': _('Flavors to suit every taste'), 'asset': 'images/about-us/figma-91044b95-765f-446f-9f86-4e752f645f84.svg'},
-    {'text': _('Seamless experience from order to delivery'), 'asset': 'images/about-us/figma-3f6cf1bd-52c1-41ce-ad9e-0459d04dca8d.svg'}
+    {'text': _('Care for every piece'), 'asset': 'images/about-us/dara-why-care.svg'},
+    {'text': _('An easy experience from order to delivery'), 'asset': 'images/about-us/dara-why-delivery.svg'},
+    {'text': _('Looks for every taste'), 'asset': 'images/about-us/dara-why-variety.svg'},
+    {'text': _('Details that respect your comfort'), 'asset': 'images/about-us/dara-why-comfort.svg'}
   ] %}
   {% set ap_why_half = ((ap_why | length) / 2) | round(0, 'ceil') | int %}
-  {# Mobile keeps the original Figma order (3rd item first) when there are exactly 4 items #}
-  {% set ap_why_mobile = [ap_why[2], ap_why[0], ap_why[1], ap_why[3]] if ap_why | length == 4 else ap_why %}
-  {% set ap_cup = ap_img(settings.about_page_why_cup_image, 'images/about-us/figma-342b0340-e6f6-47cf-ae3a-e6ccab774d3b.webp', 1200) | trim %}
-  {% set ap_cup_alt = settings.about_page_why_title or _('Ananas Coffee Cup') %}
+  {# Mobile 2x2 grid keeps the desktop columns side by side (Dara 11322:15350) when there are exactly 4 items #}
+  {% set ap_why_mobile = [ap_why[0], ap_why[2], ap_why[1], ap_why[3]] if ap_why | length == 4 else ap_why %}
+  {% set ap_cup = ap_img(settings.about_page_why_cup_image, 'images/about-us/dara-fabric.webp', 1200) | trim %}
+  {% set ap_cup_alt = settings.about_page_why_title or _('Why Dara?') %}
   <section class="why-ananas-section">
     <div class="theme-container">
-      <h2 class="section-title">{{ settings.about_page_why_title or _('Why Ananas?') }}</h2>
+      <h2 class="section-title">{{ settings.about_page_why_title or _('Why Dara?') }}</h2>
       <div class="why-ananas-desktop">
         <div class="why-side-col">
           {% for item in ap_why[:ap_why_half] %}
@@ -1385,20 +1391,20 @@
       {% else %}
       <div class="partner-card-new">
         <div class="card-img">
-          <img src="{{ 'images/about-us/figma-e109327c-fe1a-474c-9690-b6c8ce5ab075.webp' | asset_url }}" alt="{{ _('Craftsmanship in Every Detail') }}">
+          <img src="{{ 'images/about-us/dara-fabric.webp' | asset_url }}" alt="{{ _('Care in every detail') }}" loading="lazy">
         </div>
         <div class="card-text">
-          <h4>{{ _('Craftsmanship in Every Detail') }}</h4>
-          <p>{{ _('We rely on advanced technology to ensure coffee quality and consistency<br>Behind every cup is precisely calculated craftsmanship<br>✔ Calibrated roasting for every batch<br>✔ Precise flavor measurement<br>✔ Consistent quality regardless of time<br>The result: a balanced cup… every time') | safe }}</p>
+          <h4>{{ _('Care in every detail') }}</h4>
+          <p><strong class="card-text__lead">{{ _('We care about the cut, fabric and details so you can choose the right piece for your look') }}</strong>{{ _('Behind every look are details worth caring about<br>A balanced cut<br>Fabric that suits the occasion<br>Colors that are easy to style<br>The result: a look your way') | safe }}</p>
         </div>
       </div>
       <div class="partner-card-new">
         <div class="card-img">
-          <img src="{{ 'images/about-us/figma-890bac56-7f46-4acc-976e-b9f7c8c0349e.webp' | asset_url }}" alt="{{ _('Your Coffee Partner') }}">
+          <img src="{{ 'images/about-us/dara-fabric.webp' | asset_url }}" alt="{{ _('Your partner in elegance') }}" loading="lazy">
         </div>
         <div class="card-text">
-          <h4>{{ _('Your Coffee Partner') }}</h4>
-          <p>{{ _('If you have a coffee business, we will be your backbone<br>We provide you with specialty crops of high quality and give you the support to offer a stronger experience to your customers without the complexity') | safe }}</p>
+          <h4>{{ _('Your partner in elegance') }}</h4>
+          <p>{{ _('If you have a fashion store, contact us about wholesale orders and collaboration. Supply details and prices are set after we talk.') }}</p>
         </div>
       </div>
       {% endif %}
@@ -1411,9 +1417,10 @@
   <section class="grow-together-section">
     <div class="theme-container">
       <h2>{{ settings.about_page_grow_title or _('We Grow Together') }}</h2>
-      <p>{{ settings.about_page_grow_text_1 or _('Ananas is not just a roastery — it\'s people who love coffee and share the same passion') }}</p>
+      {% set ap_grow_1 = settings.about_page_grow_text_1 or (_('Dara is a world of abayas and Gulf fashion that brings taste and details together.') ~ '\n' ~ _('We discover new looks and choose what feels like us')) %}
+      <p>{{ ap_text(ap_grow_1) }}</p>
       {% if settings.about_page_grow_text_2 or not settings.about_page_grow_text_1 %}
-      <p>{{ settings.about_page_grow_text_2 or _('We discover, experiment, and grow — and with every cup, we get closer') }}</p>
+      <p>{{ settings.about_page_grow_text_2 or _('We discover, style and evolve with every look') }}</p>
       {% endif %}
     </div>
   </section>

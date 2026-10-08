@@ -5,7 +5,9 @@
     "en": "Products"
   },
   "icon": "shopping-bag-line",
-  "meta": { "type": "products" },
+  "meta": {
+    "type": "products"
+  },
   "settings": [
     {
       "id": "layout",
@@ -39,7 +41,7 @@
         "ar": "العنوان",
         "en": "Title"
       },
-      "default": "وش نرشّح لك"
+      "default": "مختارات دارا"
     },
     {
       "id": "subtitle",
@@ -48,7 +50,7 @@
         "ar": "الوصف في موبايل الجريد",
         "en": "Mobile Grid Subtitle"
       },
-      "default": "نكهات متنوعة تناسب ذوقك"
+      "default": ""
     },
     {
       "id": "display_more",
@@ -84,7 +86,7 @@
         "ar": "نص رابط موبايل الجريد",
         "en": "Mobile Grid Link Text"
       },
-      "default": "استكشف نكهتك"
+      "default": "اكتشفي إطلالتك"
     },
     {
       "id": "explore_url",
@@ -225,7 +227,7 @@
           }
         }
       ],
-      "default": "arrows"
+      "default": "buttons"
     },
     {
       "id": "background_color",
@@ -234,7 +236,7 @@
         "ar": "لون الخلفية",
         "en": "Background Color"
       },
-      "default": "#FCFAF7"
+      "default": "#FAF7F2"
     },
     {
       "id": "text_color",
@@ -279,7 +281,7 @@
         "ar": "لون خلفية التبويب",
         "en": "Tab Background Color"
       },
-      "default": "#FCFAF7"
+      "default": "#FAF7F2"
     },
     {
       "id": "active_tab_bg_color",
@@ -306,7 +308,7 @@
         "ar": "لون خلفية شارة المنتج",
         "en": "Product Badge Background Color"
       },
-      "default": "#F7512B"
+      "default": "#6B4A39"
     },
     {
       "id": "badge_text_color",
@@ -324,7 +326,7 @@
         "ar": "لون خلفية زر السلة",
         "en": "Add Button Background Color"
       },
-      "default": "#FCFAF7"
+      "default": "#FAF7F2"
     },
     {
       "id": "button_text_color",

@@ -11,7 +11,7 @@
 
     {% if ns.texts | length > 0 %}
 
-      {% set _bg   = settings.announcement_bar_bar_bg_color   | default('#d3db6f') %}
+      {% set _bg   = settings.announcement_bar_bar_bg_color   | default('#E7DDCC', true) %}
       {% set _text = settings.announcement_bar_bar_text_color  | default('#000000') %}
       {% set _spd  = settings.announcement_bar_marquee_speed   | default(30) %}
       {% set _marquee = settings.announcement_bar_enable_marquee | default(false) %}
@@ -25,15 +25,19 @@
                alt="" aria-hidden="true"
                style="width:{{ _icon_size }}px; height:{{ _icon_size }}px; object-fit:contain; flex-shrink:0;" />
         {% else %}
-          <svg width="{{ _icon_size }}" height="{{ _icon_size }}" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="flex-shrink:0;">
-            <path d="M10 1.5 12.3 7.1H18.2L13.5 10.6 15.8 16.2 10 12.7 4.2 16.2 6.5 10.6 1.8 7.1H7.7Z"/>
+          {# Dara "discount-star" glyph (Figma 11476:25660) #}
+          <svg width="{{ _icon_size }}" height="{{ _icon_size }}" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;">
+            <path d="M8.3 2.4a2.4 2.4 0 0 1 3.4 0l.9.9c.3.3.7.4 1.1.4h1.3a2.4 2.4 0 0 1 2.4 2.4v1.3c0 .4.1.8.4 1.1l.9.9a2.4 2.4 0 0 1 0 3.4l-.9.9c-.3.3-.4.7-.4 1.1v1.3a2.4 2.4 0 0 1-2.4 2.4h-1.3c-.4 0-.8.1-1.1.4l-.9.9a2.4 2.4 0 0 1-3.4 0l-.9-.9a1.6 1.6 0 0 0-1.1-.4H5.4A2.4 2.4 0 0 1 3 14.3v-1.3c0-.4-.1-.8-.4-1.1l-.9-.9a2.4 2.4 0 0 1 0-3.4l.9-.9c.3-.3.4-.7.4-1.1V4.3a2.4 2.4 0 0 1 2.4-2.4h1.3c.4 0 .8-.1 1.1-.4Z"/>
+            <path d="M7.5 12.5l5-5"/>
+            <circle cx="7.75" cy="7.75" r=".6" fill="currentColor"/>
+            <circle cx="12.25" cy="12.25" r=".6" fill="currentColor"/>
           </svg>
         {% endif %}
       {% endset %}
 
       {% if _marquee and ns.texts | length > 0 %}
         {# ── MARQUEE announcement bar (Both Mobile & Desktop) ── #}
-        <div class="ananas-abar" style="background: {{ _bg }}; color: {{ _text }}; box-shadow: 0 0 4px rgba(0,0,0,.25);">
+        <div class="ananas-abar" style="background: {{ _bg }}; color: {{ _text }}; box-shadow: 0 0 2px rgba(0,0,0,.25);">
           <div class="ananas-abar__marquee-wrap">
             {% set _repeats = 10 %}
             <div class="ananas-abar__marquee" style="--abar-spd: {{ _spd * _repeats }}s;">
@@ -43,10 +47,10 @@
                     {% for t in ns.texts %}
                       {% if _url %}
                         <a href="{{ _url }}" class="ananas-abar__marquee-item" style="color:{{ _text }};">
-                          {{ _star }} {{ t }}
+                          <span>{{ t }}</span> {{ _star }}
                         </a>
                       {% else %}
-                        <span class="ananas-abar__marquee-item">{{ _star }} {{ t }}</span>
+                        <span class="ananas-abar__marquee-item"><span>{{ t }}</span> {{ _star }}</span>
                       {% endif %}
                     {% endfor %}
                   {% endfor %}
@@ -58,34 +62,35 @@
       {% else %}
         {# ── CAROUSEL announcement bar (Both Mobile & Desktop) ── #}
         <div class="ananas-abar ananas-abar--carousel"
-             style="background: {{ _bg }}; color: {{ _text }}; box-shadow: 0 0 4px rgba(0,0,0,.25);"
+             style="background: {{ _bg }}; color: {{ _text }}; box-shadow: 0 0 2px rgba(0,0,0,.25);"
              data-abar-texts='[{% for t in ns.texts %}"{{ t | replace('"', '\\"') }}"{% if not loop.last %},{% endif %}{% endfor %}]'
              data-abar-url="{{ _url }}"
+             data-abar-autoplay="{{ 'false' if settings.announcement_bar_autoplay == false else 'true' }}"
         >
           {% if ns.texts | length > 1 %}
             <button class="ananas-abar__arrow" data-abar-prev aria-label="{{ _('Previous') }}">
-              <svg width="12" height="12" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-                <path d="M4 2L7 5L4 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
           {% endif %}
           <div class="ananas-abar__content">
             {% if _url %}
               <a href="{{ _url }}" class="ananas-abar__link" style="color:{{ _text }};">
-                {{ _star }}
                 <span class="ananas-abar__text">{{ ns.texts[0] }}</span>
+                {{ _star }}
               </a>
             {% else %}
               <span class="ananas-abar__link">
-                {{ _star }}
                 <span class="ananas-abar__text">{{ ns.texts[0] }}</span>
+                {{ _star }}
               </span>
             {% endif %}
           </div>
           {% if ns.texts | length > 1 %}
             <button class="ananas-abar__arrow" data-abar-next aria-label="{{ _('Next') }}">
-              <svg width="12" height="12" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-                <path d="M6 2L3 5L6 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
           {% endif %}
@@ -100,10 +105,13 @@
   /* ── Announcement bar ──────────────────────────── */
   .ananas-abar {
     width: 100%;
-    font-size: 14px;
+    font-size: 16px;
+    line-height: 24px;
     font-weight: 500;
     box-sizing: border-box;
-    direction: rtl;
+  }
+  @media (max-width: 767px) {
+    .ananas-abar { font-size: 14px; line-height: 20px; }
   }
 
   /* Carousel bar */
@@ -111,8 +119,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 16px;
+    padding: 10px 16px 8px;
     gap: 16px;
+  }
+  @media (max-width: 767px) {
+    .ananas-abar--carousel { padding: 8px; gap: 8px; }
   }
 
   .ananas-abar__content {
@@ -126,11 +137,13 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 8px;
     text-decoration: none;
     color: inherit;
-    direction: rtl;
     text-align: center;
+  }
+  @media (max-width: 767px) {
+    .ananas-abar__link { gap: 6px; }
   }
   @keyframes abarFadeSlide {
     0% { opacity: 0; transform: translateY(4px); }
@@ -150,15 +163,17 @@
     cursor: pointer;
     color: inherit;
     flex-shrink: 0;
-    opacity: .7;
+    opacity: 1;
     padding: 0;
   }
-  .ananas-abar__arrow:hover { opacity: 1; }
+  .ananas-abar__arrow:hover { opacity: .7; }
+  [dir="ltr"] .ananas-abar__arrow svg { transform: scaleX(-1); }
 
 
 
   /* Marquee */
   .ananas-abar__marquee-wrap {
+    direction: rtl;
     overflow: hidden;
     padding: 10px 0 8px;
   }
@@ -223,7 +238,18 @@
     if (linkEl && url) linkEl.href = url;
   }
 
-  if (prevBtn) prevBtn.addEventListener('click', function () { show(idx - 1); });
-  if (nextBtn) nextBtn.addEventListener('click', function () { show(idx + 1); });
+  var autoTimer = null;
+  function startAuto() {
+    if (bar.getAttribute('data-abar-autoplay') === 'false' || texts.length < 2) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    clearInterval(autoTimer);
+    autoTimer = setInterval(function () { show(idx + 1); }, 5000);
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', function () { show(idx - 1); startAuto(); });
+  if (nextBtn) nextBtn.addEventListener('click', function () { show(idx + 1); startAuto(); });
+  bar.addEventListener('mouseenter', function () { clearInterval(autoTimer); });
+  bar.addEventListener('mouseleave', startAuto);
+  startAuto();
 })();
 </script>

@@ -4,6 +4,11 @@
 
 {% block content %}
   <link rel="stylesheet" type="text/css" href="{{ 'css/cart-page.css' | asset_url }}" />
+  <link rel="stylesheet" type="text/css" href="{{ 'css/dara/cart-page.css' | asset_url }}" />
+  {% set cart_cta_bg = safeget(settings, 'cart_page_checkout_button_color', '#6B4A39') or '#6B4A39' %}
+  {% set cart_cta_text = safeget(settings, 'cart_page_checkout_button_text_color', '#FFFFFF') or '#FFFFFF' %}
+  {% set cart_show_breadcrumb = safeget(settings, 'cart_page_show_breadcrumb', false) %}
+  {% if cart_show_breadcrumb and (cart_show_breadcrumb | string | lower) not in ['false', '0', 'off'] %}
   <section class="pc-breadcrumb-section cart-page-bg cart-page-breadcrumb-section">
     <div class="theme-container">
       {%
@@ -17,14 +22,18 @@
       {% endwith %}
     </div>
   </section>
+  {% endif %}
 
   <section class="cart-page-bg cart-page-main-section">
     <div class="theme-container">
       {% set gift_order_enabled = safeget(store, 'settings.checkout.gift_order_settings.is_gift_order_enabled', false) == '1' %}
       {% if cart.products_count > 0 %}
-        <div class="cart-with-products">
+        <div
+          class="cart-with-products"
+          style="--cart-cta-bg: {{ cart_cta_bg }}; --cart-cta-text: {{ cart_cta_text }};"
+        >
           <div class="cart-page-header">
-            <h1 class="cart-page-header__title">{{ _('Cart') }}</h1>
+            <h1 class="cart-page-header__title">{{ _('Shopping cart') }}</h1>
             <p class="cart-page-header__count">( {{ _('%(count)s products') | format(count=(cart.products_count | default(0))) }} )</p>
           </div>
 
@@ -146,12 +155,12 @@
         translations: {
           forPointsGetDiscount: "{{ _('For %(points)s points get %(discount)s discount') }}",
           itemsCount: "{{ _('%(count)s items') }}",
-          freeShippingApplied: "{{ _('Free shipping applied!') }}",
+          freeShippingApplied: "{{ _('Congrats! Your order qualifies for free shipping') }}",
           addMoreForFreeShipping: "{{ _('Add %(total)s more to get free shipping') }}",
           discount: "{{ _('Discount') }}",
           loyalty: "{{ _('Loyalty') }}",
           options: "{{ _('Options') }}",
-          discountTemplate: "{{ _('%(percent)s discount') }}"
+          discountTemplate: "{{ _('Special offer') }}"
         }
       });
     });

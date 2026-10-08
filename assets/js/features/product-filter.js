@@ -20,6 +20,15 @@ class ProductFilter {
     const content = document.querySelector(this.contentSelector);
     if (!content) return;
     window.addEventListener("popstate", () => this.fetchProducts());
+    // "Load more" link: real next-page link (no-JS fallback), loads in place with JS
+    document.addEventListener("click", (event) => {
+      const more = event.target.closest?.("[data-infinite-more]");
+      if (!more) return;
+      const sentinel = more.closest("[data-infinite-scroll]");
+      if (!sentinel?.dataset.nextUrl) return;
+      event.preventDefault();
+      this.loadNextPage(sentinel);
+    });
     this.applyClientSideAvailability();
     this.initInfiniteScroll();
     this.hydrateCategoryFilters();
@@ -284,7 +293,8 @@ class ProductFilter {
       const nextSentinel = doc.querySelector("[data-infinite-scroll]");
 
       if (!nextGrid) {
-        sentinel.dataset.nextUrl = "";
+        sentinel.removeAttribute("data-next-url");
+        sentinel.querySelector("[data-infinite-more]")?.remove();
         return;
       }
 
@@ -292,11 +302,14 @@ class ProductFilter {
         grid.appendChild(document.importNode(item, true));
       });
 
+      const moreLink = sentinel.querySelector("[data-infinite-more]");
       if (nextSentinel?.dataset.nextUrl) {
         sentinel.dataset.nextUrl = nextSentinel.dataset.nextUrl;
         sentinel.dataset.currentPage = nextSentinel.dataset.currentPage || sentinel.dataset.currentPage;
+        if (moreLink) moreLink.href = nextSentinel.dataset.nextUrl;
       } else {
         sentinel.removeAttribute("data-next-url");
+        if (moreLink) moreLink.remove();
         if (this.infiniteObserver) {
           this.infiniteObserver.disconnect();
           this.infiniteObserver = null;

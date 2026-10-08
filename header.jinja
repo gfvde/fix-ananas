@@ -1,4 +1,4 @@
-{% set s_nav_bg           = settings.style_nav_bg           | default('#000000') %}
+{% set s_nav_bg           = settings.style_nav_bg           | default('#372923E6', true) %}
 {% set s_nav_border       = settings.style_nav_border       | default('#262626') %}
 {% set s_nav_height       = settings.style_nav_height       | default(64) %}
 {% set s_logo_height      = settings.style_logo_height      | default(40) %}
@@ -6,13 +6,13 @@
 {% set s_icon_color       = settings.style_icon_color       | default('#ffffff') %}
 {% set s_icon_color_mobile = settings.style_icon_color_mobile | default(s_icon_color) %}
 {% set s_badge_color      = settings.style_cart_badge_color | default('#25A562') %}
-{% set s_dd_bg            = settings.style_dropdown_bg      | default('#111111') %}
-{% set s_dd_border        = settings.style_dropdown_border  | default('#333333') %}
-{% set s_mega_bg          = settings.style_mega_bg          | default('#000000') %}
+{% set s_dd_bg            = settings.style_dropdown_bg      | default('#372923', true) %}
+{% set s_dd_border        = settings.style_dropdown_border  | default('#525252', true) %}
+{% set s_mega_bg          = settings.style_mega_bg          | default('#372923', true) %}
 {% set s_mega_link        = settings.style_mega_link_color  | default('#ffffff') %}
 {% set s_mega_head        = settings.style_mega_col_head_color | default('#d4d4d4') %}
 {# Search: specific search settings override the style-group fallbacks #}
-{% set s_search_bg        = settings.nav_search_bg_color      | default(settings.style_search_bg)        | default('#000000') %}
+{% set s_search_bg        = settings.nav_search_bg_color      | default(settings.style_search_bg)        | default('#372923', true) %}
 {% set s_search_border    = settings.nav_search_border_color  | default(settings.style_search_border)    | default('#27272a') %}
 {% set s_search_input     = settings.nav_search_text_color    | default(settings.style_search_input_color) | default('#a1a1a1') %}
 {% set s_search_results   = settings.nav_search_results_text_color | default('#ffffff') %}
@@ -163,6 +163,7 @@
   })();
 </script>
 
+<link rel="stylesheet" href="{{ 'css/dara/header-chrome.css' | asset_url }}">
 <div class="sticky top-0 z-50" id="ananas-header" >
 
   {% include 'components/header-announcement-bar.jinja' %}
@@ -266,7 +267,7 @@
             {% endif %}
           {% else %}
             <a href="{{ item.url | localized_url if item.resource_type != 'url' else item.url }}" class="ananas-nav__link">
-              {{ item.label }}
+              <span>{{ item.label }}</span>
             </a>
           {% endif %}
         {% endfor %}
@@ -274,9 +275,9 @@
 
       <div class="ananas-nav__icons">
         {# Cart #}
-        <a href="{{ url_for('cart_page') }}" class="ananas-nav__icon-btn" aria-label="{{ _('Cart') }}" {% if settings.header_enable_side_cart %}onclick="event.preventDefault(); if(window.openSideCart) window.openSideCart();"{% endif %}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+        <a href="{{ url_for('cart_page') }}" class="ananas-nav__icon-btn ananas-nav__icon-btn--sm" aria-label="{{ _('Cart') }}" {% if settings.header_enable_side_cart %}onclick="event.preventDefault(); if(window.openSideCart) window.openSideCart();"{% endif %}>
+          <svg width="20" height="20" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+            <path d="M16.7505 4.24995L0.751039 4.24972L0.75 4.25M16.7505 4.24995L16.75 15.3467C16.75 16.3978 15.8817 17.25 14.8106 17.25H2.68939C1.6183 17.25 0.75 16.3978 0.75 15.3467V4.25M16.7505 4.24995L13.5429 1.04289C13.3554 0.855357 13.101 0.75 12.8358 0.75H4.66421C4.399 0.75 4.14464 0.855357 3.95711 1.04289L0.75 4.25M11.75 7.25C11.75 8.90686 10.4069 10.25 8.75 10.25C7.09315 10.25 5.75 8.90686 5.75 7.25" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           <span data-cart-badge hidden class="ananas-nav__cart-badge">0</span>
         </a>
@@ -307,7 +308,7 @@
         </a>
         {# Search #}
         {% if settings.nav_enable_search != false %}
-          <button class="ananas-nav__icon-btn" id="nav-search-btn" aria-label="{{ _('Search') }}" aria-expanded="false" aria-controls="nav-search-panel">
+          <button class="ananas-nav__icon-btn ananas-nav__icon-btn--sm" id="nav-search-btn" aria-label="{{ _('Search') }}" aria-expanded="false" aria-controls="nav-search-panel">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
@@ -330,14 +331,9 @@
 	          </svg>
           <span data-cart-badge hidden class="ananas-nav__cart-badge">0</span>
         </a>
-        <button id="mobile-login-btn" type="button" onclick="handleLoginAction()" class="ananas-nav__icon-btn" aria-label="{{ _('Login') }}">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-          </svg>
-        </button>
-        <a id="mobile-profile-btn" href="{{ url_for('profile') }}" class="ananas-nav__icon-btn" style="display:none" aria-label="{{ _('Profile') }}">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+        <a href="/account/wishlist" class="ananas-nav__icon-btn" aria-label="{{ _('Wishlist') }}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
           </svg>
         </a>
         {% if show_region %}
@@ -430,7 +426,7 @@
             {% if settings.nav_mega_link %}</a>{% else %}</div>{% endif %}
           {% endif %}
 
-          <div class="ananas-mega__static-cols">
+          <div class="ananas-mega__static-cols"{% if settings.nav_mega_autoslide != false %} data-mega-autoslide{% endif %}>
             {% if settings.nav_mega_standalone_links %}
               <div class="ananas-mega__col ananas-mega__col--solo">
                 {% for link in safeget(settings, "nav_mega_standalone_links", []) if link and link.label %}
@@ -466,7 +462,7 @@
             <div class="ananas-mega__inner">
 
                 {# ── DYNAMIC MODE: columns built from menu tree ──────────── #}
-                <div class="ananas-mega__cols">
+                <div class="ananas-mega__cols"{% if settings.nav_mega_autoslide != false %} data-mega-autoslide{% endif %}>
 
                   {# Standalone level-2 links (no grandchildren) — no header, offset down #}
                   {% set standalone = [] %}
@@ -1646,6 +1642,76 @@
       }
     });
   });
+
+  /* ── Mega menu column labels slider (Figma note 11522:35560) ──
+     When the columns overflow, slowly "push" them one column at a time,
+     pause, then rewind. Manual swipe / wheel pauses the auto movement. */
+  (function () {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var sliders = document.querySelectorAll('[data-mega-autoslide]');
+    if (!sliders.length) return;
+
+    sliders.forEach(function (el) {
+      var timer = null;
+      var paused = false;
+      var resumeTimer = null;
+
+      function isRtl() { return getComputedStyle(el).direction === 'rtl'; }
+      function maxScroll() { return el.scrollWidth - el.clientWidth; }
+      function pos() { return Math.abs(el.scrollLeft); }
+
+      function updateState() {
+        var overflow = maxScroll() > 4;
+        el.classList.toggle('is-overflowing', overflow);
+        el.classList.toggle('is-at-end', overflow && pos() >= maxScroll() - 2);
+        return overflow;
+      }
+
+      function stepSize() {
+        var col = el.querySelector('.ananas-mega__col');
+        var gap = parseFloat(getComputedStyle(el).columnGap) || 0;
+        return col ? col.offsetWidth + gap : 200;
+      }
+
+      function push() {
+        if (paused || !updateState()) return;
+        var sign = isRtl() ? -1 : 1;
+        if (pos() >= maxScroll() - 2) {
+          el.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          el.scrollBy({ left: sign * stepSize(), behavior: 'smooth' });
+        }
+      }
+
+      function start() {
+        stop();
+        el.scrollLeft = 0;
+        if (!updateState() || reduce) return;
+        timer = setInterval(push, 2600);
+      }
+      function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+      function pauseFor(ms) {
+        paused = true;
+        clearTimeout(resumeTimer);
+        resumeTimer = setTimeout(function () { paused = false; }, ms);
+      }
+
+      el.addEventListener('mouseenter', function () { paused = true; });
+      el.addEventListener('mouseleave', function () { paused = false; });
+      el.addEventListener('touchstart', function () { pauseFor(5000); }, { passive: true });
+      el.addEventListener('wheel', function () { pauseFor(5000); }, { passive: true });
+      el.addEventListener('scroll', updateState, { passive: true });
+
+      var panel = el.closest('[data-mega-panel]');
+      if (panel && window.MutationObserver) {
+        new MutationObserver(function () {
+          if (panel.classList.contains('is-open')) start(); else stop();
+        }).observe(panel, { attributes: true, attributeFilter: ['class'] });
+      }
+      window.addEventListener('resize', updateState);
+    });
+  })();
 
   /* ── Simple sub-dropdown triggers: open on hover, navigate on click ── */
   subTriggers.forEach(function (btn) {

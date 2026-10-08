@@ -67,8 +67,8 @@
             {
               "value": "start",
               "label": {
-                "ar": "في البداية",
-                "en": "Start"
+                "ar": "يمين (بداية السطر)",
+                "en": "Start (right in Arabic)"
               }
             }
           ],
@@ -87,8 +87,8 @@
           "id": "tags_infinite_loop",
           "type": "checkbox",
           "label": {
-            "ar": "تحريك الوسوم في حلقة لانهائية",
-            "en": "Animate tags in infinite loop"
+            "ar": "تحريك الوسوم تلقائياً في حلقة لانهائية (مع السحب اليدوي)",
+            "en": "Auto-slide tags in an infinite loop (manual swipe stays on)"
           },
           "default": true
         },
@@ -96,8 +96,8 @@
           "id": "show_color_options",
           "type": "checkbox",
           "label": {
-            "ar": "إظهار خيارات الألوان",
-            "en": "Show color options"
+            "ar": "إظهار ألوان المنتج (دوائر الألوان)",
+            "en": "Show color variants (swatches)"
           },
           "default": true
         },
@@ -114,8 +114,8 @@
           "id": "show_stock_info",
           "type": "checkbox",
           "label": {
-            "ar": "إظهار معلومات المخزون (التوفر والمبيعات)",
-            "en": "Show stock info (availability & sold)"
+            "ar": "إظهار مؤشر المبيعات (المباع هذا الشهر / القطع المتبقية)",
+            "en": "Show sales indicator (sold this month / pieces left)"
           },
           "default": true
         },
@@ -130,19 +130,78 @@
             {
               "value": "button",
               "label": {
-                "ar": "زرار",
-                "en": "Button"
+                "ar": "زر أسفل النص",
+                "en": "Button below the text"
               }
             },
             {
               "value": "icon",
               "label": {
-                "ar": "أيقونة",
-                "en": "Icon"
+                "ar": "أيقونة على الصورة",
+                "en": "Icon on the image"
               }
             }
           ],
           "default": "button"
+        },
+        {
+          "id": "desktop_cta_style",
+          "type": "select",
+          "label": {
+            "ar": "زر الإضافة للسلة على سطح المكتب",
+            "en": "Desktop add to cart button"
+          },
+          "options": [
+            {
+              "value": "hover",
+              "label": {
+                "ar": "يظهر عند التمرير (ينزلق للأعلى)",
+                "en": "Slides up on hover"
+              }
+            },
+            {
+              "value": "always",
+              "label": {
+                "ar": "ظاهر دائماً على الصورة",
+                "en": "Always visible on the image"
+              }
+            },
+            {
+              "value": "none",
+              "label": {
+                "ar": "مخفي",
+                "en": "Hidden"
+              }
+            }
+          ],
+          "default": "hover"
+        },
+        {
+          "id": "show_wishlist_button",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار زر المفضلة على الصورة",
+            "en": "Show wishlist button on the image"
+          },
+          "default": true
+        },
+        {
+          "id": "show_quick_view_button",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار زر العرض السريع على الصورة",
+            "en": "Show quick view button on the image"
+          },
+          "default": true
+        },
+        {
+          "id": "show_badges",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار الشارات على الصورة (الأكثر مبيعاً، جديد...)",
+            "en": "Show badges on the image (best seller, new...)"
+          },
+          "default": true
         },
         {
           "id": "columns_desktop",
@@ -280,7 +339,7 @@
             "ar": "تفعيل جزء صفحة التصنيفات",
             "en": "Enable Category Page Section"
           },
-          "default": false
+          "default": true
         },
         {
           "id": "filter_layout",
@@ -303,9 +362,50 @@
                 "ar": "شريط علوي مع قائمة منبثقة",
                 "en": "Top bar with filters drawer"
               }
+            },
+            {
+              "value": "topbar",
+              "label": {
+                "ar": "شريط علوي مع فلاتر قابلة للطي",
+                "en": "Top bar with collapsible filter chips"
+              }
             }
           ],
           "default": "sidebar"
+        },
+        {
+          "id": "filters_open",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار الفلاتر مفتوحة عند فتح الصفحة",
+            "en": "Show filters open when the page loads"
+          },
+          "default": true
+        },
+        {
+          "id": "products_loading",
+          "type": "select",
+          "label": {
+            "ar": "طريقة تحميل المنتجات",
+            "en": "Products loading"
+          },
+          "options": [
+            {
+              "value": "infinite",
+              "label": {
+                "ar": "تمرير لا نهائي",
+                "en": "Infinite scrolling"
+              }
+            },
+            {
+              "value": "pagination",
+              "label": {
+                "ar": "ترقيم الصفحات",
+                "en": "Pagination"
+              }
+            }
+          ],
+          "default": "infinite"
         },
         {
           "id": "category_page_background_color",
@@ -314,7 +414,7 @@
             "ar": "لون الخلفية",
             "en": "Background Color"
           },
-          "default": "#FEECE8"
+          "default": "#EAE4DD"
         },
         {
           "id": "category_page_title_color",
@@ -323,7 +423,7 @@
             "ar": "لون العنوان",
             "en": "Title Color"
           },
-          "default": "#F7512B"
+          "default": "#6B4A39"
         },
         {
           "id": "category_page_subtitle_color",
@@ -368,7 +468,7 @@
             "ar": "لون التصنيف النشط",
             "en": "Active Subcategory Color"
           },
-          "default": "#F7512B"
+          "default": "#6B4A39"
         },
         {
           "id": "category_page_card_hover_color",
@@ -377,7 +477,7 @@
             "ar": "لون التصنيف عند التحويم",
             "en": "Subcategory Hover Color"
           },
-          "default": "#F7512B"
+          "default": "#6B4A39"
         }
       ]
     },
@@ -432,7 +532,16 @@
             "ar": "لون زر إكمال الطلب",
             "en": "Checkout Button Color"
           },
-          "default": "#F7512B"
+          "default": "#6B4A39"
+        },
+        {
+          "id": "show_breadcrumb",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار مسار التنقل أعلى صفحة السلة",
+            "en": "Show breadcrumb on the cart page"
+          },
+          "default": false
         },
         {
           "id": "checkout_button_text_color",
@@ -1708,6 +1817,14 @@
           "label": {
             "ar": "عنوان قسم الرحلة",
             "en": "Journey title"
+          }
+        },
+        {
+          "id": "journey_icon",
+          "type": "image",
+          "label": {
+            "ar": "أيقونة متحركة على خط الرحلة (تفصيلة القماش)",
+            "en": "Moving icon on the journey line (fabric detail)"
           }
         },
         {
