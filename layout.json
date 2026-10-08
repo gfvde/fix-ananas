@@ -1,26 +1,26 @@
 {
   "ar": {
-    "font_family": "IBM+Plex+Sans+Arabic",
+    "font_family": "Cairo",
     "theme_primary": "#0B0A09",
     "theme_primary_foreground": "#FFFFFF",
-    "theme_secondary": "#F6F5F4",
-    "theme_accent": "#A89C90",
-    "theme_background": "#FFFFFF",
+    "theme_secondary": "#F5F5F5",
+    "theme_accent": "#6B4A39",
+    "theme_background": "#FAF7F2",
     "theme_foreground": "#0B0A09",
     "theme_muted": "#545352",
-    "theme_border": "#B5B5B5",
-    "theme_radius": 4
+    "theme_border": "#E5E5E5",
+    "theme_radius": 0
   },
   "en": {
-    "font_family": "Roboto",
+    "font_family": "Cairo",
     "theme_primary": "#0B0A09",
     "theme_primary_foreground": "#FFFFFF",
-    "theme_secondary": "#F6F5F4",
-    "theme_accent": "#A89C90",
-    "theme_background": "#FFFFFF",
+    "theme_secondary": "#F5F5F5",
+    "theme_accent": "#6B4A39",
+    "theme_background": "#FAF7F2",
     "theme_foreground": "#0B0A09",
     "theme_muted": "#545352",
-    "theme_border": "#B5B5B5",
-    "theme_radius": 4
+    "theme_border": "#E5E5E5",
+    "theme_radius": 0
   }
 }
