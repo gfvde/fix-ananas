@@ -413,6 +413,10 @@
     data-pc-stock="{{ 'true' if settings.product_card_show_stock_info != false else 'false' }}"
     data-pc-aspect="{{ settings.product_card_image_aspect_ratio | default('adapt') }}"
     data-pc-mobile-cta="{{ settings.product_card_mobile_add_to_cart_style | default('button') }}"
+    data-pc-desktop-cta="{{ settings.product_card_desktop_cta_style | default('hover') }}"
+    data-pc-wishlist="{{ 'false' if settings.product_card_show_wishlist_button == false else 'true' }}"
+    data-pc-quick-view="{{ 'false' if settings.product_card_show_quick_view_button == false else 'true' }}"
+    data-pc-badges="{{ 'false' if settings.product_card_show_badges == false else 'true' }}"
     data-show-breadcrumb="{{ 'true' if settings.general_show_breadcrumb != false else 'false' }}"
     class="min-h-dvh font-sans antialiased"
   >

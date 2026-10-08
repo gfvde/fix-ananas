@@ -4,20 +4,10 @@
 {% set feature_subtitle_color = safeget(cart_settings, 'cart_page_feature_subtitle_color', safeget(cart_settings, 'cart_page_cart_page_feature_subtitle_color', '#52525C')) %}
 {% set loyalty_bg = safeget(cart_settings, 'cart_page_loyalty_background_color', safeget(cart_settings, 'cart_page_cart_page_loyalty_background_color', '#F5F5F5')) %}
 {% set loyalty_text = safeget(cart_settings, 'cart_page_loyalty_text_color', safeget(cart_settings, 'cart_page_cart_page_loyalty_text_color', '#0D0702')) %}
-{% set cta_bg = safeget(cart_settings, 'cart_page_checkout_button_color', safeget(cart_settings, 'cart_page_cart_page_checkout_button_color', '#F7512B')) %}
+{% set cta_bg = safeget(cart_settings, 'cart_page_checkout_button_color', safeget(cart_settings, 'cart_page_cart_page_checkout_button_color', '#6B4A39')) %}
 {% set cta_text = safeget(cart_settings, 'cart_page_checkout_button_text_color', safeget(cart_settings, 'cart_page_cart_page_checkout_button_text_color', '#FFFFFF')) %}
 {% set features = safeget(cart_settings, 'cart_page_features', safeget(cart_settings, 'cart_page_cart_page_features', [])) %}
 {% set payment_methods = safeget(cart_settings, 'cart_page_payment_methods', safeget(cart_settings, 'cart_page_cart_page_payment_methods', [])) %}
-
-{% if not features or features | length == 0 %}
-  {%
-    set features = [
-      {'title': _('Fast delivery'), 'subtitle': _('You can drink it before your mood gets cold')},
-      {'title': _('Secure payment'), 'subtitle': _('Flexible and secure payment options for a worry-free experience')},
-      {'title': _('Guaranteed quality'), 'subtitle': _('Carefully selected crops that match your mood')}
-    ]
-  %}
-{% endif %}
 
 {% set has_free_shipping_rule = cart.free_shipping_rule and cart.free_shipping_rule.code %}
 {% set subtotal_condition = cart.free_shipping_rule.subtotal_condition if has_free_shipping_rule else none %}
@@ -53,45 +43,19 @@
       data-free-shipping-percentage="{{ free_shipping_width }}"
     >
       <div class="cart-free-shipping__message-row">
-        <svg
+        <img
           class="cart-free-shipping__truck"
+          src="{{ 'images/dara/cart-free-delivery.svg' | asset_url }}"
           width="30"
           height="32"
-          viewBox="0 0 24 24"
-          fill="none"
-          aria-hidden="true"
-        >
-          <path
-            d="M3 7H14V17H3V7Z"
-            stroke="currentColor"
-            stroke-width="1.5"
-          />
-          <path
-            d="M14 11H18L21 14V17H14V11Z"
-            stroke="currentColor"
-            stroke-width="1.5"
-          />
-          <circle
-            cx="7"
-            cy="18"
-            r="1.5"
-            stroke="currentColor"
-            stroke-width="1.5"
-          />
-          <circle
-            cx="17"
-            cy="18"
-            r="1.5"
-            stroke="currentColor"
-            stroke-width="1.5"
-          />
-        </svg>
+          alt=""
+        />
         <span
           class="cart-free-shipping__message"
           data-free-shipping-message
         >
           {% if free_shipping_status == 'applied' %}
-            {{ _('Free shipping applied!') }}
+            {{ _('Congrats! Your order qualifies for free shipping') }}
           {% else %}
             {% set riyal_svg %}<svg class="riyal-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1124.14 1256.39" width="12" height="14" style="display:inline-block;vertical-align:-0.1em"><path fill="currentColor" d="M699.62,1113.02h0c-20.06,44.48-33.32,92.75-38.4,143.37l424.51-90.24c20.06-44.47,33.31-92.75,38.4-143.37l-424.51,90.24Z"/><path fill="currentColor" d="M1085.73,895.8c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.33v-135.2l292.27-62.11c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.27V66.13c-50.67,28.45-95.67,66.32-132.25,110.99v403.35l-132.25,28.11V0c-50.67,28.44-95.67,66.32-132.25,110.99v525.69l-295.91,62.88c-20.06,44.47-33.33,92.75-38.42,143.37l334.33-71.05v170.26l-358.3,76.14c-20.06,44.47-33.32,92.75-38.4,143.37l375.04-79.7c30.53-6.35,56.77-24.4,73.83-49.24l68.78-101.97v-.02c7.14-10.55,11.3-23.27,11.3-36.97v-149.98l132.25-28.11v270.4l424.53-90.28Z"/></svg>{% endset %}
             {{ (_('Add purchases worth %(amount)s to get free shipping') | format(amount=(free_shipping_remaining | e) ~ ((' ' ~ riyal_svg) if free_shipping_is_sar else ''))) | safe }}
@@ -190,88 +154,8 @@
         </div>
       {% endif %}
 
-      <div class="cart-features">
-        {% for feature in features[:3] %}
-          <div class="cart-feature">
-            <div class="cart-feature__image">
-              {% if feature.image %}
-                <img
-                  src="{{ image_url(feature.image, w=140, h=120, f='auto') }}"
-                  alt=""
-                />
-              {% else %}
-                <svg
-                  viewBox="0 0 64 56"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <rect
-                    x="8"
-                    y="18"
-                    width="34"
-                    height="22"
-                    rx="4"
-                    stroke="#1583C7"
-                    stroke-width="2"
-                  />
-                  <path
-                    d="M42 26H52L58 33V40H42V26Z"
-                    stroke="#F7941D"
-                    stroke-width="2"
-                  />
-                  <circle
-                    cx="20"
-                    cy="43"
-                    r="4"
-                    fill="#F7941D"
-                  />
-                  <circle
-                    cx="49"
-                    cy="43"
-                    r="4"
-                    fill="#1583C7"
-                  />
-                </svg>
-              {% endif %}
-            </div>
-            <h3>{{ feature.title | default(_('Fast delivery')) }}</h3>
-            <p>{{ feature.subtitle | default(_('You can drink it before your mood gets cold')) }}</p>
-          </div>
-        {% endfor %}
-      </div>
-
-      <div
-        class="cart-payments"
-        aria-label="{{ _('Payment methods') }}"
-      >
-        <div class="cart-payments__track">
-          {% for repeat in [1, 2] %}
-            <div
-              class="cart-payments__group"
-              {% if repeat == 2 %}aria-hidden="true"{% endif %}
-            >
-              {% if payment_methods and payment_methods | length > 0 %}
-                {% for method in payment_methods %}
-                  <span class="cart-payment">
-                    {% if method.image %}
-                      <img
-                        src="{{ image_url(method.image, w=120, h=56, f='auto') }}"
-                        alt="{{ method.title | default('') }}"
-                      />
-                    {% else %}
-                      {{ method.title | default(_('Pay')) }}
-                    {% endif %}
-                  </span>
-                {% endfor %}
-              {% else %}
-                {% for label in ['tabby', _('Tamara'), 'VISA', 'mada', 'MasterCard', 'valu', 'Apple Pay'] %}
-                  <span class="cart-payment cart-payment--text">{{ label }}</span>
-                {% endfor %}
-              {% endif %}
-            </div>
-          {% endfor %}
-        </div>
-      </div>
+      {% include 'components/cart/cart-uvps.jinja' %}
+      {% include 'components/cart/cart-payments.jinja' %}
     </div>
 
     {# Platform payment features (bank discounts above payment widgets, Apple Pay once per page) #}

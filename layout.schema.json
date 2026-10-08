@@ -67,8 +67,8 @@
             {
               "value": "start",
               "label": {
-                "ar": "في البداية",
-                "en": "Start"
+                "ar": "يمين (بداية السطر)",
+                "en": "Start (right in Arabic)"
               }
             }
           ],
@@ -87,8 +87,8 @@
           "id": "tags_infinite_loop",
           "type": "checkbox",
           "label": {
-            "ar": "تحريك الوسوم في حلقة لانهائية",
-            "en": "Animate tags in infinite loop"
+            "ar": "تحريك الوسوم تلقائياً في حلقة لانهائية (مع السحب اليدوي)",
+            "en": "Auto-slide tags in an infinite loop (manual swipe stays on)"
           },
           "default": true
         },
@@ -96,8 +96,8 @@
           "id": "show_color_options",
           "type": "checkbox",
           "label": {
-            "ar": "إظهار خيارات الألوان",
-            "en": "Show color options"
+            "ar": "إظهار ألوان المنتج (دوائر الألوان)",
+            "en": "Show color variants (swatches)"
           },
           "default": true
         },
@@ -114,8 +114,8 @@
           "id": "show_stock_info",
           "type": "checkbox",
           "label": {
-            "ar": "إظهار معلومات المخزون (التوفر والمبيعات)",
-            "en": "Show stock info (availability & sold)"
+            "ar": "إظهار مؤشر المبيعات (المباع هذا الشهر / القطع المتبقية)",
+            "en": "Show sales indicator (sold this month / pieces left)"
           },
           "default": true
         },
@@ -130,19 +130,78 @@
             {
               "value": "button",
               "label": {
-                "ar": "زرار",
-                "en": "Button"
+                "ar": "زر أسفل النص",
+                "en": "Button below the text"
               }
             },
             {
               "value": "icon",
               "label": {
-                "ar": "أيقونة",
-                "en": "Icon"
+                "ar": "أيقونة على الصورة",
+                "en": "Icon on the image"
               }
             }
           ],
           "default": "button"
+        },
+        {
+          "id": "desktop_cta_style",
+          "type": "select",
+          "label": {
+            "ar": "زر الإضافة للسلة على سطح المكتب",
+            "en": "Desktop add to cart button"
+          },
+          "options": [
+            {
+              "value": "hover",
+              "label": {
+                "ar": "يظهر عند التمرير (ينزلق للأعلى)",
+                "en": "Slides up on hover"
+              }
+            },
+            {
+              "value": "always",
+              "label": {
+                "ar": "ظاهر دائماً على الصورة",
+                "en": "Always visible on the image"
+              }
+            },
+            {
+              "value": "none",
+              "label": {
+                "ar": "مخفي",
+                "en": "Hidden"
+              }
+            }
+          ],
+          "default": "hover"
+        },
+        {
+          "id": "show_wishlist_button",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار زر المفضلة على الصورة",
+            "en": "Show wishlist button on the image"
+          },
+          "default": true
+        },
+        {
+          "id": "show_quick_view_button",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار زر العرض السريع على الصورة",
+            "en": "Show quick view button on the image"
+          },
+          "default": true
+        },
+        {
+          "id": "show_badges",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار الشارات على الصورة (الأكثر مبيعاً، جديد...)",
+            "en": "Show badges on the image (best seller, new...)"
+          },
+          "default": true
         },
         {
           "id": "columns_desktop",

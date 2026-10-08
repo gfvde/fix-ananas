@@ -247,13 +247,12 @@
             </div>
 
             <div class="ananas-cart-item__price-row">
-              <span class="ananas-cart-item__price{{ ' is-sale' if compare_price else '' }}" data-cart-item-price>{{ format_price(current_price) }}</span>
+              {# DOM order discount → compare → price: the row is laid out so the price sits at the start edge #}
               {% if compare_price %}
+                <span class="ananas-cart-item__discount" data-cart-item-discount>{{ _('Special offer') }}</span>
                 <span class="ananas-cart-item__compare" data-cart-item-compare>{{ format_price(compare_price) }}</span>
               {% endif %}
-              {% if discount_percent %}
-                <span class="ananas-cart-item__discount" data-cart-item-discount>{{ _('%(percent)s discount') | format(percent=(discount_percent ~ '%')) }}</span>
-              {% endif %}
+              <span class="ananas-cart-item__price{{ ' is-sale' if compare_price else '' }}" data-cart-item-price>{{ format_price(current_price) }}</span>
             </div>
 
             {% for rule in offer_rules %}

@@ -22,7 +22,6 @@
 
 /* Summary/trigger — matches disclosure.jinja label */
 .product-filter__summary {
-  flex-direction: row-reverse;
   display: flex;
   width: 100%;
   align-items: center;
