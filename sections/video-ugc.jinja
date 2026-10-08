@@ -1,7 +1,7 @@
 {% set is_lazy = (settings.order | default(3) | int) > 2 %}
-{% set title_color = settings.title_color | default('#000000') %}
-{% set subtitle_color = settings.subtitle_color | default('#000000') %}
-{% set border_radius = settings.border_radius | default(12) %}
+{% set title_color = settings.title_color | default('#000000', true) %}
+{% set subtitle_color = settings.subtitle_color | default('#000000', true) %}
+{% set border_radius = settings.border_radius | default(8) %}
 {% set videos_list = safeget(settings, "videos", []) %}
 
 {% if not videos_list or videos_list | length == 0 %}
@@ -15,16 +15,17 @@
 {% endif %}
 
 <link rel="stylesheet" href="{{ 'css/sections/video-ugc.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'css/dara/home-video-ugc.css' | asset_url }}">
 <section section-id="{{ sectionId }}" data-section="video-ugc"
-  data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}" class="section-video-ugc" style="background-color: {{ settings.background_color | default('#ffffff') }};" >
+  data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}" class="section-video-ugc" style="background-color: {{ settings.background_color | default('#FAF7F2', true) }};" >
 
   {# Header #}
   <div class="video-ugc__header">
     <h2 class="video-ugc__title" style="color: {{ title_color }};">
-      {{ settings.title | default(_('Ananas in every shot')) }}
+      {{ settings.title | default(_('Dara… in every look'), true) }}
     </h2>
     <p class="video-ugc__subtitle" style="color: {{ subtitle_color }};">
-      {{ settings.subtitle | default(_('Coffee details as they are, from its look to its grind to the first sip')) }}
+      {{ settings.subtitle | default(_('The details of cuts and fabrics, from tailoring to the look'), true) }}
     </p>
   </div>
 
@@ -38,15 +39,14 @@
           <div class="video-ugc__thumb">
             {% if vid.thumbnail %}
               <img src="{{ image_url(vid.thumbnail, w=320, f='auto') }}" alt="" class="video-ugc__thumb-img" width="320" height="569" {% if is_lazy %}loading="lazy" {% endif %}decoding="async" />
+            {% elif not vid.video %}
+              <img src="{{ ('images/dara/home-ugc-' ~ (i % 4 + 1) ~ '.webp') | asset_url }}" alt="" class="video-ugc__thumb-img" width="400" height="676" loading="lazy" decoding="async" />
             {% else %}
               <div class="video-ugc__thumb-placeholder"></div>
             {% endif %}
             {% if vid.video %}
               <button class="video-ugc__play-btn" aria-label="{{ _('Play video') }}">
-                <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" width="56" height="56">
-                  <circle cx="28" cy="28" r="28" fill="rgba(0,0,0,0.45)"/>
-                  <path d="M23 18L38 28L23 38V18Z" fill="white"/>
-                </svg>
+                <span class="video-ugc__play-icon"><svg viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" width="17" height="17" aria-hidden="true"><path d="M1.97 1.13V16.04L14.63 8.59L1.97 1.13Z" fill="white"/></svg></span>
               </button>
             {% endif %}
           </div>
@@ -68,15 +68,14 @@
               <div class="video-ugc__thumb">
                 {% if vid.thumbnail %}
                   <img src="{{ image_url(vid.thumbnail, w=200, f='auto') }}" alt="" class="video-ugc__thumb-img" width="200" height="356" {% if is_lazy %}loading="lazy" {% endif %}decoding="async" />
+                {% elif not vid.video %}
+                  <img src="{{ ('images/dara/home-ugc-' ~ (i % 4 + 1) ~ '.webp') | asset_url }}" alt="" class="video-ugc__thumb-img" width="400" height="676" loading="lazy" decoding="async" />
                 {% else %}
                   <div class="video-ugc__thumb-placeholder"></div>
                 {% endif %}
                 {% if vid.video %}
                   <button class="video-ugc__play-btn" aria-label="{{ _('Play video') }}">
-                    <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
-                      <circle cx="28" cy="28" r="28" fill="rgba(0,0,0,0.45)"/>
-                      <path d="M23 18L38 28L23 38V18Z" fill="white"/>
-                    </svg>
+                    <span class="video-ugc__play-icon"><svg viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" width="17" height="17" aria-hidden="true"><path d="M1.97 1.13V16.04L14.63 8.59L1.97 1.13Z" fill="white"/></svg></span>
                   </button>
                 {% endif %}
               </div>

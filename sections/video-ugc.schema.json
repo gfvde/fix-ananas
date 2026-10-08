@@ -5,7 +5,9 @@
     "en": "Video UGC Gallery"
   },
   "icon": "video-line",
-  "meta": { "type": "video" },
+  "meta": {
+    "type": "video"
+  },
   "settings": [
     {
       "id": "title",
@@ -14,7 +16,7 @@
         "ar": "العنوان",
         "en": "Title"
       },
-      "default": "أناناس… في كل لقطة"
+      "default": "دارا… في كل إطلالة"
     },
     {
       "id": "subtitle",
@@ -23,7 +25,7 @@
         "ar": "العنوان الفرعي",
         "en": "Subtitle"
       },
-      "default": "تفاصيل القهوة كما هي من شكلها، لطحنها، إلى أول رشفة"
+      "default": "تفاصيل القصات والأقمشة، من الخياطة إلى الإطلالة"
     },
     {
       "id": "title_color",
@@ -53,7 +55,7 @@
       "min": 0,
       "max": 32,
       "step": 2,
-      "default": 12,
+      "default": 8,
       "unit": "px"
     },
     {
@@ -91,7 +93,7 @@
         "ar": "لون الخلفية",
         "en": "Background Color"
       },
-      "default": "#ffffff"
+      "default": "#FAF7F2"
     },
     {
       "id": "remove_bottom_margin",

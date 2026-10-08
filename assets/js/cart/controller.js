@@ -210,9 +210,25 @@ function setupEventDelegation() {
   });
 
   document.addEventListener("change", (e) => {
+    const attrSelect = e.target.closest("[data-cart-variant-attr-select]");
+    if (attrSelect) {
+      handleCartVariantAttributeChange(
+        attrSelect.closest("[data-cart-variant-picker]"),
+        attrSelect.dataset.cartVariantAttrSelect,
+        attrSelect.value
+      );
+      return;
+    }
     const select = e.target.closest("[data-cart-variant-select]");
     if (!select) return;
     handleCartVariantChange(select);
+  });
+
+  document.addEventListener("click", (e) => {
+    const swatch = e.target.closest("[data-cart-variant-attr]");
+    if (!swatch || swatch.classList.contains("is-active")) return;
+    e.preventDefault();
+    handleCartVariantAttributeChange(swatch.closest("[data-cart-variant-picker]"), swatch.dataset.cartVariantAttr, swatch.dataset.value);
   });
 }
 
@@ -616,6 +632,10 @@ function renderVariantSelector(item, products = []) {
   const selectedVariant = matchProductVariant(item, item.product);
   const selectedId = getVariantId(selectedVariant) || normalizeId(item?.product_id || item?.selected_product_id || item?.variant_id);
 
+  // Dara: one control per attribute (color swatches + selects) when every variant names its attributes
+  const attributePicker = renderVariantAttributePicker(item, uniqueVariants, selectedVariant, selectedId);
+  if (attributePicker) return attributePicker;
+
   return `<div class="ananas-cart-item__option ananas-cart-item__option--variant">
     <select class="ananas-cart-item__variant-select" data-cart-variant-select data-current-variant-id="${escapeHtml(selectedId)}">
       ${uniqueVariants
@@ -628,6 +648,121 @@ function renderVariantSelector(item, products = []) {
     </select>
     <span class="ananas-cart-item__option-label">:${escapeHtml(config.translations.options || "Options")}</span>
   </div>`;
+}
+
+function getVariantAttributes(variant) {
+  return asOptionArray(variant?.attributes || variant?.options || variant?.option_values)
+    .map((option) => ({
+      name: String(pickOptionLabel(option) || "").trim(),
+      value: String(pickOptionValue(option) || "").trim()
+    }))
+    .filter((attr) => attr.name && attr.value);
+}
+
+function isColorAttribute(name) {
+  const normalized = String(name || "").toLowerCase();
+  return normalized.includes("color") || normalized.includes("colour") || normalized.includes("لون");
+}
+
+function renderVariantAttributePicker(item, variants, selectedVariant, selectedId) {
+  const variantAttrs = variants.map((variant) => ({ id: getVariantId(variant), attrs: getVariantAttributes(variant) }));
+  if (variantAttrs.some((entry) => !entry.attrs.length)) return "";
+
+  // attribute name -> ordered unique values
+  const groups = new Map();
+  variantAttrs.forEach(({ attrs }) => {
+    attrs.forEach(({ name, value }) => {
+      if (!groups.has(name)) groups.set(name, []);
+      const values = groups.get(name);
+      if (!values.includes(value)) values.push(value);
+    });
+  });
+  if (!groups.size) return "";
+
+  const selectedAttrs = selectedVariant
+    ? getVariantAttributes(selectedVariant)
+    : getCartItemOptions(item).map((option) => ({ name: option.label, value: option.value }));
+  const selectedValue = (name) => selectedAttrs.find((attr) => attr.name === name)?.value || "";
+
+  const hiddenSelect = `<select class="hidden" hidden aria-hidden="true" tabindex="-1" data-cart-variant-select data-current-variant-id="${escapeHtml(selectedId)}">
+      ${variantAttrs
+        .map(
+          ({ id, attrs }) =>
+            `<option value="${escapeHtml(id)}" data-attrs="${escapeHtml(JSON.stringify(attrs))}"${id === selectedId ? " selected" : ""}></option>`
+        )
+        .join("")}
+    </select>`;
+
+  // Non-color groups first: the item row is laid out so the last group sits at the start edge (Figma: color first)
+  const names = [...groups.keys()].sort((a, b) => Number(isColorAttribute(a)) - Number(isColorAttribute(b)));
+
+  const groupsMarkup = names
+    .map((name) => {
+      const values = groups.get(name);
+      const current = selectedValue(name);
+      const label = `<span class="ananas-cart-item__option-label">${escapeHtml(name)}:</span>`;
+      if (isColorAttribute(name)) {
+        const swatches = values
+          .map(
+            (value, index) => `<button type="button" class="ananas-cart-item__swatch-item${value === current ? " is-active" : ""}" data-cart-variant-attr="${escapeHtml(name)}" data-value="${escapeHtml(value)}" aria-pressed="${value === current ? "true" : "false"}" aria-label="${escapeHtml(name)}: ${escapeHtml(value)}">
+              <span class="ananas-cart-item__swatch" style="background-color: ${escapeHtml(colorFromOption(value, index))}"></span>
+              <span class="ananas-cart-item__option-value">${escapeHtml(value)}</span>
+            </button>`
+          )
+          .join("");
+        return `<div class="ananas-cart-item__option ananas-cart-item__option--color"><div class="ananas-cart-item__swatch-wrap">${swatches}</div>${label}</div>`;
+      }
+      const options = values
+        .map((value) => `<option value="${escapeHtml(value)}"${value === current ? " selected" : ""}>${escapeHtml(value)}</option>`)
+        .join("");
+      return `<div class="ananas-cart-item__option ananas-cart-item__option--attr"><select class="ananas-cart-item__variant-select" data-cart-variant-attr-select="${escapeHtml(name)}" aria-label="${escapeHtml(name)}">${options}</select>${label}</div>`;
+    })
+    .join("");
+
+  return `<div class="ananas-cart-item__variant-picker" data-cart-variant-picker>${hiddenSelect}${groupsMarkup}</div>`;
+}
+
+/**
+ * Resolve the variant for an attribute change (swatch click or attribute select) and hand it
+ * to the existing swap flow through the picker's hidden variant select.
+ */
+function handleCartVariantAttributeChange(picker, changedName, changedValue) {
+  const select = picker?.querySelector("[data-cart-variant-select]");
+  if (!select || select.disabled) return;
+
+  const wanted = {};
+  picker.querySelectorAll("[data-cart-variant-attr].is-active").forEach((btn) => {
+    wanted[btn.dataset.cartVariantAttr] = btn.dataset.value;
+  });
+  picker.querySelectorAll("[data-cart-variant-attr-select]").forEach((attrSelect) => {
+    wanted[attrSelect.dataset.cartVariantAttrSelect] = attrSelect.value;
+  });
+  wanted[changedName] = changedValue;
+
+  let best = null;
+  let bestScore = -1;
+  Array.from(select.options).forEach((option) => {
+    let attrs = [];
+    try {
+      attrs = JSON.parse(option.dataset.attrs || "[]");
+    } catch {
+      attrs = [];
+    }
+    if (!attrs.some((attr) => attr.name === changedName && attr.value === changedValue)) return;
+    const score = attrs.filter((attr) => wanted[attr.name] === attr.value).length;
+    if (score > bestScore) {
+      best = option;
+      bestScore = score;
+    }
+  });
+
+  if (!best || best.value === select.dataset.currentVariantId || !window.zid?.cart) return;
+  select.value = best.value;
+  picker.classList.add("is-loading");
+  picker.querySelectorAll("button, [data-cart-variant-attr-select]").forEach((control) => {
+    control.disabled = true;
+  });
+  handleCartVariantChange(select);
 }
 
 function normalizeNumber(value) {

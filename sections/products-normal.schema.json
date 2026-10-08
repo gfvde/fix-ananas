@@ -5,7 +5,9 @@
     "en": "Products (Normal)"
   },
   "icon": "shopping-bag-line",
-  "meta": { "type": "products" },
+  "meta": {
+    "type": "products"
+  },
   "settings": [
     {
       "id": "layout",
@@ -59,7 +61,7 @@
         "ar": "العنوان",
         "en": "Title"
       },
-      "default": "وش نرشّح لك"
+      "default": "لكل مناسبة، إطلالة"
     },
     {
       "id": "subtitle",
@@ -68,7 +70,7 @@
         "ar": "الوصف",
         "en": "Subtitle"
       },
-      "default": "نكهات متنوعة تناسب ذوقك"
+      "default": "قصات وألوان تناسب ذوقك"
     },
     {
       "id": "display_more",
@@ -86,7 +88,7 @@
         "ar": "نص زر المزيد",
         "en": "More Button Text"
       },
-      "default": "عرض الكل"
+      "default": "اكتشفي إطلالتك"
     },
     {
       "id": "more_url",
@@ -104,7 +106,7 @@
         "ar": "لون الخلفية",
         "en": "Background Color"
       },
-      "default": "#FCFAF7"
+      "default": "#FAF7F2"
     },
     {
       "id": "text_color",
@@ -149,7 +151,7 @@
         "ar": "لون خلفية شارة المنتج",
         "en": "Product Badge Background Color"
       },
-      "default": "#F7512B"
+      "default": "#6B4A39"
     },
     {
       "id": "badge_text_color",
@@ -167,7 +169,7 @@
         "ar": "لون خلفية زر السلة",
         "en": "Add Button Background Color"
       },
-      "default": "#FCFAF7"
+      "default": "#FAF7F2"
     },
     {
       "id": "button_text_color",

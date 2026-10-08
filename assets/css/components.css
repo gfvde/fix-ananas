@@ -787,7 +787,7 @@
   }
 
   #product-quick-view-modal .product-gallery-thumbs__slide.border-primary {
-    border-color: #f7512b !important;
+    border-color: #6b4a39 !important;
     opacity: 1;
   }
 
@@ -1037,15 +1037,15 @@
   }
 
   #product-quick-view-modal .quick-view-add-to-cart {
-    border: 1.5px solid #f7512b !important;
-    background: #f7512b !important;
+    border: 1.5px solid #6b4a39 !important;
+    background: #6b4a39 !important;
     color: #fff !important;
   }
 
   #product-quick-view-modal .quick-view-buy-now {
-    border: 1.5px solid #f7512b;
+    border: 1.5px solid #6b4a39;
     background: transparent;
-    color: #f7512b;
+    color: #6b4a39;
   }
 
   #product-quick-view-modal [data-in-stock] > [data-wishlist-btn] {

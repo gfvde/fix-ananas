@@ -16,19 +16,28 @@
         {
           "id": "nav_bg",
           "type": "color",
-          "label": { "ar": "لون خلفية الهيدر", "en": "Header Background" },
-          "default": "#000000"
+          "label": {
+            "ar": "لون خلفية الهيدر",
+            "en": "Header Background"
+          },
+          "default": "#372923E6"
         },
         {
           "id": "nav_border",
           "type": "color",
-          "label": { "ar": "لون حدود الهيدر", "en": "Header Border Color" },
+          "label": {
+            "ar": "لون حدود الهيدر",
+            "en": "Header Border Color"
+          },
           "default": "#262626"
         },
         {
           "id": "nav_height",
           "type": "range",
-          "label": { "ar": "ارتفاع الهيدر", "en": "Header Height" },
+          "label": {
+            "ar": "ارتفاع الهيدر",
+            "en": "Header Height"
+          },
           "min": 48,
           "max": 96,
           "step": 4,
@@ -38,7 +47,10 @@
         {
           "id": "logo_height",
           "type": "range",
-          "label": { "ar": "ارتفاع الشعار", "en": "Logo Height" },
+          "label": {
+            "ar": "ارتفاع الشعار",
+            "en": "Logo Height"
+          },
           "min": 20,
           "max": 64,
           "step": 2,
@@ -48,55 +60,82 @@
         {
           "id": "link_color",
           "type": "color",
-          "label": { "ar": "لون روابط المنيو", "en": "Nav Link Color" },
+          "label": {
+            "ar": "لون روابط المنيو",
+            "en": "Nav Link Color"
+          },
           "default": "#ffffff"
         },
         {
           "id": "icon_color",
           "type": "color",
-          "label": { "ar": "لون أيقونات الهيدر", "en": "Header Icon Color" },
+          "label": {
+            "ar": "لون أيقونات الهيدر",
+            "en": "Header Icon Color"
+          },
           "default": "#ffffff"
         },
         {
           "id": "icon_color_mobile",
           "type": "color",
-          "label": { "ar": "لون أيقونات الهيدر (الجوال)", "en": "Header Icon Color (Mobile)" },
+          "label": {
+            "ar": "لون أيقونات الهيدر (الجوال)",
+            "en": "Header Icon Color (Mobile)"
+          },
           "default": "#ffffff"
         },
         {
           "id": "cart_badge_color",
           "type": "color",
-          "label": { "ar": "لون شارة عدد السلة", "en": "Cart Badge Color" },
+          "label": {
+            "ar": "لون شارة عدد السلة",
+            "en": "Cart Badge Color"
+          },
           "default": "#25A562"
         },
         {
           "id": "dropdown_bg",
           "type": "color",
-          "label": { "ar": "خلفية القائمة المنسدلة", "en": "Dropdown Background" },
-          "default": "#111111"
+          "label": {
+            "ar": "خلفية القائمة المنسدلة",
+            "en": "Dropdown Background"
+          },
+          "default": "#372923"
         },
         {
           "id": "dropdown_border",
           "type": "color",
-          "label": { "ar": "حدود القائمة المنسدلة", "en": "Dropdown Border" },
-          "default": "#333333"
+          "label": {
+            "ar": "حدود القائمة المنسدلة",
+            "en": "Dropdown Border"
+          },
+          "default": "#525252"
         },
         {
           "id": "mega_bg",
           "type": "color",
-          "label": { "ar": "خلفية الميجا منيو", "en": "Mega Menu Background" },
-          "default": "#000000"
+          "label": {
+            "ar": "خلفية الميجا منيو",
+            "en": "Mega Menu Background"
+          },
+          "default": "#372923"
         },
         {
           "id": "mega_link_color",
           "type": "color",
-          "label": { "ar": "لون روابط الميجا منيو", "en": "Mega Menu Link Color" },
+          "label": {
+            "ar": "لون روابط الميجا منيو",
+            "en": "Mega Menu Link Color"
+          },
           "default": "#ffffff"
         },
         {
           "id": "mega_col_head_color",
           "type": "color",
-          "label": { "ar": "لون عناوين أعمدة الميجا منيو", "en": "Mega Menu Column Header Color" },
+          "label": {
+            "ar": "لون عناوين أعمدة الميجا منيو",
+            "en": "Mega Menu Column Header Color"
+          },
           "default": "#d4d4d4"
         }
       ]
@@ -187,19 +226,28 @@
         {
           "id": "bar_bg_color",
           "type": "color",
-          "label": { "ar": "لون خلفية الشريط", "en": "Bar Background Color" },
-          "default": "#d3db6f"
+          "label": {
+            "ar": "لون خلفية الشريط",
+            "en": "Bar Background Color"
+          },
+          "default": "#E7DDCC"
         },
         {
           "id": "bar_text_color",
           "type": "color",
-          "label": { "ar": "لون نص الشريط", "en": "Bar Text Color" },
+          "label": {
+            "ar": "لون نص الشريط",
+            "en": "Bar Text Color"
+          },
           "default": "#000000"
         },
         {
           "id": "bar_icon",
           "type": "image",
-          "label": { "ar": "أيقونة الشريط", "en": "Bar Icon" },
+          "label": {
+            "ar": "أيقونة الشريط",
+            "en": "Bar Icon"
+          },
           "info": {
             "ar": "أيقونة تظهر بجانب النص — الحجم المثالي 20×20 بكسل. اتركه فارغاً لاستخدام أيقونة النجمة الافتراضية",
             "en": "Icon shown next to the text — ideal size 20×20 px. Leave empty to use the default star icon"
@@ -208,7 +256,10 @@
         {
           "id": "bar_icon_size",
           "type": "range",
-          "label": { "ar": "حجم الأيقونة", "en": "Icon Size" },
+          "label": {
+            "ar": "حجم الأيقونة",
+            "en": "Icon Size"
+          },
           "min": 14,
           "max": 32,
           "step": 2,
@@ -223,6 +274,19 @@
             "en": "Display Announcement Bar"
           },
           "default": false
+        },
+        {
+          "id": "autoplay",
+          "type": "checkbox",
+          "label": {
+            "ar": "تبديل النصوص تلقائيًا",
+            "en": "Rotate texts automatically"
+          },
+          "info": {
+            "ar": "عند تعطيل التمرير المتحرك، تتبدل النصوص كل بضع ثوانٍ",
+            "en": "When the marquee is off, the texts change every few seconds"
+          },
+          "default": true
         },
         {
           "id": "enable_marquee",
@@ -404,13 +468,32 @@
           "options": [
             {
               "value": "dynamic",
-              "label": { "ar": "ديناميكي (من المنيو)", "en": "Dynamic (from menu)" }
+              "label": {
+                "ar": "ديناميكي (من المنيو)",
+                "en": "Dynamic (from menu)"
+              }
             },
             {
               "value": "static",
-              "label": { "ar": "ثابت (من الإعدادات)", "en": "Static (from settings)" }
+              "label": {
+                "ar": "ثابت (من الإعدادات)",
+                "en": "Static (from settings)"
+              }
             }
           ]
+        },
+        {
+          "id": "mega_autoslide",
+          "type": "checkbox",
+          "label": {
+            "ar": "تحريك أعمدة الميجا منيو تلقائيًا عند زيادتها",
+            "en": "Auto-slide mega menu columns when they overflow"
+          },
+          "info": {
+            "ar": "عندما تكون الأعمدة أكثر من عرض الشاشة تتحرك ببطء وتتوقف لتوضيح وجود المزيد، ويمكن سحبها يدويًا",
+            "en": "When the columns are wider than the screen they slowly push along and pause to hint there is more; they can also be swiped"
+          },
+          "default": true
         },
         {
           "id": "mega_standalone_links",
@@ -424,17 +507,26 @@
             "ar": "تظهر كعمود منفصل على أقصى اليمين بدون عنوان — تُستخدم في الوضع الثابت فقط",
             "en": "Shown as a separate column on the far right with no heading — used in Static mode only"
           },
-          "item_label": { "ar": "رابط", "en": "Link" },
+          "item_label": {
+            "ar": "رابط",
+            "en": "Link"
+          },
           "settings": [
             {
               "id": "label",
               "type": "text",
-              "label": { "ar": "النص", "en": "Label" }
+              "label": {
+                "ar": "النص",
+                "en": "Label"
+              }
             },
             {
               "id": "url",
               "type": "text",
-              "label": { "ar": "الرابط", "en": "URL" },
+              "label": {
+                "ar": "الرابط",
+                "en": "URL"
+              },
               "default": ""
             }
           ]
@@ -451,29 +543,47 @@
             "ar": "كل عمود له عنوان وقائمة روابط — تُستخدم في الوضع الثابت فقط",
             "en": "Each column has a heading and a list of links — used in Static mode only"
           },
-          "item_label": { "ar": "عمود", "en": "Column" },
+          "item_label": {
+            "ar": "عمود",
+            "en": "Column"
+          },
           "settings": [
             {
               "id": "title",
               "type": "text",
-              "label": { "ar": "عنوان العمود", "en": "Column Title" }
+              "label": {
+                "ar": "عنوان العمود",
+                "en": "Column Title"
+              }
             },
             {
               "id": "links",
               "type": "list",
               "max_items": 8,
-              "label": { "ar": "الروابط", "en": "Links" },
-              "item_label": { "ar": "رابط", "en": "Link" },
+              "label": {
+                "ar": "الروابط",
+                "en": "Links"
+              },
+              "item_label": {
+                "ar": "رابط",
+                "en": "Link"
+              },
               "settings": [
                 {
                   "id": "label",
                   "type": "text",
-                  "label": { "ar": "النص", "en": "Label" }
+                  "label": {
+                    "ar": "النص",
+                    "en": "Label"
+                  }
                 },
                 {
                   "id": "url",
                   "type": "text",
-                  "label": { "ar": "الرابط", "en": "URL" },
+                  "label": {
+                    "ar": "الرابط",
+                    "en": "URL"
+                  },
                   "default": ""
                 }
               ]
@@ -496,19 +606,28 @@
         {
           "id": "search_placeholder",
           "type": "text",
-          "label": { "ar": "النص الإرشادي في حقل البحث", "en": "Search Input Placeholder" },
+          "label": {
+            "ar": "النص الإرشادي في حقل البحث",
+            "en": "Search Input Placeholder"
+          },
           "default": ""
         },
         {
           "id": "show_popular",
           "type": "checkbox",
-          "label": { "ar": "إظهار عمليات البحث الشائعة", "en": "Show Popular Searches" },
+          "label": {
+            "ar": "إظهار عمليات البحث الشائعة",
+            "en": "Show Popular Searches"
+          },
           "default": true
         },
         {
           "id": "popular_title",
           "type": "text",
-          "label": { "ar": "عنوان قسم البحث الشائع", "en": "Popular Searches Title" },
+          "label": {
+            "ar": "عنوان قسم البحث الشائع",
+            "en": "Popular Searches Title"
+          },
           "info": {
             "ar": "اتركه فارغاً لاستخدام النص الافتراضي",
             "en": "Leave empty to use the default text"
@@ -518,37 +637,55 @@
         {
           "id": "show_products",
           "type": "checkbox",
-          "label": { "ar": "إظهار المنتجات المميزة", "en": "Show Featured Products" },
+          "label": {
+            "ar": "إظهار المنتجات المميزة",
+            "en": "Show Featured Products"
+          },
           "default": true
         },
         {
           "id": "search_bg_color",
           "type": "color",
-          "label": { "ar": "لون خلفية لوحة البحث", "en": "Search Panel Background" },
-          "default": "#000000"
+          "label": {
+            "ar": "لون خلفية لوحة البحث",
+            "en": "Search Panel Background"
+          },
+          "default": "#372923"
         },
         {
           "id": "search_border_color",
           "type": "color",
-          "label": { "ar": "لون حدود لوحة البحث", "en": "Search Panel Border Color" },
+          "label": {
+            "ar": "لون حدود لوحة البحث",
+            "en": "Search Panel Border Color"
+          },
           "default": "#27272a"
         },
         {
           "id": "search_text_color",
           "type": "color",
-          "label": { "ar": "لون نص البحث والأيقونات", "en": "Search Text & Icons Color" },
+          "label": {
+            "ar": "لون نص البحث والأيقونات",
+            "en": "Search Text & Icons Color"
+          },
           "default": "#a1a1a1"
         },
         {
           "id": "search_results_text_color",
           "type": "color",
-          "label": { "ar": "لون نص نتائج البحث والعناوين", "en": "Results & Headings Color" },
+          "label": {
+            "ar": "لون نص نتائج البحث والعناوين",
+            "en": "Results & Headings Color"
+          },
           "default": "#ffffff"
         },
         {
           "id": "search_card_border_color",
           "type": "color",
-          "label": { "ar": "لون حدود كارت المنتج في البحث", "en": "Product Card Border Color" },
+          "label": {
+            "ar": "لون حدود كارت المنتج في البحث",
+            "en": "Product Card Border Color"
+          },
           "default": "#3f3f46"
         },
         {
@@ -585,6 +722,19 @@
             "ar": "المنتجات المميزة في البحث",
             "en": "Featured Products in Search"
           }
+        },
+        {
+          "id": "drawer_open_label",
+          "type": "text",
+          "label": {
+            "ar": "القسم المفتوح افتراضيًا في قائمة الجوال",
+            "en": "Mobile menu group open by default"
+          },
+          "info": {
+            "ar": "اكتب اسم القسم كما يظهر في القائمة. اتركه فارغًا لفتح أول قسم",
+            "en": "Type the group name exactly as it appears in the menu. Leave empty to open the first group"
+          },
+          "default": "إطلالتك حسب المناسبة"
         }
       ]
     }

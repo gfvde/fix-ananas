@@ -1,0 +1,166 @@
+/*
+ * Dara reskin — global chrome (header nav, mega menu, search panel).
+ * Loaded from header.jinja before its inline <style>, so selectors here are
+ * prefixed with #ananas-header to win over the inline base rules.
+ * Figma: NAV 11255:33651, mega menu 11255:33785, search 11507:30621 / 11507:31121.
+ */
+
+/* ── Nav links: Cairo Medium 14/20, underline grows on hover / open ── */
+#ananas-header .ananas-nav__link {
+  font-weight: 500;
+  line-height: 20px;
+}
+#ananas-header .ananas-nav__link:hover { opacity: 1; }
+#ananas-header .ananas-nav__link > span {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 2px;
+}
+#ananas-header .ananas-nav__link > span::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: -2px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform .25s ease;
+}
+#ananas-header .ananas-nav__link:hover > span::after,
+#ananas-header .ananas-nav__link:focus-visible > span::after,
+#ananas-header .ananas-nav__link.is-open > span::after {
+  transform: scaleX(1);
+}
+#ananas-header .ananas-nav__link--has-sub svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ── Icon buttons: 40px hit area, 24px glyphs (bag + search 20px) ── */
+#ananas-header .ananas-nav__inner--desk .ananas-nav__icon-btn svg {
+  width: 24px;
+  height: 24px;
+}
+#ananas-header .ananas-nav__inner--desk .ananas-nav__icon-btn--sm svg {
+  width: 20px;
+  height: 20px;
+}
+#ananas-header .ananas-nav__icon-btn:hover {
+  background: transparent;
+  opacity: .8;
+}
+
+/* Cart badge: 16px green dot at the top of the bag (Figma left:20 top:4) */
+#ananas-header .ananas-nav__cart-badge {
+  top: 4px;
+  right: auto;
+  left: 20px;
+  min-width: 16px;
+  width: auto;
+  padding: 0 3px;
+  background: var(--ananas-badge-color, #25a562);
+  font-size: 10px;
+  line-height: 15px;
+  border-radius: 999px;
+}
+#ananas-header .ananas-nav__cart-badge[hidden] { display: none; }
+
+/* ── Mobile bar (Figma mobile-nav 10926:16287): 32px icons, 20px glyphs ── */
+@media (max-width: 1023px) {
+  #ananas-header .ananas-nav__inner--mob { padding: 0 16px; }
+  #ananas-header .ananas-mob__left { gap: 0; }
+  #ananas-header .ananas-mob__left .ananas-nav__icon-btn,
+  #ananas-header .ananas-mob__right .ananas-nav__icon-btn {
+    width: 32px !important;
+    height: 32px;
+    padding: 0;
+  }
+  #ananas-header .ananas-mob__left .ananas-nav__icon-btn svg,
+  #ananas-header .ananas-mob__right .ananas-nav__icon-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+  #ananas-header .ananas-mob__left .ananas-nav__cart-badge {
+    top: 0;
+    left: 16px;
+  }
+  #ananas-header .ananas-mobile-btn {
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+  }
+}
+
+/* ── Mega menu (Figma 11255:33785) ── */
+#ananas-header .ananas-mega__col-head {
+  font-weight: 500;
+}
+#ananas-header .ananas-mega__link {
+  font-weight: 500;
+  transition: opacity .15s;
+}
+#ananas-header .ananas-mega__img-label,
+#ananas-header .ananas-mega__img-label--static {
+  line-height: 28px;
+}
+
+/* Column labels slider: when the columns overflow they become a horizontal
+   scroller (swipe / wheel) and header.jinja slowly "pushes" them along. */
+#ananas-header [data-mega-autoslide] {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overscroll-behavior-x: contain;
+  scroll-behavior: auto;
+}
+#ananas-header [data-mega-autoslide]::-webkit-scrollbar { display: none; }
+#ananas-header .ananas-mega__cols[data-mega-autoslide] {
+  min-width: 0;
+  padding-bottom: 4px;
+}
+#ananas-header .ananas-mega__static-cols[data-mega-autoslide] {
+  left: calc(25% + 23px);
+  right: 56px;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding-bottom: 4px;
+}
+#ananas-header .ananas-mega__static-cols[data-mega-autoslide] .ananas-mega__col--solo {
+  order: 99;
+}
+#ananas-header [data-mega-autoslide].is-overflowing {
+  -webkit-mask-image: linear-gradient(to left, #000 85%, transparent);
+  mask-image: linear-gradient(to left, #000 85%, transparent);
+}
+[dir="ltr"] #ananas-header [data-mega-autoslide].is-overflowing {
+  -webkit-mask-image: linear-gradient(to right, #000 85%, transparent);
+  mask-image: linear-gradient(to right, #000 85%, transparent);
+}
+#ananas-header [data-mega-autoslide].is-at-end {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+/* ── Search panel (Figma 11507:30621 desktop / 11507:31121 mobile) ── */
+#ananas-header .ananas-search__field {
+  border-bottom-color: #525252;
+}
+#ananas-header .ananas-search__input {
+  font-weight: 500;
+}
+#ananas-header .ananas-search__sep {
+  border-left-color: #525252;
+}
+#ananas-header .ananas-pcard__btn {
+  border-color: #404040;
+}
+#ananas-header .ananas-pcard__btn:hover {
+  border-color: var(--ananas-search-results);
+}
+#ananas-header .ananas-search__pop-title,
+#ananas-header .ananas-search__pop-link {
+  font-weight: 500;
+  line-height: 20px;
+}

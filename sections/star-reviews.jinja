@@ -1,7 +1,7 @@
-{% set title_color    = settings.title_color    | default('#000000') %}
-{% set section_bg     = settings.section_bg     | default('#ffffff') %}
-{% set star_color     = settings.star_color     | default('#F7A52D') %}
-{% set verified_color = settings.verified_color | default('#25A562') %}
+{% set title_color    = settings.title_color    | default('#000000', true) %}
+{% set section_bg     = settings.section_bg     | default('#FAF7F2', true) %}
+{% set star_color     = settings.star_color     | default('#B59A70', true) %}
+{% set verified_color = settings.verified_color | default('#25A562', true) %}
 
 {% set reviews = safeget(settings, "star_reviews_items", []) | select | list %}
 
@@ -53,6 +53,8 @@
   <div class="sr-card sr-card--image {{ extra_class }}">
     {% if settings.image_card_bg %}
       <img class="sr-card__bg" src="{{ image_url(settings.image_card_bg, w=800, f='auto') }}" alt="" width="800" height="1000" loading="lazy" decoding="async" />
+    {% else %}
+      <img class="sr-card__bg" src="{{ 'images/dara/home-review.webp' | asset_url }}" alt="" width="600" height="728" loading="lazy" decoding="async" />
     {% endif %}
     <div class="sr-card__content">
       {% set mid = reviews[2] if reviews | length > 2 else reviews[0] %}
@@ -78,10 +80,11 @@
 
 {% if reviews | length > 0 %}
 <link rel="stylesheet" href="{{ 'css/sections/star-reviews.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'css/dara/home-reviews.css' | asset_url }}">
 <section section-id="{{ sectionId }}" data-section="star-reviews" data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}" class="section-star-reviews" style="background: {{ section_bg }};">
 
   <h2 class="sr-title" style="color: {{ title_color }};">
-    {{ settings.title | default(_('Coffee experience through our customers eyes')) }}
+    {{ settings.title | default(_('The Dara style guide'), true) }}
   </h2>
 
   {# Desktop: 3-column grid #}

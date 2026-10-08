@@ -280,7 +280,7 @@
             "ar": "تفعيل جزء صفحة التصنيفات",
             "en": "Enable Category Page Section"
           },
-          "default": false
+          "default": true
         },
         {
           "id": "filter_layout",
@@ -303,9 +303,50 @@
                 "ar": "شريط علوي مع قائمة منبثقة",
                 "en": "Top bar with filters drawer"
               }
+            },
+            {
+              "value": "topbar",
+              "label": {
+                "ar": "شريط علوي مع فلاتر قابلة للطي",
+                "en": "Top bar with collapsible filter chips"
+              }
             }
           ],
           "default": "sidebar"
+        },
+        {
+          "id": "filters_open",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار الفلاتر مفتوحة عند فتح الصفحة",
+            "en": "Show filters open when the page loads"
+          },
+          "default": true
+        },
+        {
+          "id": "products_loading",
+          "type": "select",
+          "label": {
+            "ar": "طريقة تحميل المنتجات",
+            "en": "Products loading"
+          },
+          "options": [
+            {
+              "value": "infinite",
+              "label": {
+                "ar": "تمرير لا نهائي",
+                "en": "Infinite scrolling"
+              }
+            },
+            {
+              "value": "pagination",
+              "label": {
+                "ar": "ترقيم الصفحات",
+                "en": "Pagination"
+              }
+            }
+          ],
+          "default": "infinite"
         },
         {
           "id": "category_page_background_color",
@@ -314,7 +355,7 @@
             "ar": "لون الخلفية",
             "en": "Background Color"
           },
-          "default": "#FEECE8"
+          "default": "#EAE4DD"
         },
         {
           "id": "category_page_title_color",
@@ -323,7 +364,7 @@
             "ar": "لون العنوان",
             "en": "Title Color"
           },
-          "default": "#F7512B"
+          "default": "#6B4A39"
         },
         {
           "id": "category_page_subtitle_color",
@@ -368,7 +409,7 @@
             "ar": "لون التصنيف النشط",
             "en": "Active Subcategory Color"
           },
-          "default": "#F7512B"
+          "default": "#6B4A39"
         },
         {
           "id": "category_page_card_hover_color",
@@ -377,7 +418,7 @@
             "ar": "لون التصنيف عند التحويم",
             "en": "Subcategory Hover Color"
           },
-          "default": "#F7512B"
+          "default": "#6B4A39"
         }
       ]
     },
