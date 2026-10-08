@@ -942,7 +942,7 @@
         "ar": {
           "logo_mobile": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/b1cc1ee0-ecce-4754-9356-9edec58649f6.png",
           "logo_desktop": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/b1cc1ee0-ecce-4754-9356-9edec58649f6.png",
-          "style_nav_bg": "#000000",
+          "style_nav_bg": "#372923E6",
           "nav_mega_link": "https://dashboard.zid.sa/ar-sa/stores/3118810/theme-editor/0b73d4d4-a7ce-43de-92a0-e23db8970e3e",
           "nav_mega_mode": "static",
           "style_mega_bg": "#000000",
@@ -1046,7 +1046,7 @@
           "style_dropdown_bg": "#111111",
           "style_logo_height": 40,
           "header_hide_country": false,
-          "nav_search_bg_color": "#000000",
+          "nav_search_bg_color": "#372923",
           "nav_search_products": {
             "id": 0,
             "type": "recent_products"
@@ -1118,10 +1118,10 @@
           "style_mega_col_head_color": "#d4d4d4",
           "search_search_border_color": "#27272a",
           "nav_search_card_border_color": "#3f3f46",
-          "announcement_bar_bar_bg_color": "#d3db6f",
+          "announcement_bar_bar_bg_color": "#E7DDCC",
           "announcement_bar_page_display": "all",
           "nav_search_results_text_color": "#ffffff",
-          "announcement_bar_bar_icon_size": 14,
+          "announcement_bar_bar_icon_size": 20,
           "announcement_bar_marquee_speed": 30,
           "announcement_bar_bar_text_color": "#000000",
           "announcement_bar_enable_marquee": false,
