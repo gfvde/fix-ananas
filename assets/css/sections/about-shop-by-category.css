@@ -274,3 +274,57 @@
     line-height: 28px;
   }
 }
+
+/* ── Dara (Figma 10891:7021; mobile versions 10888:17168 caption / 10802:11733 overlay) ── */
+[data-section="about-shop-by-category"] .shop-by-category__title {
+  line-height: 42px;
+}
+
+[data-section="about-shop-by-category"] .category-card__media::after {
+  opacity: var(--sbc-overlay-opacity, 0.2);
+}
+
+[data-section="about-shop-by-category"] .category-card__hover-cta {
+  font-weight: 500;
+  text-transform: none;
+}
+
+html[dir="rtl"] [data-section="about-shop-by-category"] .category-card__hover-cta {
+  direction: rtl;
+}
+
+html[dir="rtl"] [data-section="about-shop-by-category"] .category-card__hover-cta svg {
+  transform: scaleX(-1);
+}
+
+@media (max-width: 767px) {
+  [data-section="about-shop-by-category"] .shop-by-category__title {
+    line-height: 34px;
+  }
+
+  /* Scrolling interaction on mobile too (both versions): oversized image moved by the parallax script */
+  [data-section="about-shop-by-category"][data-scroll-effect="true"] .category-card img {
+    top: -14%;
+    height: 128%;
+    inset-inline: 0;
+    bottom: auto;
+  }
+
+  /* Version 2: 2 columns of square tiles with the name over the image */
+  [data-section="about-shop-by-category"][data-mobile-layout="overlay"] .category-card__media {
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+
+  [data-section="about-shop-by-category"][data-mobile-layout="overlay"] .category-card__name {
+    font-size: 20px;
+    line-height: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-section="about-shop-by-category"][data-scroll-effect="true"] .category-card img {
+    top: 0;
+    height: 100%;
+  }
+}

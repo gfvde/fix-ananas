@@ -31,24 +31,68 @@
       return Math.max(min, Math.min(max, value));
     }
 
-    function shouldLockPageScroll(event) {
-      if (!content || !isDesktop()) return false;
+    /*
+     * Dara (note 11423:22480): on desktop the section pins to the top of the screen
+     * (sticky) while its product column scrolls; once the products end, the page
+     * continues to the next section. The section is made as tall as the pinned
+     * frame + the product overflow, the frame is position:sticky, and the page
+     * scroll drives the product column. Works with wheel, touchpad, keys and the
+     * scrollbar (no wheel hijacking). With "fit screen height" the frame is the
+     * viewport height under the header.
+     */
+    var sticky = section.querySelector(".about-details__sticky");
+    var fitScreen = section.getAttribute("data-fit-screen") === "true";
+    var pinTop = 0;
+    var maxScroll = 0;
+    var ticking = false;
 
-      var maxScroll = content.scrollHeight - content.clientHeight;
-      if (maxScroll <= 0) return false;
-
-      var goingDown = event.deltaY > 0;
-      var goingUp = event.deltaY < 0;
-      var canScrollDown = content.scrollTop < maxScroll - 1;
-      var canScrollUp = content.scrollTop > 1;
-
-      return (goingDown && canScrollDown) || (goingUp && canScrollUp);
+    function headerOffset() {
+      var header = document.querySelector("header");
+      if (!header) return 0;
+      var pos = window.getComputedStyle(header).position;
+      if (pos !== "sticky" && pos !== "fixed") return 0;
+      return Math.max(0, header.getBoundingClientRect().bottom);
     }
 
-    function handleDesktopWheel(event) {
-      if (!shouldLockPageScroll(event)) return;
-      event.preventDefault();
-      content.scrollTop += event.deltaY;
+    function resetPin() {
+      section.classList.remove("is-pinned");
+      section.style.height = "";
+      if (sticky) {
+        sticky.style.height = "";
+        sticky.style.top = "";
+      }
+      if (content) content.scrollTop = 0;
+      maxScroll = 0;
+    }
+
+    function layoutPin() {
+      if (!content || !sticky || !isDesktop()) {
+        resetPin();
+        return;
+      }
+      pinTop = headerOffset();
+      var frameH = fitScreen
+        ? Math.max(480, window.innerHeight - pinTop)
+        : parseFloat(window.getComputedStyle(section).getPropertyValue("--about-details-height")) || 650;
+      section.classList.add("is-pinned");
+      sticky.style.top = pinTop + "px";
+      sticky.style.height = frameH + "px";
+      maxScroll = Math.max(0, content.scrollHeight - content.clientHeight);
+      section.style.height = frameH + maxScroll + "px";
+      syncPin();
+    }
+
+    function syncPin() {
+      ticking = false;
+      if (!maxScroll || !section.classList.contains("is-pinned")) return;
+      var progress = clamp(pinTop - section.getBoundingClientRect().top, 0, maxScroll);
+      content.scrollTop = progress;
+    }
+
+    function requestSync() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(syncPin);
     }
 
     function scrollMobileProduct(direction) {
@@ -83,7 +127,14 @@
     setHeaderOffset();
     window.addEventListener("resize", setHeaderOffset);
 
-    section.addEventListener("wheel", handleDesktopWheel, { passive: false });
+    layoutPin();
+    window.addEventListener("scroll", requestSync, { passive: true });
+    window.addEventListener("resize", layoutPin);
+    window.addEventListener("load", layoutPin);
+    // Product images load late and change the column height
+    section.querySelectorAll("img").forEach(function (img) {
+      if (!img.complete) img.addEventListener("load", layoutPin, { once: true });
+    });
   }
 
   function initAll() {

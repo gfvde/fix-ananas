@@ -1,15 +1,15 @@
 {% set is_lazy = (settings.order | default(3) | int) > 2 %}
-{% set section_bg_color = settings.section_bg_color | default('#ffffff') %}
+{% set section_bg_color = settings.section_bg_color | default('transparent', true) %}
 {% set title_color = settings.title_color | default('#000000') %}
 {% set card_text_color = settings.card_text_color | default('#ffffff') %}
 {% set hover_text = settings.hover_text | default(_('View the collection')) %}
 {% set hover_text_color = settings.hover_text_color | default('#ffffff') %}
 {% set mobile_text_color = settings.mobile_text_color | default('#000000') %}
 {% set overlay_color = settings.overlay_color | default('#000000') %}
-{% set overlay_opacity = settings.overlay_opacity | default(22) %}
-{% set mobile_overlay_bg_color = settings.mobile_overlay_bg_color | default('#ffffff') %}
+{% set overlay_opacity = settings.overlay_opacity | default(20) %}
+{% set mobile_overlay_bg_color = settings.mobile_overlay_bg_color | default('transparent', true) %}
 {% set mobile_layout = settings.mobile_layout | default('caption') %}
-{% set scroll_effect_enabled = settings.scroll_effect_enabled | default(false) %}
+{% set scroll_effect_enabled = settings.scroll_effect_enabled | default(true) %}
 {% set scroll_effect_strength = settings.scroll_effect_strength | default(18) %}
 {% set mobile_image_height = settings.mobile_image_height | default(150) %}
 
@@ -37,12 +37,12 @@
   <div class="sbc-grid">
 
     {% set cats = [
-      { 'name': settings.cat1_name | default(_('Coffee drip bags')),   'url': settings.cat1_url | default('', true), 'img': settings.cat1_img, 'text_color': settings.cat1_text_color | default(card_text_color) },
-      { 'name': settings.cat2_name | default(_('Coffee harvests')), 'url': settings.cat2_url | default('', true), 'img': settings.cat2_img, 'text_color': settings.cat2_text_color | default(card_text_color) },
-      { 'name': settings.cat3_name | default(_('Bundles')),     'url': settings.cat3_url | default('', true), 'img': settings.cat3_img, 'text_color': settings.cat3_text_color | default(card_text_color) },
-      { 'name': settings.cat4_name | default(_('Spring offers')),   'url': settings.cat4_url | default('', true), 'img': settings.cat4_img, 'text_color': settings.cat4_text_color | default(card_text_color) },
-      { 'name': settings.cat5_name | default(_('Ananas products')), 'url': settings.cat5_url | default('', true), 'img': settings.cat5_img, 'text_color': settings.cat5_text_color | default(card_text_color) },
-      { 'name': settings.cat6_name | default(_('Coffee tools')),  'url': settings.cat6_url | default('', true), 'img': settings.cat6_img, 'text_color': settings.cat6_text_color | default(card_text_color) }
+      { 'name': settings.cat1_name | default(_('Shawls')),   'url': settings.cat1_url | default('', true), 'img': settings.cat1_img, 'text_color': settings.cat1_text_color | default(card_text_color) },
+      { 'name': settings.cat2_name | default(_('Abayas')), 'url': settings.cat2_url | default('', true), 'img': settings.cat2_img, 'text_color': settings.cat2_text_color | default(card_text_color) },
+      { 'name': settings.cat3_name | default(_('Sets')),     'url': settings.cat3_url | default('', true), 'img': settings.cat3_img, 'text_color': settings.cat3_text_color | default(card_text_color) },
+      { 'name': settings.cat4_name | default(_('Season looks')),   'url': settings.cat4_url | default('', true), 'img': settings.cat4_img, 'text_color': settings.cat4_text_color | default(card_text_color) },
+      { 'name': settings.cat5_name | default(_('Dara accessories')), 'url': settings.cat5_url | default('', true), 'img': settings.cat5_img, 'text_color': settings.cat5_text_color | default(card_text_color) },
+      { 'name': settings.cat6_name | default(_('Accessories')),  'url': settings.cat6_url | default('', true), 'img': settings.cat6_img, 'text_color': settings.cat6_text_color | default(card_text_color) }
     ] %}
 
     {% for cat in cats if cat.img %}

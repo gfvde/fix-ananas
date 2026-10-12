@@ -5,7 +5,7 @@
     styling_care_heading / styling_care_subtitle
     styling_guide_button, styling_guide_button_image, styling_guide_title, styling_guide_tabs[]
     care_guide_button, care_guide_title, care_guide_tabs[]
-    each *_tabs item: tab_label, image, eyebrow, heading, items (one point per line)
+    each *_tabs item: tab_label, image, eyebrow, heading, points (one per line)
 
   When a guide list is empty, one default panel is rendered from translations;
   a panel without an image uses the bundled image in assets/images/dara/.
@@ -16,7 +16,7 @@
     'tab_label': _('Everyday'),
     'eyebrow': store.name,
     'heading': _('Style your look'),
-    'items': _('Choose the abaya that suits your occasion') ~ '\n' ~ _('A neutral shayla balances the colours of the look') ~ '\n' ~ _('A small bag and calm accessories') ~ '\n' ~ _('Check the size and length of the piece')
+    'points': _('Choose the abaya that suits your occasion') ~ '\n' ~ _('A neutral shayla balances the colours of the look') ~ '\n' ~ _('A small bag and calm accessories') ~ '\n' ~ _('Check the size and length of the piece')
   }] %}
 {% endif %}
 {% set care_tabs = settings.single_product_section_care_guide_tabs or [] %}
@@ -25,7 +25,7 @@
     'tab_label': _('Everyday'),
     'eyebrow': store.name,
     'heading': _('Caring for your abaya'),
-    'items': _('Read the care card first') ~ '\n' ~ _('Follow the recommended cleaning method') ~ '\n' ~ _('Avoid direct heat on embroidery') ~ '\n' ~ _('Keep the piece hung or neatly folded')
+    'points': _('Read the care card first') ~ '\n' ~ _('Follow the recommended cleaning method') ~ '\n' ~ _('Avoid direct heat on embroidery') ~ '\n' ~ _('Keep the piece hung or neatly folded')
   }] %}
 {% endif %}
 
@@ -76,10 +76,10 @@
           <div class="pdp-guide__text">
             {% if t.eyebrow %}<p class="pdp-guide__eyebrow">{{ t.eyebrow }}</p>{% endif %}
             {% if t.heading %}<p class="pdp-guide__heading">{{ t.heading }}</p>{% endif %}
-            {% if t.items %}
+            {% if t['points'] %}
               <ol class="pdp-guide__list">
                 {% set n = namespace(i=0) %}
-                {% for line in (t.items | string).split('\n') %}
+                {% for line in (t['points'] | string).split('\n') %}
                   {% if line | trim %}
                     {% set n.i = n.i + 1 %}
                     <li><span class="pdp-guide__num">{{ '%02d' | format(n.i) }}</span><span>{{ line | trim }}</span></li>

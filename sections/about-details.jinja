@@ -1,7 +1,7 @@
 {% set is_lazy = (settings.order | default(3) | int) > 2 %}
-{% set section_bg = settings.section_bg | default('#FCFAF7', true) %}
+{% set section_bg = settings.section_bg | default('transparent', true) %}
 {% set mobile_bg = settings.mobile_bg | default('#000000', true) %}
-{% set title_color = settings.title_color | default('#F7512B', true) %}
+{% set title_color = settings.title_color | default('#6B4A39', true) %}
 {% set mobile_title_color = settings.mobile_title_color | default('#000000', true) %}
 {% set text_color = settings.text_color | default('#000000', true) %}
 {% set mobile_product_text_color = settings.mobile_product_text_color | default('#FFFFFF', true) %}
@@ -19,6 +19,7 @@
   data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
   class="about-details"
   data-about-details-sticky
+  data-fit-screen="{{ 'false' if settings.fit_screen_height is sameas false else 'true' }}"
   style="
     --about-details-bg: {{ section_bg }};
     --about-details-mobile-bg: {{ mobile_bg }};
@@ -45,7 +46,7 @@
 
     <div class="about-details__content">
       <div class="about-details__header">
-        <h2>{{ settings.title | default(_('Details that complete your day'), true) }}</h2>
+        <h2>{{ settings.title | default(_('Details that complete your look'), true) }}</h2>
         <p>{{ settings.subtitle | default(_('Carefully selected pieces: practical, elegant and made to last'), true) }}</p>
       </div>
 

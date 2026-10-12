@@ -3,6 +3,7 @@
 {% block title %}{{ _("Questions") }} – {{ product.name }} – {{ store.name }}{% endblock %}
 
 {% block content %}
+  <link rel="stylesheet" href="{{ 'css/dara/pdp.css' | asset_url }}">
   {# Breadcrumb Section #}
   <section class="pc-breadcrumb-section px-4 py-6 md:px-16">
     <div class="theme-container">
@@ -20,7 +21,7 @@
   </section>
 
   {# Questions Section #}
-  <section class="px-4 pb-12 md:px-16 md:pb-16">
+  <section class="dara-pdp px-4 pb-12 md:px-16 md:pb-16">
     <div class="theme-container">
       {# Product Header #}
       <a

@@ -5,7 +5,9 @@
     "en": "Featured Reviews (About)"
   },
   "icon": "chat-quote-line",
-  "meta": { "type": "testimonials" },
+  "meta": {
+    "type": "testimonials"
+  },
   "settings": [
     {
       "id": "title",
@@ -14,7 +16,7 @@
         "ar": "العنوان",
         "en": "Title"
       },
-      "default": "تجربة القهوة بعيون عملائنا"
+      "default": "دليل الأناقة من دارا"
     },
     {
       "id": "title_color",
@@ -117,7 +119,7 @@
         "ar": "لون خلفية السكشن",
         "en": "Section Background Color"
       },
-      "default": "#ffffff"
+      "default": "transparent"
     },
     {
       "id": "remove_bottom_margin",
