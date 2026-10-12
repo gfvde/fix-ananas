@@ -336,6 +336,9 @@ body[data-pc-align][data-pc-mobile-cta="icon"] .pc-img-icon-cta:active {
   margin-top: auto;
 }
 .pc-cta-wrap-mb-card .pc-cta {
+  white-space: normal;
+  text-align: center;
+  line-height: 18px;
   background: transparent !important;
   border: 1px solid #000 !important;
   color: #000 !important;
