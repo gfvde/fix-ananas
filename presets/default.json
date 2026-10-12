@@ -224,7 +224,7 @@
                   }
                 ],
                 "speed": 18,
-                "bg_color": "#D3DB6F",
+                "bg_color": "#E7DDCC",
                 "icon_color": "#000000",
                 "text_color": "#000000",
                 "separator_color": "#000000"
@@ -516,7 +516,7 @@
             },
             {
               "meta": {},
-              "display": true,
+              "display": false,
               "settings": {
                 "title": "مختارات دارا",
                 "layout": "grid",
@@ -563,7 +563,7 @@
             },
             {
               "meta": {},
-              "display": true,
+              "display": false,
               "settings": {
                 "title": "تسوّقي حسب اختيارك",
                 "cat1_img": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/79a85344-1064-4855-a94f-2328cc89b365.png",
@@ -608,7 +608,7 @@
             },
             {
               "meta": {},
-              "display": true,
+              "display": false,
               "settings": {
                 "title": "دليل الأناقة من دارا",
                 "reviews": [
@@ -652,7 +652,7 @@
             },
             {
               "meta": {},
-              "display": true,
+              "display": false,
               "template": "sections/carousel.jinja",
               "section_id": "4130feb7-a31f-4604-9bb7-a92f4e4776b8",
               "settings": {
@@ -682,7 +682,7 @@
             },
             {
               "meta": {},
-              "display": true,
+              "display": false,
               "template": "sections/gallery.jinja",
               "section_id": "296a9965-8d06-438f-b7db-4293476876ee",
               "settings": {
@@ -721,7 +721,7 @@
             },
             {
               "meta": {},
-              "display": true,
+              "display": false,
               "template": "sections/benefits.jinja",
               "section_id": "24f1b784-2b5d-4ea1-82dd-f574e58a169f",
               "settings": {
@@ -749,7 +749,7 @@
             },
             {
               "meta": {},
-              "display": true,
+              "display": false,
               "template": "sections/partners.jinja",
               "section_id": "0cf507d5-2f9a-4c0d-a1d2-117c8aa0a84d",
               "settings": {
@@ -774,7 +774,7 @@
             },
             {
               "meta": {},
-              "display": true,
+              "display": false,
               "template": "sections/testimonials.jinja",
               "section_id": "09cb9a6b-7a94-442d-aa02-03e36685f976",
               "settings": {
@@ -802,7 +802,7 @@
             },
             {
               "meta": {},
-              "display": true,
+              "display": false,
               "template": "sections/categories.jinja",
               "section_id": "cc31d17e-bbe0-4825-8cdc-f3e5993c1b36",
               "settings": {
@@ -844,7 +844,7 @@
             },
             {
               "meta": {},
-              "display": true,
+              "display": false,
               "template": "sections/countdown.jinja",
               "section_id": "bdd97f4d-3be3-45bb-ac47-f0db85e2e059",
               "settings": {
@@ -861,7 +861,7 @@
             },
             {
               "meta": {},
-              "display": true,
+              "display": false,
               "template": "sections/video.jinja",
               "section_id": "e3c832c6-c495-4d07-80ae-341e9dbe0035",
               "settings": {
@@ -875,7 +875,7 @@
             },
             {
               "meta": {},
-              "display": true,
+              "display": false,
               "template": "sections/logo-social.jinja",
               "section_id": "3e11e441-5e6e-4cfb-ad10-5a3e1c814840",
               "settings": {
@@ -885,7 +885,7 @@
             },
             {
               "meta": {},
-              "display": true,
+              "display": false,
               "template": "sections/hero.jinja",
               "section_id": "f4314ce8-0500-4fa1-8147-4d9ed7a7dacc",
               "settings": {
@@ -905,7 +905,7 @@
             },
             {
               "meta": {},
-              "display": true,
+              "display": false,
               "template": "sections/ananas-banner.jinja",
               "section_id": "3292fb15-43d2-4de1-9019-b8169e9cfaf5",
               "settings": {
@@ -1287,7 +1287,7 @@
           "cart_page_checkout_button_color": "#6B4A39",
           "product_card_image_aspect_ratio": "portrait",
           "product_card_show_color_options": true,
-          "product_card_tags_infinite_loop": false,
+          "product_card_tags_infinite_loop": true,
           "cart_page_feature_subtitle_color": "#52525C",
           "category_page_category_page_title": "hguhf",
           "product_card_card_aligned_content": "start",
@@ -1298,7 +1298,7 @@
           "category_page_category_page_subtitle": "gghgbgbgb",
           "spacing_section_margin_bottom_mobile": 40,
           "category_page_infinite_scroll_enabled": false,
-          "product_card_mobile_add_to_cart_style": "icon",
+          "product_card_mobile_add_to_cart_style": "button",
           "spacing_section_margin_bottom_desktop": 0,
           "category_page_category_page_title_color": "#6B4A39",
           "single_product_section_head_title_color": "#000000",

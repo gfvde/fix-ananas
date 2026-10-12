@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.0.0\n"
+"Project-Id-Version:  1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-17 00:00+0300\n"
 "PO-Revision-Date: 2025-12-17 00:00+0300\n"
@@ -15,12 +15,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Manual\n"
+"Generated-By: Babel 2.18.0\n"
 
 # ==============================================================================
 # 404 Page
-# ==============================================================================
-
 msgid "Page Not Found"
 msgstr "الصفحة غير موجودة"
 
@@ -35,8 +33,6 @@ msgstr "العودة للرئيسية"
 
 # ==============================================================================
 # Navigation & Layout
-# ==============================================================================
-
 msgid "Home"
 msgstr "الرئيسية"
 
@@ -72,8 +68,6 @@ msgstr "تسجيل الخروج"
 
 # ==============================================================================
 # Header & Search
-# ==============================================================================
-
 msgid "Search"
 msgstr "بحث"
 
@@ -97,8 +91,6 @@ msgstr "إغلاق البحث"
 
 # ==============================================================================
 # Region Selector
-# ==============================================================================
-
 msgid "Delivery to:"
 msgstr "التوصيل إلى:"
 
@@ -116,8 +108,6 @@ msgstr "حفظ"
 
 # ==============================================================================
 # Footer
-# ==============================================================================
-
 msgid "Follow us"
 msgstr "تابعنا"
 
@@ -141,8 +131,6 @@ msgstr "مركز الأعمال"
 
 # ==============================================================================
 # Categories Page
-# ==============================================================================
-
 msgid "Explore Our Categories"
 msgstr "اكتشف تصنيفاتنا"
 
@@ -163,8 +151,6 @@ msgstr "عرض الكل"
 
 # ==============================================================================
 # Product Card
-# ==============================================================================
-
 msgid "Add to cart"
 msgstr "أضف للسلة"
 
@@ -209,8 +195,6 @@ msgstr "تم بيع %s قطعة هذا الشهر"
 
 # ==============================================================================
 # Quick View Modal
-# ==============================================================================
-
 msgid "Select option"
 msgstr "اختر الخيارات"
 
@@ -237,8 +221,6 @@ msgstr "الذهاب لصفحة المنتج"
 
 # ==============================================================================
 # Product Page
-# ==============================================================================
-
 msgid "Product"
 msgstr "المنتج"
 
@@ -277,8 +259,6 @@ msgstr "المنتجات"
 
 # ==============================================================================
 # Product Sharing
-# ==============================================================================
-
 msgid "Share product"
 msgstr "مشاركة المنتج"
 
@@ -299,8 +279,6 @@ msgstr "نسخ الرابط"
 
 # ==============================================================================
 # Product Gallery
-# ==============================================================================
-
 msgid "Image"
 msgstr "صورة"
 
@@ -321,8 +299,6 @@ msgstr "إغلاق الفيديو"
 
 # ==============================================================================
 # Wishlist
-# ==============================================================================
-
 msgid "Add to wishlist"
 msgstr "أضف للمفضلة"
 
@@ -334,8 +310,6 @@ msgstr "تمت الإضافة إلى المفضلة"
 
 # ==============================================================================
 # Notify Me Dialog
-# ==============================================================================
-
 msgid "Name"
 msgstr "الاسم"
 
@@ -383,8 +357,6 @@ msgstr "إغلاق"
 
 # ==============================================================================
 # Reviews
-# ==============================================================================
-
 msgid "Customer reviews"
 msgstr "تقييمات العملاء"
 
@@ -470,8 +442,6 @@ msgstr "الآن"
 
 # ==============================================================================
 # Questions
-# ==============================================================================
-
 msgid "By"
 msgstr "بواسطة"
 
@@ -510,8 +480,6 @@ msgstr "فشل إرسال سؤالك. حاول مرة أخرى."
 
 # ==============================================================================
 # Form Validation
-# ==============================================================================
-
 msgid "This field is required"
 msgstr "هذا الحقل مطلوب"
 
@@ -520,8 +488,6 @@ msgstr "البريد الإلكتروني غير صالح"
 
 # ==============================================================================
 # Products Filters
-# ==============================================================================
-
 msgid "Filters"
 msgstr "الفلاتر"
 
@@ -590,8 +556,6 @@ msgstr "إغلاق اللوحة"
 
 # ==============================================================================
 # No Results State
-# ==============================================================================
-
 msgid "No results found"
 msgstr "لم يتم العثور على نتائج"
 
@@ -603,8 +567,6 @@ msgstr "عرض جميع المنتجات"
 
 # ==============================================================================
 # Grid Controls
-# ==============================================================================
-
 msgid "Select grid layout"
 msgstr "اختر تخطيط الشبكة"
 
@@ -622,8 +584,6 @@ msgstr "عرض قائمة"
 
 # ==============================================================================
 # Pagination
-# ==============================================================================
-
 msgid "Products per page"
 msgstr "المنتجات في الصفحة"
 
@@ -651,8 +611,6 @@ msgstr "%(current)s من أصل %(total)s منتج"
 
 # ==============================================================================
 # Cart Page
-# ==============================================================================
-
 msgid "Amount"
 msgstr "الكمية"
 
@@ -714,8 +672,6 @@ msgstr "تحميل"
 
 # ==============================================================================
 # Order Summary
-# ==============================================================================
-
 msgid "Order summary"
 msgstr "ملخص الطلب"
 
@@ -725,8 +681,6 @@ msgstr "شامل الضريبة %(percentage)s"
 
 # ==============================================================================
 # Coupon & Discount
-# ==============================================================================
-
 msgid "Coupon code"
 msgstr "كود الخصم"
 
@@ -744,8 +698,6 @@ msgstr "إزالة الكوبون"
 
 # ==============================================================================
 # Shipping
-# ==============================================================================
-
 msgid "You are"
 msgstr "أنت على بعد"
 
@@ -771,8 +723,6 @@ msgstr "الشحن المجاني متاح لإجمالي السلة بين %(mi
 
 # ==============================================================================
 # Loyalty Program
-# ==============================================================================
-
 msgid "Loyalty program"
 msgstr "برنامج الولاء"
 
@@ -818,8 +768,6 @@ msgstr "اكسب نقاط مع هذا الشراء"
 
 # ==============================================================================
 # Gift Order
-# ==============================================================================
-
 msgid "Make it a gift"
 msgstr "اجعلها هدية"
 
@@ -855,8 +803,6 @@ msgstr "حذف"
 
 # ==============================================================================
 # Checkout
-# ==============================================================================
-
 msgid "Store is closed"
 msgstr "المتجر مغلق"
 
@@ -871,8 +817,6 @@ msgstr "أنت مؤهل!"
 
 # ==============================================================================
 # Carousel Controls
-# ==============================================================================
-
 msgid "Previous"
 msgstr "السابق"
 
@@ -881,8 +825,6 @@ msgstr "التالي"
 
 # ==============================================================================
 # Countdown Timer
-# ==============================================================================
-
 msgid "Day"
 msgstr "يوم"
 
@@ -897,8 +839,6 @@ msgstr "ثانية"
 
 # ==============================================================================
 # File Upload
-# ==============================================================================
-
 msgid "Choose File"
 msgstr "اختر ملف"
 
@@ -922,8 +862,6 @@ msgstr "الرجاء إدخال"
 
 # ==============================================================================
 # Shipping & Payment Page
-# ==============================================================================
-
 msgid "Shipping & Payment"
 msgstr "الشحن والدفع"
 
@@ -1020,11 +958,10 @@ msgstr "أخرى"
 
 # ==============================================================================
 # Loyalty Rewards
-# ==============================================================================
-
 msgid "Rewards"
 msgstr "المكافآت"
 
+#, python-brace-format
 msgid "For {points} get a discount {percentage}"
 msgstr "مقابل {points} نقطة احصل على خصم {percentage}"
 
@@ -1051,8 +988,6 @@ msgstr "كن أول من يقيم هذا المنتج"
 
 # ==============================================================================
 # Questions Page
-# ==============================================================================
-
 msgid "Questions"
 msgstr "الأسئلة"
 
@@ -1076,8 +1011,6 @@ msgstr "صورة الإجابة"
 
 # ==============================================================================
 # Grouped Products
-# ==============================================================================
-
 msgid "Bundle consist of"
 msgstr "الباقة تتكون من"
 
@@ -1098,8 +1031,6 @@ msgstr "لا توجد تدوينات، يرجى زيارة هذه الصفحة �
 
 # ==============================================================================
 # Ananas Custom UI
-# ==============================================================================
-
 msgid "Different flavors for every taste"
 msgstr "نكهات مختلفة… لكل ذوق تجربة"
 
@@ -1393,13 +1324,12 @@ msgstr "محدد"
 msgid "SAR"
 msgstr "ريال"
 
+#, python-format
 msgid "Add purchases worth %(total)s %(currency)s to get free shipping"
 msgstr "أضف مشتريات بقيمة %(total)s %(currency)s للحصول على شحن مجاني"
 
 # ==============================================================================
 # About Us Page
-# ==============================================================================
-
 msgid "About Ananas"
 msgstr "عن أناناس"
 
@@ -1563,14 +1493,14 @@ msgstr "عرض المجموعة"
 msgid "Your browser does not support the video tag."
 msgstr "متصفحك لا يدعم تشغيل الفيديو."
 
-# English msgids for templates/product.jinja (currently _('الحموضة') / _('القوام');
+# English msgids for templates/product.jinja (currently _('الحموضة') /
+# _('القوام');
 # switch those calls to _('Acidity') / _('Body') when product.jinja is edited)
 msgid "Acidity"
 msgstr "الحموضة"
 
 msgid "Body"
 msgstr "القوام"
-
 
 # --- commerce fixes ---
 msgid "Preorder"
@@ -1620,7 +1550,6 @@ msgid "Share on Telegram"
 msgstr "مشاركة عبر تيليجرام"
 
 # --- r2 sections ---
-
 msgid "Discover the world of Ananas"
 msgstr "تعرّف على عالم أناناس"
 
@@ -1835,3 +1764,405 @@ msgstr "جرّبها على جهاز Xbloom"
 
 msgid "Brew it yourself"
 msgstr "حضّرها بنفسك"
+
+msgid "Sold out"
+msgstr "نفذت الكمية"
+
+msgid "Colors"
+msgstr "الألوان"
+
+msgid "Shopping cart"
+msgstr "عربة التسوق"
+
+msgid "Special offer"
+msgstr "عرض خاص"
+
+msgid "Congrats! Your order qualifies for free shipping"
+msgstr "مبروك! طلبك مؤهل للشحن المجاني"
+
+msgid "Free shipping"
+msgstr "شحن مجاني"
+
+msgid "On every order over 130"
+msgstr "لكل طلب فوق 130"
+
+msgid "Flexible and secure payment options"
+msgstr "خيارات دفع مرنة وآمنة"
+
+msgid "Carefully selected pieces"
+msgstr "قطع مختارة بعناية"
+
+msgid "About Dara"
+msgstr "عن دارا"
+
+msgid "Elegance is not just a piece you wear"
+msgstr "الأناقة مو بس قطعة ترتدينها"
+
+msgid "It is taste, details and a look that suits you every day"
+msgstr "هي ذوق وتفاصيل وإطلالة تشبهك كل يوم"
+
+msgid "At Dara, we care about every detail so you can choose a look that suits you"
+msgstr "في دارا، نهتم بكل تفصيلة لتختاري إطلالة تشبهك"
+
+msgid "The journey of elegance from design to your look"
+msgstr "رحلة الأناقة من التصميم إلى إطلالتك"
+
+msgid "From design... the beginning"
+msgstr "من التصميم… البداية"
+
+msgid "We start with the cut, fabric and color so the look comes together"
+msgstr "نبدأ بالقصة والخامة واللون لتتكامل الإطلالة"
+
+msgid "Careful selection"
+msgstr "اختيار بعناية"
+
+msgid "Cuts and details that respect the shape and comfort of the piece"
+msgstr "قصات وتفاصيل تراعي شكل القطعة وراحتها"
+
+msgid "Refined details"
+msgstr "تفاصيل متقنة"
+
+msgid "Attention to tailoring and a balanced cut in every piece"
+msgstr "اهتمام بالخياطة وتوازن القصة في كل قطعة"
+
+msgid "For every taste"
+msgstr "لكل ذوق"
+
+msgid "Abayas and fashion for every occasion"
+msgstr "عبايات وأزياء تناسب مختلف المناسبات"
+
+msgid "Our principles in every piece"
+msgstr "مبادئنا في كل قطعة"
+
+msgid "We care about the cut, fabric and details so you can choose the right piece for your look"
+msgstr "نهتم بالقصة والخامة والتفاصيل، لتختاري القطعة المناسبة لإطلالتك"
+
+msgid "An experience we care about"
+msgstr "تجربة تهمنا"
+
+msgid "We design every detail with care, from choosing the piece to the moment you enjoy it"
+msgstr "نصمم كل تفصيلة بعناية، من اختيار المنتج إلى لحظة الاستمتاع"
+
+msgid "A passion for elegance"
+msgstr "شغف بالأناقة"
+
+msgid "We work with real passion that shows in every small detail"
+msgstr "نعمل بشغف حقيقي ينعكس في كل تفصيلة صغيرة"
+
+msgid "Why Dara?"
+msgstr "ليش دارا؟"
+
+msgid "Care for every piece"
+msgstr "اهتمام بكل قطعة"
+
+msgid "An easy experience from order to delivery"
+msgstr "تجربة سهلة من الطلب حتى التوصيل"
+
+msgid "Looks for every taste"
+msgstr "إطلالات تناسب مختلف الأذواق"
+
+msgid "Details that respect your comfort"
+msgstr "تفاصيل تراعي راحتك"
+
+msgid "Care in every detail"
+msgstr "عناية بكل تفصيلة"
+
+msgid "Behind every look are details worth caring about<br>A balanced cut<br>Fabric that suits the occasion<br>Colors that are easy to style<br>The result: a look your way"
+msgstr "وراء كل إطلالة تفاصيل تستحق الاهتمام<br>قصة متوازنة<br>خامة تناسب المناسبة<br>ألوان يسهل تنسيقها<br>النتيجة: إطلالة على طريقتك"
+
+msgid "Your partner in elegance"
+msgstr "شريكك في الأناقة"
+
+msgid "If you have a fashion store, contact us about wholesale orders and collaboration. Supply details and prices are set after we talk."
+msgstr "لو عندك متجر أزياء، تواصلي معنا للاستفسار عن طلبات الجملة والتعاون. تفاصيل التوريد والأسعار تُحدّد بعد التواصل."
+
+msgid "Dara is a world of abayas and Gulf fashion that brings taste and details together."
+msgstr "دارا عالم من العبايات والأزياء الخليجية، يجمع الذوق والتفاصيل."
+
+msgid "We discover new looks and choose what feels like us"
+msgstr "نكتشف إطلالات جديدة، ونختار ما يشبهنا"
+
+msgid "We discover, style and evolve with every look"
+msgstr "نكتشف، ننسّق، ونتطور مع كل إطلالة"
+
+msgid "Elegance your way"
+msgstr "أناقة على طريقتك"
+
+msgid "Gulf abayas and fashion with details that suit you"
+msgstr "عبايات وأزياء خليجية بتفاصيل تشبهك"
+
+msgid "Shop our collection"
+msgstr "تسوّقي مجموعتنا"
+
+msgid "customers"
+msgstr "عميل"
+
+msgid "Shop by your preference"
+msgstr "تسوّقي حسب اختيارك"
+
+msgid "Shawls"
+msgstr "الشيلات"
+
+msgid "Abayas"
+msgstr "العبايات"
+
+msgid "Sets"
+msgstr "الأطقم"
+
+msgid "Season looks"
+msgstr "إطلالات الموسم"
+
+msgid "Dara accessories"
+msgstr "أكسسوارات دارا"
+
+msgid "Accessories"
+msgstr "الأكسسوارات"
+
+msgid "Choose your look"
+msgstr "اختاري إطلالتك"
+
+msgid "A look for every occasion, find what suits you here"
+msgstr "لكل مناسبة إطلالة، هنا تلقين اللي يناسبك"
+
+msgid "A look for every occasion"
+msgstr "لكل مناسبة إطلالة"
+
+msgid "Shop by occasion"
+msgstr "تسوّقي حسب المناسبة"
+
+msgid "Your everyday"
+msgstr "يومياتك"
+
+msgid "Everyday abayas"
+msgstr "عبايات يومية"
+
+msgid "A light look for your day"
+msgstr "إطلالة خفيفة ترافق يومك"
+
+msgid "Wide, calm cuts"
+msgstr "قصات واسعة وهادئة"
+
+msgid "Comfortable fashion"
+msgstr "أزياء مريحة"
+
+msgid "Comfortable cuts for calm moments"
+msgstr "قصات مريحة للحظات الهادئة"
+
+msgid "Work elegance"
+msgstr "أناقة العمل"
+
+msgid "Work looks"
+msgstr "إطلالات العمل"
+
+msgid "Simple looks for the work day"
+msgstr "إطلالات بسيطة تناسب يوم العمل"
+
+msgid "Your occasions"
+msgstr "مناسباتك"
+
+msgid "Occasion abayas"
+msgstr "عبايات المناسبات"
+
+msgid "Discover new details for every occasion"
+msgstr "اكتشفي تفاصيل جديدة لكل مناسبة"
+
+msgid "Discover the world of Dara"
+msgstr "اكتشفي عالم دارا"
+
+msgid "The world of Dara"
+msgstr "عالم دارا"
+
+msgid "At Dara, elegance starts with the details."
+msgstr "في دارا، الأناقة تبدأ بالتفاصيل."
+
+msgid "Calm cuts and looks that express who you are"
+msgstr "قصات هادئة وإطلالات تعبّر عنك"
+
+msgid "From the abaya to the shawl and accessories,"
+msgstr "من العباية إلى الشيلة والأكسسوارات،"
+
+msgid "discover pieces that complete your taste."
+msgstr "اكتشفي قطعًا تتكامل مع ذوقك."
+
+msgid "Dara… Gulf elegance in your style."
+msgstr "دارا… أناقة خليجية بأسلوبك."
+
+msgid "From the abaya to the shawl and accessories, discover pieces that complete your taste. Dara… Gulf elegance in your style."
+msgstr "من العباية إلى الشيلة والأكسسوارات، اكتشفي قطعًا تتكامل مع ذوقك. دارا… أناقة خليجية بأسلوبك."
+
+msgid "Details that complete your look"
+msgstr "تفاصيل تكمل إطلالتك"
+
+msgid "The Dara style guide"
+msgstr "دليل الأناقة من دارا"
+
+msgid "Moments from the world of Dara"
+msgstr "لحظات من عالم دارا"
+
+msgid "Gulf elegance… that lives with you"
+msgstr "أناقة خليجية… تعيش معك"
+
+msgid "Fine details"
+msgstr "تفاصيل متقنة"
+
+msgid "Dara picks"
+msgstr "مختارات دارا"
+
+msgid "Discover your look"
+msgstr "اكتشفي إطلالتك"
+
+msgid "For every occasion, a look"
+msgstr "لكل مناسبة، إطلالة"
+
+msgid "Cuts and colors that suit your taste"
+msgstr "قصات وألوان تناسب ذوقك"
+
+msgid "Dara… in every look"
+msgstr "دارا… في كل إطلالة"
+
+msgid "The details of cuts and fabrics, from tailoring to the look"
+msgstr "تفاصيل القصات والأقمشة، من الخياطة إلى الإطلالة"
+
+#, python-format
+msgid "%s people are viewing this product now"
+msgstr "يشاهد %s شخصًا هذا المنتج الآن"
+
+msgid "A neutral shayla balances the colours of the look"
+msgstr "شيلة محايدة توازن ألوان الإطلالة"
+
+msgid "A small bag and calm accessories"
+msgstr "حقيبة صغيرة وأكسسوارات هادئة"
+
+msgid "Add your review"
+msgstr "أضف تقييمك"
+
+msgid "Avoid direct heat on embroidery"
+msgstr "تجنبي الحرارة المباشرة على التطريز"
+
+msgid "Caring for your abaya"
+msgstr "العناية بعبايتك"
+
+msgid "Check the size and length of the piece"
+msgstr "راجعي المقاس وطول القطعة"
+
+msgid "Choose the abaya that suits your occasion"
+msgstr "اختاري العباية المناسبة لمناسبتك"
+
+msgid "Choose your look guide"
+msgstr "اختاري دليل إطلالتك"
+
+msgid "Cut width"
+msgstr "اتساع القصة"
+
+msgid "Delivered to your door"
+msgstr "توصيل حتى باب منزلك"
+
+msgid "Delivery takes 2-5 business days depending on your city."
+msgstr "يستغرق التوصيل من 2 إلى 5 أيام عمل حسب مدينتك."
+
+msgid "Everyday"
+msgstr "يومي"
+
+msgid "Fabric"
+msgstr "الخامة"
+
+msgid "Fabric feel"
+msgstr "ملمس القماش"
+
+msgid "Fitted"
+msgstr "محددة"
+
+msgid "Flexible and safe payment options"
+msgstr "خيارات دفع مرنة وآمنة"
+
+msgid "Flowing"
+msgstr "انسيابي"
+
+msgid "Follow the recommended cleaning method"
+msgstr "اتبعي طريقة التنظيف الموصى بها"
+
+msgid "Keep the piece hung or neatly folded"
+msgstr "احفظي القطعة معلّقة أو مطوية بعناية"
+
+msgid "Long"
+msgstr "طويلة"
+
+msgid "Look details"
+msgstr "تفاصيل الإطلالة"
+
+msgid "Look styling guide"
+msgstr "دليل تنسيق الإطلالة"
+
+msgid "Loose"
+msgstr "واسعة"
+
+msgid "No description available for this product."
+msgstr "لا يوجد وصف لهذا المنتج."
+
+#, python-format
+msgid "Only %s pieces left in stock!"
+msgstr "متبقي %s قطع فقط في المخزون!"
+
+msgid "Orders are prepared within 1-2 business days."
+msgstr "يتم تجهيز الطلبات خلال 1-2 يوم عمل."
+
+msgid "Piece care guide"
+msgstr "دليل العناية بالقطعة"
+
+msgid "Product description"
+msgstr "وصف المنتج"
+
+msgid "Read the care card first"
+msgstr "اقرئي بطاقة العناية أولاً"
+
+msgid "Recommended for you"
+msgstr "توصيات من أجلك"
+
+msgid "Relaxed"
+msgstr "مريحة"
+
+msgid "Shipping & delivery"
+msgstr "الشحن والتوصيل"
+
+msgid "Show more"
+msgstr "عرض المزيد"
+
+msgid "Simple ideas to style and care for your piece"
+msgstr "أفكار بسيطة لتنسيق قطعتك والعناية بها"
+
+msgid "Size chart"
+msgstr "جدول المقاسات"
+
+msgid "Soft"
+msgstr "ناعم"
+
+msgid "Style your look"
+msgstr "نسّقي إطلالتك"
+
+msgid "Styling & care"
+msgstr "التنسيق والعناية"
+
+msgid "Styling the abaya and shayla"
+msgstr "تنسيق العباية والشيلة"
+
+msgid "This item is currently out of stock"
+msgstr "هذا المنتج غير متوفر حاليًا"
+
+msgid "Why shop with us"
+msgstr "لماذا تتسوقين معنا"
+
+msgid "You can track your order from your account once it ships."
+msgstr "يمكنك تتبع طلبك من حسابك بعد شحنه."
+
+msgid "Your opinion matters... share your experience with us"
+msgstr "رأيك يهمنا... شاركي تجربتك معنا"
+
+msgid "Zoom image"
+msgstr "تكبير الصورة"
+
+msgid "Load more"
+msgstr "عرض المزيد"
+
+msgid "All filters"
+msgstr "كل الفلاتر"
+
