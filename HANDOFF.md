@@ -42,6 +42,26 @@
 - Checklist pass 1 (merged to main in PR #36):
   cart loyalty redemption, `/checkout` links, side cart empty/free-shipping fixes, Q&A gated by `questions_enabled`, variant price updates all copies, footer address/VAT/copyright "صنع بواسطة زد"/linked payment logos, category hero+breadcrumb+subcategories when banner off, region dialog for multi-inventory, 1023px mobile breakpoint, forced-RTL removed (drawer, filters, banner, product column), header font uses `var(--font-family)`.
 
+## Dara reskin (branch `claude/vigilant-johnson-gmlxwi`, 2026-10-12)
+- The owner asked to restyle Roast's existing elements to the **DARA** Figma (abaya store, file `U2w1BgcRDOHC8uZVNFBjSM`). This is not a new theme: same files and setting ids.
+- Theme defaults: Cairo, background `#FAF7F2`, espresso accent `#6B4A39`, radius 0.
+- Shared Dara CSS lives in `assets/css/dara/`, images in `assets/images/dara/`.
+- Done:
+  - header and footer, mega menu, drawer, search, snake bar;
+  - product card: every designer note is a setting in the `product_card` group;
+  - quick view, side cart, wishlist cards;
+  - home sections and the about-* sections they use: sticky about-details, image-strip icon mode, category scroll effect;
+  - PLP: shared `components/products/products-listing.jinja`, infinite scroll, collapsible filters, chips;
+  - PDP: sticky gallery; show/hide toggles for blocks; styling & care guides; viewers counter; fabric; trust strip; reviews;
+  - cart page: variant picker, looping payment row, UVPs;
+  - About page.
+- 133 new Arabic strings were merged into `locale/ar`.
+- Pushed as v1.0.46; validator 39/39.
+- Still open:
+  - the demo preset images are still the Ananas coffee photos (Dara photos need uploading);
+  - check the cart variant picker and PLP filters against real attribute data;
+  - review sort/filter is not built (no data).
+
 ## Open work (in priority order)
 1. **Demo content in the preview — DONE (partly)**: `python3 scripts/demo-settings.py build/theme` writes `templates/home.json`, `header.json`, `footer.json`, `layout.json` from `presets/default.json` into the preview folder only (not shipped), then `vitrin preview 3255406 .` uploads them as drafted settings.
    Home now renders 25 sections (all 24 types), 0 JS errors desktop + mobile (screenshots: `build/home-desktop.png`, `build/home-mobile.png`, not committed).
