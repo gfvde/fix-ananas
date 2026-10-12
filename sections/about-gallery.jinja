@@ -2,27 +2,27 @@
 <section section-id="{{ sectionId }}" data-section="about-gallery"
   data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}" 
   class="py-6 px-4 md:py-10 md:px-14" 
-  style="background-color: {{ settings.background_color | default('#ffffff') }};"
+  style="background-color: {{ settings.background_color | default('transparent', true) }};"
   data-carousel>
   
-  {% set border_radius = settings.border_radius | default(8) %}
+  {% set border_radius = settings.border_radius | default(0) %}
   {% set title_color = settings.title_color | default('#000000') %}
   {% set subtitle_color = settings.subtitle_color | default('#000000') %}
 
   {# Desktop Header #}
   <div class="hidden md:flex flex-col gap-2 items-center text-center mb-6">
-    <h2 class="text-3xl font-medium" style="color: {{ title_color }};">{{ settings.title | default(_('Moments from the world of Ananas')) }}</h2>
-    <p class="text-base" style="color: {{ subtitle_color }};">{{ settings.subtitle | default(_('Coffee is not just for drinking… it is for living')) }}</p>
+    <h2 class="text-3xl font-medium ag-title" style="color: {{ title_color }};">{{ settings.title | default(_('Moments from the world of Dara')) }}</h2>
+    <p class="text-base" style="color: {{ subtitle_color }};">{{ settings.subtitle | default(_('Gulf elegance… that lives with you')) }}</p>
   </div>
 
   {# Mobile Header with Arrows #}
   <div class="flex flex-col gap-2 items-center text-center mb-4 md:hidden">
-    <h2 class="text-2xl font-medium" style="color: {{ title_color }};">{{ settings.title | default(_('Moments from the world of Ananas')) }}</h2>
+    <h2 class="text-2xl font-medium ag-title" style="color: {{ title_color }};">{{ settings.title | default(_('Moments from the world of Dara')) }}</h2>
     <div class="flex items-center gap-4">
       <button data-carousel-prev class="w-6 h-6 flex items-center justify-center bg-[#f5f5f5]  flex-shrink-0 transition-opacity hover:opacity-80" aria-label="{{ _('Previous') }}">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="rotate-180"><polyline points="15 18 9 12 15 6"></polyline></svg>
       </button>
-      <p class="text-sm" style="color: {{ subtitle_color }};">{{ settings.subtitle | default(_('Coffee is not just for drinking… it is for living')) }}</p>
+      <p class="text-sm" style="color: {{ subtitle_color }};">{{ settings.subtitle | default(_('Gulf elegance… that lives with you')) }}</p>
       <button data-carousel-next class="w-6 h-6 flex items-center justify-center bg-[#f5f5f5]  flex-shrink-0 transition-opacity hover:opacity-80" aria-label="{{ _('Next') }}">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
       </button>

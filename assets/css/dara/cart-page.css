@@ -413,3 +413,7 @@ html[dir="rtl"] .cart-payments__track {
     gap: 4px 8px;
   }
 }
+
+.ananas-cart-item__options.hidden {
+  display: none;
+}

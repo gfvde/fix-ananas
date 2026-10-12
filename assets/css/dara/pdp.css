@@ -1245,6 +1245,9 @@
 }
 
 dialog.pdp-guide {
+  position: fixed;
+  inset: 0;
+  margin: auto;
   padding: 0;
   border: 0;
   background: transparent;
@@ -1324,7 +1327,11 @@ dialog.pdp-guide::backdrop {
 
 .pdp-guide__panel {
   display: grid;
-  grid-template-columns: 350px 1fr;
+  grid-template-columns: 1fr 350px;
+}
+
+.pdp-guide__panel > .pdp-guide__media {
+  order: 2;
 }
 
 .pdp-guide__panel[hidden] {
@@ -1399,6 +1406,10 @@ dialog.pdp-guide::backdrop {
 
   .pdp-guide__panel {
     grid-template-columns: 1fr;
+  }
+
+  .pdp-guide__panel > .pdp-guide__media {
+    order: 0;
   }
 
   .pdp-guide__media {
