@@ -7,14 +7,13 @@
     care_guide_button, care_guide_title, care_guide_tabs[]
     each *_tabs item: tab_label, image, eyebrow, heading, items (one point per line)
 
-  When a guide list is empty, one default panel is rendered from translations
-  and the bundled images in assets/images/dara/.
+  When a guide list is empty, one default panel is rendered from translations;
+  a panel without an image uses the bundled image in assets/images/dara/.
 #}
 {% set styling_tabs = settings.single_product_section_styling_guide_tabs or [] %}
 {% if styling_tabs | length == 0 %}
   {% set styling_tabs = [{
     'tab_label': _('Everyday'),
-    'asset': 'images/dara/pdp-guide-styling.webp',
     'eyebrow': store.name,
     'heading': _('Style your look'),
     'items': _('Choose the abaya that suits your occasion') ~ '\n' ~ _('A neutral shayla balances the colours of the look') ~ '\n' ~ _('A small bag and calm accessories') ~ '\n' ~ _('Check the size and length of the piece')
@@ -24,7 +23,6 @@
 {% if care_tabs | length == 0 %}
   {% set care_tabs = [{
     'tab_label': _('Everyday'),
-    'asset': 'images/dara/pdp-guide-care.webp',
     'eyebrow': store.name,
     'heading': _('Caring for your abaya'),
     'items': _('Read the care card first') ~ '\n' ~ _('Follow the recommended cleaning method') ~ '\n' ~ _('Avoid direct heat on embroidery') ~ '\n' ~ _('Keep the piece hung or neatly folded')
@@ -48,8 +46,8 @@
 </div>
 
 {% for guide in [
-  {'id': 'pdp-guide-styling', 'title': settings.single_product_section_styling_guide_title | default(_('Styling the abaya and shayla'), true), 'tabs': styling_tabs},
-  {'id': 'pdp-guide-care', 'title': settings.single_product_section_care_guide_title | default(_('Piece care guide'), true), 'tabs': care_tabs}
+  {'id': 'pdp-guide-styling', 'fallback': 'images/dara/pdp-guide-styling.webp', 'title': settings.single_product_section_styling_guide_title | default(_('Styling the abaya and shayla'), true), 'tabs': styling_tabs},
+  {'id': 'pdp-guide-care', 'fallback': 'images/dara/pdp-guide-care.webp', 'title': settings.single_product_section_care_guide_title | default(_('Piece care guide'), true), 'tabs': care_tabs}
 ] %}
   <dialog class="pdp-guide" id="{{ guide.id }}" aria-labelledby="{{ guide.id }}-title" data-pdp-guide>
     <div class="pdp-guide__box">
@@ -69,10 +67,10 @@
       {% for t in guide.tabs %}
         <div class="pdp-guide__panel {{ 'is-active' if loop.first }}" data-pdp-guide-panel="{{ loop.index0 }}" {% if not loop.first %}hidden{% endif %}>
           <div class="pdp-guide__media">
-            {% if t.asset %}
-              <img src="{{ t.asset | asset_url }}" alt="{{ t.heading | default('') }}" loading="lazy">
-            {% elif t.image %}
+            {% if t.image %}
               <img src="{{ image_url(t.image, w=800, q=85, f='auto') }}" alt="{{ t.heading | default('') }}" loading="lazy">
+            {% else %}
+              <img src="{{ guide.fallback | asset_url }}" alt="{{ t.heading | default('') }}" loading="lazy">
             {% endif %}
           </div>
           <div class="pdp-guide__text">

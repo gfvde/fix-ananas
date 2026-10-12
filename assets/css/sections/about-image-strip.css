@@ -115,3 +115,55 @@
     gap: var(--image-strip-mobile-gap);
   }
 }
+
+/* ── Dara (Figma 11373:30175, UVP note 11718:24114) ─────────────────── */
+[data-section="about-image-strip"] .image-strip__caption {
+  gap: 0;
+}
+
+[data-section="about-image-strip"] .image-strip__title {
+  color: var(--image-strip-title-color);
+}
+
+/* Icon mode: an uploaded icon/illustration with optional text under it */
+[data-section="about-image-strip"].image-strip--icon .image-strip__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 120px;
+}
+
+[data-section="about-image-strip"].image-strip--icon .image-strip__media img {
+  width: auto;
+  max-width: 120px;
+  height: 100%;
+  object-fit: contain;
+}
+
+@media (max-width: 767px) {
+  [data-section="about-image-strip"] .image-strip__grid {
+    grid-template-columns: repeat(2, minmax(0, 181px));
+    width: 100%;
+  }
+
+  [data-section="about-image-strip"] .image-strip__item {
+    width: 100%;
+  }
+
+  [data-section="about-image-strip"] .image-strip__media {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+
+  [data-section="about-image-strip"].image-strip--icon .image-strip__media {
+    height: 80px;
+    aspect-ratio: auto;
+  }
+
+  [data-section="about-image-strip"] .image-strip__subtitle {
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
