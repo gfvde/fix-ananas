@@ -10,8 +10,9 @@
 // ─────────────────────────────────────────────────────────────
 
 const ICONS = {
-  EMPTY_HEART: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="text-primary" fill="none" > <path d="M12.001 4.52853C14.35 2.42 17.98 2.49 20.2426 4.75736C22.5053 7.02472 22.583 10.637 20.4786 12.993L11.9999 21.485L3.52138 12.993C1.41705 10.637 1.49571 7.01901 3.75736 4.75736C6.02157 2.49315 9.64519 2.41687 12.001 4.52853ZM18.827 6.1701C17.3279 4.66794 14.9076 4.60701 13.337 6.01687L12.0019 7.21524L10.6661 6.01781C9.09098 4.60597 6.67506 4.66808 5.17157 6.17157C3.68183 7.66131 3.60704 10.0473 4.97993 11.6232L11.9999 18.6543L19.0201 11.6232C20.3935 10.0467 20.319 7.66525 18.827 6.1701Z" fill="currentColor" ></path> </svg>`,
-  FILLED_HEART: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"> <path d="M12 8C12 8 12 8 12.76 7C13.64 5.84 14.94 5 16.5 5C18.99 5 21 7.01 21 9.5C21 10.43 20.72 11.29 20.24 12C19.43 13.21 12 21 12 21C12 21 4.57 13.21 3.76 12C3.28 11.29 3 10.43 3 9.5C3 7.01 5.01 5 7.5 5C9.06 5 10.37 5.84 11.24 7C12 8 12 8 12 8Z" fill="#C22B51"/> <path d="M12 8C12 8 12 8 11.24 7C10.36 5.84 9.06 5 7.5 5C5.01 5 3 7.01 3 9.5C3 10.43 3.28 11.29 3.76 12C4.57 13.21 12 21 12 21M12 8C12 8 12 8 12.76 7C13.64 5.84 14.94 5 16.5 5C18.99 5 21 7.01 21 9.5C21 10.43 20.72 11.29 20.24 12C19.43 13.21 12 21 12 21" stroke="#C22B51" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> </svg>`,
+  // Figma fav button 11459:21677 (unactive = outline, active = espresso fill)
+  EMPTY_HEART: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M17.6169 11.0143C19.461 9.20412 19.461 6.26929 17.6169 4.45913C16.1508 3.02006 14.3811 2.57943 12.5955 3.43467C11.8867 3.77413 10.9575 4.45913 10.5 5.35393C10.0425 4.45913 9.11325 3.77413 8.40452 3.43467C6.61887 2.57943 4.8492 3.02006 3.38311 4.45913C1.53896 6.26929 1.53896 9.20412 3.38311 11.0143L9.7995 17.3124C10.1885 17.6942 10.8115 17.6942 11.2005 17.3124L17.6169 11.0143Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  FILLED_HEART: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M17.6169 4.45913C19.461 6.26929 19.461 9.20412 17.6169 11.0143L11.2005 17.3124C10.8115 17.6942 10.1885 17.6942 9.7995 17.3124L3.38311 11.0143C1.53896 9.20412 1.53896 6.26929 3.38311 4.45913C4.8492 3.02006 6.61887 2.57943 8.40452 3.43467C9.11325 3.77413 10.0425 4.45913 10.5 5.35393C10.9575 4.45913 11.8867 3.77413 12.5955 3.43467C14.3811 2.57943 16.1508 3.02006 17.6169 4.45913Z" fill="#6B4A39" stroke="#6B4A39" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   SPINNER: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 animate-spin text-primary" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>`
 };
 
@@ -562,48 +563,58 @@ class WishlistManager {
       </div>
     ` : "";
 
+    const esc = (v) => this.escapeHtml(v);
+    const ctaAttrs = hasOptions
+      ? `data-open-quick-view="true" data-product-id="${esc(id)}"`
+      : `data-add-to-cart="${esc(id)}"`;
+    const starSvg = `<svg width="16" height="16" viewBox="0 0 24 24" fill="#B59A70" stroke="none" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2Z"></path></svg>`;
+
     return `
-      <article class="pc-card pc-card--figma-products wishlist-page-product-card" data-product-card="${this.escapeHtml(id)}" data-product-slug="${this.escapeHtml(slug)}">
+      <article class="pc-card wishlist-page-product-card" data-product-card="${esc(id)}" data-product-slug="${esc(slug)}">
         <div class="pc-img-wrap">
-          <a href="${this.escapeHtml(url)}" class="pc-img-link" tabindex="-1" aria-hidden="true">
-            ${image ? `<img src="${this.escapeHtml(image)}" alt="${this.escapeHtml(name)}" class="pc-img" loading="lazy">` : `<span class="pc-img wishlist-page-product-card__placeholder"></span>`}
+          <a href="${esc(url)}" class="pc-img-link" tabindex="-1" aria-hidden="true">
+            ${image ? `<img src="${esc(image)}" alt="${esc(name)}" class="pc-img" loading="lazy">` : `<span class="pc-img wishlist-page-product-card__placeholder"></span>`}
           </a>
           <div class="pc-badges">
-            ${badge ? `<span class="pc-badge-pill">${this.escapeHtml(badge)}</span>` : ""}
+            ${badge && typeof badge === "string" ? `<span class="pc-badge-pill">${esc(badge)}</span>` : ""}
           </div>
           <div class="pc-actions">
             ${id ? `
-              <button type="button" class="pc-action-btn pc-action-btn--wishlist-remove" data-wishlist-remove-id="${this.escapeHtml(id)}" aria-label="${this.escapeHtml(this.LABELS.removeFromWishlist)}">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <button type="button" class="pc-action-btn pc-action-btn--wishlist-remove" data-wishlist-remove-id="${esc(id)}" aria-label="${esc(this.LABELS.removeFromWishlist)}">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="M6 6L18 18M18 6L6 18"></path>
                 </svg>
               </button>
             ` : ""}
-            <button type="button" class="pc-action-btn" data-open-quick-view="true" data-product-id="${this.escapeHtml(id)}" aria-label="${this.escapeHtml(this.LABELS.quickView)}">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"></path>
-                <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path>
+            <button type="button" class="pc-action-btn pc-action-btn--quick-view" data-open-quick-view="true" data-product-id="${esc(id)}" aria-label="${esc(this.LABELS.quickView)}">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M19 10.1041C19 10.1041 16.984 16.1034 10.5 15.9986C4.01603 15.8939 2 10.1041 2 10.1041C2 10.1041 3.93429 4 10.5 4C17.0657 4 19 10.1041 19 10.1041ZM12.625 10.0255C12.625 11.1541 11.6736 12.069 10.5 12.069C9.32639 12.069 8.375 11.1541 8.375 10.0255C8.375 8.89696 9.32639 7.98208 10.5 7.98208C11.6736 7.98208 12.625 8.89696 12.625 10.0255Z" stroke="currentColor" stroke-width="1.5"></path>
               </svg>
             </button>
           </div>
+          <div class="pc-cta-wrap">
+            <button type="button" class="pc-cta" ${ctaAttrs}>${esc(this.LABELS.addToCart)}</button>
+          </div>
         </div>
         <div class="pc-info">
-          <h3 class="pc-name"><a href="${this.escapeHtml(url)}">${this.escapeHtml(name)}</a></h3>
-          ${tags.length ? `<div class="pc-tags">${tags.map((tag) => `<span class="pc-tag">${this.escapeHtml(tag)}</span>`).join("")}</div>` : ""}
+          <h3 class="pc-name"><a href="${esc(url)}">${esc(name)}</a></h3>
+          ${tags.length ? `
+            <div class="pc-tags-container" data-pc-tags>
+              <div class="pc-tags-wrapper"><div class="pc-tags-track"><span class="pc-tags-set">${tags.map((tag) => `<span class="pc-tag">${esc(tag)}</span>`).join("")}</span></div></div>
+              <button type="button" class="pc-tags-scroll-btn" tabindex="-1" aria-hidden="true"><svg width="16" height="24" viewBox="0 0 16 24" fill="none"><path d="M10 17L5 12L10 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            </div>
+          ` : ""}
           ${(rating.score || rating.count) ? `
             <div class="pc-rating">
-              ${rating.count ? `<span class="pc-rating__count">( ${this.escapeHtml(rating.count)} ${this.escapeHtml(this.LABELS.review)} )</span>` : ""}
-              ${rating.score ? `<span class="pc-rating__score">${this.escapeHtml(rating.score)}</span>` : ""}
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="#f7a52d" stroke="none" aria-hidden="true">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2Z"></path>
-              </svg>
+              <span class="pc-rating__stars">${starSvg}${rating.score ? `<span class="pc-rating__score">${esc(rating.score)}</span>` : ""}</span>
+              ${rating.count ? `<span class="pc-rating__count">(${esc(rating.count)})</span>` : ""}
             </div>
           ` : ""}
           ${priceMarkup}
+          <div class="pc-cta-wrap-mb-card">
+            <button type="button" class="pc-cta" ${ctaAttrs}>${esc(this.LABELS.addToCart)}</button>
+          </div>
         </div>
-        <button type="button" class="pc-static-cta" ${hasOptions ? `data-open-quick-view="true" data-product-id="${this.escapeHtml(id)}"` : `data-add-to-cart="${this.escapeHtml(id)}"`}>
-          ${this.escapeHtml(this.LABELS.addToCart)}
-        </button>
       </article>
     `;
   }

@@ -1,0 +1,204 @@
+/* Dara "About us" page (Figma 11351:30495 desktop, 11322:15350 mobile).
+   Loaded from templates/page.jinja after its inline about-us styles. */
+
+.about-ananas-section,
+.coffee-journey-section,
+.principles-section,
+.why-ananas-section,
+.partners-section,
+.grow-together-section {
+  --about-accent: var(--accent, #6b4a39);
+}
+
+.about-ananas-section,
+.principles-section,
+.why-ananas-section,
+.partners-section,
+.grow-together-section {
+  background: transparent;
+}
+
+/* 1. Intro */
+.about-ananas-section .ananas-title {
+  color: var(--about-accent) !important;
+  font-weight: 500 !important;
+  line-height: 42px !important;
+}
+
+.about-ananas-section .ananas-subtitle {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.about-ananas-section .ananas-subtitle__lead {
+  font-weight: 500;
+}
+
+.about-ananas-section .ananas-subtitle__body {
+  font-weight: 400;
+}
+
+/* 2. Journey */
+.coffee-journey-section {
+  background: #fff0ec;
+}
+
+.journey-title {
+  color: var(--about-accent);
+  font-weight: 700;
+  line-height: 42px;
+}
+
+.timeline-content h4 {
+  font-weight: 400;
+}
+
+.scrolling-bean__img {
+  width: 33px;
+  height: 39px;
+  object-fit: contain;
+}
+
+/* 3. Principles */
+.section-title {
+  color: var(--about-accent);
+  font-weight: 500;
+  line-height: 42px;
+}
+
+.principles-carousel {
+  background: #ffffff;
+}
+
+.principle-card {
+  background: #ffffff;
+  padding-bottom: 12px;
+}
+
+.principle-card h5 {
+  font-weight: 700;
+  color: #000000;
+}
+
+.principle-card p {
+  font-weight: 500;
+  color: #404040;
+  padding-inline: 4px;
+}
+
+/* 4. Why Dara: the photo fills the frame; the scroll "fill" reveal stays */
+.why-cup-center img,
+.why-cup-mobile img {
+  inset: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.why-icon-item img {
+  width: 100px;
+  height: 100px;
+}
+
+.why-icon-item p {
+  font-weight: 700;
+  color: #404040;
+}
+
+/* 5. Partner cards */
+.partner-card-new {
+  background-color: rgba(231, 221, 204, 0.15);
+}
+
+.partner-card-new .card-text h4 {
+  color: var(--about-accent);
+  line-height: 34px;
+}
+
+.partner-card-new .card-text p {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  color: #171717;
+}
+
+.partner-card-new .card-text__lead {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 500;
+  color: #000000;
+}
+
+/* 6. Grow together */
+.grow-together-section h2 {
+  color: var(--about-accent);
+  font-weight: 500;
+  line-height: 42px;
+}
+
+.grow-together-section p {
+  font-weight: 500;
+}
+
+@media (max-width: 767px) {
+  .about-ananas-section .ananas-title {
+    line-height: 32px !important;
+  }
+
+  .about-ananas-section .ananas-subtitle {
+    gap: 8px;
+  }
+
+  .about-ananas-section .ananas-subtitle__lead {
+    font-weight: 500;
+  }
+
+  .journey-title {
+    font-weight: 500;
+    line-height: 34px;
+  }
+
+  .section-title {
+    line-height: 32px;
+  }
+
+  .principle-card p {
+    color: #404040;
+  }
+
+  .why-mobile-icon-item img {
+    width: 65px;
+    height: 65px;
+  }
+
+  .why-mobile-icon-item p {
+    font-weight: 700;
+    color: #404040;
+  }
+
+  .partner-card-new {
+    background: transparent;
+  }
+
+  .partner-card-new .card-text p {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .partner-card-new .card-text__lead {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .grow-together-section {
+    background: transparent;
+  }
+
+  .grow-together-section h2 {
+    line-height: 32px;
+  }
+}

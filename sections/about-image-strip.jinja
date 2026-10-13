@@ -3,13 +3,14 @@
 {% set mobile_row_gap = settings.mobile_row_gap | default(8) %}
 {% set mobile_padding = settings.mobile_padding | default(0) %}
 {% set title_color = settings.title_color | default('#000000') %}
-{% set subtitle_color = settings.subtitle_color | default('#000000') %}
+{% set subtitle_color = settings.subtitle_color | default('#52525C') %}
+{% set media_style = settings.media_style | default('image', true) %}
 
 <link rel="stylesheet" href="{{ 'css/sections/about-image-strip.css' | asset_url }}">
 <section
   section-id="{{ sectionId }}" data-section="about-image-strip"
   data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
-  class="image-strip"
+  class="image-strip image-strip--{{ media_style }}"
   style="
     --image-strip-desktop-gap: {{ desktop_gap }}px;
     --image-strip-mobile-gap: {{ mobile_gap }}px;

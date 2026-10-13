@@ -42,6 +42,41 @@
 - Checklist pass 1 (merged to main in PR #36):
   cart loyalty redemption, `/checkout` links, side cart empty/free-shipping fixes, Q&A gated by `questions_enabled`, variant price updates all copies, footer address/VAT/copyright "صنع بواسطة زد"/linked payment logos, category hero+breadcrumb+subcategories when banner off, region dialog for multi-inventory, 1023px mobile breakpoint, forced-RTL removed (drawer, filters, banner, product column), header font uses `var(--font-family)`.
 
+## Dara reskin (branch `claude/vigilant-johnson-gmlxwi`, 2026-10-12)
+- The owner asked to restyle Roast's existing elements to the **DARA** Figma (abaya store, file `U2w1BgcRDOHC8uZVNFBjSM`). This is not a new theme: same files and setting ids.
+- Theme defaults: Cairo, background `#FAF7F2`, espresso accent `#6B4A39`, radius 0.
+- Shared Dara CSS lives in `assets/css/dara/`, images in `assets/images/dara/`.
+- Done:
+  - header and footer, mega menu, drawer, search, snake bar;
+  - product card: every designer note is a setting in the `product_card` group;
+  - quick view, side cart, wishlist cards;
+  - home sections and the about-* sections they use: sticky about-details, image-strip icon mode, category scroll effect;
+  - PLP: shared `components/products/products-listing.jinja`, infinite scroll, collapsible filters, chips;
+  - PDP: sticky gallery; show/hide toggles for blocks; styling & care guides; viewers counter; fabric; trust strip; reviews;
+  - cart page: variant picker, looping payment row, UVPs;
+  - About page.
+- 133 new Arabic strings were merged into `locale/ar`.
+- Pushed as v1.0.46; validator 39/39.
+- Still open:
+  - the demo preset images are still the Ananas coffee photos (Dara photos need uploading);
+  - check the cart variant picker and PLP filters against real attribute data;
+  - review sort/filter is not built (no data).
+
+## Darna theme / DARNA store (2026-10-13)
+- The vitrin account now owns only the **Darna** theme (`73c71cfb-ec7d-47c8-a4cd-1ad10a2d0f41`); `.vitrin/theme.json` points to it.
+  - The old Roast theme (`48f8b24f…`) is no longer visible from this account.
+- Dev store **DARNA** `3257518` (pxhvko).
+  - Preview: https://pxhvko.dev.zid.store?theme=4c8e8590-70ba-42bd-9a71-61055bcfcf84
+  - Validator: 39/39 (Darna v1.0.1).
+- Store data was added through the `DARNA_zid_store` connector:
+  - 8 Dara products, SKUs `DARA-001`…`DARA-008`;
+  - 5 categories: 1749391 العبايات, 1749392 الشيلات, 1749393 الأكسسوارات, 1749394 إطلالات المناسبات, 1749395 عبايات يومية;
+  - a Size attribute with presets S‑M / L‑XL / XXL.
+- Not done through the connector:
+  - size variants per product: `add_variants` returns a 400 bug, so the owner adds them in the dashboard;
+  - brands: no connector tool.
+- `presets/default.json` now uses Dara images, uploaded with `vitrin presets -t 73c71cfb… upload-image`, plus DARNA category and product links.
+
 ## Open work (in priority order)
 1. **Demo content in the preview — DONE (partly)**: `python3 scripts/demo-settings.py build/theme` writes `templates/home.json`, `header.json`, `footer.json`, `layout.json` from `presets/default.json` into the preview folder only (not shipped), then `vitrin preview 3255406 .` uploads them as drafted settings.
    Home now renders 25 sections (all 24 types), 0 JS errors desktop + mobile (screenshots: `build/home-desktop.png`, `build/home-mobile.png`, not committed).

@@ -367,8 +367,6 @@
 
 [data-section="products-normal"] .pc-card--figma-products .pc-badge-pill,
 [data-section="products-normal"] .pc-card--figma-products .pc-badges > span {
-  background: var(--fp-badge-bg);
-  color: var(--fp-badge-text);
   border-radius: 0;
   font-size: 14px;
   font-weight: 500;
@@ -412,7 +410,6 @@
 [data-section="products-normal"] .pc-card--figma-products .pc-rating,
 [data-section="products-normal"] .pc-card--figma-products .pc-price-wrap {
   width: 100%;
-  justify-content: flex-end;
   gap: 4px;
 }
 

@@ -5,7 +5,9 @@
     "en": "Hero Banner (About)"
   },
   "icon": "landscape-line",
-  "meta": { "type": "slider" },
+  "meta": {
+    "type": "slider"
+  },
   "settings": [
     {
       "id": "bg_desktop",
@@ -117,7 +119,7 @@
         "ar": "العنوان الرئيسي",
         "en": "Heading"
       },
-      "default": "قهوة تضبط يومك"
+      "default": "أناقة على طريقتك"
     },
     {
       "id": "subheading",
@@ -126,7 +128,7 @@
         "ar": "العنوان الفرعي",
         "en": "Subheading"
       },
-      "default": "تجربة جريئة محمصة بعناية لتجربة تفهم جوك"
+      "default": "عبايات وأزياء خليجية بتفاصيل تشبهك"
     },
     {
       "id": "heading_color",
@@ -192,7 +194,7 @@
         "ar": "النص أسفل التقييم",
         "en": "Rating Sub-label Text"
       },
-      "default": "عميل مروق"
+      "default": "عميل"
     },
     {
       "id": "rating_scroll_target",
@@ -255,7 +257,7 @@
         "ar": "نص الزر",
         "en": "CTA Text"
       },
-      "default": "تسوّق قهوتك الآن"
+      "default": "تسوّقي مجموعتنا"
     },
     {
       "id": "cta_url",

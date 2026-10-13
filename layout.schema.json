@@ -67,8 +67,8 @@
             {
               "value": "start",
               "label": {
-                "ar": "في البداية",
-                "en": "Start"
+                "ar": "يمين (بداية السطر)",
+                "en": "Start (right in Arabic)"
               }
             }
           ],
@@ -87,8 +87,8 @@
           "id": "tags_infinite_loop",
           "type": "checkbox",
           "label": {
-            "ar": "تحريك الوسوم في حلقة لانهائية",
-            "en": "Animate tags in infinite loop"
+            "ar": "تحريك الوسوم تلقائياً في حلقة لانهائية (مع السحب اليدوي)",
+            "en": "Auto-slide tags in an infinite loop (manual swipe stays on)"
           },
           "default": true
         },
@@ -96,8 +96,8 @@
           "id": "show_color_options",
           "type": "checkbox",
           "label": {
-            "ar": "إظهار خيارات الألوان",
-            "en": "Show color options"
+            "ar": "إظهار ألوان المنتج (دوائر الألوان)",
+            "en": "Show color variants (swatches)"
           },
           "default": true
         },
@@ -114,8 +114,8 @@
           "id": "show_stock_info",
           "type": "checkbox",
           "label": {
-            "ar": "إظهار معلومات المخزون (التوفر والمبيعات)",
-            "en": "Show stock info (availability & sold)"
+            "ar": "إظهار مؤشر المبيعات (المباع هذا الشهر / القطع المتبقية)",
+            "en": "Show sales indicator (sold this month / pieces left)"
           },
           "default": true
         },
@@ -130,19 +130,78 @@
             {
               "value": "button",
               "label": {
-                "ar": "زرار",
-                "en": "Button"
+                "ar": "زر أسفل النص",
+                "en": "Button below the text"
               }
             },
             {
               "value": "icon",
               "label": {
-                "ar": "أيقونة",
-                "en": "Icon"
+                "ar": "أيقونة على الصورة",
+                "en": "Icon on the image"
               }
             }
           ],
           "default": "button"
+        },
+        {
+          "id": "desktop_cta_style",
+          "type": "select",
+          "label": {
+            "ar": "زر الإضافة للسلة على سطح المكتب",
+            "en": "Desktop add to cart button"
+          },
+          "options": [
+            {
+              "value": "hover",
+              "label": {
+                "ar": "يظهر عند التمرير (ينزلق للأعلى)",
+                "en": "Slides up on hover"
+              }
+            },
+            {
+              "value": "always",
+              "label": {
+                "ar": "ظاهر دائماً على الصورة",
+                "en": "Always visible on the image"
+              }
+            },
+            {
+              "value": "none",
+              "label": {
+                "ar": "مخفي",
+                "en": "Hidden"
+              }
+            }
+          ],
+          "default": "hover"
+        },
+        {
+          "id": "show_wishlist_button",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار زر المفضلة على الصورة",
+            "en": "Show wishlist button on the image"
+          },
+          "default": true
+        },
+        {
+          "id": "show_quick_view_button",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار زر العرض السريع على الصورة",
+            "en": "Show quick view button on the image"
+          },
+          "default": true
+        },
+        {
+          "id": "show_badges",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار الشارات على الصورة (الأكثر مبيعاً، جديد...)",
+            "en": "Show badges on the image (best seller, new...)"
+          },
+          "default": true
         },
         {
           "id": "columns_desktop",
@@ -280,7 +339,7 @@
             "ar": "تفعيل جزء صفحة التصنيفات",
             "en": "Enable Category Page Section"
           },
-          "default": false
+          "default": true
         },
         {
           "id": "filter_layout",
@@ -303,9 +362,50 @@
                 "ar": "شريط علوي مع قائمة منبثقة",
                 "en": "Top bar with filters drawer"
               }
+            },
+            {
+              "value": "topbar",
+              "label": {
+                "ar": "شريط علوي مع فلاتر قابلة للطي",
+                "en": "Top bar with collapsible filter chips"
+              }
             }
           ],
           "default": "sidebar"
+        },
+        {
+          "id": "filters_open",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار الفلاتر مفتوحة عند فتح الصفحة",
+            "en": "Show filters open when the page loads"
+          },
+          "default": true
+        },
+        {
+          "id": "products_loading",
+          "type": "select",
+          "label": {
+            "ar": "طريقة تحميل المنتجات",
+            "en": "Products loading"
+          },
+          "options": [
+            {
+              "value": "infinite",
+              "label": {
+                "ar": "تمرير لا نهائي",
+                "en": "Infinite scrolling"
+              }
+            },
+            {
+              "value": "pagination",
+              "label": {
+                "ar": "ترقيم الصفحات",
+                "en": "Pagination"
+              }
+            }
+          ],
+          "default": "infinite"
         },
         {
           "id": "category_page_background_color",
@@ -314,7 +414,7 @@
             "ar": "لون الخلفية",
             "en": "Background Color"
           },
-          "default": "#FEECE8"
+          "default": "#EAE4DD"
         },
         {
           "id": "category_page_title_color",
@@ -323,7 +423,7 @@
             "ar": "لون العنوان",
             "en": "Title Color"
           },
-          "default": "#F7512B"
+          "default": "#6B4A39"
         },
         {
           "id": "category_page_subtitle_color",
@@ -368,7 +468,7 @@
             "ar": "لون التصنيف النشط",
             "en": "Active Subcategory Color"
           },
-          "default": "#F7512B"
+          "default": "#6B4A39"
         },
         {
           "id": "category_page_card_hover_color",
@@ -377,7 +477,7 @@
             "ar": "لون التصنيف عند التحويم",
             "en": "Subcategory Hover Color"
           },
-          "default": "#F7512B"
+          "default": "#6B4A39"
         }
       ]
     },
@@ -432,7 +532,16 @@
             "ar": "لون زر إكمال الطلب",
             "en": "Checkout Button Color"
           },
-          "default": "#F7512B"
+          "default": "#6B4A39"
+        },
+        {
+          "id": "show_breadcrumb",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار مسار التنقل أعلى صفحة السلة",
+            "en": "Show breadcrumb on the cart page"
+          },
+          "default": false
         },
         {
           "id": "checkout_button_text_color",
@@ -477,6 +586,44 @@
               }
             }
           ]
+        },
+        {
+          "id": "payment_methods_source",
+          "type": "select",
+          "label": {
+            "ar": "مصدر وسائل الدفع",
+            "en": "Payment methods source"
+          },
+          "info": {
+            "ar": "تظهر في السلة وصفحة المنتج والعرض السريع والسلة الجانبية",
+            "en": "Shown in the cart, product page, quick view and side cart"
+          },
+          "options": [
+            {
+              "value": "custom",
+              "label": {
+                "ar": "الصور اللي أرفعها",
+                "en": "Images I upload"
+              }
+            },
+            {
+              "value": "store",
+              "label": {
+                "ar": "وسائل الدفع المفعّلة في المتجر",
+                "en": "Payment methods enabled in the store"
+              }
+            }
+          ],
+          "default": "custom"
+        },
+        {
+          "id": "show_side_cart_payments",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار وسائل الدفع في السلة الجانبية",
+            "en": "Show payment methods in the side cart"
+          },
+          "default": true
         },
         {
           "id": "payment_methods",
@@ -607,6 +754,40 @@
             }
           ],
           "default": "bottom"
+        },
+        {
+          "id": "mobile_thumbnail_layout",
+          "type": "select",
+          "label": {
+            "ar": "وضع الصور المصغرة في الموبايل",
+            "en": "Thumbnail layout on mobile"
+          },
+          "options": [
+            {
+              "value": "vertical",
+              "label": {
+                "ar": "بجانب الصورة",
+                "en": "Beside the image"
+              }
+            },
+            {
+              "value": "horizontal",
+              "label": {
+                "ar": "أسفل الصورة",
+                "en": "Below the image"
+              }
+            }
+          ],
+          "default": "vertical"
+        },
+        {
+          "id": "sticky_gallery",
+          "type": "checkbox",
+          "label": {
+            "ar": "تثبيت الصور أثناء التمرير حتى نهاية التفاصيل (ديسكتوب)",
+            "en": "Keep the gallery sticky until the details end (desktop)"
+          },
+          "default": true
         }
       ]
     },
@@ -631,8 +812,8 @@
           "id": "head_title_feature",
           "type": "text",
           "label": {
-            "ar": "العنوان الرئيسي لقسم المميزات",
-            "en": "Title Section"
+            "ar": "عنوان تفاصيل الإطلالة (قسم المميزات)",
+            "en": "Look details title (features block)"
           },
           "default": ""
         },
@@ -643,7 +824,7 @@
             "ar": "لون خلفية قسم المميزات",
             "en": "Features Section Background"
           },
-          "default": "#FFFFFF"
+          "default": "#F9B75724"
         },
         {
           "id": "features_title_font_size",
@@ -652,7 +833,7 @@
             "ar": "حجم عنوان القسم",
             "en": "Section Title Font Size"
           },
-          "default": 32
+          "default": 14
         },
         {
           "id": "features_icon_size",
@@ -661,7 +842,7 @@
             "ar": "حجم الأيقونات",
             "en": "Icon Size"
           },
-          "default": 48
+          "default": 56
         },
         {
           "id": "features_text_font_size",
@@ -688,7 +869,7 @@
             "ar": "استدارة الحواف",
             "en": "Border Radius"
           },
-          "default": 24
+          "default": 0
         },
         {
           "id": "head_title_color",
@@ -1067,8 +1248,8 @@
           "id": "coffee_acidity_level",
           "type": "text",
           "label": {
-            "ar": "درجة الحموضة",
-            "en": "Acidity Level"
+            "ar": "عنوان المؤشر الأول (مثال: اتساع القصة)",
+            "en": "Scale 1 title (e.g. Cut width)"
           },
           "default": ""
         },
@@ -1076,8 +1257,8 @@
           "id": "coffee_body_level",
           "type": "text",
           "label": {
-            "ar": "نص درجة القوام",
-            "en": "Body Level"
+            "ar": "عنوان المؤشر الثاني (مثال: ملمس القماش)",
+            "en": "Scale 2 title (e.g. Fabric feel)"
           },
           "default": ""
         },
@@ -1237,7 +1418,7 @@
             "ar": "لون الزر الأساسي",
             "en": "Primary Button Color"
           },
-          "default": "#F7512B"
+          "default": "#6B4A39"
         },
         {
           "id": "primary_btn_text_color_coffee_cta_section",
@@ -1264,7 +1445,7 @@
             "ar": "لون نص الزر الثانوي",
             "en": "Secondary Button Text Color"
           },
-          "default": "#F7512B"
+          "default": "#6B4A39"
         },
         {
           "id": "enable_faq_section",
@@ -1404,6 +1585,488 @@
             {
               "faq_question": "هل يمكن استرجاع المنتج بعد الشراء؟",
               "faq_answer": "نعم، يمكنك طلب الاسترجاع خلال الفترة المحددة وفق سياسة الاسترجاع الخاصة بالمتجر."
+            }
+          ]
+        },
+        {
+          "id": "show_viewers_counter",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار عداد (يشاهد X شخصاً هذا المنتج الآن)",
+            "en": "Show \"X people viewing\" counter"
+          },
+          "default": true
+        },
+        {
+          "id": "viewers_min",
+          "type": "number",
+          "label": {
+            "ar": "أقل عدد للمشاهدين",
+            "en": "Viewers counter minimum"
+          },
+          "default": 8
+        },
+        {
+          "id": "viewers_max",
+          "type": "number",
+          "label": {
+            "ar": "أكبر عدد للمشاهدين",
+            "en": "Viewers counter maximum"
+          },
+          "default": 25
+        },
+        {
+          "id": "viewers_text",
+          "type": "text",
+          "label": {
+            "ar": "نص العداد (استخدم %s مكان الرقم)",
+            "en": "Counter text (use %s for the number)"
+          },
+          "default": ""
+        },
+        {
+          "id": "show_fabric",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار الخامة",
+            "en": "Show fabric"
+          },
+          "default": true
+        },
+        {
+          "id": "fabric_label",
+          "type": "text",
+          "label": {
+            "ar": "عنوان الخامة",
+            "en": "Fabric label"
+          },
+          "info": {
+            "ar": "يُستخدم أيضاً للبحث عن خاصية منتج بنفس الاسم",
+            "en": "Also used to find a product attribute with the same name"
+          },
+          "default": ""
+        },
+        {
+          "id": "fabric_by_product",
+          "type": "list",
+          "max_items": 50,
+          "label": {
+            "ar": "الخامة حسب المنتج",
+            "en": "Fabric by product"
+          },
+          "settings": [
+            {
+              "id": "product",
+              "type": "product",
+              "label": {
+                "ar": "المنتج",
+                "en": "Product"
+              }
+            },
+            {
+              "id": "fabric",
+              "type": "text",
+              "label": {
+                "ar": "الخامة",
+                "en": "Fabric"
+              }
+            }
+          ]
+        },
+        {
+          "id": "show_look_details",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار تفاصيل الإطلالة (قائمة المميزات)",
+            "en": "Show look details (features list)"
+          },
+          "default": true
+        },
+        {
+          "id": "show_story_texture",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار القصة والقوام (المؤشرات)",
+            "en": "Show story & texture scales"
+          },
+          "default": true
+        },
+        {
+          "id": "story_label_low",
+          "type": "text",
+          "label": {
+            "ar": "المؤشر الأول: النص الأول",
+            "en": "Scale 1: first label"
+          },
+          "default": ""
+        },
+        {
+          "id": "story_label_mid",
+          "type": "text",
+          "label": {
+            "ar": "المؤشر الأول: النص الأوسط",
+            "en": "Scale 1: middle label"
+          },
+          "default": ""
+        },
+        {
+          "id": "story_label_high",
+          "type": "text",
+          "label": {
+            "ar": "المؤشر الأول: النص الأخير",
+            "en": "Scale 1: last label"
+          },
+          "default": ""
+        },
+        {
+          "id": "texture_label_low",
+          "type": "text",
+          "label": {
+            "ar": "المؤشر الثاني: النص الأول",
+            "en": "Scale 2: first label"
+          },
+          "default": ""
+        },
+        {
+          "id": "texture_label_mid",
+          "type": "text",
+          "label": {
+            "ar": "المؤشر الثاني: النص الأوسط",
+            "en": "Scale 2: middle label"
+          },
+          "default": ""
+        },
+        {
+          "id": "texture_label_high",
+          "type": "text",
+          "label": {
+            "ar": "المؤشر الثاني: النص الأخير",
+            "en": "Scale 2: last label"
+          },
+          "default": ""
+        },
+        {
+          "id": "show_low_stock",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار الكمية المتبقية",
+            "en": "Show remaining stock"
+          },
+          "default": true
+        },
+        {
+          "id": "show_buy_now",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار زر اشتري الآن",
+            "en": "Show \"Buy now\" button"
+          },
+          "default": true
+        },
+        {
+          "id": "size_chart_url",
+          "type": "url",
+          "label": {
+            "ar": "رابط جدول المقاسات",
+            "en": "Size chart link"
+          }
+        },
+        {
+          "id": "size_chart_text",
+          "type": "text",
+          "label": {
+            "ar": "نص رابط جدول المقاسات",
+            "en": "Size chart link text"
+          },
+          "default": ""
+        },
+        {
+          "id": "show_trust_badges",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار مميزات المتجر أسفل الصور",
+            "en": "Show trust badges under the gallery"
+          },
+          "default": true
+        },
+        {
+          "id": "trust_badges",
+          "type": "list",
+          "max_items": 4,
+          "label": {
+            "ar": "مميزات المتجر (لكل المنتجات)",
+            "en": "Trust badges (all products)"
+          },
+          "settings": [
+            {
+              "id": "image",
+              "type": "image",
+              "label": {
+                "ar": "الأيقونة",
+                "en": "Icon"
+              }
+            },
+            {
+              "id": "title",
+              "type": "text",
+              "label": {
+                "ar": "العنوان",
+                "en": "Title"
+              }
+            },
+            {
+              "id": "subtitle",
+              "type": "text",
+              "label": {
+                "ar": "الوصف",
+                "en": "Subtitle"
+              }
+            }
+          ]
+        },
+        {
+          "id": "show_variants_tab",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار تبويب الخيارات",
+            "en": "Show variants tab"
+          },
+          "default": false
+        },
+        {
+          "id": "show_shipping_tab",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار تبويب الشحن والتوصيل",
+            "en": "Show shipping tab"
+          },
+          "default": true
+        },
+        {
+          "id": "shipping_tab_title",
+          "type": "text",
+          "label": {
+            "ar": "عنوان تبويب الشحن",
+            "en": "Shipping tab title"
+          },
+          "default": ""
+        },
+        {
+          "id": "shipping_tab_content",
+          "type": "textarea",
+          "label": {
+            "ar": "محتوى تبويب الشحن (كل سطر نقطة)",
+            "en": "Shipping tab content (one point per line)"
+          },
+          "default": ""
+        },
+        {
+          "id": "show_styling_care_tab",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار تبويب التنسيق والعناية",
+            "en": "Show styling & care tab"
+          },
+          "default": true
+        },
+        {
+          "id": "styling_care_tab_title",
+          "type": "text",
+          "label": {
+            "ar": "عنوان تبويب التنسيق والعناية",
+            "en": "Styling & care tab title"
+          },
+          "default": ""
+        },
+        {
+          "id": "styling_care_heading",
+          "type": "text",
+          "label": {
+            "ar": "عنوان قسم التنسيق",
+            "en": "Styling & care heading"
+          },
+          "default": ""
+        },
+        {
+          "id": "styling_care_subtitle",
+          "type": "text",
+          "label": {
+            "ar": "وصف قسم التنسيق",
+            "en": "Styling & care subtitle"
+          },
+          "default": ""
+        },
+        {
+          "id": "styling_guide_button",
+          "type": "text",
+          "label": {
+            "ar": "نص زر دليل التنسيق",
+            "en": "Styling guide button text"
+          },
+          "default": ""
+        },
+        {
+          "id": "styling_guide_button_image",
+          "type": "image",
+          "label": {
+            "ar": "صورة زر دليل التنسيق",
+            "en": "Styling guide button image"
+          }
+        },
+        {
+          "id": "styling_guide_title",
+          "type": "text",
+          "label": {
+            "ar": "عنوان نافذة دليل التنسيق",
+            "en": "Styling guide popup title"
+          },
+          "default": ""
+        },
+        {
+          "id": "styling_guide_tabs",
+          "type": "list",
+          "max_items": 4,
+          "label": {
+            "ar": "تبويبات دليل التنسيق",
+            "en": "Styling guide tabs"
+          },
+          "settings": [
+            {
+              "id": "tab_label",
+              "type": "text",
+              "label": {
+                "ar": "اسم التبويب",
+                "en": "Tab label"
+              }
+            },
+            {
+              "id": "image",
+              "type": "image",
+              "label": {
+                "ar": "الصورة",
+                "en": "Image"
+              }
+            },
+            {
+              "id": "eyebrow",
+              "type": "text",
+              "label": {
+                "ar": "نص علوي صغير",
+                "en": "Small top text"
+              }
+            },
+            {
+              "id": "heading",
+              "type": "text",
+              "label": {
+                "ar": "العنوان",
+                "en": "Heading"
+              }
+            },
+            {
+              "id": "points",
+              "type": "textarea",
+              "label": {
+                "ar": "النقاط (كل سطر نقطة)",
+                "en": "Points (one per line)"
+              }
+            }
+          ],
+          "default": [
+            {
+              "tab_label": "يومي",
+              "eyebrow": "DARA | دارا",
+              "heading": "نسّقي إطلالتك",
+              "points": "اختاري العباية المناسبة لمناسبتك\nشيلة محايدة توازن ألوان الإطلالة\nحقيبة صغيرة وأكسسوارات هادئة\nراجعي المقاس وطول القطعة"
+            },
+            {
+              "tab_label": "مناسبات",
+              "eyebrow": "DARA | دارا",
+              "heading": "إطلالة المناسبات",
+              "points": "اختاري عباية بتفاصيل تطريز ناعمة\nشيلة بلون مكمّل للقطعة\nأكسسوارات لامعة بسيطة\nحذاء مريح بلون محايد"
+            }
+          ]
+        },
+        {
+          "id": "care_guide_button",
+          "type": "text",
+          "label": {
+            "ar": "نص زر دليل العناية",
+            "en": "Care guide button text"
+          },
+          "default": ""
+        },
+        {
+          "id": "care_guide_title",
+          "type": "text",
+          "label": {
+            "ar": "عنوان نافذة دليل العناية",
+            "en": "Care guide popup title"
+          },
+          "default": ""
+        },
+        {
+          "id": "care_guide_tabs",
+          "type": "list",
+          "max_items": 4,
+          "label": {
+            "ar": "تبويبات دليل العناية",
+            "en": "Care guide tabs"
+          },
+          "settings": [
+            {
+              "id": "tab_label",
+              "type": "text",
+              "label": {
+                "ar": "اسم التبويب",
+                "en": "Tab label"
+              }
+            },
+            {
+              "id": "image",
+              "type": "image",
+              "label": {
+                "ar": "الصورة",
+                "en": "Image"
+              }
+            },
+            {
+              "id": "eyebrow",
+              "type": "text",
+              "label": {
+                "ar": "نص علوي صغير",
+                "en": "Small top text"
+              }
+            },
+            {
+              "id": "heading",
+              "type": "text",
+              "label": {
+                "ar": "العنوان",
+                "en": "Heading"
+              }
+            },
+            {
+              "id": "points",
+              "type": "textarea",
+              "label": {
+                "ar": "النقاط (كل سطر نقطة)",
+                "en": "Points (one per line)"
+              }
+            }
+          ],
+          "default": [
+            {
+              "tab_label": "يومي",
+              "eyebrow": "DARA | دارا",
+              "heading": "العناية بعبايتك",
+              "points": "اقرئي بطاقة العناية أولاً\nاختاري طريقة التنظيف الموصى بها\nتجنبي الحرارة المباشرة على التطريز\nاحفظي القطعة معلّقة أو مطوية بعناية"
+            },
+            {
+              "tab_label": "مناسبات",
+              "eyebrow": "DARA | دارا",
+              "heading": "تفاصيل تستحق العناية",
+              "points": "راجعي تعليمات بطاقة القطعة\nاتبعي طريقة التنظيف الموصى بها\nتجنبي الحرارة المباشرة على التطريز\nاحفظي القطعة بعناية بعد الاستخدام"
             }
           ]
         }
@@ -1708,6 +2371,14 @@
           "label": {
             "ar": "عنوان قسم الرحلة",
             "en": "Journey title"
+          }
+        },
+        {
+          "id": "journey_icon",
+          "type": "image",
+          "label": {
+            "ar": "أيقونة متحركة على خط الرحلة (تفصيلة القماش)",
+            "en": "Moving icon on the journey line (fabric detail)"
           }
         },
         {

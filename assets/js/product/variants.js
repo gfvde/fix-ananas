@@ -37,25 +37,60 @@ function hide(selector) {
 // Price Updates
 // ─────────────────────────────────────────────────────────────
 
+// Unit prices as the platform formats them; the shown price is unit × quantity.
+const unitPrice = { current: null, old: null };
+
+function getProductQuantity() {
+  const input = document.querySelector('[data-qty-input="product-quantity"] [data-qty-value]');
+  return Math.max(1, parseInt(input?.value, 10) || 1);
+}
+
+// Multiply the number inside a formatted price ("1,250.00 ر.س") and keep its format.
+function multiplyFormattedPrice(formatted, qty) {
+  if (!formatted || qty === 1) return formatted;
+  const match = formatted.match(/\d[\d,]*(?:\.\d+)?/);
+  if (!match) return formatted;
+  const unit = parseFloat(match[0].replace(/,/g, ""));
+  if (!Number.isFinite(unit)) return formatted;
+  const decimals = (match[0].split(".")[1] || "").length;
+  let total = (unit * qty).toFixed(decimals);
+  if (match[0].includes(",")) {
+    const [int, frac] = total.split(".");
+    total = int.replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (frac ? "." + frac : "");
+  }
+  return formatted.replace(match[0], total);
+}
+
+function renderPriceTotals() {
+  if (unitPrice.current === null) return;
+  const qty = getProductQuantity();
+  document.querySelectorAll("[data-product-price]").forEach((priceEl) => {
+    priceEl.textContent = multiplyFormattedPrice(unitPrice.current, qty);
+  });
+  if (unitPrice.old) {
+    document.querySelectorAll("[data-product-price-old]").forEach((priceOldEl) => {
+      priceOldEl.textContent = multiplyFormattedPrice(unitPrice.old, qty);
+    });
+  }
+}
+
 export function updatePrice(selectedProduct) {
   if (!selectedProduct) return;
 
   // The product page can render the price block twice (mobile + desktop layouts), so update every copy.
   const hasDiscount = !!selectedProduct.formatted_sale_price;
-
-  document.querySelectorAll("[data-product-price]").forEach((priceEl) => {
-    priceEl.textContent = hasDiscount ? selectedProduct.formatted_sale_price : selectedProduct.formatted_price;
-  });
+  unitPrice.current = hasDiscount ? selectedProduct.formatted_sale_price : selectedProduct.formatted_price;
+  unitPrice.old = hasDiscount ? selectedProduct.formatted_price : null;
 
   document.querySelectorAll("[data-product-price-old]").forEach((priceOldEl) => {
     if (hasDiscount) {
-      priceOldEl.textContent = selectedProduct.formatted_price;
       priceOldEl.classList.remove("hidden");
     } else {
       priceOldEl.textContent = "";
       priceOldEl.classList.add("hidden");
     }
   });
+  renderPriceTotals();
 
   document.querySelectorAll("[data-product-discount]").forEach((discountEl) => {
     if (hasDiscount && selectedProduct.discount_percentage) {
@@ -106,7 +141,7 @@ export function updateProductInfo(selectedProduct) {
   if (lowStockBadge) {
     const threshold = window.storeLowStockThreshold || 5;
     if (window.storeLowStockEnabled && !selectedProduct.is_infinite && selectedProduct.quantity <= threshold) {
-      const template = window.productTranslations?.remaining || "Remaining %s only";
+      const template = lowStockBadge.dataset.template || window.productTranslations?.remaining || "Remaining %s only";
       const lowStockText = lowStockBadge.querySelector("[data-low-stock-text]");
       if (lowStockText) {
         lowStockText.textContent = template.replace("%s", selectedProduct.quantity);
@@ -196,6 +231,13 @@ export function updateStockStatus(selectedProduct) {
   const inStockSection = document.querySelector("[data-in-stock]");
   const outOfStockSection = document.querySelector("[data-out-of-stock]");
   const quantityWrapper = document.querySelector("[data-quantity-wrapper]");
+
+  // Dara PDP: "sold out" ribbon over the gallery follows the selected variant
+  document.querySelectorAll("[data-pdp-soldout]").forEach((ribbon) => {
+    const soldOut = !isSelectedProductBuyable(selectedProduct);
+    ribbon.classList.toggle("hidden", !soldOut);
+    ribbon.setAttribute("aria-hidden", soldOut ? "false" : "true");
+  });
 
   if (selectedProduct.in_stock) {
     // Show in-stock elements
@@ -455,6 +497,10 @@ function initProductObjSync() {
     if (e.detail?.id === "product-quantity" && window.productObj?.selected_product) {
       window.productObj.selected_product.selected_quantity = Number(e.detail.value) || 1;
     }
+    if (e.detail?.id === "product-quantity" || e.detail?.id === "sticky-qty") {
+      // The sticky bar syncs its value into the main input; read it after that runs
+      requestAnimationFrame(renderPriceTotals);
+    }
   });
 }
 
@@ -462,7 +508,17 @@ function initProductObjSync() {
 // Initialization
 // ─────────────────────────────────────────────────────────────
 
+function initUnitPrice() {
+  // Before any variant change, the unit price is what the page rendered
+  const priceEl = document.querySelector("[data-product-price]");
+  if (!priceEl) return;
+  unitPrice.current = priceEl.textContent.trim();
+  const oldEl = document.querySelector("[data-product-price-old]");
+  unitPrice.old = oldEl && !oldEl.classList.contains("hidden") ? oldEl.textContent.trim() || null : null;
+}
+
 export function init() {
+  initUnitPrice();
   initProductObjSync();
   updateSelectedOptionLabels();
   window.addEventListener("content:loaded", updateSelectedOptionLabels);

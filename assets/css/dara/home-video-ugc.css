@@ -1,0 +1,68 @@
+/* Dara home — video UGC (Figma 10876:16165 desktop, 10802:12030 mobile).
+   Loaded after css/sections/video-ugc.css. */
+
+[data-section="video-ugc"] .video-ugc__title {
+  line-height: 42px;
+}
+
+[data-section="video-ugc"] .video-ugc__subtitle {
+  font-weight: 500;
+  line-height: 24px;
+}
+
+[data-section="video-ugc"] .video-ugc__grid--desktop .video-ugc__card,
+[data-section="video-ugc"] .video-ugc__slide-mobile .video-ugc__card {
+  aspect-ratio: 309 / 522;
+}
+
+/* Figma play control: 40px frosted circle with a small white triangle */
+[data-section="video-ugc"] .video-ugc__play-icon {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: rgba(65, 65, 65, 0.4);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+/* the triangle always points right, so its optical offset is physical */
+[data-section="video-ugc"] .video-ugc__play-icon svg {
+  margin-left: 2px;
+  filter: none;
+  transform: none;
+}
+
+[data-section="video-ugc"] .video-ugc__play-btn:hover .video-ugc__play-icon {
+  transform: scale(1.08);
+  background: rgba(65, 65, 65, 0.55);
+}
+
+[data-section="video-ugc"] .video-ugc__play-btn:hover svg {
+  transform: none;
+}
+
+@media (max-width: 767px) {
+  [data-section="video-ugc"] .video-ugc__title {
+    font-size: 24px;
+    line-height: 34px;
+  }
+
+  [data-section="video-ugc"] .video-ugc__subtitle {
+    font-size: 16px;
+    max-width: 277px;
+    margin-inline: auto;
+  }
+
+  /* Figma: 193px cards, the second one peeks */
+  [data-section="video-ugc"] .video-ugc__slide-mobile {
+    flex: 0 0 193px;
+  }
+
+  [data-section="video-ugc"] .video-ugc__slider--mobile [data-carousel-viewport] > .flex {
+    gap: 16px;
+  }
+}

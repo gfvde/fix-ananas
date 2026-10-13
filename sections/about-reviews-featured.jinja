@@ -16,7 +16,7 @@
 {% macro star_icons(size=18, count=5) %}
   <span class="arf-stars" aria-hidden="true">
     {% for i in range(count) %}
-      <svg width="{{ size }}" height="{{ size }}" viewBox="0 0 20 20" fill="#F7A52D" xmlns="http://www.w3.org/2000/svg">
+      <svg width="{{ size }}" height="{{ size }}" viewBox="0 0 20 20" fill="#B59A70" xmlns="http://www.w3.org/2000/svg">
         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
       </svg>
     {% endfor %}
@@ -88,7 +88,7 @@
   {% set first_review = reviews[0] %}
   {% set second_review = reviews[1] if review_count > 1 else first_review %}
   {% set third_review = reviews[2] if review_count > 2 else first_review %}
-  {% set front_bg = first_review.background_color | default('#E2E899') %}
+  {% set front_bg = first_review.background_color | default('#FFFFFF', true) %}
   {% set front_color = first_review.text_color | default('#000000') %}
   {% set back_one_bg = second_review.background_color | default('#239C5C') %}
   {% set back_two_bg = third_review.background_color | default('#E2E899') %}
@@ -142,10 +142,10 @@
 {% if review_count > 0 %}
 <link rel="stylesheet" href="{{ 'css/sections/about-reviews-featured.css' | asset_url }}">
 <section section-id="{{ sectionId }}" data-section="about-reviews-featured"
-  data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}" class="section-arf"  style="--arf-title-color: {{ title_color }}; --arf-section-bg: {{ settings.section_background_color | default('#FCFAF7') }};">
+  data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}" class="section-arf"  style="--arf-title-color: {{ title_color }}; --arf-section-bg: {{ settings.section_background_color | default('transparent', true) }};">
   <div class="arf-desktop">
     <div class="arf-header">
-      <h2 class="arf-title">{{ settings.title | default(_('The coffee experience through our customers’ eyes')) }}</h2>
+      <h2 class="arf-title">{{ settings.title | default(_('The Dara style guide')) }}</h2>
     </div>
 
     <div class="arf-stage">
@@ -168,7 +168,7 @@
   </div>
 
   <div class="arf-mobile">
-    <h2 class="arf-title arf-title--mobile">{{ settings.title | default(_('The coffee experience through our customers’ eyes')) }}</h2>
+    <h2 class="arf-title arf-title--mobile">{{ settings.title | default(_('The Dara style guide')) }}</h2>
 
     <div class="arf-stage arf-stage--mobile">
       <div class="arf-bg-grid arf-bg-grid--mobile" aria-hidden="true">
@@ -194,7 +194,7 @@
           "text": {{ (review.text | default(fallback_text)) | tojson }},
           "name": {{ (review.name | default('')) | tojson }},
           "avatar": {{ (image_url(review.avatar, w=92, h=92, f='auto') if review.avatar else avatar_fallbacks[fallback_avatar_index]) | tojson }},
-          "backgroundColor": {{ (review.background_color | default('#E2E899')) | tojson }},
+          "backgroundColor": {{ (review.background_color | default('', true)) | tojson }},
           "textColor": {{ (review.text_color | default('#000000')) | tojson }},
           "stars": {{ (review.stars | default(5) | int) | tojson }}
         }{% if not loop.last %},{% endif %}

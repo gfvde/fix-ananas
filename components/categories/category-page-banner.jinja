@@ -24,22 +24,22 @@
 {% set cph_has_subcategories = cph_subcategories and cph_subcategories|length > 0 %}
 {% set cph_title = category.name if cph_is_category else _('All Products') %}
 {% set cph_subtitle = (category.description | striptags) if cph_is_category and category.description else '' %}
-{% set cph_bg_raw = safeget(cph_settings, 'category_page_background_color', safeget(cph_settings, 'background_color', safeget(settings, 'category_page_background_color', safeget(settings, 'category_page_category_page_background_color', safeget(settings, 'background_color', 'rgba(247,81,43,0.11)'))))) %}
-{% set cph_title_color_raw = safeget(cph_settings, 'category_page_title_color', safeget(cph_settings, 'title_color', safeget(settings, 'category_page_title_color', safeget(settings, 'category_page_category_page_title_color', safeget(settings, 'title_color', '#F7512B'))))) %}
+{% set cph_bg_raw = safeget(cph_settings, 'category_page_background_color', safeget(cph_settings, 'background_color', safeget(settings, 'category_page_background_color', safeget(settings, 'category_page_category_page_background_color', safeget(settings, 'background_color', 'rgba(107,74,57,0.11)'))))) %}
+{% set cph_title_color_raw = safeget(cph_settings, 'category_page_title_color', safeget(cph_settings, 'title_color', safeget(settings, 'category_page_title_color', safeget(settings, 'category_page_category_page_title_color', safeget(settings, 'title_color', '#6B4A39'))))) %}
 {% set cph_subtitle_color_raw = safeget(cph_settings, 'category_page_subtitle_color', safeget(cph_settings, 'subtitle_color', safeget(settings, 'category_page_subtitle_color', safeget(settings, 'category_page_category_page_subtitle_color', safeget(settings, 'subtitle_color', '#000000'))))) %}
 {% set cph_breadcrumb_color_raw = safeget(cph_settings, 'category_page_breadcrumb_color', safeget(cph_settings, 'breadcrumb_color', safeget(settings, 'category_page_breadcrumb_color', safeget(settings, 'category_page_category_page_breadcrumb_color', safeget(settings, 'breadcrumb_color', '#525252'))))) %}
 {% set cph_card_title_color_raw = safeget(cph_settings, 'category_page_card_title_color', safeget(cph_settings, 'card_title_color', safeget(settings, 'category_page_card_title_color', safeget(settings, 'category_page_category_page_card_title_color', safeget(settings, 'card_title_color', '#262626'))))) %}
 {% set cph_card_meta_color_raw = safeget(cph_settings, 'category_page_card_meta_color', safeget(cph_settings, 'card_meta_color', safeget(settings, 'category_page_card_meta_color', safeget(settings, 'category_page_category_page_card_meta_color', safeget(settings, 'card_meta_color', '#737373'))))) %}
-{% set cph_card_active_color_raw = safeget(cph_settings, 'category_page_card_active_color', safeget(cph_settings, 'card_active_color', safeget(settings, 'category_page_card_active_color', safeget(settings, 'category_page_category_page_card_active_color', safeget(settings, 'card_active_color', '#F7512B'))))) %}
-{% set cph_card_hover_color_raw = safeget(cph_settings, 'category_page_card_hover_color', safeget(cph_settings, 'card_hover_color', safeget(settings, 'category_page_card_hover_color', safeget(settings, 'category_page_category_page_card_hover_color', safeget(settings, 'card_hover_color', '#F7512B'))))) %}
-{% set cph_bg = normalize_cph_color(cph_bg_raw, 'rgba(247,81,43,0.11)')|trim %}
-{% set cph_title_color = normalize_cph_color(cph_title_color_raw, '#F7512B')|trim %}
+{% set cph_card_active_color_raw = safeget(cph_settings, 'category_page_card_active_color', safeget(cph_settings, 'card_active_color', safeget(settings, 'category_page_card_active_color', safeget(settings, 'category_page_category_page_card_active_color', safeget(settings, 'card_active_color', '#6B4A39'))))) %}
+{% set cph_card_hover_color_raw = safeget(cph_settings, 'category_page_card_hover_color', safeget(cph_settings, 'card_hover_color', safeget(settings, 'category_page_card_hover_color', safeget(settings, 'category_page_category_page_card_hover_color', safeget(settings, 'card_hover_color', '#6B4A39'))))) %}
+{% set cph_bg = normalize_cph_color(cph_bg_raw, 'rgba(107,74,57,0.11)')|trim %}
+{% set cph_title_color = normalize_cph_color(cph_title_color_raw, '#6B4A39')|trim %}
 {% set cph_subtitle_color = normalize_cph_color(cph_subtitle_color_raw, '#000000')|trim %}
 {% set cph_breadcrumb_color = normalize_cph_color(cph_breadcrumb_color_raw, '#525252')|trim %}
 {% set cph_card_title_color = normalize_cph_color(cph_card_title_color_raw, '#262626')|trim %}
 {% set cph_card_meta_color = normalize_cph_color(cph_card_meta_color_raw, '#737373')|trim %}
-{% set cph_card_active_color = normalize_cph_color(cph_card_active_color_raw, '#F7512B')|trim %}
-{% set cph_card_hover_color = normalize_cph_color(cph_card_hover_color_raw, '#F7512B')|trim %}
+{% set cph_card_active_color = normalize_cph_color(cph_card_active_color_raw, '#6B4A39')|trim %}
+{% set cph_card_hover_color = normalize_cph_color(cph_card_hover_color_raw, '#6B4A39')|trim %}
 {% set cph_variant_class = 'category-page-banner--with-subcategories' if cph_has_subcategories else 'category-page-banner--plain' %}
 
 <section
@@ -196,7 +196,7 @@
   }
 
   .category-page-banner__breadcrumb-current {
-    color: var(--cph-breadcrumb);
+    color: var(--cph-subtitle);
     font-weight: 500;
   }
 
@@ -244,7 +244,7 @@
     color: var(--cph-title);
     font-size: 30px;
     font-weight: 500;
-    line-height: 36px;
+    line-height: 42px;
   }
 
   .category-page-banner__copy p {
@@ -309,11 +309,11 @@
     justify-content: center;
     flex-shrink: 0;
     transition: background 0.2s;
-    background: #f85f3b;
+    background: var(--cph-active);
   }
 
   .category-page-banner__arrow--inactive {
-    background: rgba(248, 95, 59, 0.32);
+    background: color-mix(in srgb, var(--cph-active) 32%, transparent);
   }
 
   .category-page-banner__arrow svg path {
@@ -390,7 +390,6 @@
 
   .category-page-banner__subcategory[aria-current="page"] .category-page-banner__subcategory-media {
     border: 1.5px solid var(--cph-active);
-    box-shadow: 0 0 12px rgba(247, 81, 43, 0.2);
     box-shadow: 0 0 12px color-mix(in srgb, var(--cph-active) 24%, transparent);
   }
 
@@ -419,7 +418,7 @@
     }
 
     .category-page-banner--with-subcategories {
-      background: #ffffff;
+      background: var(--background);
     }
 
     .category-page-banner--with-subcategories .category-page-banner__copy {
@@ -439,13 +438,13 @@
     .category-page-banner__copy h1 {
       font-size: 20px;
       line-height: 28px;
-      font-weight: 400;
+      font-weight: 500;
     }
 
     .category-page-banner__copy p {
       font-size: 16px;
       line-height: 24px;
-      font-weight: 400;
+      font-weight: 500;
     }
 
     .category-page-banner__subcategories-wrap {
@@ -460,7 +459,7 @@
       width: 100%;
       max-width: 100%;
       overflow-x: auto;
-      background: #ffffff;
+      background: transparent;
       padding: 8px 16px;
       scroll-padding-inline: 16px;
       scrollbar-width: none;
@@ -485,7 +484,7 @@
     .category-page-banner__subcategory-title {
       font-size: 14px;
       line-height: 20px;
-      font-weight: 400;
+      font-weight: 500;
     }
 
     .category-page-banner__subcategory-count {

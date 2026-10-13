@@ -596,3 +596,9 @@
     width: 22px;
   }
 }
+
+/* ── Dara reviews version 2 (Figma 11522:50385) ─────────────────────── */
+[data-section="about-reviews-featured"] .arf-stars svg,
+.section-arf .arf-stars svg {
+  fill: #b59a70;
+}

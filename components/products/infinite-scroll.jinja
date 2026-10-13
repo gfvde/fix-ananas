@@ -1,3 +1,9 @@
+{#
+  Infinite scrolling for PLP / sub-category (Dara dev note 11299:46484).
+  assets/js/features/product-filter.js loads the next page when this sentinel
+  comes into view. The "Load more" link is a real link to the next page, so the
+  listing still pages without JavaScript; with JavaScript it loads in place.
+#}
 {% set products_total = products.count|default(0)|int %}
 {% set current_page = currentPage|default(products.page|default(1))|int %}
 {% set total_pages = totalPages|default(products.pages_count|default(1))|int %}
@@ -14,32 +20,16 @@
   {% if current_page < total_pages %}data-next-url="{{ session.url.include_query_params(page=next_page) }}"{% endif %}
 >
   <div class="products-infinite-scroll__loader" data-infinite-loader hidden>
-    <div
-      class="coffee-loader"
-      role="status"
-      aria-label="{{ _('Loading') }}"
-    >
-      <span class="coffee-loader__steam coffee-loader__steam--1"></span>
-      <span class="coffee-loader__steam coffee-loader__steam--2"></span>
-      <span class="coffee-loader__steam coffee-loader__steam--3"></span>
-      <span class="coffee-loader__cup">
-        <span class="coffee-loader__coffee"></span>
-      </span>
-      <span class="coffee-loader__plate"></span>
-    </div>
+    <span class="plp-spinner" role="status" aria-label="{{ _('Loading') }}"></span>
   </div>
+
+  {% if current_page < total_pages %}
+    <a
+      class="products-infinite-scroll__more"
+      href="{{ session.url.include_query_params(page=next_page) }}"
+      data-infinite-more
+    >
+      {{ _('Load more') }}
+    </a>
+  {% endif %}
 </div>
-
-<style>
-  .products-infinite-scroll {
-    min-height: 1px;
-    width: 100%;
-  }
-
-  .products-infinite-scroll__loader {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 86px;
-  }
-</style>

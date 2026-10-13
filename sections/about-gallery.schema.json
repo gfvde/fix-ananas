@@ -5,7 +5,9 @@
     "en": "Media Gallery"
   },
   "icon": "image-2-line",
-  "meta": { "type": "gallery" },
+  "meta": {
+    "type": "gallery"
+  },
   "settings": [
     {
       "id": "title",
@@ -14,7 +16,7 @@
         "ar": "العنوان",
         "en": "Title"
       },
-      "default": "لحظات من عالم أناناس"
+      "default": "لحظات من عالم دارا"
     },
     {
       "id": "subtitle",
@@ -23,7 +25,7 @@
         "ar": "العنوان الفرعي",
         "en": "Subtitle"
       },
-      "default": "قهوة مو بس تُشرب… تنعاش"
+      "default": "أناقة خليجية… تعيش معك"
     },
     {
       "id": "title_color",
@@ -53,7 +55,7 @@
       "min": 0,
       "max": 50,
       "step": 2,
-      "default": 8,
+      "default": 0,
       "unit": "px"
     },
     {
@@ -95,7 +97,7 @@
         "ar": "لون الخلفية",
         "en": "Background Color"
       },
-      "default": "#ffffff"
+      "default": "transparent"
     },
     {
       "id": "remove_bottom_margin",

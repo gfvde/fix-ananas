@@ -1,0 +1,19 @@
+{# Payment methods row: infinite marquee on mobile and desktop (Dara 11522:52233).
+   Merchant list (Cart Page Settings → payment methods) first, then the store's own checkout
+   payment methods, then plain text labels. The group is repeated so the loop is seamless. #}
+<div
+  class="cart-payments"
+  aria-label="{{ _('Payment methods') }}"
+>
+  <div class="cart-payments__track">
+    {% for repeat in [1, 2, 3, 4] %}
+      <div
+        class="cart-payments__group"
+        {% if repeat > 1 %}aria-hidden="true"{% endif %}
+      >
+        {% set pm_item_class = 'cart-payment' %}
+        {% include 'components/shared/payment-methods-items.jinja' %}
+      </div>
+    {% endfor %}
+  </div>
+</div>

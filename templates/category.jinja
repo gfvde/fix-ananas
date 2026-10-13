@@ -13,23 +13,9 @@
   {% elif settings.category_page_category_page_enabled is defined %}
     {% set category_page_enabled = settings.category_page_category_page_enabled %}
   {% else %}
-    {% set category_page_enabled = false %}
+    {% set category_page_enabled = true %}
   {% endif %}
   {% set category_page_enabled_value = category_page_enabled|string|lower|trim %}
-  {% if category_page_settings.filter_layout is defined %}
-    {% set category_filter_layout = category_page_settings.filter_layout %}
-  {% elif settings.filter_layout is defined %}
-    {% set category_filter_layout = settings.filter_layout %}
-  {% elif settings.category_page_filter_layout is defined %}
-    {% set category_filter_layout = settings.category_page_filter_layout %}
-  {% elif settings.category_page_category_page_filter_layout is defined %}
-    {% set category_filter_layout = settings.category_page_category_page_filter_layout %}
-  {% else %}
-    {% set category_filter_layout = 'drawer' %}
-  {% endif %}
-  {% set category_filters_sidebar = category_filter_layout == 'sidebar' %}
-  {% set category_infinite_scroll_enabled_bool = true %}
-  {% set category_products_shell_class = 'products-with-sidebar products-with-sidebar--ready' if category_filters_sidebar else 'flex items-center gap-2' %}
 
   {% if category_page_enabled_value in ['true', '1', 'on', 'yes'] %}
     {% include 'components/categories/category-page-banner.jinja' %}
@@ -67,64 +53,15 @@
   {% endif %}
 
   {# Products Section #}
-  <section class="px-4  pb-8 md:px-16 md:py-6">
+  <section class="plp-section px-4 pb-8 md:px-16 md:py-6">
     <div class="theme-container">
-      <div
-        id="products-content"
-        class="flex flex-col gap-3 md:gap-6 transition-opacity duration-200"
-      >
-        <div
-          class="{{ category_products_shell_class }}"
-          {% if category_filters_sidebar %}dir="ltr"{% endif %}
-        >
-          {% if category_filters_sidebar %}
-            {% include 'components/products/filters/sidebar-topbar.jinja' %}
-          {% endif %}
-          <div
-            class="min-w-0"
-            {% if category_filters_sidebar %}dir="rtl"{% endif %}
-          >
-            {# Products Header with Filters #}
-            {% include 'components/products/products-header.jinja' %}
-
-            {# Products Grid #}
-            {% if products and products.results and products.results|length > 0 %}
-              <div
-                data-grid-root="true"
-                data-grid="four"
-                class="group/grid grid gap-x-3 gap-y-4 md:gap-x-4 md:gap-y-10"
-              >
-                {% for product in products.results %}
-                  {% include 'components/products/product-card.jinja' %}
-                {% endfor %}
-              </div>
-
-              {% set totalPages = ((products.count / (session.query_params.get('page_size') or 24)|int) | round(0, 'ceil')) | int %}
-              {% set currentPage = products.page %}
-              {% if category_infinite_scroll_enabled_bool %}
-                {% include 'components/products/infinite-scroll.jinja' %}
-              {% else %}
-                {% include 'components/products/pagination.jinja' %}
-              {% endif %}
-            {% else %}
-              <div class="bg-secondary flex flex-col items-center justify-center rounded-lg py-16">
-                <p class="text-muted text-sm">{{ _("No products found in this category") }}</p>
-              </div>
-            {% endif %}
-          </div>
-          {% if category_filters_sidebar %}
-            {% include 'components/products/filters/sidebar-filters.jinja' %}
-          {% endif %}
-        </div>
-      </div>
+      {% with empty_state='category' %}
+        {% include 'components/products/products-listing.jinja' %}
+      {% endwith %}
     </div>
   </section>
 
   {# Quick View Modal is included globally in layout.jinja #}
-  {% if category_filters_sidebar %}
-    {% include 'components/products/filters/sidebar-layout-ready.jinja' %}
-  {% endif %}
-
   <script>
     (function () {
       // Track grid mode separately for desktop and mobile

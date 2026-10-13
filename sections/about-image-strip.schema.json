@@ -5,7 +5,9 @@
     "en": "Image Strip (About)"
   },
   "icon": "layout-column-line",
-  "meta": { "type": "gallery" },
+  "meta": {
+    "type": "gallery"
+  },
   "settings": [
     {
       "id": "photo1",
@@ -148,6 +150,31 @@
       "default": ""
     },
     {
+      "id": "media_style",
+      "type": "select",
+      "label": {
+        "ar": "شكل الصور",
+        "en": "Media style"
+      },
+      "default": "image",
+      "options": [
+        {
+          "value": "image",
+          "label": {
+            "ar": "صورة كاملة",
+            "en": "Full image"
+          }
+        },
+        {
+          "value": "icon",
+          "label": {
+            "ar": "أيقونة (مميزات UVP)",
+            "en": "Icon (UVP)"
+          }
+        }
+      ]
+    },
+    {
       "id": "title_color",
       "type": "color",
       "label": {
@@ -163,7 +190,7 @@
         "ar": "لون العناوين الفرعية للصور",
         "en": "Image Subtitle Color"
       },
-      "default": "#000000"
+      "default": "#52525C"
     },
     {
       "id": "desktop_gap",

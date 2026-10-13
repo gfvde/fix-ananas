@@ -5,20 +5,6 @@
 {% block title %}{{ store.name }} – {{ brand_name }}{% endblock %}
 
 {% block content %}
-  {% set category_page_settings = settings.category_page if settings.category_page is defined and settings.category_page else {} %}
-  {% if category_page_settings.filter_layout is defined %}
-    {% set category_filter_layout = category_page_settings.filter_layout %}
-  {% elif settings.filter_layout is defined %}
-    {% set category_filter_layout = settings.filter_layout %}
-  {% elif settings.category_page_filter_layout is defined %}
-    {% set category_filter_layout = settings.category_page_filter_layout %}
-  {% elif settings.category_page_category_page_filter_layout is defined %}
-    {% set category_filter_layout = settings.category_page_category_page_filter_layout %}
-  {% else %}
-    {% set category_filter_layout = 'drawer' %}
-  {% endif %}
-  {% set category_filters_sidebar = category_filter_layout == 'sidebar' %}
-  {% set category_products_shell_class = 'products-with-sidebar products-with-sidebar--ready' if category_filters_sidebar else 'flex items-center gap-2' %}
   {% set product_list = products.results if products is defined and products and products.results else [] %}
   {% set product_count = products.count if products is defined and products and products.count is not none else product_list | length %}
 
@@ -75,58 +61,15 @@
   </section>
 
   {# Products #}
-  <section class="px-4 pb-8 md:px-16 md:pb-16">
+  <section class="plp-section px-4 pb-8 md:px-16 md:pb-16">
     <div class="theme-container">
-      <div
-        id="products-content"
-        class="flex flex-col gap-3 md:gap-6 transition-opacity duration-200"
-      >
-        <div
-          class="{{ category_products_shell_class }}"
-          {% if category_filters_sidebar %}dir="ltr"{% endif %}
-        >
-          {% if category_filters_sidebar %}
-            {% include 'components/products/filters/sidebar-topbar.jinja' %}
-          {% endif %}
-          <div
-            class="min-w-0"
-            {% if category_filters_sidebar %}dir="rtl"{% endif %}
-          >
-            {% if product_list | length > 0 %}
-              {% include 'components/products/products-header.jinja' %}
-              <div
-                data-grid-root="true"
-                data-grid="four"
-                class="group/grid grid gap-x-3 gap-y-4 md:gap-x-4 md:gap-y-10"
-              >
-                {% for product in product_list %}
-                  {% include 'components/products/product-card.jinja' %}
-                {% endfor %}
-              </div>
-
-              {% set page_size_value = ((session.query_params.get('page_size') if session and session.query_params else none) or 24) | int %}
-              {% set page_size_value = page_size_value if page_size_value > 0 else 24 %}
-              {% set totalPages = ((product_count / page_size_value) | round(0, 'ceil')) | int %}
-              {% set currentPage = (products.page | default(1, true)) | int %}
-              {% include 'components/products/pagination.jinja' %}
-            {% else %}
-              <div class="bg-secondary flex flex-col items-center justify-center rounded-lg py-16">
-                <p class="text-muted text-sm">{{ _("No products found in this brand") }}</p>
-              </div>
-            {% endif %}
-          </div>
-          {% if category_filters_sidebar and product_list | length > 0 %}
-            {% include 'components/products/filters/sidebar-filters.jinja' %}
-          {% endif %}
-        </div>
-      </div>
+      {% with empty_state='brand' %}
+        {% include 'components/products/products-listing.jinja' %}
+      {% endwith %}
     </div>
   </section>
 
   {# Quick View Modal is included globally in layout.jinja #}
-  {% if category_filters_sidebar %}
-    {% include 'components/products/filters/sidebar-layout-ready.jinja' %}
-  {% endif %}
 
   <script>
     (function () {

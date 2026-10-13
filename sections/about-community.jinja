@@ -1,12 +1,12 @@
 {% set is_lazy = (settings.order | default(3) | int) > 2 %}
 {% set section_bg_color = settings.section_bg_color | default('#FFF0EC') %}
-{% set title_color = settings.title_color | default('#F7512B') %}
+{% set title_color = settings.title_color | default('#6B4A39', true) %}
 {% set lead_color = settings.lead_color | default('#000000') %}
 {% set body_color = settings.body_color | default('#000000') %}
 {% set cta_text_color = settings.cta_text_color | default('#000000') %}
 {% set cta_bg_color = settings.cta_bg_color | default(section_bg_color) %}
 {% set cta_border_color = settings.cta_border_color | default('#000000') %}
-{% set cta_text = settings.cta_text | default(_('Discover the world of Ananas')) %}
+{% set cta_text = settings.cta_text | default(_('Discover the world of Dara')) %}
 {% set media_type = settings.media_type | default('image') %}
 {% set mobile_media_position = settings.mobile_media_position | default('after') %}
 
@@ -38,18 +38,18 @@
 {% macro community_content(is_mobile=false) %}
   <div class="{% if is_mobile %}ac-mobile__text{% else %}ac-text{% endif %}">
     <div class="ac-text__inner">
-      <h2 class="ac-title">{{ settings.title | default(_('The Ananas community')) }}</h2>
+      <h2 class="ac-title">{{ settings.title | default(_('The world of Dara')) }}</h2>
       <p class="ac-body ac-body--lead">
-        {{ settings.body1 | default(_('At Ananas, the experience is bigger than a cup of coffee.')) }}<br>
-        {{ settings.body2 | default(_('It is moments you live and details you choose that express who you are')) }}
+        {{ settings.body1 | default(_('At Dara, elegance starts with the details.')) }}<br>
+        {{ settings.body2 | default(_('Calm cuts and looks that express who you are')) }}
       </p>
       <p class="ac-body ac-body--normal">
         {% if is_mobile and (settings.body3_mobile or settings.body4_mobile or settings.body5_mobile) %}
-          {{ settings.body3_mobile | default(_('From coffee to everything around your day,')) }}<br>
-          {{ settings.body4_mobile | default(_('we design an experience that brings together people who share the same taste.')) }}<br>
-          {{ settings.body5_mobile | default(_('Ananas… a community where coffee is lived your way.')) }}
+          {{ settings.body3_mobile | default(_('From the abaya to the shawl and accessories,')) }}<br>
+          {{ settings.body4_mobile | default(_('discover pieces that complete your taste.')) }}<br>
+          {{ settings.body5_mobile | default(_('Dara… Gulf elegance in your style.')) }}
         {% else %}
-          {{ settings.body3 | default(_('From coffee to everything around your day, we design an experience that brings together people who share the same taste. Ananas… a community where coffee is lived your way.')) }}
+          {{ settings.body3 | default(_('From the abaya to the shawl and accessories, discover pieces that complete your taste. Dara… Gulf elegance in your style.')) }}
         {% endif %}
       </p>
     </div>

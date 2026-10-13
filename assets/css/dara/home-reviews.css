@@ -1,0 +1,54 @@
+/* Dara home — star reviews (Figma 10802:13413 desktop, 10802:11804 mobile).
+   Loaded after css/sections/star-reviews.css. */
+
+[data-section="star-reviews"] .sr-title {
+  line-height: 42px;
+}
+
+/* Figma: soft bottom gradient on the photo card */
+[data-section="star-reviews"] .sr-card--image::after {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0.17) 56.4%,
+    rgba(102, 102, 102, 0) 74%
+  );
+}
+
+[data-section="star-reviews"] .sr-card--image .sr-card__content {
+  gap: 30px;
+}
+
+[data-section="star-reviews"] .sr-card--image .sr-text,
+[data-section="star-reviews"] .sr-card--image .sr-author__name {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+@media (min-width: 768px) {
+  [data-section="star-reviews"] .sr-desktop {
+    align-items: center;
+  }
+
+  /* Figma: side columns are vertically centred next to the taller photo card */
+  [data-section="star-reviews"] .sr-col .sr-card {
+    flex: 0 0 auto;
+  }
+
+  [data-section="star-reviews"] .sr-card--image {
+    min-height: 539px;
+    align-self: stretch;
+  }
+}
+
+@media (max-width: 767px) {
+  [data-section="star-reviews"] .sr-title {
+    font-size: 24px;
+    line-height: 34px;
+  }
+
+  [data-section="star-reviews"] .sr-text {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+  }
+}

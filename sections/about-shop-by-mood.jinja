@@ -1,22 +1,22 @@
 {% set is_lazy = (settings.order | default(3) | int) > 2 %}
-{% set title_text = settings.title | default(_('Choose your coffee to match your mood')) %}
-{% set subtitle_text = settings.subtitle | default(_('Every mood has its own experience, here you will find what suits you')) %}
-{% set cta_text = settings.cta_text | default(_('Shop by mood')) %}
+{% set title_text = settings.title | default(_('Choose your look')) %}
+{% set subtitle_text = settings.subtitle | default(_('A look for every occasion, find what suits you here')) %}
+{% set cta_text = settings.cta_text | default(_('Shop by occasion')) %}
 {% set cta_url = settings.cta_url | default('#') %}
-{% set section_bg_color = settings.section_bg_color | default('#ffffff') %}
+{% set section_bg_color = settings.section_bg_color | default('transparent', true) %}
 {% set text_color = settings.text_color | default('#000000') %}
-{% set tag_bg_color = settings.tag_bg_color | default('#F7512B') %}
+{% set tag_bg_color = settings.tag_bg_color | default('#6B4A39', true) %}
 {% set tag_text_color = settings.tag_text_color | default('#ffffff') %}
 {% set cta_border_color = settings.cta_border_color | default('#000000') %}
 {% set cta_text_color = settings.cta_text_color | default('#000000') %}
-{% set hover_text_color = settings.hover_text_color | default('#ffffff') %}
+{% set hover_text_color = settings.hover_text_color | default('#6B4A39', true) %}
 
 {%
   set cards = [
-    { 'image': settings.card1_image, 'tag': settings.card1_tag | default(_('Something new')), 'title': settings.card1_title | default(_('Adventure coffee')), 'desc': settings.card1_desc | default(_('Discover new flavors every time')), 'url': settings.card1_url | default('#') },
-    { 'image': settings.card2_image, 'tag': settings.card2_tag | default(_('Clear mind')), 'title': settings.card2_title | default(_('Focus coffee')), 'desc': settings.card2_desc | default(_('A clear mood that helps you get things done without distraction')), 'url': settings.card2_url | default('#') },
-    { 'image': settings.card3_image, 'tag': settings.card3_tag | default(_('Calm with a rich taste')), 'title': settings.card3_title | default(_('Relaxation coffee')), 'desc': settings.card3_desc | default(_('A moment for yourself, away from the rush')), 'url': settings.card3_url | default('#') },
-    { 'image': settings.card4_image, 'tag': settings.card4_tag | default(_('Start of your day')), 'title': settings.card4_title | default(_('Morning coffee')), 'desc': settings.card4_desc | default(_('A light start that sets your day right from the first cup')), 'url': settings.card4_url | default('#') }
+    { 'image': settings.card1_image, 'tag': settings.card1_tag | default(_('Your everyday')), 'title': settings.card1_title | default(_('Everyday abayas')), 'desc': settings.card1_desc | default(_('A light look for your day')), 'url': settings.card1_url | default('#') },
+    { 'image': settings.card2_image, 'tag': settings.card2_tag | default(_('Wide, calm cuts')), 'title': settings.card2_title | default(_('Comfortable fashion')), 'desc': settings.card2_desc | default(_('Comfortable cuts for calm moments')), 'url': settings.card2_url | default('#') },
+    { 'image': settings.card3_image, 'tag': settings.card3_tag | default(_('Work elegance')), 'title': settings.card3_title | default(_('Work looks')), 'desc': settings.card3_desc | default(_('Simple looks for the work day')), 'url': settings.card3_url | default('#') },
+    { 'image': settings.card4_image, 'tag': settings.card4_tag | default(_('Your occasions')), 'title': settings.card4_title | default(_('Occasion abayas')), 'desc': settings.card4_desc | default(_('Discover new details for every occasion')), 'url': settings.card4_url | default('#') }
   ]
 %}
 
@@ -93,7 +93,7 @@
             />
           </svg>
         </button>
-        <p class="sbm-mob-subtitle">{{ settings.mobile_subtitle | default(_('Every mood has its own experience')) }}</p>
+        <p class="sbm-mob-subtitle">{{ settings.mobile_subtitle | default(_('A look for every occasion')) }}</p>
         <button
           class="sbm-arrow"
           data-sbm-next

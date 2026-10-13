@@ -1,0 +1,130 @@
+{#
+  Product listing body (Dara PLP): toolbar, collapsible filters, products grid
+  and infinite scroll / pagination.
+
+  Used by templates/products.jinja, templates/category.jinja and templates/brand.jinja.
+
+  Optional context (via {% with %}):
+    - empty_state: 'search' (default) | 'category' | 'brand'
+#}
+{% set plp_settings = settings.category_page if settings.category_page is defined and settings.category_page else {} %}
+
+{% if plp_settings.filter_layout is defined and plp_settings.filter_layout %}
+  {% set plp_layout = plp_settings.filter_layout %}
+{% elif settings.filter_layout is defined and settings.filter_layout %}
+  {% set plp_layout = settings.filter_layout %}
+{% elif settings.category_page_filter_layout is defined and settings.category_page_filter_layout %}
+  {% set plp_layout = settings.category_page_filter_layout %}
+{% elif settings.category_page_category_page_filter_layout is defined and settings.category_page_category_page_filter_layout %}
+  {% set plp_layout = settings.category_page_category_page_filter_layout %}
+{% else %}
+  {% set plp_layout = 'drawer' %}
+{% endif %}
+{% set plp_layout = plp_layout if plp_layout in ['sidebar', 'drawer', 'topbar'] else 'drawer' %}
+
+{% if plp_settings.products_loading is defined %}
+  {% set plp_loading = plp_settings.products_loading %}
+{% elif settings.category_page_products_loading is defined %}
+  {% set plp_loading = settings.category_page_products_loading %}
+{% else %}
+  {% set plp_loading = 'infinite' %}
+{% endif %}
+{% set plp_infinite = (plp_loading | default('infinite', true)) != 'pagination' %}
+
+{% if plp_settings.filters_open is defined %}
+  {% set plp_filters_open_raw = plp_settings.filters_open %}
+{% elif settings.category_page_filters_open is defined %}
+  {% set plp_filters_open_raw = settings.category_page_filters_open %}
+{% else %}
+  {% set plp_filters_open_raw = true %}
+{% endif %}
+{% set plp_filters_open = (plp_filters_open_raw | string | lower | trim) not in ['false', '0', 'off', 'no'] %}
+
+{% set plp_sidebar = plp_layout == 'sidebar' %}
+{% set plp_empty_state = empty_state | default('search') %}
+{% set plp_has_products = products and products.results and products.results | length > 0 %}
+
+<link rel="stylesheet" href="{{ 'css/dara/plp-listing.css' | asset_url }}">
+
+<div
+  class="plp"
+  data-plp
+  data-plp-layout="{{ plp_layout }}"
+  data-plp-filters-open="{{ 'true' if plp_filters_open else 'false' }}"
+  data-plp-filters-default="{{ 'true' if plp_filters_open else 'false' }}"
+  data-plp-chips-open="{{ 'true' if (plp_layout == 'topbar' and plp_filters_open) else 'false' }}"
+>
+  {# Swapped as a whole by product-filter.js during AJAX filtering #}
+  <div
+    id="products-content"
+    class="plp__content transition-opacity duration-200"
+  >
+    {% with toolbar_layout=plp_layout %}
+      {% include 'components/products/filters/sidebar-topbar.jinja' %}
+    {% endwith %}
+
+    {% include 'components/products/filters/mobile-inline-filters.jinja' %}
+
+    <div class="plp__body{% if plp_sidebar %} plp__body--sidebar{% endif %}">
+      {% if plp_sidebar %}
+        {% include 'components/products/filters/sidebar-filters.jinja' %}
+      {% endif %}
+
+      <div class="plp__main">
+        {% include 'components/products/products-header.jinja' %}
+
+        {% if plp_has_products %}
+          <div
+            data-grid-root="true"
+            data-grid="four"
+            class="plp__grid group/grid grid gap-x-2 gap-y-5 lg:gap-x-5 lg:gap-y-6"
+          >
+            {% for product in products.results %}
+              {% include 'components/products/product-card.jinja' %}
+            {% endfor %}
+          </div>
+
+          {% set plp_page_size = ((session.query_params.get('page_size') if session and session.query_params else none) or 24) | int %}
+          {% set plp_page_size = plp_page_size if plp_page_size > 0 else 24 %}
+          {% set totalPages = ((products.count / plp_page_size) | round(0, 'ceil')) | int %}
+          {% set currentPage = (products.page | default(1, true)) | int %}
+          {% if plp_infinite %}
+            {% include 'components/products/infinite-scroll.jinja' %}
+          {% else %}
+            {% include 'components/products/pagination.jinja' %}
+          {% endif %}
+        {% elif plp_empty_state == 'search' %}
+          <div class="plp__empty">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="56"
+              height="56"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path d="M10.75 18.5a7.75 7.75 0 1 1 0-15.5 7.75 7.75 0 0 1 0 15.5ZM16.25 16.25 21 21" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+            <h3 class="plp__empty-title">{{ _("No results found") }}</h3>
+            <p class="plp__empty-text">
+              {{ _("We couldn't find any products matching your search. Try adjusting your filters or search terms.") }}
+            </p>
+            <a href="{{ url_for('list_products') }}" class="plp__empty-link">{{ _("View all products") }}</a>
+          </div>
+        {% else %}
+          <div class="plp__empty">
+            <p class="plp__empty-text">
+              {% if plp_empty_state == 'brand' %}
+                {{ _("No products found in this brand") }}
+              {% else %}
+                {{ _("No products found in this category") }}
+              {% endif %}
+            </p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script defer src="{{ 'js/dara/plp-filters.js' | asset_url }}"></script>

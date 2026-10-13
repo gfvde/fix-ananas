@@ -13,7 +13,7 @@
         "ar": "لون الخلفية",
         "en": "Background Color"
       },
-      "default": "#D3DB6F"
+      "default": "#E7DDCC"
     },
     {
       "id": "text_color",
@@ -80,7 +80,7 @@
             "ar": "النص",
             "en": "Text"
           },
-          "default": "تحميص مظبوط"
+          "default": "تفاصيل متقنة"
         },
         {
           "id": "icon_image",

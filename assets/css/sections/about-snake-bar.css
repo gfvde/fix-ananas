@@ -1,7 +1,7 @@
 /* sections/about-snake-bar.jinja styles (moved from an inline <style>). Scoped by [data-section="about-snake-bar"]. */
 [data-section="about-snake-bar"].snake-bar {
-  background: var(--snake-bg, #d3db6f);
-  min-height: 40px;
+  background: var(--snake-bg, #e7ddcc);
+  min-height: 48px;
   width: 100%;
   overflow: hidden;
   display: flex;
@@ -67,7 +67,7 @@
 }
 
 [data-section="about-snake-bar"] .snake-bar__sep {
-  width: 2px;
+  width: 1px;
   height: 19px;
   background: var(--snake-separator, #000);
   flex: 0 0 auto;

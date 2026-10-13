@@ -1,4 +1,14 @@
-{# Image aspect ratio: adapt (natural), square (1/1), portrait (3/4), landscape (4/3) #}
+{#
+  Product card (Dara design — Figma "product card" sheet 10802:12456)
+
+  Include API (unchanged, all optional except product):
+    product, product_card_variant, show_static_cta, is_priority, index,
+    card_image_aspect_ratio, show_card_options_above_title, wishlist_card_mode
+
+  Display options are theme settings (layout.schema.json → product_card) exposed as
+  body[data-pc-*] attributes by layout.jinja, so they work inside every section.
+  Styles: assets/css/product-card.css · JS: assets/js/features/product-card.js
+#}
 {% set aspect_ratio = card_image_aspect_ratio | default('') %}
 {% set product_card_variant = product_card_variant | default('') %}
 {% set show_static_cta = show_static_cta | default(false) %}
@@ -11,17 +21,29 @@
 {% set is_out_of_stock = (product.in_stock == false or (product.is_infinite == false and product.quantity is not none and product.quantity <= 0)) and not can_preorder %}
 {% set has_options = product.has_options or product.has_fields %}
 {% set add_label = _("Preorder now") if has_preorder else _("Add to cart") %}
-{# ************************** Card Options **************************************** #}
-{# All product card display settings come from body data attributes set in layout.jinja #}
+{% set product_url = url_for('product_details', slug=product.slug) %}
+
+{# Color swatches: first product option whose choices carry color metadata (choices_metadata.type == 'color') #}
+{% set pc_colors = namespace(items=[]) %}
+{% for opt in (product.options or []) %}
+  {% if pc_colors.items | length == 0 and opt and opt.choices_metadata %}
+    {% for ch in (opt.choices or []) %}
+      {% set meta = opt.choices_metadata[ch] if ch in opt.choices_metadata else none %}
+      {% if meta and meta.type == 'color' and meta.type_value %}
+        {% set pc_colors.items = pc_colors.items + [{'name': ch, 'color': meta.type_value}] %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endfor %}
 
 <div
-  class="pc-card group {{ product_card_variant }} {{ 'pc-card--unified' if settings.product_card_unified_height != false }}"
+  class="pc-card group {{ product_card_variant }} {{ 'pc-card--unified' if settings.product_card_unified_height != false }}{{ ' pc-card--oos' if is_out_of_stock }}"
   data-product-card="{{ product.id }}"
 >
   {# ── Image ── #}
   <div class="pc-img-wrap"{% if aspect_ratio %} data-aspect="{{ aspect_ratio }}"{% endif %}>
     <a
-      href="{{ url_for('product_details', slug=product.slug) }}"
+      href="{{ product_url }}"
       class="pc-img-link"
       tabindex="-1"
       aria-hidden="true"
@@ -41,7 +63,7 @@
       />
     </a>
 
-    {# Badge: top-right #}
+    {# Badges: top-start (right in RTL) #}
     <div class="pc-badges">
       {% if product.badge %}
         {% with product=product %}
@@ -51,9 +73,6 @@
       {% if has_preorder %}
         {% set preorder_badge_variant = 'product_card' %}
         {% include 'vitrin:products/preorder_badge.jinja' %}
-      {% endif %}
-      {% if is_out_of_stock %}
-        <span class="pc-badge-pill">{{ _("OUT OF STOCK") }}</span>
       {% endif %}
       {% if product.is_taxable == false %}
         <span class="pc-badge-pill">{{ _("Tax free") }}</span>
@@ -70,7 +89,12 @@
       ></span>
     </div>
 
-    {# Actions: top-left — wishlist + quick-view #}
+    {# Out of stock stamp (Figma 11917:36582) #}
+    {% if is_out_of_stock %}
+      <span class="pc-oos-stamp" role="status">{{ _("Sold out") }}</span>
+    {% endif %}
+
+    {# Actions: top-end (left in RTL) — wishlist + quick-view #}
     <div class="pc-actions">
       {% if wishlist_card_mode %}
         <button
@@ -79,92 +103,40 @@
           data-wishlist-remove-id="{{ product.id }}"
           aria-label="{{ _('Remove from wishlist') }}"
         >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="black"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M6 6L18 18M18 6L6 18" />
           </svg>
         </button>
       {% elif store.settings.products.wishlist_enabled %}
         <button
           type="button"
-          class="pc-action-btn"
+          class="pc-action-btn pc-action-btn--wishlist"
           data-wishlist-btn
           data-product-id="{{ product.id }}"
           aria-label="{{ _('Add to wishlist') }}"
           onclick="event.preventDefault(); event.stopPropagation(); if(window.wishlistManager && window.wishlistManager.handleProductCardWishlist){ window.wishlistManager.handleProductCardWishlist('{{ product.id }}'); }"
         >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="black"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path
-              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
-            />
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M17.6169 11.0143C19.461 9.20412 19.461 6.26929 17.6169 4.45913C16.1508 3.02006 14.3811 2.57943 12.5955 3.43467C11.8867 3.77413 10.9575 4.45913 10.5 5.35393C10.0425 4.45913 9.11325 3.77413 8.40452 3.43467C6.61887 2.57943 4.8492 3.02006 3.38311 4.45913C1.53896 6.26929 1.53896 9.20412 3.38311 11.0143L9.7995 17.3124C10.1885 17.6942 10.8115 17.6942 11.2005 17.3124L17.6169 11.0143Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </button>
       {% endif %}
       <button
         type="button"
-        class="pc-action-btn"
+        class="pc-action-btn pc-action-btn--quick-view"
         data-open-quick-view="true"
         data-product-id="{{ product.id }}"
         aria-label="{{ _('Quick view') }}"
       >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path
-            d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
-          />
-          <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M19 10.1041C19 10.1041 16.984 16.1034 10.5 15.9986C4.01603 15.8939 2 10.1041 2 10.1041C2 10.1041 3.93429 4 10.5 4C17.0657 4 19 10.1041 19 10.1041ZM12.625 10.0255C12.625 11.1541 11.6736 12.069 10.5 12.069C9.32639 12.069 8.375 11.1541 8.375 10.0255C8.375 8.89696 9.32639 7.98208 10.5 7.98208C11.6736 7.98208 12.625 8.89696 12.625 10.0255Z" stroke="currentColor" stroke-width="1.5" />
         </svg>
       </button>
     </div>
 
-    {# CTA overlay — hidden, slides in on hover (desktop) #}
-    {% if not is_out_of_stock %}
-      <div class="pc-cta-wrap">
-        {% if has_options %}
-          <a
-            href="{{ url_for('product_details', slug=product.slug) }}"
-            class="pc-cta"
-          >
-            {{ _("Select options") }}
-          </a>
-        {% else %}
-          <button
-            type="button"
-            class="pc-cta"
-            data-add-to-cart="{{ product.id }}"
-          >
-            {{ add_label }}
-          </button>
-        {% endif %}
-      </div>
-    {% else %}
-      <div class="pc-cta-wrap">
+    {# CTA overlay — slides up on hover (desktop), see data-pc-desktop-cta #}
+    <div class="pc-cta-wrap">
+      {% if is_out_of_stock %}
         <button
           type="button"
           class="pc-cta pc-notify-btn"
@@ -172,131 +144,118 @@
         >
           {{ _("Notify me when available") }}
         </button>
-      </div>
-    {% endif %}
-
-    {# ── Mobile icon CTA — shown via CSS when body[data-pc-mobile-cta="icon"] ── #}
-    {% if not is_out_of_stock %}
-      {% if has_options %}
+      {% elif has_options %}
         <a
-          href="{{ url_for('product_details', slug=product.slug) }}"
-          class="pc-img-icon-cta"
-          aria-label="{{ _('Select options') }}"
+          href="{{ product_url }}"
+          class="pc-cta"
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
-            <line x1="3" y1="6" x2="21" y2="6"/>
-            <path d="M16 10a4 4 0 0 1-8 0"/>
-          </svg>
+          {{ _("Select options") }}
         </a>
       {% else %}
         <button
           type="button"
-          class="pc-img-icon-cta"
+          class="pc-cta"
           data-add-to-cart="{{ product.id }}"
-          aria-label="{{ add_label }}"
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
-            <line x1="3" y1="6" x2="21" y2="6"/>
-            <path d="M16 10a4 4 0 0 1-8 0"/>
-          </svg>
+          {{ add_label }}
         </button>
       {% endif %}
-    {% else %}
-      {# Out of stock: notify me icon button #}
+    </div>
+
+    {# ── Mobile icon CTA on the image — shown via CSS when body[data-pc-mobile-cta="icon"] ── #}
+    {% if is_out_of_stock %}
       <button
         type="button"
         class="pc-img-icon-cta pc-img-icon-cta--notify"
         data-notify-me-trigger="{{ product.id }}"
         aria-label="{{ _('Notify me when available') }}"
       >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
           <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
         </svg>
       </button>
+    {% else %}
+      {% if has_options %}
+        <a href="{{ product_url }}" class="pc-img-icon-cta" aria-label="{{ _('Select options') }}">
+      {% else %}
+        <button type="button" class="pc-img-icon-cta" data-add-to-cart="{{ product.id }}" aria-label="{{ add_label }}">
+      {% endif %}
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3.5 7.5h17l-1.2 11.6a2 2 0 0 1-2 1.8H6.7a2 2 0 0 1-2-1.8L3.5 7.5Z"/>
+            <path d="M8.5 10.5V6.5a3.5 3.5 0 0 1 7 0v4"/>
+          </svg>
+      {% if has_options %}
+        </a>
+      {% else %}
+        </button>
+      {% endif %}
     {% endif %}
   </div>
 
   {# ── Info ── #}
-   <div
-  class="pc-info group-data-[grid=list]/grid:col-span-1 group-data-[grid=list]/grid:row-span-1 group-data-[grid=list]/grid:min-w-0 group-data-[grid=list]/grid:self-start"
->
-
-    <h3 class="pc-name">
-      <a href="{{ url_for('product_details', slug=product.slug) }}" title="{{ product.name }}">{{ product.name }}</a>
-    </h3>
-    {% if product.keywords %}
-{% set tags_loop = settings.product_card_tags_infinite_loop | default(true) %}
-
-<div class="pc-tags-container">
-  <button type="button" class="pc-tags-scroll-btn" aria-label="{{ _('Show more tags') }}" onclick="const w=this.nextElementSibling; w.scrollBy({left: -80, behavior: 'smooth'})">
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="m15 18-6-6 6-6"/>
-    </svg>
-  </button>
-  <div class="pc-tags-wrapper">
-    <div class="pc-tags-track" data-loop="{{ 'true' if tags_loop != false else 'false' }}">
-      <span class="pc-tags-set">
-        {% for tag in product.keywords %}
-          <span class="pc-tag">{{ tag }}</span>
+  <div
+    class="pc-info group-data-[grid=list]/grid:col-span-1 group-data-[grid=list]/grid:row-span-1 group-data-[grid=list]/grid:min-w-0 group-data-[grid=list]/grid:self-start"
+  >
+    {# Color variants (Figma Merch card 11361:28304) #}
+    {% if pc_colors.items | length > 0 %}
+      {% set pc_colors_max = 3 %}
+      <div class="pc-color-options" aria-label="{{ _('Colors') }}">
+        {% for c in pc_colors.items[:pc_colors_max] %}
+          <a
+            href="{{ product_url }}"
+            class="pc-swatch{{ ' is-active' if loop.first }}"
+            title="{{ c.name }}"
+            aria-label="{{ c.name }}"
+            tabindex="-1"
+          ><span class="pc-swatch__dot" style="background: {{ c.color }};"></span></a>
         {% endfor %}
-      </span>
-
-      {# الـ duplicate sets — اظهرهم بس لو loop مفعل #}
-      {% if tags_loop != false %}
-        <span class="pc-tags-set" aria-hidden="true">
-          {% for tag in product.keywords %}
-            <span class="pc-tag">{{ tag }}</span>
-          {% endfor %}
-        </span>
-        <span class="pc-tags-set" aria-hidden="true">
-          {% for tag in product.keywords %}
-            <span class="pc-tag">{{ tag }}</span>
-          {% endfor %}
-        </span>
-        <span class="pc-tags-set" aria-hidden="true">
-          {% for tag in product.keywords %}
-            <span class="pc-tag">{{ tag }}</span>
-          {% endfor %}
-        </span>
-      {% endif %}
-    </div>
-  </div>
-</div>
+        {% if pc_colors.items | length > pc_colors_max %}
+          <span class="pc-swatch-more">+{{ pc_colors.items | length - pc_colors_max }}</span>
+        {% endif %}
+      </div>
     {% endif %}
 
+    <h3 class="pc-name">
+      <a href="{{ product_url }}" title="{{ product.name }}">{{ product.name }}</a>
+    </h3>
 
-    {# Coffee flavor tags (product.tags) #}
-    {# {% if product.tags and product.tags | length > 0 %}
-      <div class="pc-tags">
-        {% for tag in product.tags %}
-          <span class="pc-tag">{{ tag }}</span>
-        {% endfor %}
+    {# Tags strip: one row, auto-slides after ~1s, manual swipe, chevron hint (Figma 11700:23991) #}
+    {% if product.keywords %}
+      <div class="pc-tags-container" data-pc-tags>
+        <div class="pc-tags-wrapper">
+          <div class="pc-tags-track">
+            <span class="pc-tags-set">
+              {% for tag in product.keywords %}
+                <span class="pc-tag">{{ tag }}</span>
+              {% endfor %}
+            </span>
+          </div>
+        </div>
+        <button type="button" class="pc-tags-scroll-btn" aria-label="{{ _('Show more tags') }}" tabindex="-1">
+          <svg width="16" height="24" viewBox="0 0 16 24" fill="none" aria-hidden="true">
+            <path d="M10 17L5 12L10 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
       </div>
-    {% endif %} #} 
+    {% endif %}
 
     {# Rating #}
-      {% if store.settings.products.reviews_enabled and product.rating and product.rating.average > 0 %}
-          <div class="pc-rating">
-            <span class="pc-rating__score">{{ product.rating.average }}</span>
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="#f7a52d"
-              stroke="none"
-            >
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2Z" />
-            </svg>
-            {% if product.rating.total_count > 0 %}
-              <span class="pc-rating__count">( {{ product.rating.total_count }} {{ _("review") }} )</span>
-            {% endif %}
-          </div>
+    {% if store.settings.products.reviews_enabled and product.rating and product.rating.average > 0 %}
+      <div class="pc-rating">
+        <span class="pc-rating__stars">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M7.2392 2.3416C7.4792 1.6048 8.5216 1.6048 8.7608 2.3416L9.6168 4.9752C9.6691 5.13559 9.77076 5.27534 9.90726 5.37448C10.0438 5.47362 10.2081 5.52708 10.3768 5.5272H13.1464C13.9216 5.5272 14.2432 6.5192 13.6168 6.9752L11.3768 8.6024C11.24 8.70162 11.1382 8.84161 11.0859 9.00228C11.0336 9.16296 11.0335 9.33607 11.0856 9.4968L11.9416 12.1304C12.1816 12.8672 11.3376 13.4808 10.7096 13.0248L8.4696 11.3976C8.33297 11.2984 8.16845 11.245 7.9996 11.245C7.83075 11.245 7.66624 11.2984 7.5296 11.3976L5.2896 13.0248C4.6624 13.4808 3.8192 12.8672 4.0584 12.1304L4.9144 9.4968C4.96654 9.33607 4.96645 9.16296 4.91413 9.00228C4.86182 8.84161 4.75998 8.70162 4.6232 8.6024L2.384 6.976C1.7576 6.52 2.08 5.528 2.8544 5.528H5.6232C5.79204 5.52804 5.95656 5.47467 6.09322 5.37552C6.22988 5.27637 6.33166 5.13652 6.384 4.976L7.24 2.3424L7.2392 2.3416Z" fill="#B59A70"/>
+          </svg>
+          <span class="pc-rating__score">{{ product.rating.average }}</span>
+        </span>
+        {% if product.rating.total_count > 0 %}
+          <span class="pc-rating__count">( {{ product.rating.total_count }} {{ _("review") }} )</span>
         {% endif %}
+      </div>
+    {% endif %}
 
-    {# ── Stock Info ── #}
+    {# ── Sales indicator (Figma 11361:17685): alternates "sold this month" ↔ "pieces left" ── #}
     {% if not is_out_of_stock %}
       {%
         set has_qty = (
@@ -317,23 +276,21 @@
       %}
       {% if has_qty or has_sold %}
         <div class="pc-stock" data-product-id="{{ product.id }}">
-          {# Real sold count (from platform). Styles: assets/css/product-card.css, JS: assets/js/features/product-card.js #}
           {% if has_sold %}
             <span class="pc-stock-sold">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.03666 4.01755C1.97432 4.68255 1.93057 5.85942 2.32323 6.36036C2.32323 6.36036 2.13838 5.06755 3.79541 3.44552C4.4626 2.79255 4.61682 1.90442 4.38385 1.23833C4.25151 0.860984 4.00979 0.549265 3.79979 0.331609C3.67729 0.20364 3.77135 -0.00745363 3.94963 0.000202624C5.02807 0.0483276 6.77588 0.348015 7.51854 2.21177C7.84447 3.02989 7.86854 3.87536 7.71322 4.73505C7.61479 5.28411 7.26479 6.50473 8.06322 6.65458C8.63307 6.76177 8.90869 6.30895 9.03229 5.98302C9.08369 5.84739 9.26198 5.81348 9.35822 5.92177C10.3207 7.01661 10.4028 8.30614 10.2037 9.4163C9.81869 11.5622 7.64541 13.1241 5.48635 13.1241C2.78916 13.1241 0.642131 11.5808 0.0854127 8.78739C-0.138806 7.65973 -0.0250559 5.42848 1.71401 3.85348C1.84307 3.73536 2.05416 3.84036 2.03666 4.01755Z" fill="url(#pc-fire-grad-{{ product.id }})"/><defs><radialGradient id="pc-fire-grad-{{ product.id }}" cx="0" cy="0" r="1" gradientTransform="matrix(-7.72045 -0.0335068 -0.0550468 12.6677 4.95214 13.1581)" gradientUnits="userSpaceOnUse"><stop offset="0.314" stop-color="#FF9800"/><stop offset="0.662" stop-color="#FF6D00"/><stop offset="0.972" stop-color="#F44336"/></radialGradient></defs></svg>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M2.03666 4.01755C1.97432 4.68255 1.93057 5.85942 2.32323 6.36036C2.32323 6.36036 2.13838 5.06755 3.79541 3.44552C4.4626 2.79255 4.61682 1.90442 4.38385 1.23833C4.25151 0.860984 4.00979 0.549265 3.79979 0.331609C3.67729 0.20364 3.77135 -0.00745363 3.94963 0.000202624C5.02807 0.0483276 6.77588 0.348015 7.51854 2.21177C7.84447 3.02989 7.86854 3.87536 7.71322 4.73505C7.61479 5.28411 7.26479 6.50473 8.06322 6.65458C8.63307 6.76177 8.90869 6.30895 9.03229 5.98302C9.08369 5.84739 9.26198 5.81348 9.35822 5.92177C10.3207 7.01661 10.4028 8.30614 10.2037 9.4163C9.81869 11.5622 7.64541 13.1241 5.48635 13.1241C2.78916 13.1241 0.642131 11.5808 0.0854127 8.78739C-0.138806 7.65973 -0.0250559 5.42848 1.71401 3.85348C1.84307 3.73536 2.05416 3.84036 2.03666 4.01755Z" fill="url(#pc-fire-grad-{{ product.id }})"/><defs><radialGradient id="pc-fire-grad-{{ product.id }}" cx="0" cy="0" r="1" gradientTransform="matrix(-7.72045 -0.0335068 -0.0550468 12.6677 4.95214 13.1581)" gradientUnits="userSpaceOnUse"><stop offset="0.314" stop-color="#FF9800"/><stop offset="0.662" stop-color="#FF6D00"/><stop offset="0.972" stop-color="#F44336"/></radialGradient></defs></svg>
               {{ _("Sold %s pieces this month") | format(product.sold_products_count) }}
             </span>
           {% endif %}
           {% if has_qty %}
             <span class="pc-stock-qty">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="#F7512B"/></svg>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3.79688 4V10.6H5.59687V16L9.79687 8.8H7.39687L9.79687 4M10.9969 11.8H12.1969V13H10.9969V11.8ZM10.9969 7H12.1969V10.6H10.9969V7Z" fill="#FC6A2C"/></svg>
               {{ _("Remaining %s only") | format(qty_display) }}
             </span>
           {% endif %}
         </div>
       {% endif %}
     {% endif %}
-
 
     {# Price #}
     {% if product.formatted_sale_price is not none %}
@@ -350,29 +307,9 @@
       </div>
     {% endif %}
 
-    {% if not is_out_of_stock %}
-      <div class="pc-cta-wrap-mb-card md:hidden not-icon-cta">
-        {% if has_options %}
-          <a
-            href="{{ url_for('product_details', slug=product.slug) }}"
-            class="pc-cta md:hidden"
-            aria-label="{{ _('Select options') }}"
-          >
-            {{ _("Select options") }}
-          </a>
-        {% else %}
-          <button
-            type="button"
-            class="pc-cta md:hidden"
-            data-add-to-cart="{{ product.id }}"
-            aria-label="{{ add_label }}"
-          >
-            {{ add_label }}
-          </button>
-        {% endif %}
-      </div>
-    {% else %}
-      <div class="pc-cta-wrap-mb-card not-icon-cta">
+    {# Mobile CTA below the text (hidden when body[data-pc-mobile-cta="icon"]) #}
+    <div class="pc-cta-wrap-mb-card md:hidden not-icon-cta">
+      {% if is_out_of_stock %}
         <button
           type="button"
           class="pc-cta pc-notify-btn"
@@ -380,14 +317,31 @@
         >
           {{ _("Notify me when available") }}
         </button>
-      </div>
-    {% endif %}
+      {% elif has_options %}
+        <a
+          href="{{ product_url }}"
+          class="pc-cta"
+          aria-label="{{ _('Select options') }}"
+        >
+          {{ _("Select options") }}
+        </a>
+      {% else %}
+        <button
+          type="button"
+          class="pc-cta"
+          data-add-to-cart="{{ product.id }}"
+          aria-label="{{ add_label }}"
+        >
+          {{ add_label }}
+        </button>
+      {% endif %}
+    </div>
   </div>
 
   {% if show_static_cta and not is_out_of_stock %}
     {% if has_options %}
       <a
-        href="{{ url_for('product_details', slug=product.slug) }}"
+        href="{{ product_url }}"
         class="pc-static-cta"
       >
         {{ add_label }}

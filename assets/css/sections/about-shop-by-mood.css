@@ -343,3 +343,32 @@
     line-height: 32px;
   }
 }
+
+/* ── Dara (Figma 11031:7369; hover note 11740:20774: text turns espresso) ── */
+[data-section="about-shop-by-mood"] .sbm-card__desc {
+  font-weight: 500;
+}
+
+[data-section="about-shop-by-mood"] .sbm-card:hover .sbm-card__name,
+[data-section="about-shop-by-mood"] .sbm-card:hover .sbm-card__desc,
+[data-section="about-shop-by-mood"] .sbm-card:focus-visible .sbm-card__name,
+[data-section="about-shop-by-mood"] .sbm-card:focus-visible .sbm-card__desc {
+  color: var(--mc-hover-text, #6b4a39);
+}
+
+@media (min-width: 768px) {
+  [data-section="about-shop-by-mood"] .sbm-card__img {
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+}
+
+[data-section="about-shop-by-mood"] .sbm-mob-card:hover *,
+[data-section="about-shop-by-mood"] .sbm-mob-card:active * {
+  transition: color 0.25s ease;
+}
+
+[data-section="about-shop-by-mood"] .sbm-mob-card:hover .sbm-mob-card__info *,
+[data-section="about-shop-by-mood"] .sbm-mob-card:active .sbm-mob-card__info * {
+  color: var(--mc-hover-text, #6b4a39);
+}

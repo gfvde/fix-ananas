@@ -25,3 +25,14 @@
 [data-section="about-gallery"] .ag-media-cell.is-playing:hover .ag-play-btn {
   opacity: 1;
 }
+
+/* ── Dara (Figma 11361:28115; note 11423:22483: 10 tiles desktop, 4 + 4 on mobile) ── */
+[data-section="about-gallery"] .ag-title {
+  line-height: 42px;
+}
+
+@media (max-width: 767px) {
+  [data-section="about-gallery"] .ag-title {
+    line-height: 34px;
+  }
+}

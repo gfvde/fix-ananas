@@ -6,22 +6,23 @@
   {% set products_url = settings.products.url if settings.products and settings.products.url else '' %}
   {% set more_fallback_url = products_url or url_for('list_products') %}
   {% set more_url = settings.more_url | default(more_fallback_url, true) %}
-  {% set more_text = settings.more_text | default(_('View all'), true) %}
-  {% set title = settings.title | default(_('What we recommend for you'), true) %}
-  {% set subtitle = settings.subtitle | default(_('A variety of flavors to suit your taste'), true) %}
+  {% set more_text = settings.more_text | default(_('Discover your look'), true) %}
+  {% set title = settings.title | default(_('For every occasion, a look'), true) %}
+  {% set subtitle = settings.subtitle | default(_('Cuts and colors that suit your taste'), true) %}
 
   <link rel="stylesheet" href="{{ 'css/sections/products-normal.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'css/dara/home-products.css' | asset_url }}">
   <section
     section-id="{{ sectionId }}" data-section="products-normal"
   data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
     class="section-products section-products-normal fp-section fp-section--{{ layout }} fp-section--single-source"
     style="
-      --fp-bg: {{ settings.background_color | default('#FCFAF7', true) }};
+      --fp-bg: {{ settings.background_color | default('#FAF7F2', true) }};
       --fp-text: {{ settings.text_color | default('#000000', true) }};
       --fp-muted: {{ settings.muted_color | default('#737373', true) }};
       --fp-chip-bg: {{ settings.chip_bg_color | default('#F0F0F0', true) }};
       --fp-border: {{ settings.border_color | default('#000000', true) }};
-      --fp-badge-bg: {{ settings.badge_bg_color | default('#F7512B', true) }};
+      --fp-badge-bg: {{ settings.badge_bg_color | default('#6B4A39', true) }};
       --fp-badge-text: {{ settings.badge_text_color | default('#FFFFFF', true) }};
       --fp-button-bg: {{ settings.button_bg_color | default('transparent', true) }};
       --fp-button-text: {{ settings.button_text_color | default('#000000', true) }};

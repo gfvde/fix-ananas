@@ -65,7 +65,7 @@
       if (deck) {
         deck.style.setProperty(
           "--arf-front-bg",
-          review.backgroundColor || "#E2E899",
+          review.backgroundColor || "#FFFFFF",
         );
         deck.style.setProperty(
           "--arf-front-color",

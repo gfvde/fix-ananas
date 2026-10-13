@@ -5,7 +5,9 @@
     "en": "About Details"
   },
   "icon": "information-line",
-  "meta": { "type": "products" },
+  "meta": {
+    "type": "products"
+  },
   "settings": [
     {
       "id": "title",
@@ -14,7 +16,7 @@
         "ar": "العنوان",
         "en": "Title"
       },
-      "default": "تفاصيل تكمل يومك"
+      "default": "تفاصيل تكمل إطلالتك"
     },
     {
       "id": "subtitle",
@@ -101,7 +103,7 @@
         "ar": "لون الخلفية",
         "en": "Section Background"
       },
-      "default": "#FCFAF7"
+      "default": "transparent"
     },
     {
       "id": "mobile_bg",
@@ -119,7 +121,7 @@
         "ar": "لون العنوان",
         "en": "Title Color"
       },
-      "default": "#F7512B"
+      "default": "#6B4A39"
     },
     {
       "id": "mobile_title_color",
@@ -173,6 +175,15 @@
       "step": 1,
       "unit": "px",
       "default": 650
+    },
+    {
+      "id": "fit_screen_height",
+      "type": "checkbox",
+      "label": {
+        "ar": "ملء ارتفاع الشاشة وتثبيت السكشن حتى ينتهي تمرير المنتجات (ديسكتوب)",
+        "en": "Fit screen height and pin the section until its products finish scrolling (desktop)"
+      },
+      "default": true
     },
     {
       "id": "desktop_card_size",

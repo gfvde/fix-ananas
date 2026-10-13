@@ -77,6 +77,9 @@
       </span>
     {% endif %}
     <span class="product-filter__text">{{ option.value }}</span>
+    {% if option.count is defined and option.count is not none %}
+      <span class="product-filter__count">( {{ option.count }} )</span>
+    {% endif %}
   </label>
 {% endmacro %}
 

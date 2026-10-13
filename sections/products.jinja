@@ -11,14 +11,14 @@
   {% set more_fallback_url = single_products_url or tab_2_url or tab_1_url or url_for('list_products') %}
   {% set more_url = settings.more_url | default(more_fallback_url, true) %}
   {% set more_text = settings.more_text | default(_('View all'), true) %}
-  {% set title = settings.title | default(_('What we recommend for you'), true) %}
-  {% set subtitle = settings.subtitle | default(_('A variety of flavors to suit your taste'), true) %}
-  {% set explore_text = settings.explore_text | default(_('Explore your flavor'), true) %}
+  {% set title = settings.title | default(_('Dara picks'), true) %}
+  {% set subtitle = settings.subtitle | default('') %}
+  {% set explore_text = settings.explore_text | default(_('Discover your look'), true) %}
   {% set explore_url = settings.explore_url | default(more_url, true) %}
   {% set tab_1_text = settings.tab_1_text | default(_('Our newest'), true) %}
   {% set tab_2_text = settings.tab_2_text | default(_('Best selling'), true) %}
   {% set active_tab = settings.active_tab | default('tab_2', true) %}
-  {% set mobile_tabs_layout = settings.mobile_tabs_layout | default('arrows', true) %}
+  {% set mobile_tabs_layout = settings.mobile_tabs_layout | default('buttons', true) %}
   {% set use_single_products = products_source == 'products' %}
   {% set products_limit = settings.products_limit | default(12, true) | int %}
   {% if use_single_products %}
@@ -35,20 +35,21 @@
   {% endif %}
 
   <link rel="stylesheet" href="{{ 'css/sections/products.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'css/dara/home-products.css' | asset_url }}">
   <section
     section-id="{{ sectionId }}" data-section="products"
   data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
     class="section-products fp-section fp-section--{{ layout }} fp-mobile-tabs--{{ mobile_tabs_layout }} {% if use_single_products %}fp-section--single-source{% endif %}"
     style="
-      --fp-bg: {{ settings.background_color | default('#FCFAF7', true) }};
+      --fp-bg: {{ settings.background_color | default('#FAF7F2', true) }};
       --fp-text: {{ settings.text_color | default('#000000', true) }};
       --fp-muted: {{ settings.muted_color | default('#737373', true) }};
       --fp-chip-bg: {{ settings.chip_bg_color | default('#F0F0F0', true) }};
-      --fp-tab-bg: {{ settings.tab_bg_color | default('#FCFAF7', true) }};
+      --fp-tab-bg: {{ settings.tab_bg_color | default('#FAF7F2', true) }};
       --fp-active-tab-bg: {{ settings.active_tab_bg_color | default('#262626', true) }};
       --fp-active-tab-text: {{ settings.active_tab_text_color | default('#FFFFFF', true) }};
       --fp-border: {{ settings.border_color | default('#000000', true) }};
-      --fp-badge-bg: {{ settings.badge_bg_color | default('#F7512B', true) }};
+      --fp-badge-bg: {{ settings.badge_bg_color | default('#6B4A39', true) }};
       --fp-badge-text: {{ settings.badge_text_color | default('#FFFFFF', true) }};
       --fp-button-bg: {{ settings.button_bg_color | default('transparent', true) }};
       --fp-button-text: {{ settings.button_text_color | default('#000000', true) }};

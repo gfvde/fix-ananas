@@ -13,7 +13,7 @@
         "ar": "العنوان",
         "en": "Title"
       },
-      "default": "تسوّق حسب اختيارك"
+      "default": "تسوّقي حسب اختيارك"
     },
     {
       "id": "section_bg_color",
@@ -22,7 +22,7 @@
         "ar": "لون خلفية السكشن",
         "en": "Section Background Color"
       },
-      "default": "#ffffff"
+      "default": "transparent"
     },
     {
       "id": "title_color",
@@ -76,7 +76,7 @@
         "ar": "لون خلفية الموبايل عند النص فوق الصورة",
         "en": "Mobile Overlay Background Color"
       },
-      "default": "#ffffff"
+      "default": "transparent"
     },
     {
       "id": "overlay_color",
@@ -98,7 +98,7 @@
       "max": 80,
       "step": 1,
       "unit": "%",
-      "default": 22
+      "default": 20
     },
     {
       "id": "mobile_layout",
@@ -145,7 +145,7 @@
         "ar": "تفعيل تأثير الاسكرول على الصور",
         "en": "Enable Image Scroll Effect"
       },
-      "default": false
+      "default": true
     },
     {
       "id": "scroll_effect_strength",
@@ -167,7 +167,7 @@
         "ar": "اسم الفئة 1",
         "en": "Category 1 Name"
       },
-      "default": "أظرف القهوه"
+      "default": "الشيلات"
     },
     {
       "id": "cat1_url",
@@ -202,7 +202,7 @@
         "ar": "اسم الفئة 2",
         "en": "Category 2 Name"
       },
-      "default": "محاصيل القهوه"
+      "default": "العبايات"
     },
     {
       "id": "cat2_url",
@@ -237,7 +237,7 @@
         "ar": "اسم الفئة 3",
         "en": "Category 3 Name"
       },
-      "default": "البكجــات"
+      "default": "الأطقم"
     },
     {
       "id": "cat3_url",
@@ -272,7 +272,7 @@
         "ar": "اسم الفئة 4",
         "en": "Category 4 Name"
       },
-      "default": "عروض الربيع"
+      "default": "إطلالات الموسم"
     },
     {
       "id": "cat4_url",
@@ -307,7 +307,7 @@
         "ar": "اسم الفئة 5",
         "en": "Category 5 Name"
       },
-      "default": "منتجات أناناس"
+      "default": "أكسسوارات دارا"
     },
     {
       "id": "cat5_url",
@@ -342,7 +342,7 @@
         "ar": "اسم الفئة 6",
         "en": "Category 6 Name"
       },
-      "default": "أدوات القهوة"
+      "default": "الأكسسوارات"
     },
     {
       "id": "cat6_url",

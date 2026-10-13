@@ -76,6 +76,10 @@ function applyHeaderAuthState(loggedIn) {
     profileBtn.style.display = loggedIn ? "inline-flex" : "none";
     profileBtn.classList.toggle("hidden", !loggedIn);
   }
+  const mHeaderLogin = byId("mobile-header-login-btn");
+  const mHeaderProfile = byId("mobile-header-profile-btn");
+  if (mHeaderLogin) mHeaderLogin.style.display = loggedIn ? "none" : "";
+  if (mHeaderProfile) mHeaderProfile.style.display = loggedIn ? "inline-flex" : "none";
   if (mLoginBtn) mLoginBtn.style.display = loggedIn ? "none" : "";
   if (mProfileBtn) mProfileBtn.style.display = loggedIn ? "inline-flex" : "none";
   if (mLoggedIn) {
