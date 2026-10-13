@@ -43,6 +43,14 @@
         if (found) {
           sec.style.position = isDesktop ? "relative" : "";
           sec.style.zIndex = isDesktop ? "2" : "";
+          // A transparent section sliding over the pinned one would show it through.
+          sec.style.backgroundColor = "";
+          if (
+            isDesktop &&
+            window.getComputedStyle(sec).backgroundColor === "rgba(0, 0, 0, 0)"
+          ) {
+            sec.style.backgroundColor = "var(--background, #FAF7F2)";
+          }
         }
         if (sec === sr) found = true;
       });
