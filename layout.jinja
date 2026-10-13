@@ -225,134 +225,91 @@
         pointer-events: none;
       }
 
-      .coffee-loader {
-        position: relative;
+      .abaya-loader {
         display: flex;
-        width: 74px;
-        height: 64px;
-        align-items: flex-end;
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        color: var(--accent, #6b4a39);
       }
 
-      .coffee-loader__cup {
-        position: relative;
-        display: block;
-        width: 42px;
-        height: 30px;
-        border: 2px solid #282828;
-        border-top: 0;
-        border-radius: 0 0 12px 12px;
-        background: #ffffff;
+      .abaya-loader__svg {
+        width: 64px;
+        height: 84px;
         overflow: visible;
-        animation: coffee-loader-bob 1.6s ease-in-out infinite;
+        transform-origin: 50% 0;
+        animation: abaya-loader-sway 2.4s ease-in-out infinite;
       }
 
-      .coffee-loader__cup::before {
+      .abaya-loader__line {
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 240;
+        stroke-dashoffset: 240;
+        animation: abaya-loader-draw 2.4s ease-in-out infinite;
+      }
+
+      .abaya-loader__line--fold {
+        stroke-width: 1.5;
+        stroke-dasharray: 90;
+        stroke-dashoffset: 90;
+        animation-name: abaya-loader-draw-fold;
+      }
+
+      .abaya-loader__line--2 { animation-delay: 0.15s; }
+      .abaya-loader__line--3 { animation-delay: 0.3s; }
+      .abaya-loader__line--4 { animation-delay: 0.45s; }
+
+      .abaya-loader__fabric {
+        position: relative;
+        width: 56px;
+        height: 3px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: color-mix(in srgb, currentColor 18%, transparent);
+      }
+
+      .abaya-loader__fabric::after {
         content: "";
         position: absolute;
-        inset-inline-end: -13px;
-        top: 7px;
-        width: 14px;
-        height: 14px;
-        border: 2px solid #282828;
-        border-inline-start: 0;
-        border-radius: 0 12px 12px 0;
+        inset-block: 0;
+        inset-inline-start: -40%;
+        width: 40%;
+        border-radius: inherit;
+        background: currentColor;
+        animation: abaya-loader-fabric 1.4s ease-in-out infinite;
       }
 
-      .coffee-loader__coffee {
-        position: absolute;
-        left: 4px;
-        right: 4px;
-        top: 5px;
-        height: 5px;
-        border-radius: 999px;
-        background: #f7512b;
-        transform-origin: center;
-        animation: coffee-loader-surface 1.2s ease-in-out infinite;
+      @keyframes abaya-loader-draw {
+        0% { stroke-dashoffset: 240; }
+        45%, 70% { stroke-dashoffset: 0; }
+        100% { stroke-dashoffset: -240; }
       }
 
-      .coffee-loader__plate {
-        position: absolute;
-        bottom: 0;
-        width: 58px;
-        height: 7px;
-        border-radius: 999px;
-        background: #d3db6f;
-        animation: coffee-loader-shadow 1.6s ease-in-out infinite;
+      @keyframes abaya-loader-draw-fold {
+        0%, 15% { stroke-dashoffset: 90; }
+        55%, 75% { stroke-dashoffset: 0; }
+        100% { stroke-dashoffset: -90; }
       }
 
-      .coffee-loader__steam {
-        position: absolute;
-        bottom: 42px;
-        display: block;
-        width: 8px;
-        height: 20px;
-        border-inline-start: 2px solid #f7512b;
-        border-radius: 999px;
-        opacity: 0;
-        animation: coffee-loader-steam 1.7s ease-in-out infinite;
+      @keyframes abaya-loader-sway {
+        0%, 100% { transform: rotate(0deg); }
+        25% { transform: rotate(1.5deg); }
+        75% { transform: rotate(-1.5deg); }
       }
 
-      .coffee-loader__steam--1 {
-        inset-inline-start: 23px;
-        animation-delay: 0s;
+      @keyframes abaya-loader-fabric {
+        0% { inset-inline-start: -40%; }
+        100% { inset-inline-start: 100%; }
       }
 
-      .coffee-loader__steam--2 {
-        inset-inline-start: 34px;
-        height: 24px;
-        animation-delay: 0.2s;
-      }
-
-      .coffee-loader__steam--3 {
-        inset-inline-start: 45px;
-        animation-delay: 0.4s;
-      }
-
-      @keyframes coffee-loader-bob {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-3px);
-        }
-      }
-
-      @keyframes coffee-loader-surface {
-        0%,
-        100% {
-          transform: scaleX(1);
-        }
-        50% {
-          transform: scaleX(0.78);
-        }
-      }
-
-      @keyframes coffee-loader-shadow {
-        0%,
-        100% {
-          transform: scaleX(1);
-          opacity: 0.95;
-        }
-        50% {
-          transform: scaleX(0.86);
-          opacity: 0.55;
-        }
-      }
-
-      @keyframes coffee-loader-steam {
-        0% {
-          transform: translateY(8px) scale(0.82);
-          opacity: 0;
-        }
-        35% {
-          opacity: 1;
-        }
-        100% {
-          transform: translateY(-15px) scale(1);
-          opacity: 0;
-        }
+      @media (prefers-reduced-motion: reduce) {
+        .abaya-loader__svg,
+        .abaya-loader__fabric::after { animation: none; }
+        .abaya-loader__line { animation: none; stroke-dashoffset: 0; }
       }
       {% endif %}
 
@@ -428,14 +385,14 @@
       aria-label="{{ _('Loading') }}"
       aria-live="polite"
     >
-      <div class="coffee-loader">
-        <span class="coffee-loader__steam coffee-loader__steam--1"></span>
-        <span class="coffee-loader__steam coffee-loader__steam--2"></span>
-        <span class="coffee-loader__steam coffee-loader__steam--3"></span>
-        <span class="coffee-loader__cup">
-          <span class="coffee-loader__coffee"></span>
-        </span>
-        <span class="coffee-loader__plate"></span>
+      <div class="abaya-loader" aria-hidden="true">
+        <svg class="abaya-loader__svg" viewBox="0 0 64 84">
+          <path class="abaya-loader__line" d="M6 82 V32 C6 16 18 4 32 2 C46 4 58 16 58 32 V82 Z" />
+          <path class="abaya-loader__line abaya-loader__line--fold abaya-loader__line--2" d="M32 10 C26 16 22 22 20 30 L14 78" />
+          <path class="abaya-loader__line abaya-loader__line--fold abaya-loader__line--3" d="M32 10 C38 16 42 22 44 30 L50 78" />
+          <path class="abaya-loader__line abaya-loader__line--fold abaya-loader__line--4" d="M32 10 V78" />
+        </svg>
+        <span class="abaya-loader__fabric"></span>
       </div>
     </div>
     <script>
