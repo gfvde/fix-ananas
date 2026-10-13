@@ -364,28 +364,3 @@
     display: none;
   }
 }
-
-/* ── Dara (Figma 10852:19113; note 11423:22480: pinned until the products end) ── */
-[data-section="about-details"] .about-details__header h2 {
-  line-height: 42px;
-}
-
-@media (min-width: 992px) {
-  /* JS (is-pinned) sets the section height = frame + product overflow; the frame sticks */
-  [data-section="about-details"].about-details.is-pinned {
-    overflow: visible;
-  }
-
-  [data-section="about-details"].about-details.is-pinned .about-details__sticky {
-    position: sticky;
-    top: 0;
-  }
-
-  [data-section="about-details"].about-details.is-pinned .about-details__media {
-    min-height: 0;
-  }
-
-  [data-section="about-details"].about-details.is-pinned .about-details__content {
-    overflow: hidden;
-  }
-}
