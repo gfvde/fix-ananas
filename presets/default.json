@@ -1049,7 +1049,7 @@
             }
           ],
           "nav_show_popular": true,
-          "style_icon_color": "#6B4A39",
+          "style_icon_color": "#FFFFFF",
           "style_link_color": "#FFFFFF",
           "style_nav_border": "#262626",
           "style_nav_height": 60,
@@ -1113,7 +1113,7 @@
               "term": "هبعتلك ميل"
             }
           ],
-          "style_icon_color_mobile": "#ffffff",
+          "style_icon_color_mobile": "#FFFFFF",
           "announcement_bar_display": true,
           "search_search_text_color": "#a1a1a1",
           "style_search_input_color": "#a1a1a1",
