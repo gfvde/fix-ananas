@@ -588,6 +588,44 @@
           ]
         },
         {
+          "id": "payment_methods_source",
+          "type": "select",
+          "label": {
+            "ar": "مصدر وسائل الدفع",
+            "en": "Payment methods source"
+          },
+          "info": {
+            "ar": "تظهر في السلة وصفحة المنتج والعرض السريع والسلة الجانبية",
+            "en": "Shown in the cart, product page, quick view and side cart"
+          },
+          "options": [
+            {
+              "value": "custom",
+              "label": {
+                "ar": "الصور اللي أرفعها",
+                "en": "Images I upload"
+              }
+            },
+            {
+              "value": "store",
+              "label": {
+                "ar": "وسائل الدفع المفعّلة في المتجر",
+                "en": "Payment methods enabled in the store"
+              }
+            }
+          ],
+          "default": "custom"
+        },
+        {
+          "id": "show_side_cart_payments",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار وسائل الدفع في السلة الجانبية",
+            "en": "Show payment methods in the side cart"
+          },
+          "default": true
+        },
+        {
           "id": "payment_methods",
           "type": "list",
           "label": {

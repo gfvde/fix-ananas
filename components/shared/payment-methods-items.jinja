@@ -1,0 +1,43 @@
+{# One group of payment-method logos, shared by the cart page, product page, quick view and
+   side cart strips. Source (Cart Page Settings → "Payment methods source"):
+   - custom: the images the merchant uploaded in "Payment methods" (falls back to the store's
+     own methods when that list is empty);
+   - store: the payment methods actually enabled in the store's checkout.
+   Optional variables: pm_item_class (default "cart-payment"). #}
+{% set pm_item_class = pm_item_class | default('cart-payment', true) %}
+{% set pm_source = safeget(settings, 'cart_page_payment_methods_source') | default('custom', true) %}
+{% set pm_custom = safeget(settings, 'cart_page_payment_methods', safeget(settings, 'cart_page_cart_page_payment_methods', [])) or [] %}
+{% set pm_store = safeget(store, 'settings.checkout.payment_methods', []) or [] %}
+{% if pm_source != 'store' and pm_custom | length > 0 %}
+  {% for method in pm_custom %}
+    <span class="{{ pm_item_class }}">
+      {% if method.image %}
+        <img
+          src="{{ image_url(method.image, w=120, h=56, f='auto') }}"
+          alt="{{ method.title | default('') }}"
+          loading="lazy"
+        />
+      {% else %}
+        {{ method.title | default(_('Pay')) }}
+      {% endif %}
+    </span>
+  {% endfor %}
+{% elif pm_store | length > 0 %}
+  {% for method in pm_store %}
+    <span class="{{ pm_item_class }}">
+      {% if method.icon %}
+        <img
+          src="{{ image_url(method.icon, w=92, h=40, q=100, f='auto') }}"
+          alt="{{ method.name | default('') }}"
+          loading="lazy"
+        />
+      {% else %}
+        {{ method.name | default(_('Pay')) }}
+      {% endif %}
+    </span>
+  {% endfor %}
+{% else %}
+  {% for label in ['tabby', _('Tamara'), 'VISA', 'mada', 'MasterCard', 'Apple Pay'] %}
+    <span class="{{ pm_item_class }} {{ pm_item_class }}--text">{{ label }}</span>
+  {% endfor %}
+{% endif %}

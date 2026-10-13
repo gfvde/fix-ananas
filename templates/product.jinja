@@ -541,24 +541,8 @@
                     class="cart-payments__group"
                     {% if repeat > 0 %}aria-hidden="true"{% endif %}
                   >
-                    {% if payment_methods and payment_methods | length > 0 %}
-                      {% for method in payment_methods %}
-                        <span class="cart-payment">
-                          {% if method.image %}
-                            <img
-                              src="{{ image_url(method.image, w=120, h=56, f='auto') }}"
-                              alt="{{ method.title | default('') }}"
-                            />
-                          {% else %}
-                            {{ method.title | default(_('Pay')) }}
-                          {% endif %}
-                        </span>
-                      {% endfor %}
-                    {% else %}
-                      {% for label in ['tabby', _('Tamara'), 'VISA', 'mada', 'MasterCard', 'valu', 'Apple Pay'] %}
-                        <span class="cart-payment cart-payment--text">{{ label }}</span>
-                      {% endfor %}
-                    {% endif %}
+                    {% set pm_item_class = 'cart-payment' %}
+                    {% include 'components/shared/payment-methods-items.jinja' %}
                   </div>
                 {% endfor %}
               </div>

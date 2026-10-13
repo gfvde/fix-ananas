@@ -309,24 +309,8 @@
                   class="quick-view-payments__group"
                   {% if repeat == 2 %}aria-hidden="true"{% endif %}
                 >
-                  {% if quick_view_payment_methods and quick_view_payment_methods | length > 0 %}
-                    {% for method in quick_view_payment_methods %}
-                      <span class="quick-view-payment">
-                        {% if method.image %}
-                          <img
-                            src="{{ image_url(method.image, w=120, h=56, f='auto') }}"
-                            alt="{{ method.title | default('') }}"
-                          />
-                        {% else %}
-                          {{ method.title | default(_('Pay')) }}
-                        {% endif %}
-                      </span>
-                    {% endfor %}
-                  {% else %}
-                    {% for label in ['Western Union', 'BANK', 'PayPal', 'tabby', _('Tamara'), 'VISA', 'mada', 'MasterCard', 'valu', 'Apple Pay'] %}
-                      <span class="quick-view-payment quick-view-payment--text">{{ label }}</span>
-                    {% endfor %}
-                  {% endif %}
+                  {% set pm_item_class = 'quick-view-payment' %}
+                  {% include 'components/shared/payment-methods-items.jinja' %}
                 </div>
               {% endfor %}
             </div>
