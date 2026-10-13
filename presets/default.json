@@ -55,7 +55,7 @@
               "settings": {
                 "title": "مختارات دارا",
                 "layout": "carousel",
-                "more_url": "/categories/1744425/قهوة",
+                "more_url": "/categories/1749391/العبايات",
                 "products": null,
                 "subtitle": "",
                 "more_text": "عرض الكل",
@@ -76,8 +76,8 @@
                   "type": "recent_products"
                 },
                 "tab_2_products": {
-                  "id": 1744422,
-                  "name": "قهوة مختصة",
+                  "id": 1749395,
+                  "name": "عبايات يومية",
                   "type": "products_category"
                 },
                 "button_bg_color": "#FAF7F2",
@@ -131,17 +131,17 @@
               "settings": {
                 "title": "تسوّقي حسب اختيارك",
                 "cat1_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/dd5bd2ebeeb3420984e40d13ba81c5d5.jpg",
-                "cat1_url": "/categories/1744425/قهوة",
+                "cat1_url": "/categories/1749391/العبايات",
                 "cat2_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f665f233e2264c9fa443e3e67ed9abc1.jpg",
-                "cat2_url": "/categories/1744422/قهوة-مختصة",
+                "cat2_url": "/categories/1749395/عبايات-يومية",
                 "cat3_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/6aa80b999fad4a4683aaec35629f163d.jpg",
-                "cat3_url": "/categories/1744423/إثيوبيا",
+                "cat3_url": "/categories/1749394/إطلالات-المناسبات",
                 "cat4_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/63912d642c824beb99f99dd601250a68.jpg",
-                "cat4_url": "/categories/1744424/أدوات-التحضير",
+                "cat4_url": "/categories/1749392/الشيلات",
                 "cat5_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f34acf78e028411bb90c4739c6c3fad9.jpg",
-                "cat5_url": "/products/قهوة-البيت-خلطة-يومية",
+                "cat5_url": "/products/عباية-دارا-السوداء",
                 "cat6_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f34acf78e028411bb90c4739c6c3fad9.jpg",
-                "cat6_url": "/products/قهوة-كولومبيا-هويلا",
+                "cat6_url": "/products/عباية-دارا-المطرزة",
                 "cat1_name": "الشيلات",
                 "cat2_name": "العبايات",
                 "cat3_name": "الأطقم",
@@ -179,7 +179,7 @@
                 "layout": "carousel",
                 "more_url": "/products",
                 "products": {
-                  "id": 1744424,
+                  "id": 1749392,
                   "name": "أدوات التحضير",
                   "type": "products_category"
                 },
@@ -237,17 +237,17 @@
               "display": true,
               "settings": {
                 "title": "اختاري إطلالتك",
-                "cta_url": "/categories/1744425/قهوة",
+                "cta_url": "/categories/1749391/العبايات",
                 "cta_text": "تسوّقي حسب المناسبة",
                 "subtitle": "لكل مناسبة إطلالة، هنا تلقين اللي يناسبك",
                 "card1_tag": "يومياتك",
-                "card1_url": "/products/قهوة-كينيا-aa",
+                "card1_url": "/products/عباية-رمل-بقصة-واسعة",
                 "card2_tag": "قصات واسعة وهادئة",
-                "card2_url": "/products/قهوة-إثيوبيا-يرغاتشيفي",
+                "card2_url": "/products/عباية-دارا-الرملية",
                 "card3_tag": "أناقة العمل",
-                "card3_url": "/products/قهوة-كولومبيا-هويلا",
+                "card3_url": "/products/عباية-دارا-المطرزة",
                 "card4_tag": "مناسبات",
-                "card4_url": "/products/قهوة-البيت-خلطة-يومية",
+                "card4_url": "/products/عباية-دارا-السوداء",
                 "card1_desc": "إطلالة خفيفة ترافق يومك",
                 "card2_desc": "قصات مريحة للحظات الهادئة",
                 "card3_desc": "إطلالات بسيطة تناسب يوم العمل",
@@ -307,12 +307,12 @@
               "display": true,
               "settings": {
                 "title": "تفاصيل تكمل إطلالتك",
-                "cta_url": "/categories/1744422/قهوة-مختصة",
+                "cta_url": "/categories/1749395/عبايات-يومية",
                 "cta_text": "عرض الكل",
                 "hero_alt": "About details image",
                 "products": {
-                  "id": 1744422,
-                  "name": "قهوة مختصة",
+                  "id": 1749395,
+                  "name": "عبايات يومية",
                   "type": "products_category"
                 },
                 "show_cta": true,
@@ -530,7 +530,7 @@
               "settings": {
                 "title": "مختارات دارا",
                 "layout": "grid",
-                "more_url": "/categories/1744425/قهوة",
+                "more_url": "/categories/1749391/العبايات",
                 "products": null,
                 "subtitle": "",
                 "more_text": "عرض الكل",
@@ -551,8 +551,8 @@
                   "type": "recent_products"
                 },
                 "tab_2_products": {
-                  "id": 1744422,
-                  "name": "قهوة مختصة",
+                  "id": 1749395,
+                  "name": "عبايات يومية",
                   "type": "products_category"
                 },
                 "button_bg_color": "#FAF7F2",
@@ -577,17 +577,17 @@
               "settings": {
                 "title": "تسوّقي حسب اختيارك",
                 "cat1_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/dd5bd2ebeeb3420984e40d13ba81c5d5.jpg",
-                "cat1_url": "/categories/1744425/قهوة",
+                "cat1_url": "/categories/1749391/العبايات",
                 "cat2_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f665f233e2264c9fa443e3e67ed9abc1.jpg",
-                "cat2_url": "/categories/1744422/قهوة-مختصة",
+                "cat2_url": "/categories/1749395/عبايات-يومية",
                 "cat3_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/6aa80b999fad4a4683aaec35629f163d.jpg",
-                "cat3_url": "/categories/1744423/إثيوبيا",
+                "cat3_url": "/categories/1749394/إطلالات-المناسبات",
                 "cat4_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/63912d642c824beb99f99dd601250a68.jpg",
-                "cat4_url": "/categories/1744424/أدوات-التحضير",
+                "cat4_url": "/categories/1749392/الشيلات",
                 "cat5_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f34acf78e028411bb90c4739c6c3fad9.jpg",
-                "cat5_url": "/products/قهوة-البيت-خلطة-يومية",
+                "cat5_url": "/products/عباية-دارا-السوداء",
                 "cat6_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f34acf78e028411bb90c4739c6c3fad9.jpg",
-                "cat6_url": "/products/قهوة-كولومبيا-هويلا",
+                "cat6_url": "/products/عباية-دارا-المطرزة",
                 "cat1_name": "الشيلات",
                 "cat2_name": "العبايات",
                 "cat3_name": "الأطقم",
@@ -680,7 +680,7 @@
                     "overlay_opacity": 20,
                     "text_alignment": "start",
                     "badge_text": "NEW COLLECTION",
-                    "heading": "قهوة تضبط يومك",
+                    "heading": "أناقة على طريقتك",
                     "description": "تجربة جريئة محمصة بعناية لتجربة تفهم جوك",
                     "button_text": "تسوّق الآن",
                     "button_url": "/products",
@@ -793,12 +793,12 @@
                 "testimonials": [
                   {
                     "rating": 5,
-                    "text": "تجربة رائعة! القهوة ذات جودة عالية وطعم لا يُنسى.",
+                    "text": "تجربة رائعة! الخامة ناعمة والقصة مريحة جدًا.",
                     "name": "أحمد"
                   },
                   {
                     "rating": 5,
-                    "text": "أفضل قهوة جربتها، التحميص مثالي.",
+                    "text": "أجمل عباية اشتريتها، التفاصيل متقنة.",
                     "name": "سارة"
                   },
                   {
@@ -821,28 +821,28 @@
                 "categories": [
                   {
                     "category": {
-                      "id": 1744425,
-                      "name": "قهوة",
-                      "slug": "قهوة"
+                      "id": 1749391,
+                      "name": "العبايات",
+                      "slug": "العبايات"
                     }
                   },
                   {
                     "category": {
-                      "id": 1744422,
-                      "name": "قهوة مختصة",
-                      "slug": "قهوة-مختصة"
+                      "id": 1749395,
+                      "name": "عبايات يومية",
+                      "slug": "عبايات-يومية"
                     }
                   },
                   {
                     "category": {
-                      "id": 1744423,
+                      "id": 1749394,
                       "name": "إثيوبيا",
                       "slug": "إثيوبيا"
                     }
                   },
                   {
                     "category": {
-                      "id": 1744424,
+                      "id": 1749392,
                       "name": "أدوات التحضير",
                       "slug": "أدوات-التحضير"
                     }
@@ -899,7 +899,7 @@
               "template": "sections/hero.jinja",
               "section_id": "f4314ce8-0500-4fa1-8147-4d9ed7a7dacc",
               "settings": {
-                "heading": "قهوة تضبط يومك",
+                "heading": "أناقة على طريقتك",
                 "overlay_opacity": 30,
                 "remove_bottom_margin": false,
                 "description": "تجربة جريئة محمصة بعناية",
@@ -919,7 +919,7 @@
               "template": "sections/ananas-banner.jinja",
               "section_id": "3292fb15-43d2-4de1-9019-b8169e9cfaf5",
               "settings": {
-                "heading": "ابدأ رحلتك مع القهوة",
+                "heading": "اكتشفي إطلالتك",
                 "button_url": "/products",
                 "rating_stars": 5,
                 "remove_bottom_margin": false,
@@ -953,96 +953,64 @@
           "logo_mobile": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/4e1f18603e4946fea66f8eca1f118646.png",
           "logo_desktop": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/4e1f18603e4946fea66f8eca1f118646.png",
           "style_nav_bg": "#372923E6",
-          "nav_mega_link": "https://dashboard.zid.sa/ar-sa/stores/3118810/theme-editor/0b73d4d4-a7ce-43de-92a0-e23db8970e3e",
+          "nav_mega_link": "/categories/1749391/العبايات",
           "nav_mega_mode": "static",
           "style_mega_bg": "#000000",
           "nav_mega_decor": "",
           "nav_mega_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/c305128e334c4ffda13ae76f063d0885.jpg",
-          "nav_mega_label": "ابدأ رحلتك مع القهوة",
+          "nav_mega_label": "اكتشفي إطلالتك",
           "style_search_bg": "#000000",
           "nav_mega_columns": [
             {
               "links": [
                 {
-                  "label": "البكجات"
+                  "label": "قصة واسعة"
                 },
                 {
-                  "label": "البكجات"
+                  "label": "قصة مستقيمة"
                 },
                 {
-                  "label": "البكجات"
+                  "label": "قصة مفتوحة"
                 },
                 {
-                  "label": "البكجات"
-                },
-                {
-                  "label": "البكجات"
+                  "label": "قصة مغلقة"
                 }
               ],
-              "title": "تسوّق حسب الحجم"
+              "title": "تسوّقي حسب القصة"
             },
             {
               "links": [
                 {
-                  "label": "قهوة الصباح"
+                  "label": "عبايات يومية"
                 },
                 {
-                  "label": "قهوة الصباح"
+                  "label": "إطلالات العمل"
                 },
                 {
-                  "label": "قهوة الصباح"
+                  "label": "إطلالات المناسبات"
                 },
                 {
-                  "label": "قهوة الصباح"
-                },
-                {
-                  "label": "قهوة الصباح"
+                  "label": "أزياء مريحة"
                 }
               ],
-              "title": "تسوّق حسب المزاج"
+              "title": "تسوّقي حسب المناسبة"
             },
             {
               "links": [
                 {
-                  "label": "فاتح"
+                  "label": "أسود"
                 },
                 {
-                  "label": "فاتح"
+                  "label": "رملي"
                 },
                 {
-                  "label": "فاتح"
+                  "label": "بني"
                 },
                 {
-                  "label": "فاتح"
+                  "label": "عاجي"
                 }
               ],
-              "title": "تسوّق حسب التحميص"
-            },
-            {
-              "links": [
-                {
-                  "label": "اسبريسو"
-                },
-                {
-                  "label": "اسبريسو"
-                },
-                {
-                  "label": "اسبريسو"
-                },
-                {
-                  "label": "اسبريسو"
-                },
-                {
-                  "label": "اسبريسو"
-                },
-                {
-                  "label": "اسبريسو"
-                },
-                {
-                  "label": "اسبريسو"
-                }
-              ],
-              "title": "تسوّق حسب النوع"
+              "title": "تسوّقي حسب اللون"
             }
           ],
           "nav_show_popular": true,
@@ -1091,7 +1059,7 @@
               "text": "أضف مشتريات بقيمة  57.00 ريال  للحصول على شحن مجاني "
             }
           ],
-          "nav_mega_trigger_label": "القهوة",
+          "nav_mega_trigger_label": "العبايات",
           "nav_search_placeholder": " البحث المتقدم",
           "search_search_bg_color": "#000000",
           "search_search_products": [
@@ -1121,7 +1089,7 @@
           "nav_mega_standalone_links": [
             {
               "url": "https://dashboard.zid.sa/",
-              "label": "ابدأ رحلتك مع القهوة"
+              "label": "اكتشفي إطلالتك"
             }
           ],
           "search_search_placeholder": "عمليات البحث الشائعة",
@@ -1149,7 +1117,7 @@
           "logo_logo_height": 40,
           "logo_logo_mobile": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/99fe3e4d4b204b6b9fa5e9abdaf1f6bf.png",
           "style_text_color": "#a3a3a3",
-          "about_us_about_us": "<p>مو بس قهوة، إحنا معك في يومك، من أول رشفة لين آخر كوب، في اناناس نحرص علي تقديم أفضل جودة بسعر مناسب، أناناس تجرب</p>",
+          "about_us_about_us": "<p>عبايات وأزياء خليجية بقصات هادئة وتفاصيل تشبهك. دارا، من يومياتك إلى مناسباتك.</p>",
           "link_groups_items": [
             {
               "links": [
@@ -1181,7 +1149,7 @@
                   "title": "سياسة الاستبدال والاسترجاع"
                 }
               ],
-              "title": "عن أناناس"
+              "title": "عن دارا"
             },
             {
               "hide": true,
@@ -1208,7 +1176,7 @@
           "style_bg_image_style": "repeat",
           "style_desktop_height": 300,
           "style_icon_border_color": "#ffffff1a",
-          "bottom_bar_copyright_text": "الحقوق محفوظة محمصة اناناس - Ananas Roastery",
+          "bottom_bar_copyright_text": "الحقوق محفوظة لـ دارا - DARA",
           "newsletter_newsletter_hide": true,
           "newsletter_newsletter_title": "Subscribe",
           "bottom_bar_show_language_selector": true,
@@ -1327,29 +1295,29 @@
               "bundle_items": [
                 {
                   "product": {
-                    "id": "0d1e87f5-192f-4511-96bd-0f4ace2cc209",
+                    "id": "8d52aea4-4816-4075-b3f6-f2d0cb7f533b",
                     "name": "قمع تقطير V60",
                     "type": "product"
                   }
                 },
                 {
                   "product": {
-                    "id": "998f7f3d-d143-4f1c-afb8-f11c44eb443f",
+                    "id": "ad67763c-c9fa-4438-aa15-2d98b8bcc3ff",
                     "name": "إبريق تقطير بعنق رفيع",
                     "type": "product"
                   }
                 },
                 {
                   "product": {
-                    "id": "62933deb-a604-40e2-a021-dd6e9ddab0e7",
-                    "name": "قهوة إثيوبيا يرغاتشيفي",
+                    "id": "36606bd3-b504-4ead-b289-4ccf8f4b96af",
+                    "name": "عباية دارا الرملية",
                     "type": "product"
                   }
                 }
               ],
               "main_product": {
-                "id": "98146e48-eec1-4d89-9ccf-e512641e8778",
-                "name": "قهوة البيت - خلطة يومية",
+                "id": "25a4c3a1-57be-4c4e-8142-5dcc30ea8c85",
+                "name": "عباية دارا السوداء",
                 "type": "product"
               },
               "section_title": "تست",
