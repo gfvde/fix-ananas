@@ -76,6 +76,21 @@
       {% if is_lazy %}loading="lazy" decoding="async"{% else %}fetchpriority="high"{% endif %}
     />
     {% endif %}
+    {% set video_desktop = settings.video_desktop or settings.video_mobile %}
+    {% set video_mobile = settings.video_mobile or settings.video_desktop %}
+    {% if settings.media_type == 'video' and video_desktop %}
+    {# The images above stay as the poster; JS picks the desktop/mobile source and plays it. #}
+    <video
+      class="about-hero-banner__image about-hero-banner__video"
+      data-ahb-video
+      data-src-desktop="{{ video_desktop }}"
+      data-src-mobile="{{ video_mobile }}"
+      muted
+      loop
+      playsinline
+      preload="none"
+    ></video>
+    {% endif %}
     <div class="about-hero-banner__overlay"></div>
   </div>
 

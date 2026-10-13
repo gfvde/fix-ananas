@@ -12,10 +12,40 @@
     return;
   }
 
+  // Background video: load the source for the current breakpoint, swap it when the
+  // breakpoint changes, and leave the poster image alone for reduced motion.
+  function initVideo(section) {
+    var video = section.querySelector("[data-ahb-video]");
+    if (!video) return;
+    if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    )
+      return;
+    var mq = window.matchMedia("(min-width: 768px)");
+    video.muted = true;
+    video.addEventListener("playing", function () {
+      video.classList.add("is-playing");
+    });
+    function load() {
+      var src = mq.matches ? video.dataset.srcDesktop : video.dataset.srcMobile;
+      if (!src || video.getAttribute("src") === src) return;
+      video.classList.remove("is-playing");
+      video.setAttribute("src", src);
+      var p = video.play();
+      if (p && p.catch) p.catch(function () {});
+    }
+    load();
+    if (mq.addEventListener) mq.addEventListener("change", load);
+    else if (mq.addListener) mq.addListener(load);
+  }
+
   function init(section) {
     if (!section || section.getAttribute("data-section-ready") === "true")
       return;
     section.setAttribute("data-section-ready", "true");
+
+    initVideo(section);
 
     if (!section || section.dataset.ahbRatingScrollBound === "true") return;
 
