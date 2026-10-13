@@ -85,6 +85,13 @@ if [ -f .vitrin/theme.json ]; then
   cp .vitrin/theme.json "$STAGE/.vitrin/theme.json"
 fi
 
+# WITH_SETTINGS=1: ship presets/default.json as the theme's default settings
+# (templates/home.json, header.json, footer.json, layout.json) so an
+# "Upload new theme" install starts with the full demo home.
+if [ "${WITH_SETTINGS:-0}" = "1" ]; then
+  python3 scripts/demo-settings.py "$STAGE"
+fi
+
 rm -f "$ZIP"
 (cd "$STAGE" && zip -qr "$ZIP" . -x '.vitrin/*')
 

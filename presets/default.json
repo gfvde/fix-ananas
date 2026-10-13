@@ -1,6 +1,942 @@
 {
   "presets": [
     {
+      "path": "footer.jinja",
+      "settings": {
+        "ar": {
+          "style_bg_color": "#0E0D0D",
+          "style_bg_image": null,
+          "logo_logo_height": 40,
+          "logo_logo_mobile": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/702814ccca0f47cb9c7915ecbbc844c0.png",
+          "style_text_color": "#D4D4D4",
+          "about_us_about_us": "<p>دارنا للعبايات الخليجية — نقدّم لكِ أرقى التصاميم الخليجية بخامات فاخرة وأسعار مناسبة. أناقة تعيشينها كل يوم.</p>",
+          "link_groups_items": [
+            {
+              "links": [
+                {
+                  "title": "الأسئلة الشائعة"
+                },
+                {
+                  "title": "طلبات الجملة"
+                },
+                {
+                  "title": "طرق الشحن"
+                },
+                {
+                  "title": "الشحن والتوصيل"
+                }
+              ],
+              "title": "تسوّقي معنا"
+            },
+            {
+              "links": [
+                {
+                  "url": "https://iasvhj.dev.zid.store/pages/about-us",
+                  "title": "من نحن"
+                },
+                {
+                  "title": "سياسة الخصوصية"
+                },
+                {
+                  "title": "سياسة الاستبدال والاسترجاع"
+                }
+              ],
+              "title": "عن دارنا"
+            },
+            {
+              "hide": true,
+              "links": [
+                {
+                  "title": "للأسئلة والاستفسارات"
+                },
+                {
+                  "title": "+966573863884"
+                },
+                {
+                  "title": "info@ananasroastery.com"
+                }
+              ],
+              "title": "تواصلي معنا"
+            }
+          ],
+          "logo_logo_desktop": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/702814ccca0f47cb9c7915ecbbc844c0.png",
+          "style_divider_color": "#ffffff26",
+          "style_heading_color": "#D4D4D4",
+          "style_icon_bg_color": "#262626",
+          "style_mobile_height": 300,
+          "style_noise_opacity": 0.15,
+          "style_bg_image_style": "repeat",
+          "style_desktop_height": 300,
+          "style_copyright_color": "#E5E5E5",
+          "style_description_color": "#FAFAFA",
+          "style_icon_border_color": "#404040",
+          "bottom_bar_copyright_text": "الحقوق محفوظة © دارنا للعبايات الخليجية - نسخة تجريبية",
+          "newsletter_newsletter_hide": true,
+          "newsletter_newsletter_title": "Subscribe",
+          "contact_info_contact_info_title": "تواصلي معنا",
+          "bottom_bar_show_language_selector": true,
+          "newsletter_newsletter_description": "Join our newsletter to stay up to date on features and releases.",
+          "newsletter_newsletter_placeholder": "Enter your email",
+          "contact_info_contact_info_subtitle": "للاستفسارات والطلبات",
+          "newsletter_newsletter_button_label": "Subscribe"
+        },
+        "en": {
+          "style_bg_color": "#0E0D0D",
+          "style_bg_image": null,
+          "logo_logo_height": 40,
+          "logo_logo_mobile": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/702814ccca0f47cb9c7915ecbbc844c0.png",
+          "style_text_color": "#D4D4D4",
+          "about_us_about_us": "<p>دارنا للعبايات الخليجية — نقدّم لكِ أرقى التصاميم الخليجية بخامات فاخرة وأسعار مناسبة. أناقة تعيشينها كل يوم.</p>",
+          "link_groups_items": [
+            {
+              "links": [
+                {
+                  "title": "الأسئلة الشائعة"
+                },
+                {
+                  "title": "طلبات الجملة"
+                },
+                {
+                  "title": "طرق الشحن"
+                },
+                {
+                  "title": "الشحن والتوصيل"
+                }
+              ],
+              "title": "تسوّقي معنا"
+            },
+            {
+              "links": [
+                {
+                  "url": "https://iasvhj.dev.zid.store/pages/about-us",
+                  "title": "من نحن"
+                },
+                {
+                  "title": "سياسة الخصوصية"
+                },
+                {
+                  "title": "سياسة الاستبدال والاسترجاع"
+                }
+              ],
+              "title": "عن دارنا"
+            },
+            {
+              "hide": true,
+              "links": [
+                {
+                  "title": "للأسئلة والاستفسارات"
+                },
+                {
+                  "title": "+966573863884"
+                },
+                {
+                  "title": "info@ananasroastery.com"
+                }
+              ],
+              "title": "تواصلي معنا"
+            }
+          ],
+          "logo_logo_desktop": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/702814ccca0f47cb9c7915ecbbc844c0.png",
+          "style_divider_color": "#ffffff26",
+          "style_heading_color": "#D4D4D4",
+          "style_icon_bg_color": "#262626",
+          "style_mobile_height": 300,
+          "style_noise_opacity": 0.15,
+          "style_bg_image_style": "repeat",
+          "style_desktop_height": 300,
+          "style_copyright_color": "#E5E5E5",
+          "style_description_color": "#FAFAFA",
+          "style_icon_border_color": "#404040",
+          "bottom_bar_copyright_text": "الحقوق محفوظة © دارنا للعبايات الخليجية - نسخة تجريبية",
+          "newsletter_newsletter_hide": true,
+          "newsletter_newsletter_title": "Subscribe",
+          "contact_info_contact_info_title": "تواصلي معنا",
+          "bottom_bar_show_language_selector": true,
+          "newsletter_newsletter_description": "Join our newsletter to stay up to date on features and releases.",
+          "newsletter_newsletter_placeholder": "Enter your email",
+          "contact_info_contact_info_subtitle": "للاستفسارات والطلبات",
+          "newsletter_newsletter_button_label": "Subscribe"
+        }
+      }
+    },
+    {
+      "path": "header.jinja",
+      "settings": {
+        "ar": {
+          "logo_mobile": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/a99ef400b0b240858b690c06984f5a8f.png",
+          "logo_desktop": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/a99ef400b0b240858b690c06984f5a8f.png",
+          "style_nav_bg": "#4b3e37",
+          "nav_mega_link": "/categories/1749391/العبايات",
+          "nav_mega_mode": "static",
+          "style_mega_bg": "#261f1b",
+          "nav_mega_decor": "https://media.zid.store/a2ecca0a-b975-47b1-96a2-a7e246b8311d/f49ef088-2e59-4691-9aef-19a7c6a02286.png",
+          "nav_mega_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/774458d7603143619007de3dfd8fffe3.jpg",
+          "nav_mega_label": "اكتشفي أناقتك",
+          "style_search_bg": "#000000",
+          "nav_mega_columns": [
+            {
+              "links": [
+                {
+                  "label": "كلاسيكية"
+                },
+                {
+                  "label": "مطرزة"
+                },
+                {
+                  "label": "مفتوحة"
+                },
+                {
+                  "label": "مغلقة"
+                },
+                {
+                  "label": "تسوق الكل"
+                }
+              ],
+              "title": "تسوّق حسب النوع"
+            },
+            {
+              "links": [
+                {
+                  "label": "كريب"
+                },
+                {
+                  "label": "لينن"
+                },
+                {
+                  "label": "ساتان"
+                },
+                {
+                  "label": "تسوق الكل"
+                }
+              ],
+              "title": "تسوّقي حسب القماش"
+            },
+            {
+              "links": [
+                {
+                  "label": "عبايات يومية"
+                },
+                {
+                  "label": "عبايات للعمل"
+                },
+                {
+                  "label": "عبايات للزيارات"
+                },
+                {
+                  "label": "عبايات للمناسبات"
+                },
+                {
+                  "label": "تسوق الكل"
+                }
+              ],
+              "title": "تسوّقي حسب المناسبة"
+            },
+            {
+              "links": [
+                {
+                  "label": "أطقم العبايات"
+                },
+                {
+                  "label": "مقاس 52"
+                },
+                {
+                  "label": "مقاس 54"
+                },
+                {
+                  "label": "مقاس 56"
+                },
+                {
+                  "label": "جميع المقاسات"
+                }
+              ],
+              "title": "تسوّقي حسب المقاس"
+            }
+          ],
+          "nav_show_popular": true,
+          "style_icon_color": "#FFFFFF",
+          "style_link_color": "#FFFFFF",
+          "style_nav_border": "#262626",
+          "style_nav_height": 60,
+          "nav_enable_search": true,
+          "nav_popular_title": "إظهار عمليات البحث الشائعة",
+          "nav_show_products": true,
+          "style_dropdown_bg": "#000000",
+          "style_logo_height": 40,
+          "nav_mega_autoslide": true,
+          "header_hide_country": false,
+          "nav_search_bg_color": "#372923",
+          "nav_search_products": {
+            "id": 0,
+            "type": "recent_products"
+          },
+          "search_show_popular": true,
+          "style_search_border": "#27272a",
+          "announcement_bar_url": "",
+          "header_hide_language": false,
+          "nav_enable_mega_menu": true,
+          "nav_popular_searches": [
+            {
+              "term": "هبعتلك ميل"
+            },
+            {
+              "term": "هبعتلك ميل"
+            },
+            {
+              "term": "هبعتلك ميل"
+            }
+          ],
+          "search_enable_search": true,
+          "search_popular_title": "عمليات البحث الشائعة",
+          "search_show_products": true,
+          "nav_drawer_open_label": "إطلالتك حسب المناسبة",
+          "nav_search_text_color": "#a1a1a1",
+          "style_dropdown_border": "#000000",
+          "style_mega_link_color": "#FFFFFF",
+          "announcement_bar_texts": [
+            {
+              "text": "أناقة خليجية… بتفاصيل تليق بكِ"
+            }
+          ],
+          "nav_mega_trigger_label": "العبايات",
+          "nav_search_placeholder": " البحث المتقدم",
+          "search_search_bg_color": "#000000",
+          "search_search_products": [
+            {
+              "handle": "شارك رابطك وخذ خصم مباشر "
+            }
+          ],
+          "style_cart_badge_color": "#261f1b",
+          "header_enable_side_cart": true,
+          "nav_search_border_color": "#27272a",
+          "search_popular_searches": [
+            {
+              "term": "هبعتلك ميل"
+            },
+            {
+              "term": "هبعتلك ميل"
+            },
+            {
+              "term": "هبعتلك ميل"
+            }
+          ],
+          "style_icon_color_mobile": "#FFFFFF",
+          "announcement_bar_display": true,
+          "search_search_text_color": "#a1a1a1",
+          "style_search_input_color": "#a1a1a1",
+          "announcement_bar_autoplay": true,
+          "announcement_bar_bar_icon": "",
+          "nav_mega_standalone_links": [
+            {
+              "url": "/categories/1749392/الشيلات",
+              "label": "الشيل"
+            },
+            {
+              "url": "/categories/1749391/العبايات",
+              "label": "أطقم العبايات"
+            }
+          ],
+          "search_search_placeholder": "عمليات البحث الشائعة",
+          "style_mega_col_head_color": "#D4D4D4",
+          "search_search_border_color": "#27272a",
+          "nav_search_card_border_color": "#3f3f46",
+          "announcement_bar_bar_bg_color": "#261F1C",
+          "announcement_bar_page_display": "all",
+          "nav_search_results_text_color": "#ffffff",
+          "announcement_bar_bar_icon_size": 20,
+          "announcement_bar_marquee_speed": 30,
+          "announcement_bar_bar_text_color": "#FFFFFF",
+          "announcement_bar_enable_marquee": true,
+          "search_search_card_border_color": "#3f3f46",
+          "search_search_results_text_color": "#ffffff"
+        },
+        "en": {
+          "logo_mobile": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/a99ef400b0b240858b690c06984f5a8f.png",
+          "logo_desktop": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/a99ef400b0b240858b690c06984f5a8f.png",
+          "style_nav_bg": "#372923E6",
+          "nav_mega_link": "/categories/1749391/العبايات",
+          "nav_mega_mode": "static",
+          "style_mega_bg": "#372923",
+          "nav_mega_decor": "",
+          "nav_mega_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/774458d7603143619007de3dfd8fffe3.jpg",
+          "nav_mega_label": "اكتشفي أناقتك",
+          "style_search_bg": "#000000",
+          "nav_mega_columns": [
+            {
+              "links": [
+                {
+                  "label": "كلاسيكية"
+                },
+                {
+                  "label": "مطرزة"
+                },
+                {
+                  "label": "مفتوحة"
+                },
+                {
+                  "label": "مغلقة"
+                },
+                {
+                  "label": "تسوق الكل"
+                }
+              ],
+              "title": "تسوّق حسب النوع"
+            },
+            {
+              "links": [
+                {
+                  "label": "كريب"
+                },
+                {
+                  "label": "لينن"
+                },
+                {
+                  "label": "ساتان"
+                },
+                {
+                  "label": "تسوق الكل"
+                }
+              ],
+              "title": "تسوّقي حسب القماش"
+            },
+            {
+              "links": [
+                {
+                  "label": "عبايات يومية"
+                },
+                {
+                  "label": "عبايات للعمل"
+                },
+                {
+                  "label": "عبايات للزيارات"
+                },
+                {
+                  "label": "عبايات للمناسبات"
+                },
+                {
+                  "label": "تسوق الكل"
+                }
+              ],
+              "title": "تسوّقي حسب المناسبة"
+            },
+            {
+              "links": [
+                {
+                  "label": "أطقم العبايات"
+                },
+                {
+                  "label": "مقاس 52"
+                },
+                {
+                  "label": "مقاس 54"
+                },
+                {
+                  "label": "مقاس 56"
+                },
+                {
+                  "label": "جميع المقاسات"
+                }
+              ],
+              "title": "تسوّقي حسب المقاس"
+            }
+          ],
+          "nav_show_popular": true,
+          "style_icon_color": "#FFFFFF",
+          "style_link_color": "#FFFFFF",
+          "style_nav_border": "#262626",
+          "style_nav_height": 60,
+          "nav_enable_search": true,
+          "nav_popular_title": "إظهار عمليات البحث الشائعة",
+          "nav_show_products": true,
+          "style_dropdown_bg": "#111111",
+          "style_logo_height": 40,
+          "header_hide_country": false,
+          "nav_search_bg_color": "#372923",
+          "nav_search_products": {
+            "id": 0,
+            "type": "recent_products"
+          },
+          "search_show_popular": true,
+          "style_search_border": "#27272a",
+          "announcement_bar_url": "",
+          "header_hide_language": false,
+          "nav_enable_mega_menu": true,
+          "nav_popular_searches": [
+            {
+              "term": "هبعتلك ميل"
+            },
+            {
+              "term": "هبعتلك ميل"
+            },
+            {
+              "term": "هبعتلك ميل"
+            }
+          ],
+          "search_enable_search": true,
+          "search_popular_title": "عمليات البحث الشائعة",
+          "search_show_products": true,
+          "nav_search_text_color": "#a1a1a1",
+          "style_dropdown_border": "#333333",
+          "style_mega_link_color": "#FFFFFF",
+          "announcement_bar_texts": [
+            {
+              "text": "أناقة خليجية… بتفاصيل تليق بكِ"
+            }
+          ],
+          "nav_mega_trigger_label": "العبايات",
+          "nav_search_placeholder": " البحث المتقدم",
+          "search_search_bg_color": "#000000",
+          "search_search_products": [
+            {
+              "handle": "شارك رابطك وخذ خصم مباشر "
+            }
+          ],
+          "style_cart_badge_color": "#261F1C",
+          "header_enable_side_cart": true,
+          "nav_search_border_color": "#27272a",
+          "search_popular_searches": [
+            {
+              "term": "هبعتلك ميل"
+            },
+            {
+              "term": "هبعتلك ميل"
+            },
+            {
+              "term": "هبعتلك ميل"
+            }
+          ],
+          "style_icon_color_mobile": "#FFFFFF",
+          "announcement_bar_display": true,
+          "search_search_text_color": "#a1a1a1",
+          "style_search_input_color": "#a1a1a1",
+          "announcement_bar_bar_icon": "",
+          "nav_mega_standalone_links": [
+            {
+              "url": "/categories/1749392/الشيلات",
+              "label": "الشيل"
+            },
+            {
+              "url": "/categories/1749391/العبايات",
+              "label": "أطقم العبايات"
+            }
+          ],
+          "search_search_placeholder": "عمليات البحث الشائعة",
+          "style_mega_col_head_color": "#D4D4D4",
+          "search_search_border_color": "#27272a",
+          "nav_search_card_border_color": "#3f3f46",
+          "announcement_bar_bar_bg_color": "#261F1C",
+          "announcement_bar_page_display": "all",
+          "nav_search_results_text_color": "#ffffff",
+          "announcement_bar_bar_icon_size": 20,
+          "announcement_bar_marquee_speed": 30,
+          "announcement_bar_bar_text_color": "#FFFFFF",
+          "announcement_bar_enable_marquee": false,
+          "search_search_card_border_color": "#3f3f46",
+          "search_search_results_text_color": "#ffffff"
+        }
+      }
+    },
+    {
+      "path": "layout.jinja",
+      "settings": {
+        "ar": {
+          "font_family": "IBM+Plex+Sans+Arabic",
+          "cart_page_features": [
+            {
+              "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/1bfe6583db9e44a3844a1fe4074b2b7d.png",
+              "title": "جودة مضمونة",
+              "subtitle": "محاصيل منتقاة بعناية"
+            },
+            {
+              "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/ee113483fc5643168409edc9a70e9247.png",
+              "title": "دفع امن",
+              "subtitle": "خيارات دفع مرنة وآمنة "
+            },
+            {
+              "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/c622641dbbbd48c8bbe33d963a05f796.png",
+              "title": "شحن مجاني",
+              "subtitle": "لكل طلب فوق 130"
+            }
+          ],
+          "category_page_enabled": true,
+          "general_show_breadcrumb": false,
+          "product_card_show_badges": true,
+          "product_card_show_c_tags": true,
+          "product_card_show_rating": true,
+          "cart_page_payment_methods": [
+            {
+              "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/2c2bb95f-c217-4adf-9a3d-feba0ca98ab4.png"
+            },
+            {
+              "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/fe23ac22-bd9b-41b6-a35e-d4f54f544116.png"
+            },
+            {
+              "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/264fdc78-e352-4a7c-af61-d299a758f603.png"
+            },
+            {
+              "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/44c5ded1-4e7a-40e9-b5af-a5ba29aebd42.png"
+            },
+            {
+              "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/f2247b1b-4b65-4c13-90dd-558d58493b8a.png"
+            },
+            {
+              "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/5e93495d-0d1f-4744-b7fe-e98e6553af78.png"
+            },
+            {
+              "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/d16e23ab-3a46-4337-8551-3114c48b8884.png"
+            },
+            {
+              "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/ba7b1bf8-962e-49e7-ae02-30499e9d1bfa.png"
+            }
+          ],
+          "cart_page_show_breadcrumb": false,
+          "category_page_filters_open": true,
+          "cart_features_features_list": [
+            {
+              "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/1bfe6583db9e44a3844a1fe4074b2b7d.png",
+              "title": "المميزات (1)",
+              "description": "المميزات (1)"
+            },
+            {
+              "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/ee113483fc5643168409edc9a70e9247.png",
+              "title": "المميزات (1)",
+              "description": "المميزات (1)المميزات (1)"
+            },
+            {
+              "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/c622641dbbbd48c8bbe33d963a05f796.png",
+              "title": "المميزات (1)",
+              "description": "المميزات (1)"
+            }
+          ],
+          "category_page_filter_layout": "sidebar",
+          "general_enable_theme_loader": false,
+          "product_card_columns_mobile": "2",
+          "product_card_unified_height": true,
+          "product_gallery_enable_loop": false,
+          "cart_page_loyalty_text_color": "#0D0702",
+          "product_card_columns_desktop": "4",
+          "product_card_show_stock_info": true,
+          "cart_page_feature_title_color": "#000000",
+          "category_page_products_loading": "infinite",
+          "product_card_desktop_cta_style": "hover",
+          "product_gallery_sticky_gallery": true,
+          "cart_page_checkout_button_color": "#6B4A39",
+          "product_card_image_aspect_ratio": "square",
+          "product_card_show_color_options": true,
+          "product_card_tags_infinite_loop": true,
+          "product_gallery_enable_keyboard": true,
+          "cart_page_feature_subtitle_color": "#52525C",
+          "product_gallery_thumbnail_layout": "horizontal",
+          "single_product_section_faq_items": [
+            {
+              "faq_answer": "نعم، جميع المنتجات تشمل ضمان حسب سياسة المتجر.",
+              "faq_question": "هل يتوفر ضمان على المنتجات؟",
+              "faq_item_opened": true
+            },
+            {
+              "faq_answer": "مدة الشحن تختلف حسب المدينة ويتم توضيح المدة المتوقعة أثناء إتمام الطلب.",
+              "faq_question": "كم تستغرق مدة الشحن داخل المملكة؟"
+            },
+            {
+              "faq_answer": "نعم، يمكنك طلب الاسترجاع خلال الفترة المحددة وفق سياسة الاسترجاع الخاصة بالمتجر.",
+              "faq_question": "هل يمكن استرجاع المنتج بعد الشراء؟"
+            }
+          ],
+          "category_page_category_page_title": "hguhf",
+          "product_card_card_aligned_content": "center",
+          "product_card_show_wishlist_button": true,
+          "cart_page_loyalty_background_color": "#F5F5F5",
+          "product_card_truncate_product_name": true,
+          "product_gallery_thumbnail_position": "start",
+          "single_product_section_show_fabric": true,
+          "single_product_section_viewers_max": 25,
+          "single_product_section_viewers_min": 8,
+          "category_page_category_page_enabled": false,
+          "product_card_show_quick_view_button": true,
+          "single_product_section_fabric_label": "",
+          "single_product_section_show_buy_now": true,
+          "single_product_section_trust_badges": null,
+          "single_product_section_viewers_text": "",
+          "cart_page_checkout_button_text_color": "#FFFFFF",
+          "category_page_category_page_subtitle": "gghgbgbgb",
+          "spacing_section_margin_bottom_mobile": 40,
+          "category_page_infinite_scroll_enabled": false,
+          "product_card_mobile_add_to_cart_style": "button",
+          "single_product_section_faq_icon_color": "#171717",
+          "single_product_section_show_low_stock": true,
+          "single_product_section_size_chart_url": null,
+          "spacing_section_margin_bottom_desktop": 0,
+          "single_product_section_care_guide_tabs": [
+            {
+              "points": "اقرئي بطاقة العناية أولاً\nاختاري طريقة التنظيف الموصى بها\nتجنبي الحرارة المباشرة على التطريز\nاحفظي القطعة معلّقة أو مطوية بعناية",
+              "eyebrow": "DARA | دارا",
+              "heading": "العناية بعبايتك",
+              "tab_label": "يومي"
+            },
+            {
+              "points": "راجعي تعليمات بطاقة القطعة\nاتبعي طريقة التنظيف الموصى بها\nتجنبي الحرارة المباشرة على التطريز\nاحفظي القطعة بعناية بعد الاستخدام",
+              "eyebrow": "DARA | دارا",
+              "heading": "تفاصيل تستحق العناية",
+              "tab_label": "مناسبات"
+            }
+          ],
+          "single_product_section_size_chart_text": "",
+          "single_product_section_story_label_low": "",
+          "single_product_section_story_label_mid": "",
+          "category_page_category_page_title_color": "#6B4A39",
+          "product_gallery_mobile_thumbnail_layout": "vertical",
+          "single_product_section_care_guide_title": "",
+          "single_product_section_head_title_color": "#000000",
+          "single_product_section_story_label_high": "",
+          "single_product_section_care_guide_button": "",
+          "single_product_section_coffee_body_level": "",
+          "single_product_section_fabric_by_product": null,
+          "single_product_section_faq_section_title": "",
+          "single_product_section_show_look_details": true,
+          "single_product_section_show_shipping_tab": true,
+          "single_product_section_show_trust_badges": true,
+          "single_product_section_show_variants_tab": false,
+          "single_product_section_texture_label_low": "",
+          "single_product_section_texture_label_mid": "",
+          "single_product_section_enable_faq_section": false,
+          "single_product_section_features_icon_size": 56,
+          "single_product_section_features_items_gap": 24,
+          "single_product_section_head_title_feature": "مزيج نكهات فريد",
+          "single_product_section_shipping_tab_title": "",
+          "single_product_section_show_story_texture": true,
+          "single_product_section_styling_guide_tabs": [
+            {
+              "points": "اختاري العباية المناسبة لمناسبتك\nشيلة محايدة توازن ألوان الإطلالة\nحقيبة صغيرة وأكسسوارات هادئة\nراجعي المقاس وطول القطعة",
+              "eyebrow": "DARA | دارا",
+              "heading": "نسّقي إطلالتك",
+              "tab_label": "يومي"
+            },
+            {
+              "points": "اختاري عباية بتفاصيل تطريز ناعمة\nشيلة بلون مكمّل للقطعة\nأكسسوارات لامعة بسيطة\nحذاء مريح بلون محايد",
+              "eyebrow": "DARA | دارا",
+              "heading": "إطلالة المناسبات",
+              "tab_label": "مناسبات"
+            }
+          ],
+          "single_product_section_texture_label_high": "",
+          "category_page_category_page_subtitle_color": "#000000",
+          "product_gallery_details_thumbnail_position": "bottom",
+          "single_product_section_styling_guide_title": "",
+          "category_page_category_page_card_meta_color": "#737373",
+          "single_product_section_coffee_acidity_level": "",
+          "single_product_section_faq_section_subtitle": "",
+          "single_product_section_shipping_tab_content": "",
+          "single_product_section_show_viewers_counter": true,
+          "single_product_section_styling_care_heading": "",
+          "single_product_section_styling_guide_button": "",
+          "category_page_category_page_background_color": "#eae4de",
+          "category_page_category_page_breadcrumb_color": "#000000",
+          "category_page_category_page_card_hover_color": "#6B4A39",
+          "category_page_category_page_card_title_color": "#000000",
+          "single_product_section_background_color_page": "#FCFAF7",
+          "single_product_section_faq_answer_text_color": "#525252",
+          "single_product_section_faq_item_border_color": "#E5E5E5",
+          "single_product_section_show_styling_care_tab": true,
+          "single_product_section_styling_care_subtitle": "",
+          "category_page_category_page_card_active_color": "#6b4a39",
+          "single_product_section_styling_care_tab_title": "",
+          "single_product_section_faq_question_text_color": "#171717",
+          "single_product_section_faq_section_title_color": "#000000",
+          "single_product_section_features_section_radius": 0,
+          "single_product_section_features_text_font_size": 16,
+          "single_product_section_features_title_font_size": 14,
+          "single_product_section_title_coffee_cta_section": "",
+          "single_product_section_enabled_coffee_cta_section": true,
+          "single_product_section_faq_section_subtitle_color": "#737373",
+          "single_product_section_styling_guide_button_image": null,
+          "single_product_section_coffee_attributes_selection": null,
+          "single_product_section_features_section_background": "#F9B75724",
+          "single_product_section_subtitle_coffee_cta_section": "",
+          "category_page_category_page_breadcrumb_active_color": "#ff0000",
+          "single_product_section_coffee_cta_iframe_by_product": null,
+          "single_product_section_faq_section_background_color": "#FFFFFF",
+          "single_product_section_bundle_products_with_selection": [
+            {
+              "bundle_items": [
+                {
+                  "product": {
+                    "id": "8d52aea4-4816-4075-b3f6-f2d0cb7f533b",
+                    "name": "قمع تقطير V60",
+                    "type": "product"
+                  }
+                },
+                {
+                  "product": {
+                    "id": "ad67763c-c9fa-4438-aa15-2d98b8bcc3ff",
+                    "name": "إبريق تقطير بعنق رفيع",
+                    "type": "product"
+                  }
+                },
+                {
+                  "product": {
+                    "id": "36606bd3-b504-4ead-b289-4ccf8f4b96af",
+                    "name": "عباية دارا الرملية",
+                    "type": "product"
+                  }
+                }
+              ],
+              "main_product": {
+                "id": "25a4c3a1-57be-4c4e-8142-5dcc30ea8c85",
+                "name": "عباية دارا السوداء",
+                "type": "product"
+              },
+              "section_title": "تست",
+              "bundle_btn_text": "تست",
+              "bundle_btn_color": "#5a2a2a"
+            }
+          ],
+          "single_product_section_list_features_with_product_selection": null,
+          "single_product_section_primary_btn_color_coffee_cta_section": "#6B4A39",
+          "single_product_section_secondary_btn_color_coffee_cta_section": "#FFFFFF",
+          "single_product_section_primary_btn_text_color_coffee_cta_section": "#FFFFFF",
+          "single_product_section_list_features_with_product_selection_store": null,
+          "single_product_section_secondary_btn_text_color_coffee_cta_section": "#6B4A39"
+        },
+        "en": {
+          "font_family": "IBM+Plex+Sans+Arabic",
+          "cart_page_features": [
+            {
+              "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/1bfe6583db9e44a3844a1fe4074b2b7d.png",
+              "title": "جودة مضمونة",
+              "subtitle": "محاصيل منتقاة بعناية"
+            },
+            {
+              "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/ee113483fc5643168409edc9a70e9247.png",
+              "title": "دفع امن",
+              "subtitle": "خيارات دفع مرنة وآمنة "
+            },
+            {
+              "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/c622641dbbbd48c8bbe33d963a05f796.png",
+              "title": "شحن مجاني",
+              "subtitle": "لكل طلب فوق 130"
+            }
+          ],
+          "category_page_enabled": true,
+          "general_show_breadcrumb": false,
+          "product_card_show_c_tags": true,
+          "product_card_show_rating": true,
+          "cart_page_payment_methods": [
+            {
+              "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/2c2bb95f-c217-4adf-9a3d-feba0ca98ab4.png"
+            },
+            {
+              "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/fe23ac22-bd9b-41b6-a35e-d4f54f544116.png"
+            },
+            {
+              "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/264fdc78-e352-4a7c-af61-d299a758f603.png"
+            },
+            {
+              "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/44c5ded1-4e7a-40e9-b5af-a5ba29aebd42.png"
+            },
+            {
+              "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/f2247b1b-4b65-4c13-90dd-558d58493b8a.png"
+            },
+            {
+              "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/5e93495d-0d1f-4744-b7fe-e98e6553af78.png"
+            },
+            {
+              "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/d16e23ab-3a46-4337-8551-3114c48b8884.png"
+            },
+            {
+              "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/ba7b1bf8-962e-49e7-ae02-30499e9d1bfa.png"
+            }
+          ],
+          "cart_features_features_list": [
+            {
+              "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/1bfe6583db9e44a3844a1fe4074b2b7d.png",
+              "title": "المميزات (1)",
+              "description": "المميزات (1)"
+            },
+            {
+              "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/ee113483fc5643168409edc9a70e9247.png",
+              "title": "المميزات (1)",
+              "description": "المميزات (1)المميزات (1)"
+            },
+            {
+              "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/c622641dbbbd48c8bbe33d963a05f796.png",
+              "title": "المميزات (1)",
+              "description": "المميزات (1)"
+            }
+          ],
+          "category_page_filter_layout": "sidebar",
+          "general_enable_theme_loader": false,
+          "product_card_columns_mobile": "2",
+          "cart_page_loyalty_text_color": "#0D0702",
+          "product_card_columns_desktop": "4",
+          "product_card_show_stock_info": true,
+          "cart_page_feature_title_color": "#000000",
+          "cart_page_checkout_button_color": "#6B4A39",
+          "product_card_image_aspect_ratio": "portrait",
+          "product_card_show_color_options": true,
+          "product_card_tags_infinite_loop": true,
+          "cart_page_feature_subtitle_color": "#52525C",
+          "category_page_category_page_title": "hguhf",
+          "product_card_card_aligned_content": "start",
+          "cart_page_loyalty_background_color": "#F5F5F5",
+          "product_card_truncate_product_name": true,
+          "category_page_category_page_enabled": false,
+          "cart_page_checkout_button_text_color": "#FFFFFF",
+          "category_page_category_page_subtitle": "gghgbgbgb",
+          "spacing_section_margin_bottom_mobile": 40,
+          "category_page_infinite_scroll_enabled": false,
+          "product_card_mobile_add_to_cart_style": "button",
+          "spacing_section_margin_bottom_desktop": 0,
+          "category_page_category_page_title_color": "#6B4A39",
+          "single_product_section_head_title_color": "#000000",
+          "single_product_section_head_title_feature": "مزيج نكهات فريد",
+          "category_page_category_page_subtitle_color": "#000000",
+          "category_page_category_page_card_meta_color": "#737373",
+          "category_page_category_page_background_color": "#fbe7e1",
+          "category_page_category_page_breadcrumb_color": "#000000",
+          "category_page_category_page_card_hover_color": "#6B4A39",
+          "category_page_category_page_card_title_color": "#000000",
+          "single_product_section_background_color_page": "#FCFAF7",
+          "category_page_category_page_card_active_color": "#ff0000",
+          "category_page_category_page_breadcrumb_active_color": "#ff0000",
+          "single_product_section_bundle_products_with_selection": [
+            {
+              "bundle_items": [
+                {
+                  "product": {
+                    "id": "8d52aea4-4816-4075-b3f6-f2d0cb7f533b",
+                    "name": "قمع تقطير V60",
+                    "type": "product"
+                  }
+                },
+                {
+                  "product": {
+                    "id": "ad67763c-c9fa-4438-aa15-2d98b8bcc3ff",
+                    "name": "إبريق تقطير بعنق رفيع",
+                    "type": "product"
+                  }
+                },
+                {
+                  "product": {
+                    "id": "36606bd3-b504-4ead-b289-4ccf8f4b96af",
+                    "name": "عباية دارا الرملية",
+                    "type": "product"
+                  }
+                }
+              ],
+              "main_product": {
+                "id": "25a4c3a1-57be-4c4e-8142-5dcc30ea8c85",
+                "name": "عباية دارا السوداء",
+                "type": "product"
+              },
+              "section_title": "تست",
+              "bundle_btn_text": "تست",
+              "bundle_btn_color": "#5a2a2a"
+            }
+          ],
+          "single_product_section_list_features_with_product_selection": null
+        }
+      }
+    },
+    {
       "path": "templates/home.jinja",
       "settings": {
         "components": {
@@ -24,29 +960,31 @@
                 "cta_url": "/products",
                 "heading": "عباءة تُكمل أناقتك",
                 "cta_text": "تسوّقي عباءتك الآن",
-                "bg_mobile": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/eff7f59b4cfb40fb9e45059430f7a16f.jpg",
+                "bg_mobile": "https://media.zid.store/a2ecca0a-b975-47b1-96a2-a7e246b8311d/b39e3b2a-7e0a-4840-9569-968e6186d297.png",
                 "bg_desktop": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/eff7f59b4cfb40fb9e45059430f7a16f.jpg",
                 "cta_radius": 4,
                 "subheading": "تصاميم خليجية فاخرة تجمع بين الأصالة والعصرية",
+                "show_rating": true,
                 "cta_bg_color": "rgba(255,255,255,0)",
+                "rating_count": "بكل تفاصيلها )",
+                "rating_label": "أناقة (",
                 "rating_stars": 5,
                 "heading_color": "#946E40",
                 "mobile_height": 460,
                 "cta_text_color": "#FFFFFF",
                 "desktop_height": 602,
                 "overlay_opacity": 100,
+                "background_color": "#171717",
                 "cta_border_color": "#FFFFFF",
                 "subheading_color": "#FFFFFF",
                 "cta_hover_bg_color": "rgba(255,255,255,0.10)",
+                "cta_link_on_banner": false,
                 "rating_scroll_target": "star_reviews",
                 "remove_bottom_margin": true,
                 "show_desktop_content": true,
                 "desktop_overlay_opacity": 0,
                 "mobile_content_offset_y": 0,
-                "desktop_content_offset_y": 1,
-                "show_rating": true,
-                "rating_label": "أناقة (",
-                "rating_count": "بكل تفاصيلها )"
+                "desktop_content_offset_y": 1
               },
               "template": "sections/about-hero-banner.jinja",
               "section_id": "02f2f802-893e-4777-9a2b-b45ee5635d86"
@@ -110,6 +1048,7 @@
                 "photo3_url": "/products",
                 "photo4_url": "/products",
                 "desktop_gap": 1,
+                "media_style": "icon",
                 "title_color": "#000000",
                 "photo1_title": "",
                 "photo2_title": "",
@@ -122,9 +1061,8 @@
                 "photo2_subtitle": "",
                 "photo3_subtitle": "",
                 "photo4_subtitle": "",
-                "remove_bottom_margin": false,
-                "media_style": "icon",
-                "background_color": "#FCFAF7"
+                "background_color": "#FCFAF7",
+                "remove_bottom_margin": false
               },
               "template": "sections/about-image-strip.jinja",
               "section_id": "76192aa8-fa69-4411-baa3-c390d0a8157d"
@@ -400,7 +1338,6 @@
               "display": true,
               "settings": {
                 "title": "مزيد من تجارب عميلاتنا",
-                "image_card_bg": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/7510547e7c084cbfbe888b2420c9b5c7.jpg",
                 "reviews": [
                   {
                     "name": "سارة عبدالله",
@@ -434,8 +1371,9 @@
                     "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/8df44702bc814068b043d1ce7e72e9f0.jpg"
                   }
                 ],
-                "title_color": "#000000",
                 "show_arrows": true,
+                "title_color": "#000000",
+                "image_card_bg": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/7510547e7c084cbfbe888b2420c9b5c7.jpg",
                 "section_background_color": "#FCFAF7"
               },
               "template": "sections/about-reviews-featured.jinja",
@@ -555,6 +1493,7 @@
                 "tab_bg_color": "#FAF7F2",
                 "chip_bg_color": "#F0F0F0",
                 "badge_bg_color": "#6B4A39",
+                "products_limit": 8,
                 "tab_1_products": {
                   "id": 0,
                   "type": "recent_products"
@@ -574,8 +1513,7 @@
                 "active_tab_bg_color": "#262626",
                 "progress_fill_color": "#737373",
                 "remove_bottom_margin": false,
-                "active_tab_text_color": "#ffffff",
-                "products_limit": 8
+                "active_tab_text_color": "#ffffff"
               },
               "template": "sections/products.jinja",
               "section_id": "d6daf648-ec54-4a4b-b638-0976b4b2ecc9"
@@ -634,37 +1572,37 @@
                   {
                     "name": "دليل التنسيق",
                     "text": "دليل توضيحي: شيلة هادئة وأكسسوارات بسيطة تكمل إطلالتك.",
-                    "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f23d99b61b2f48f69dabd058bb5eb15b.jpg",
-                    "stars": 5
+                    "stars": 5,
+                    "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f23d99b61b2f48f69dabd058bb5eb15b.jpg"
                   },
                   {
                     "name": "دليل التنسيق",
                     "text": "دليل توضيحي: شيلة هادئة وأكسسوارات بسيطة تكمل إطلالتك.",
-                    "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f45d6fca06c343ddb858214c0b67c83c.jpg",
-                    "stars": 5
+                    "stars": 5,
+                    "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f45d6fca06c343ddb858214c0b67c83c.jpg"
                   },
                   {
                     "name": "دليل التنسيق",
                     "text": "دليل توضيحي: شيلة هادئة وأكسسوارات بسيطة تكمل إطلالتك.",
-                    "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/71a9ab7578334adbb6988fb3aa69082f.jpg",
-                    "stars": 5
+                    "stars": 5,
+                    "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/71a9ab7578334adbb6988fb3aa69082f.jpg"
                   },
                   {
                     "name": "دليل التنسيق",
                     "text": "دليل توضيحي: شيلة هادئة وأكسسوارات بسيطة تكمل إطلالتك.",
-                    "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/99aff446df4e4d83a8baafe5c6161535.jpg",
-                    "stars": 5
+                    "stars": 5,
+                    "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/99aff446df4e4d83a8baafe5c6161535.jpg"
                   },
                   {
                     "name": "دليل التنسيق",
                     "text": "دليل توضيحي: شيلة هادئة وأكسسوارات بسيطة تكمل إطلالتك.",
-                    "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/500fbe2b952441f993529d77496cf2e8.jpg",
-                    "stars": 5
+                    "stars": 5,
+                    "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/500fbe2b952441f993529d77496cf2e8.jpg"
                   }
                 ],
+                "show_arrows": true,
                 "title_color": "#000000",
-                "image_card_bg": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f34acf78e028411bb90c4739c6c3fad9.jpg",
-                "show_arrows": true
+                "image_card_bg": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f34acf78e028411bb90c4739c6c3fad9.jpg"
               },
               "template": "sections/about-reviews-featured.jinja",
               "section_id": "04da72c9-2291-477c-9f76-8292098c39d6"
@@ -672,79 +1610,76 @@
             {
               "meta": {},
               "display": false,
-              "template": "sections/carousel.jinja",
-              "section_id": "4130feb7-a31f-4604-9bb7-a92f4e4776b8",
               "settings": {
-                "style_variant": "default",
-                "autoplay_enabled": true,
-                "autoplay_delay": 4000,
-                "transition_effect": "fade",
-                "show_dots": true,
-                "min_height_mobile": 500,
-                "min_height_desktop": 600,
-                "remove_bottom_margin": false,
                 "slides": [
                   {
-                    "background_position": "center",
-                    "overlay_opacity": 20,
-                    "text_alignment": "start",
-                    "badge_text": "NEW COLLECTION",
                     "heading": "أناقة على طريقتك",
-                    "description": "تجربة جريئة محمصة بعناية لتجربة تفهم جوك",
-                    "button_text": "تسوّق الآن",
+                    "badge_text": "NEW COLLECTION",
                     "button_url": "/products",
-                    "background_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/d540fe84cd9b43ffa3067c5d269e54c5.jpg"
+                    "button_text": "تسوّق الآن",
+                    "description": "تجربة جريئة محمصة بعناية لتجربة تفهم جوك",
+                    "text_alignment": "start",
+                    "overlay_opacity": 20,
+                    "background_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/d540fe84cd9b43ffa3067c5d269e54c5.jpg",
+                    "background_position": "center"
                   }
                 ],
-                "text_color": "#FFFFFF"
-              }
+                "show_dots": true,
+                "text_color": "#FFFFFF",
+                "style_variant": "default",
+                "autoplay_delay": 4000,
+                "autoplay_enabled": true,
+                "min_height_mobile": 500,
+                "transition_effect": "fade",
+                "min_height_desktop": 600,
+                "remove_bottom_margin": false
+              },
+              "template": "sections/carousel.jinja",
+              "section_id": "4130feb7-a31f-4604-9bb7-a92f4e4776b8"
             },
             {
               "meta": {},
               "display": false,
-              "template": "sections/gallery.jinja",
-              "section_id": "296a9965-8d06-438f-b7db-4293476876ee",
               "settings": {
                 "title": "معرض الصور",
-                "remove_bottom_margin": false,
                 "gallery": [
                   {
                     "alt": "",
+                    "src": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f665f233e2264c9fa443e3e67ed9abc1.jpg",
                     "image_title": "",
-                    "primary_button_text": "",
                     "primary_button_url": "",
-                    "secondary_button_text": "",
+                    "primary_button_text": "",
                     "secondary_button_url": "",
-                    "src": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f665f233e2264c9fa443e3e67ed9abc1.jpg"
+                    "secondary_button_text": ""
                   },
                   {
                     "alt": "",
+                    "src": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/63912d642c824beb99f99dd601250a68.jpg",
                     "image_title": "",
-                    "primary_button_text": "",
                     "primary_button_url": "",
-                    "secondary_button_text": "",
+                    "primary_button_text": "",
                     "secondary_button_url": "",
-                    "src": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/63912d642c824beb99f99dd601250a68.jpg"
+                    "secondary_button_text": ""
                   },
                   {
                     "alt": "",
+                    "src": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f34acf78e028411bb90c4739c6c3fad9.jpg",
                     "image_title": "",
-                    "primary_button_text": "",
                     "primary_button_url": "",
-                    "secondary_button_text": "",
+                    "primary_button_text": "",
                     "secondary_button_url": "",
-                    "src": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f34acf78e028411bb90c4739c6c3fad9.jpg"
+                    "secondary_button_text": ""
                   }
-                ]
-              }
+                ],
+                "remove_bottom_margin": false
+              },
+              "template": "sections/gallery.jinja",
+              "section_id": "296a9965-8d06-438f-b7db-4293476876ee"
             },
             {
               "meta": {},
               "display": false,
-              "template": "sections/benefits.jinja",
-              "section_id": "24f1b784-2b5d-4ea1-82dd-f574e58a169f",
               "settings": {
-                "remove_bottom_margin": false,
                 "store_features": [
                   {
                     "title": "جودة مضمونة",
@@ -763,17 +1698,17 @@
                     "description": "تجربة فتح علبة لا تُنسى"
                   }
                 ],
-                "background_color": "#ffffff"
-              }
+                "background_color": "#ffffff",
+                "remove_bottom_margin": false
+              },
+              "template": "sections/benefits.jinja",
+              "section_id": "24f1b784-2b5d-4ea1-82dd-f574e58a169f"
             },
             {
               "meta": {},
               "display": false,
-              "template": "sections/partners.jinja",
-              "section_id": "0cf507d5-2f9a-4c0d-a1d2-117c8aa0a84d",
               "settings": {
                 "title": "شركاؤنا",
-                "remove_bottom_margin": false,
                 "store_partners": [
                   {
                     "url": "",
@@ -788,45 +1723,45 @@
                     "name": "شريك 3"
                   }
                 ],
-                "background_color": "#ffffff"
-              }
+                "background_color": "#ffffff",
+                "remove_bottom_margin": false
+              },
+              "template": "sections/partners.jinja",
+              "section_id": "0cf507d5-2f9a-4c0d-a1d2-117c8aa0a84d"
             },
             {
               "meta": {},
               "display": false,
-              "template": "sections/testimonials.jinja",
-              "section_id": "09cb9a6b-7a94-442d-aa02-03e36685f976",
               "settings": {
                 "title": "آراء عملائنا",
-                "remove_bottom_margin": false,
                 "testimonials": [
                   {
-                    "rating": 5,
+                    "name": "أحمد",
                     "text": "تجربة رائعة! الخامة ناعمة والقصة مريحة جدًا.",
-                    "name": "أحمد"
+                    "rating": 5
                   },
                   {
-                    "rating": 5,
+                    "name": "سارة",
                     "text": "أجمل عباية اشتريتها، التفاصيل متقنة.",
-                    "name": "سارة"
+                    "rating": 5
                   },
                   {
-                    "rating": 5,
+                    "name": "محمد",
                     "text": "خدمة ممتازة وشحن سريع، أنصح بها بشدة.",
-                    "name": "محمد"
+                    "rating": 5
                   }
                 ],
-                "background_color": "#ffffff"
-              }
+                "background_color": "#ffffff",
+                "remove_bottom_margin": false
+              },
+              "template": "sections/testimonials.jinja",
+              "section_id": "09cb9a6b-7a94-442d-aa02-03e36685f976"
             },
             {
               "meta": {},
               "display": false,
-              "template": "sections/categories.jinja",
-              "section_id": "cc31d17e-bbe0-4825-8cdc-f3e5993c1b36",
               "settings": {
                 "title": "تسوّق حسب التصنيف",
-                "remove_bottom_margin": false,
                 "categories": [
                   {
                     "category": {
@@ -857,81 +1792,78 @@
                     }
                   }
                 ],
+                "display_more": true,
                 "background_color": "#ffffff",
-                "display_more": true
-              }
+                "remove_bottom_margin": false
+              },
+              "template": "sections/categories.jinja",
+              "section_id": "cc31d17e-bbe0-4825-8cdc-f3e5993c1b36"
             },
             {
               "meta": {},
               "display": false,
-              "template": "sections/countdown.jinja",
-              "section_id": "bdd97f4d-3be3-45bb-ac47-f0db85e2e059",
               "settings": {
                 "title": "عرض محدود الوقت",
-                "remove_bottom_margin": false,
-                "background_color": "#000000",
-                "description": "لا تفوّت الفرصة",
                 "end_date": "2027-12-31",
-                "button_text": "تسوّق الآن",
-                "button_url": "/products",
                 "badge_text": "عرض خاص",
-                "text_color": "#FFFFFF"
-              }
+                "button_url": "/products",
+                "text_color": "#FFFFFF",
+                "button_text": "تسوّق الآن",
+                "description": "لا تفوّت الفرصة",
+                "background_color": "#000000",
+                "remove_bottom_margin": false
+              },
+              "template": "sections/countdown.jinja",
+              "section_id": "bdd97f4d-3be3-45bb-ac47-f0db85e2e059"
             },
             {
               "meta": {},
               "display": false,
-              "template": "sections/video.jinja",
-              "section_id": "e3c832c6-c495-4d07-80ae-341e9dbe0035",
               "settings": {
                 "title": "شاهد تجربتنا",
-                "remove_bottom_margin": false,
                 "video": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/0db8b874-5e5e-4503-8038-17dc28dc8509.mp4",
-                "poster_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/c305128e334c4ffda13ae76f063d0885.jpg",
                 "autoplay": true,
-                "controls": false
-              }
+                "controls": false,
+                "poster_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/c305128e334c4ffda13ae76f063d0885.jpg",
+                "remove_bottom_margin": false
+              },
+              "template": "sections/video.jinja",
+              "section_id": "e3c832c6-c495-4d07-80ae-341e9dbe0035"
             },
             {
               "meta": {},
               "display": false,
-              "template": "sections/logo-social.jinja",
-              "section_id": "3e11e441-5e6e-4cfb-ad10-5a3e1c814840",
               "settings": {
-                "remove_bottom_margin": false,
-                "background_color": "#ffffff"
-              }
+                "background_color": "#ffffff",
+                "remove_bottom_margin": false
+              },
+              "template": "sections/logo-social.jinja",
+              "section_id": "3e11e441-5e6e-4cfb-ad10-5a3e1c814840"
             },
             {
               "meta": {},
               "display": false,
-              "template": "sections/hero.jinja",
-              "section_id": "f4314ce8-0500-4fa1-8147-4d9ed7a7dacc",
               "settings": {
                 "heading": "أناقة على طريقتك",
-                "overlay_opacity": 30,
-                "remove_bottom_margin": false,
-                "description": "تجربة جريئة محمصة بعناية",
-                "button_text": "تسوّق الآن",
                 "button_url": "/products",
+                "text_color": "#FFFFFF",
+                "button_text": "تسوّق الآن",
+                "description": "تجربة جريئة محمصة بعناية",
+                "is_primary_hero": false,
+                "overlay_opacity": 30,
                 "background_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/d540fe84cd9b43ffa3067c5d269e54c5.jpg",
-                "background_image_mobile": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/d540fe84cd9b43ffa3067c5d269e54c5.jpg",
                 "min_height_mobile": 500,
                 "min_height_desktop": 600,
-                "is_primary_hero": false,
-                "text_color": "#FFFFFF"
-              }
+                "remove_bottom_margin": false,
+                "background_image_mobile": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/d540fe84cd9b43ffa3067c5d269e54c5.jpg"
+              },
+              "template": "sections/hero.jinja",
+              "section_id": "f4314ce8-0500-4fa1-8147-4d9ed7a7dacc"
             },
             {
               "meta": {},
               "display": false,
-              "template": "sections/ananas-banner.jinja",
-              "section_id": "3292fb15-43d2-4de1-9019-b8169e9cfaf5",
               "settings": {
-                "heading": "اكتشفي إطلالتك",
-                "button_url": "/products",
-                "rating_stars": 5,
-                "remove_bottom_margin": false,
                 "avatars": [
                   {
                     "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f23d99b61b2f48f69dabd058bb5eb15b.jpg"
@@ -943,429 +1875,969 @@
                     "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/71a9ab7578334adbb6988fb3aa69082f.jpg"
                   }
                 ],
-                "description": "تجربة جريئة محمصة بعناية لتجربة تفهم جوك",
+                "heading": "اكتشفي إطلالتك",
+                "button_url": "/products",
                 "button_text": "تسوّق الآن",
+                "description": "تجربة جريئة محمصة بعناية لتجربة تفهم جوك",
+                "rating_stars": 5,
                 "rating_value": "4.8",
                 "background_color": "#000000",
                 "background_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/d540fe84cd9b43ffa3067c5d269e54c5.jpg",
+                "remove_bottom_margin": false,
                 "background_image_mobile": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/d540fe84cd9b43ffa3067c5d269e54c5.jpg"
-              }
+              },
+              "template": "sections/ananas-banner.jinja",
+              "section_id": "3292fb15-43d2-4de1-9019-b8169e9cfaf5"
+            }
+          ],
+          "en": [
+            {
+              "meta": {},
+              "display": true,
+              "settings": {
+                "rating": "4.8",
+                "avatars": [
+                  {
+                    "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/e77a5766739e44cfa0e5fa91d177cb64.jpg"
+                  },
+                  {
+                    "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/bc709acb0d5a4e9a8faaca0fb773104d.jpg"
+                  },
+                  {
+                    "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/996ce0942e47478e85c97ad846c0c482.jpg"
+                  }
+                ],
+                "cta_url": "/products",
+                "heading": "عباءة تُكمل أناقتك",
+                "cta_text": "تسوّقي عباءتك الآن",
+                "bg_mobile": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/eff7f59b4cfb40fb9e45059430f7a16f.jpg",
+                "bg_desktop": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/eff7f59b4cfb40fb9e45059430f7a16f.jpg",
+                "cta_radius": 4,
+                "subheading": "تصاميم خليجية فاخرة تجمع بين الأصالة والعصرية",
+                "show_rating": true,
+                "cta_bg_color": "rgba(255,255,255,0)",
+                "rating_count": "بكل تفاصيلها )",
+                "rating_label": "أناقة (",
+                "rating_stars": 5,
+                "heading_color": "#946E40",
+                "mobile_height": 460,
+                "cta_text_color": "#FFFFFF",
+                "desktop_height": 602,
+                "overlay_opacity": 100,
+                "cta_border_color": "#FFFFFF",
+                "subheading_color": "#FFFFFF",
+                "cta_hover_bg_color": "rgba(255,255,255,0.10)",
+                "rating_scroll_target": "star_reviews",
+                "remove_bottom_margin": true,
+                "show_desktop_content": true,
+                "desktop_overlay_opacity": 0,
+                "mobile_content_offset_y": 0,
+                "desktop_content_offset_y": 1
+              },
+              "template": "sections/about-hero-banner.jinja",
+              "section_id": "02f2f802-893e-4777-9a2b-b45ee5635d86"
+            },
+            {
+              "meta": {},
+              "display": true,
+              "settings": {
+                "title": "مختاراتنا لكِ",
+                "layout": "carousel",
+                "more_url": "/categories/1749391/العبايات",
+                "products": null,
+                "subtitle": "",
+                "more_text": "عرض الكل",
+                "active_tab": "tab_2",
+                "tab_1_text": "جديدنا",
+                "tab_2_text": "الأكثر مبيعا",
+                "text_color": "#000000",
+                "explore_url": "/products",
+                "muted_color": "#737373",
+                "border_color": "#000000",
+                "display_more": true,
+                "explore_text": "اكتشفي إطلالتك",
+                "tab_bg_color": "#FCFAF7",
+                "chip_bg_color": "#F5F0E8",
+                "badge_bg_color": "#946E40",
+                "tab_1_products": {
+                  "id": 0,
+                  "type": "recent_products"
+                },
+                "tab_2_products": {
+                  "id": 1749395,
+                  "name": "عبايات يومية",
+                  "type": "products_category"
+                },
+                "button_bg_color": "#FCFAF7",
+                "products_source": "tabs",
+                "background_color": "#FCFAF7",
+                "badge_text_color": "#FFFFFF",
+                "button_text_color": "#000000",
+                "progress_bg_color": "#e5e5e5",
+                "mobile_tabs_layout": "buttons",
+                "active_tab_bg_color": "#262626",
+                "progress_fill_color": "#737373",
+                "active_tab_text_color": "#FFFFFF"
+              },
+              "template": "sections/products.jinja",
+              "section_id": "3de6621c-bcdb-413e-8be1-9751d1743759"
+            },
+            {
+              "meta": {},
+              "display": true,
+              "settings": {
+                "photo1": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/5e357f0185584a11bf6b996283a6d36d.png",
+                "photo2": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/5ac9da7ae3344d95ba112960faf4f665.png",
+                "photo3": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/91b1e0dc18774d6aba276eb56a8de6bf.png",
+                "photo4": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/d5c73afbab2f4501a76e168d0b533f15.png",
+                "mobile_gap": 16,
+                "photo1_url": "/products",
+                "photo2_url": "/products",
+                "photo3_url": "/products",
+                "photo4_url": "/products",
+                "desktop_gap": 1,
+                "media_style": "icon",
+                "title_color": "#000000",
+                "photo1_title": "",
+                "photo2_title": "",
+                "photo3_title": "",
+                "photo4_title": "",
+                "mobile_padding": 32,
+                "mobile_row_gap": 8,
+                "subtitle_color": "#000000",
+                "photo1_subtitle": "",
+                "photo2_subtitle": "",
+                "photo3_subtitle": "",
+                "photo4_subtitle": "",
+                "background_color": "#FCFAF7",
+                "remove_bottom_margin": false
+              },
+              "template": "sections/about-image-strip.jinja",
+              "section_id": "76192aa8-fa69-4411-baa3-c390d0a8157d"
+            },
+            {
+              "meta": {},
+              "display": true,
+              "settings": {
+                "title": "تسوّقي حسب اختيارك",
+                "cat1_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/5b8aa8c52f744fea999c3d4218ac42f2.jpg",
+                "cat1_url": "/categories/1749391/العبايات",
+                "cat2_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/4ec86aba757f4ce680a9ca2ebf20648b.jpg",
+                "cat2_url": "/categories/1749395/عبايات-يومية",
+                "cat3_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/639436dbb7bc40459a38f6528fe5f637.jpg",
+                "cat3_url": "/categories/1749394/إطلالات-المناسبات",
+                "cat4_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/3e37267894f44bafa372d77a08c631a1.jpg",
+                "cat4_url": "/categories/1749392/الشيلات",
+                "cat5_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/10247faa0dd44143aaf3e09d0711d25c.jpg",
+                "cat5_url": "/products/عباية-دارا-السوداء",
+                "cat6_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/5eb09ef0fbf94c57934776114b513f96.jpg",
+                "cat6_url": "/products/عباية-دارا-المطرزة",
+                "cat1_name": "العبايات الكحلية",
+                "cat2_name": "عبايات اللينن",
+                "cat3_name": "العبايات الكلاسيكية",
+                "cat4_name": "عبايات المناسبات",
+                "cat5_name": "العبايات اليومية",
+                "cat6_name": "العبايات المطرزة",
+                "hover_text": "اكتشفي المجموعة",
+                "title_color": "#000000",
+                "mobile_layout": "caption",
+                "overlay_color": null,
+                "card_text_color": "#FFFFFF",
+                "cat1_text_color": "#FFFFFF",
+                "cat2_text_color": "#FFFFFF",
+                "cat3_text_color": "#FFFFFF",
+                "cat4_text_color": "#FFFFFF",
+                "cat5_text_color": "#FFFFFF",
+                "cat6_text_color": "#FFFFFF",
+                "overlay_opacity": 20,
+                "hover_text_color": "#ffffff",
+                "section_bg_color": "#FCFAF7",
+                "mobile_text_color": "#000000",
+                "remove_bottom_margin": false,
+                "scroll_effect_enabled": true,
+                "scroll_effect_strength": 40,
+                "mobile_overlay_bg_color": "#ffffff"
+              },
+              "template": "sections/about-shop-by-category.jinja",
+              "section_id": "fa18cb0d-5edb-47df-bb13-c1b7a8659d8b"
+            },
+            {
+              "meta": {},
+              "display": true,
+              "settings": {
+                "title": "لكل مناسبة، عباءتها",
+                "layout": "carousel",
+                "more_url": "/products",
+                "products": {
+                  "id": 1749392,
+                  "name": "أدوات التحضير",
+                  "type": "products_category"
+                },
+                "subtitle": "اختاري العباءة التي تناسب أسلوبك وذوقك",
+                "more_text": "اكتشفي المجموعة",
+                "text_color": "#000000",
+                "muted_color": "#737373",
+                "border_color": "#000000",
+                "display_more": true,
+                "chip_bg_color": "#F5F0E8",
+                "badge_bg_color": "#946E40",
+                "button_bg_color": "#FCFAF7",
+                "background_color": "#FCFAF7",
+                "badge_text_color": "#FFFFFF",
+                "button_text_color": "#000000",
+                "progress_bg_color": "#E5E5E5",
+                "progress_fill_color": "#737373"
+              },
+              "template": "sections/products-normal.jinja",
+              "section_id": "6716e20b-0ba7-4acb-a0cf-3224b104f88e"
+            },
+            {
+              "meta": {},
+              "display": true,
+              "settings": {
+                "items": [
+                  {
+                    "text": "دفع آمن",
+                    "icon_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/2162ef57176f4b5ab4b846b8c1921679.png"
+                  },
+                  {
+                    "text": "شحن سريع",
+                    "icon_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/ec7107f8c979482fb616c9e8a172aeaa.png"
+                  },
+                  {
+                    "text": "تغليف مميز",
+                    "icon_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/9ac7417f80be45a6b1a98b479601207c.png"
+                  },
+                  {
+                    "text": "خياطة متقنة",
+                    "icon_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/72e7061c5f64455ab48f1f9d51b178b5.png"
+                  }
+                ],
+                "speed": 18,
+                "bg_color": "#946E40",
+                "icon_color": "#FFFFFF",
+                "text_color": "#FFFFFF",
+                "separator_color": "#00000014",
+                "mobile_text_color": "#FFFFFF"
+              },
+              "template": "sections/about-snake-bar.jinja",
+              "section_id": "492ab4b0-02ee-41c0-befe-0489a2392d5b"
+            },
+            {
+              "meta": {},
+              "display": true,
+              "settings": {
+                "title": "اختاري عباءتك حسب مزاجك",
+                "cta_url": "/categories/1749391/العبايات",
+                "cta_text": "اكتشفي المجموعة",
+                "subtitle": "نرشّح لكِ العباءة المناسبة لكل مناسبة",
+                "card1_tag": "مختاراتنا",
+                "card1_url": "/products/عباية-رمل-بقصة-واسعة",
+                "card2_tag": "مختاراتنا",
+                "card2_url": "/products/عباية-دارا-الرملية",
+                "card3_tag": "مختاراتنا",
+                "card3_url": "/products/عباية-دارا-المطرزة",
+                "card4_tag": "مختاراتنا",
+                "card4_url": "/products/عباية-دارا-السوداء",
+                "card1_desc": "راحة وأناقة في آنٍ واحد كل يوم",
+                "card2_desc": "أناقة المساء بلمسة خليجية أصيلة",
+                "card3_desc": "إطلالة تليق بكل مناسبة فارهة",
+                "card4_desc": "بداية يومك بأناقة خليجية",
+                "text_color": "#000000",
+                "card1_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/9ca3e64cdf294d06922d9bd2ea669844.jpg",
+                "card1_title": "زياراتك الجميلة",
+                "card2_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/a03c1019e9f7452b8a6ce3c03ef5d341.jpg",
+                "card2_title": "أناقة المساء",
+                "card3_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/569e33221a8b453887ab915e8fa03a47.jpg",
+                "card3_title": "إطلالة العمل",
+                "card4_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/a59ec4de5c944587bd033dc2057f8cdb.jpg",
+                "card4_title": "أناقة يومية",
+                "tag_bg_color": "#946E40",
+                "cta_text_color": "#000000",
+                "tag_text_color": "#FFFFFF",
+                "mobile_subtitle": "نرشّح لكِ العباءة المناسبة لكل مناسبة",
+                "cta_border_color": "#000000",
+                "hover_text_color": "#946E40",
+                "section_bg_color": "#FCFAF7"
+              },
+              "template": "sections/about-shop-by-mood.jinja",
+              "section_id": "4faa6ce1-41e6-4a3d-adcf-3789d5ba5f89"
+            },
+            {
+              "meta": {},
+              "display": true,
+              "settings": {
+                "body1": "أناقة خليجية أصيلة، من قلب الخليج إليكِ.",
+                "body2": "كل عباءة قصة تروينها.",
+                "body3": "من العباءة إلى الشيلة، تفاصيل تكمل إطلالتكِ وتعبّر عن ذوقكِ الرفيع. اكتشفي أناقة خليجية ترافقكِ في كل مناسبة.",
+                "photo": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/1f9653a02b8c4bedba0dfdc8178ef026.jpg",
+                "title": "دارنا للعبايات الخليجية",
+                "video": "",
+                "cta_url": "#",
+                "cta_text": "تعرّفي على دارنا",
+                "image_alt": "دارنا للعبايات الخليجية",
+                "body_color": "#3D2B1F",
+                "lead_color": "#1A0A2E",
+                "media_type": "image",
+                "title_color": "#8B5E3C",
+                "body3_mobile": "من العباءة إلى الشيلة،",
+                "body4_mobile": "تفاصيل تكمل إطلالتكِ وتعبّر عن ذوقكِ الرفيع.",
+                "body5_mobile": "اكتشفي أناقة خليجية ترافقكِ في كل مناسبة.",
+                "cta_bg_color": "#F7F3ED",
+                "poster_image": null,
+                "cta_text_color": "#1A0A2E",
+                "cta_border_color": "#1A0A2E",
+                "section_bg_color": "#F7F3ED",
+                "mobile_media_position": "after"
+              },
+              "template": "sections/about-community.jinja",
+              "section_id": "973776a2-f4e7-4278-affd-b0351985a842"
+            },
+            {
+              "meta": {},
+              "display": true,
+              "settings": {
+                "title": "إكسسوارات تُكمل إطلالتكِ",
+                "cta_url": "/categories/1749395/عبايات-يومية",
+                "cta_text": "عرض الكل",
+                "hero_alt": "إكسسوارات دارنا",
+                "products": {
+                  "id": 1749395,
+                  "name": "عبايات يومية",
+                  "type": "products_category"
+                },
+                "show_cta": true,
+                "subtitle": "شيلات وحقائب ولمسات تُكمل أناقتكِ",
+                "mobile_bg": "#FCFAF7",
+                "hero_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/07ee18abeebf4490bae6572812b064d6.jpg",
+                "section_bg": "#FCFAF7",
+                "sticky_top": 0,
+                "text_color": "#000000",
+                "title_color": "#261F1C",
+                "desktop_height": 650,
+                "mobile_nav_text": "تصفّح المنتجات",
+                "mobile_card_size": 297,
+                "desktop_card_size": 327,
+                "mobile_hero_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/07ee18abeebf4490bae6572812b064d6.jpg",
+                "mobile_title_color": "#261F1C",
+                "mobile_product_text_color": "#FFFFFF"
+              },
+              "template": "sections/about-details.jinja",
+              "section_id": "920490b2-04f1-4528-ad75-b02966b07e80"
+            },
+            {
+              "meta": {},
+              "display": true,
+              "settings": {
+                "title": "آراء عميلاتنا الكريمات",
+                "section_bg": "#FCFAF7",
+                "star_color": "#946E40",
+                "title_color": "#000000",
+                "image_card_bg": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/44220a10ebdd49e2b92f64a72a170ad4.jpg",
+                "verified_color": "#946E40",
+                "star_reviews_items": [
+                  {
+                    "name": "فاطمة المنصوري",
+                    "text": "«قماش ناعم وقصة مريحة، والتطريز يضيف لمسة راقية لإطلالتي.»",
+                    "stars": 5,
+                    "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/9a8352b4f0744e5e947c3bc21da4570d.jpg",
+                    "card_bg": "#EEEEEE",
+                    "text_color": "#000000"
+                  },
+                  {
+                    "name": "ليلى العجمي",
+                    "text": "«اللون هادئ والخياطة متقنة، عباية تناسب يومي بكل راحة.»",
+                    "stars": 5,
+                    "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/b2546ded6f264731a2c344522adcca42.jpg",
+                    "card_bg": "#171717",
+                    "text_color": "#FFFFFF"
+                  },
+                  {
+                    "name": "هند القحطاني",
+                    "text": "«تفاصيل أنيقة وقصة واسعة، خيار جميل للمناسبات والزيارات.»",
+                    "stars": 5,
+                    "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/2ba669e16610425b89dbcba8c1668705.jpg",
+                    "card_bg": "#171717",
+                    "text_color": "#FFFFFF"
+                  },
+                  {
+                    "name": "نورة العتيبي",
+                    "text": "«قماش ناعم وقصة مريحة، والتطريز يضيف لمسة راقية لإطلالتي.»",
+                    "stars": 5,
+                    "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/8a8700cb38cc494ca902bf95c230a54d.jpg",
+                    "card_bg": "#171717",
+                    "text_color": "#FFFFFF"
+                  },
+                  {
+                    "name": "سارة الشمري",
+                    "text": "«اللون هادئ والخياطة متقنة، عباية تناسب يومي بكل راحة.»",
+                    "stars": 5,
+                    "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/d8a09d19e6ce4bbeac61827abebc853c.jpg",
+                    "card_bg": "#EEEEEE",
+                    "text_color": "#000000"
+                  }
+                ]
+              },
+              "template": "sections/star-reviews.jinja",
+              "section_id": "152b1809-88c1-4d0c-aa3f-0189c3637ce7"
+            },
+            {
+              "meta": {},
+              "display": true,
+              "settings": {
+                "title": "مزيد من تجارب عميلاتنا",
+                "reviews": [
+                  {
+                    "name": "سارة عبدالله",
+                    "text": "«قماش ناعم وقصة مريحة، والتطريز يضيف لمسة راقية لإطلالتي.»",
+                    "stars": 5
+                  },
+                  {
+                    "name": "رهف الدوسري",
+                    "text": "«قماش ناعم وقصة مريحة، والتطريز يضيف لمسة راقية لإطلالتي.»",
+                    "stars": 5,
+                    "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/2ca089612430451b8caa26d67c20905d.jpg",
+                    "background_color": "#946E40"
+                  },
+                  {
+                    "name": "عبير السليم",
+                    "text": "«اللون هادئ والخياطة متقنة، عباية تناسب يومي بكل راحة.»",
+                    "stars": 5,
+                    "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/50e52263108b49c4ace9547ececdc2c2.jpg",
+                    "background_color": "#E2E899"
+                  },
+                  {
+                    "name": "دانة المطيري",
+                    "text": "«تفاصيل أنيقة وقصة واسعة، خيار جميل للمناسبات والزيارات.»",
+                    "stars": 5,
+                    "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/6cb428b6621a45c09aaae5f136a7bb62.jpg"
+                  },
+                  {
+                    "name": "أميرة الحربي",
+                    "text": "«قماش ناعم وقصة مريحة، والتطريز يضيف لمسة راقية لإطلالتي.»",
+                    "stars": 5,
+                    "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/8df44702bc814068b043d1ce7e72e9f0.jpg"
+                  }
+                ],
+                "show_arrows": true,
+                "title_color": "#000000",
+                "image_card_bg": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/7510547e7c084cbfbe888b2420c9b5c7.jpg",
+                "section_background_color": "#FCFAF7"
+              },
+              "template": "sections/about-reviews-featured.jinja",
+              "section_id": "944768e5-2d07-4614-b473-18b34ae30d00"
+            },
+            {
+              "meta": {},
+              "display": true,
+              "settings": {
+                "title": "دارنا… في كل لقطة",
+                "videos": [
+                  {
+                    "video": "",
+                    "thumbnail": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/c2cd852e440342328d3bfa7d192302af.jpg"
+                  },
+                  {
+                    "video": "",
+                    "thumbnail": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/e8b3fa95a2b641cd88ee4770a9e4c97a.jpg"
+                  },
+                  {
+                    "video": "",
+                    "thumbnail": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/1b84c00d92f84ac1928db0b53b4b081e.jpg"
+                  },
+                  {
+                    "video": "",
+                    "thumbnail": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/afaec39a6c5e4be6b647ea4fae6d25b5.jpg"
+                  },
+                  {
+                    "video": "",
+                    "thumbnail": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/231b23a705894cc88cd96127a2134e82.jpg"
+                  }
+                ],
+                "subtitle": "لحظات إطلالاتكِ الخليجية الأنيقة",
+                "title_color": "#000000",
+                "border_radius": 8,
+                "subtitle_color": "#000000",
+                "background_color": "#FCFAF7"
+              },
+              "template": "sections/video-ugc.jinja",
+              "section_id": "797da064-c992-4ee7-a8f5-33d7e864c06b"
+            },
+            {
+              "meta": {},
+              "display": true,
+              "settings": {
+                "title": "لحظات من عالم دارنا",
+                "subtitle": "العباءة لا تُلبس فقط… تُرتدى بعناية وأصالة",
+                "media_items": [
+                  {
+                    "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/c4c76f906add4e2b9c6c0c280e41d867.jpg",
+                    "video": ""
+                  },
+                  {
+                    "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/c2f248d41ec34c5da558862cd34fa905.jpg",
+                    "video": ""
+                  },
+                  {
+                    "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/88ec4101e760471b83be610dac5aeed5.jpg",
+                    "video": ""
+                  },
+                  {
+                    "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/33aa02fafc0a44c6b5e442d69899fad9.jpg",
+                    "video": ""
+                  },
+                  {
+                    "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/4ddcab88fe3b42729f387c3401a374f0.jpg",
+                    "video": ""
+                  },
+                  {
+                    "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/2e065e3d31544a0f9010f04c7cc0d956.jpg",
+                    "video": ""
+                  },
+                  {
+                    "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/541e031936e147be8ed9d64ca3f38092.jpg",
+                    "video": ""
+                  },
+                  {
+                    "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/a2523ecbbde741b4bc609931cdc38c4b.jpg",
+                    "video": ""
+                  },
+                  {
+                    "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/d7cac92c5b10454297b342daa32b6671.jpg",
+                    "video": ""
+                  },
+                  {
+                    "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/fc7632edc5564818900e44fbc0ddd86c.jpg",
+                    "video": ""
+                  }
+                ],
+                "title_color": "#000000",
+                "border_radius": 0,
+                "subtitle_color": "#000000",
+                "background_color": "#FCFAF7"
+              },
+              "template": "sections/about-gallery.jinja",
+              "section_id": "7af402f5-683f-4ab6-9b71-4a6732b18d5a"
+            },
+            {
+              "meta": {},
+              "display": false,
+              "settings": {
+                "title": "مختارات دارا",
+                "layout": "grid",
+                "more_url": "/categories/1749391/العبايات",
+                "products": null,
+                "subtitle": "",
+                "more_text": "عرض الكل",
+                "active_tab": "tab_2",
+                "tab_1_text": "جديدنا",
+                "tab_2_text": "الأكثر مبيعا",
+                "text_color": "#000000",
+                "explore_url": "/products",
+                "muted_color": "#737373",
+                "border_color": "#000000",
+                "display_more": true,
+                "explore_text": "اكتشفي إطلالتك",
+                "tab_bg_color": "#FAF7F2",
+                "chip_bg_color": "#F0F0F0",
+                "badge_bg_color": "#6B4A39",
+                "products_limit": 8,
+                "tab_1_products": {
+                  "id": 0,
+                  "type": "recent_products"
+                },
+                "tab_2_products": {
+                  "id": 1749395,
+                  "name": "عبايات يومية",
+                  "type": "products_category"
+                },
+                "button_bg_color": "#FAF7F2",
+                "products_source": "tabs",
+                "background_color": "#FAF7F2",
+                "badge_text_color": "#ffffff",
+                "button_text_color": "#000000",
+                "progress_bg_color": "#e5e5e5",
+                "mobile_tabs_layout": "buttons",
+                "active_tab_bg_color": "#262626",
+                "progress_fill_color": "#737373",
+                "remove_bottom_margin": false,
+                "active_tab_text_color": "#ffffff"
+              },
+              "template": "sections/products.jinja",
+              "section_id": "d6daf648-ec54-4a4b-b638-0976b4b2ecc9"
+            },
+            {
+              "meta": {},
+              "display": false,
+              "settings": {
+                "title": "تسوّقي حسب اختيارك",
+                "cat1_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/dd5bd2ebeeb3420984e40d13ba81c5d5.jpg",
+                "cat1_url": "/categories/1749391/العبايات",
+                "cat2_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f665f233e2264c9fa443e3e67ed9abc1.jpg",
+                "cat2_url": "/categories/1749395/عبايات-يومية",
+                "cat3_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/6aa80b999fad4a4683aaec35629f163d.jpg",
+                "cat3_url": "/categories/1749394/إطلالات-المناسبات",
+                "cat4_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/63912d642c824beb99f99dd601250a68.jpg",
+                "cat4_url": "/categories/1749392/الشيلات",
+                "cat5_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f34acf78e028411bb90c4739c6c3fad9.jpg",
+                "cat5_url": "/products/عباية-دارا-السوداء",
+                "cat6_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f34acf78e028411bb90c4739c6c3fad9.jpg",
+                "cat6_url": "/products/عباية-دارا-المطرزة",
+                "cat1_name": "الشيلات",
+                "cat2_name": "العبايات",
+                "cat3_name": "الأطقم",
+                "cat4_name": "إطلالات الموسم",
+                "cat5_name": "أكسسوارات دارا",
+                "cat6_name": "الأكسسوارات",
+                "hover_text": "VIEW THE COLLECTION",
+                "title_color": "#000000",
+                "mobile_layout": "overlay",
+                "overlay_color": null,
+                "card_text_color": "#ffffff",
+                "cat1_text_color": "#ffffff",
+                "cat2_text_color": "#ffffff",
+                "cat3_text_color": "#ffffff",
+                "cat4_text_color": "#ffffff",
+                "cat5_text_color": "#ffffff",
+                "cat6_text_color": "#ffffff",
+                "overlay_opacity": 22,
+                "hover_text_color": "#ffffff",
+                "section_bg_color": "transparent",
+                "mobile_text_color": "#000000",
+                "scroll_effect_enabled": true,
+                "scroll_effect_strength": 37,
+                "mobile_overlay_bg_color": "#ffffff"
+              },
+              "template": "sections/about-shop-by-category.jinja",
+              "section_id": "ed93f2d8-372c-48df-bc14-9c73f3674fa3"
+            },
+            {
+              "meta": {},
+              "display": false,
+              "settings": {
+                "title": "دليل الأناقة من دارا",
+                "reviews": [
+                  {
+                    "name": "دليل التنسيق",
+                    "text": "دليل توضيحي: شيلة هادئة وأكسسوارات بسيطة تكمل إطلالتك.",
+                    "stars": 5,
+                    "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f23d99b61b2f48f69dabd058bb5eb15b.jpg"
+                  },
+                  {
+                    "name": "دليل التنسيق",
+                    "text": "دليل توضيحي: شيلة هادئة وأكسسوارات بسيطة تكمل إطلالتك.",
+                    "stars": 5,
+                    "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f45d6fca06c343ddb858214c0b67c83c.jpg"
+                  },
+                  {
+                    "name": "دليل التنسيق",
+                    "text": "دليل توضيحي: شيلة هادئة وأكسسوارات بسيطة تكمل إطلالتك.",
+                    "stars": 5,
+                    "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/71a9ab7578334adbb6988fb3aa69082f.jpg"
+                  },
+                  {
+                    "name": "دليل التنسيق",
+                    "text": "دليل توضيحي: شيلة هادئة وأكسسوارات بسيطة تكمل إطلالتك.",
+                    "stars": 5,
+                    "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/99aff446df4e4d83a8baafe5c6161535.jpg"
+                  },
+                  {
+                    "name": "دليل التنسيق",
+                    "text": "دليل توضيحي: شيلة هادئة وأكسسوارات بسيطة تكمل إطلالتك.",
+                    "stars": 5,
+                    "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/500fbe2b952441f993529d77496cf2e8.jpg"
+                  }
+                ],
+                "show_arrows": true,
+                "title_color": "#000000",
+                "image_card_bg": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f34acf78e028411bb90c4739c6c3fad9.jpg"
+              },
+              "template": "sections/about-reviews-featured.jinja",
+              "section_id": "04da72c9-2291-477c-9f76-8292098c39d6"
+            },
+            {
+              "meta": {},
+              "display": false,
+              "settings": {
+                "slides": [
+                  {
+                    "heading": "أناقة على طريقتك",
+                    "badge_text": "NEW COLLECTION",
+                    "button_url": "/products",
+                    "button_text": "تسوّق الآن",
+                    "description": "تجربة جريئة محمصة بعناية لتجربة تفهم جوك",
+                    "text_alignment": "start",
+                    "overlay_opacity": 20,
+                    "background_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/d540fe84cd9b43ffa3067c5d269e54c5.jpg",
+                    "background_position": "center"
+                  }
+                ],
+                "show_dots": true,
+                "text_color": "#FFFFFF",
+                "style_variant": "default",
+                "autoplay_delay": 4000,
+                "autoplay_enabled": true,
+                "min_height_mobile": 500,
+                "transition_effect": "fade",
+                "min_height_desktop": 600,
+                "remove_bottom_margin": false
+              },
+              "template": "sections/carousel.jinja",
+              "section_id": "4130feb7-a31f-4604-9bb7-a92f4e4776b8"
+            },
+            {
+              "meta": {},
+              "display": false,
+              "settings": {
+                "title": "معرض الصور",
+                "gallery": [
+                  {
+                    "alt": "",
+                    "src": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f665f233e2264c9fa443e3e67ed9abc1.jpg",
+                    "image_title": "",
+                    "primary_button_url": "",
+                    "primary_button_text": "",
+                    "secondary_button_url": "",
+                    "secondary_button_text": ""
+                  },
+                  {
+                    "alt": "",
+                    "src": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/63912d642c824beb99f99dd601250a68.jpg",
+                    "image_title": "",
+                    "primary_button_url": "",
+                    "primary_button_text": "",
+                    "secondary_button_url": "",
+                    "secondary_button_text": ""
+                  },
+                  {
+                    "alt": "",
+                    "src": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f34acf78e028411bb90c4739c6c3fad9.jpg",
+                    "image_title": "",
+                    "primary_button_url": "",
+                    "primary_button_text": "",
+                    "secondary_button_url": "",
+                    "secondary_button_text": ""
+                  }
+                ],
+                "remove_bottom_margin": false
+              },
+              "template": "sections/gallery.jinja",
+              "section_id": "296a9965-8d06-438f-b7db-4293476876ee"
+            },
+            {
+              "meta": {},
+              "display": false,
+              "settings": {
+                "store_features": [
+                  {
+                    "title": "جودة مضمونة",
+                    "description": "محاصيل منتقاة بعناية"
+                  },
+                  {
+                    "title": "دفع آمن",
+                    "description": "خيارات دفع مرنة وآمنة"
+                  },
+                  {
+                    "title": "شحن سريع",
+                    "description": "توصيل لباب بيتك"
+                  },
+                  {
+                    "title": "تغليف مميز",
+                    "description": "تجربة فتح علبة لا تُنسى"
+                  }
+                ],
+                "background_color": "#ffffff",
+                "remove_bottom_margin": false
+              },
+              "template": "sections/benefits.jinja",
+              "section_id": "24f1b784-2b5d-4ea1-82dd-f574e58a169f"
+            },
+            {
+              "meta": {},
+              "display": false,
+              "settings": {
+                "title": "شركاؤنا",
+                "store_partners": [
+                  {
+                    "url": "",
+                    "name": "شريك 1"
+                  },
+                  {
+                    "url": "",
+                    "name": "شريك 2"
+                  },
+                  {
+                    "url": "",
+                    "name": "شريك 3"
+                  }
+                ],
+                "background_color": "#ffffff",
+                "remove_bottom_margin": false
+              },
+              "template": "sections/partners.jinja",
+              "section_id": "0cf507d5-2f9a-4c0d-a1d2-117c8aa0a84d"
+            },
+            {
+              "meta": {},
+              "display": false,
+              "settings": {
+                "title": "آراء عملائنا",
+                "testimonials": [
+                  {
+                    "name": "أحمد",
+                    "text": "تجربة رائعة! الخامة ناعمة والقصة مريحة جدًا.",
+                    "rating": 5
+                  },
+                  {
+                    "name": "سارة",
+                    "text": "أجمل عباية اشتريتها، التفاصيل متقنة.",
+                    "rating": 5
+                  },
+                  {
+                    "name": "محمد",
+                    "text": "خدمة ممتازة وشحن سريع، أنصح بها بشدة.",
+                    "rating": 5
+                  }
+                ],
+                "background_color": "#ffffff",
+                "remove_bottom_margin": false
+              },
+              "template": "sections/testimonials.jinja",
+              "section_id": "09cb9a6b-7a94-442d-aa02-03e36685f976"
+            },
+            {
+              "meta": {},
+              "display": false,
+              "settings": {
+                "title": "تسوّق حسب التصنيف",
+                "categories": [
+                  {
+                    "category": {
+                      "id": 1749391,
+                      "name": "العبايات",
+                      "slug": "العبايات"
+                    }
+                  },
+                  {
+                    "category": {
+                      "id": 1749395,
+                      "name": "عبايات يومية",
+                      "slug": "عبايات-يومية"
+                    }
+                  },
+                  {
+                    "category": {
+                      "id": 1749394,
+                      "name": "إثيوبيا",
+                      "slug": "إثيوبيا"
+                    }
+                  },
+                  {
+                    "category": {
+                      "id": 1749392,
+                      "name": "أدوات التحضير",
+                      "slug": "أدوات-التحضير"
+                    }
+                  }
+                ],
+                "display_more": true,
+                "background_color": "#ffffff",
+                "remove_bottom_margin": false
+              },
+              "template": "sections/categories.jinja",
+              "section_id": "cc31d17e-bbe0-4825-8cdc-f3e5993c1b36"
+            },
+            {
+              "meta": {},
+              "display": false,
+              "settings": {
+                "title": "عرض محدود الوقت",
+                "end_date": "2027-12-31",
+                "badge_text": "عرض خاص",
+                "button_url": "/products",
+                "text_color": "#FFFFFF",
+                "button_text": "تسوّق الآن",
+                "description": "لا تفوّت الفرصة",
+                "background_color": "#000000",
+                "remove_bottom_margin": false
+              },
+              "template": "sections/countdown.jinja",
+              "section_id": "bdd97f4d-3be3-45bb-ac47-f0db85e2e059"
+            },
+            {
+              "meta": {},
+              "display": false,
+              "settings": {
+                "title": "شاهد تجربتنا",
+                "video": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/0db8b874-5e5e-4503-8038-17dc28dc8509.mp4",
+                "autoplay": true,
+                "controls": false,
+                "poster_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/c305128e334c4ffda13ae76f063d0885.jpg",
+                "remove_bottom_margin": false
+              },
+              "template": "sections/video.jinja",
+              "section_id": "e3c832c6-c495-4d07-80ae-341e9dbe0035"
+            },
+            {
+              "meta": {},
+              "display": false,
+              "settings": {
+                "background_color": "#ffffff",
+                "remove_bottom_margin": false
+              },
+              "template": "sections/logo-social.jinja",
+              "section_id": "3e11e441-5e6e-4cfb-ad10-5a3e1c814840"
+            },
+            {
+              "meta": {},
+              "display": false,
+              "settings": {
+                "heading": "أناقة على طريقتك",
+                "button_url": "/products",
+                "text_color": "#FFFFFF",
+                "button_text": "تسوّق الآن",
+                "description": "تجربة جريئة محمصة بعناية",
+                "is_primary_hero": false,
+                "overlay_opacity": 30,
+                "background_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/d540fe84cd9b43ffa3067c5d269e54c5.jpg",
+                "min_height_mobile": 500,
+                "min_height_desktop": 600,
+                "remove_bottom_margin": false,
+                "background_image_mobile": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/d540fe84cd9b43ffa3067c5d269e54c5.jpg"
+              },
+              "template": "sections/hero.jinja",
+              "section_id": "f4314ce8-0500-4fa1-8147-4d9ed7a7dacc"
+            },
+            {
+              "meta": {},
+              "display": false,
+              "settings": {
+                "avatars": [
+                  {
+                    "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f23d99b61b2f48f69dabd058bb5eb15b.jpg"
+                  },
+                  {
+                    "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/821c53ed8d8f489489146f0e51667377.jpg"
+                  },
+                  {
+                    "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/71a9ab7578334adbb6988fb3aa69082f.jpg"
+                  }
+                ],
+                "heading": "اكتشفي إطلالتك",
+                "button_url": "/products",
+                "button_text": "تسوّق الآن",
+                "description": "تجربة جريئة محمصة بعناية لتجربة تفهم جوك",
+                "rating_stars": 5,
+                "rating_value": "4.8",
+                "background_color": "#000000",
+                "background_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/d540fe84cd9b43ffa3067c5d269e54c5.jpg",
+                "remove_bottom_margin": false,
+                "background_image_mobile": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/d540fe84cd9b43ffa3067c5d269e54c5.jpg"
+              },
+              "template": "sections/ananas-banner.jinja",
+              "section_id": "3292fb15-43d2-4de1-9019-b8169e9cfaf5"
             }
           ]
-        }
-      }
-    },
-    {
-      "path": "header.jinja",
-      "settings": {
-        "ar": {
-          "logo_mobile": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/a99ef400b0b240858b690c06984f5a8f.png",
-          "logo_desktop": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/a99ef400b0b240858b690c06984f5a8f.png",
-          "style_nav_bg": "#372923",
-          "nav_mega_link": "/categories/1749391/العبايات",
-          "nav_mega_mode": "static",
-          "style_mega_bg": "#372923",
-          "nav_mega_decor": "",
-          "nav_mega_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/774458d7603143619007de3dfd8fffe3.jpg",
-          "nav_mega_label": "اكتشفي أناقتك",
-          "style_search_bg": "#000000",
-          "nav_mega_columns": [
-            {
-              "title": "تسوّق حسب النوع",
-              "links": [
-                {
-                  "label": "كلاسيكية"
-                },
-                {
-                  "label": "مطرزة"
-                },
-                {
-                  "label": "مفتوحة"
-                },
-                {
-                  "label": "مغلقة"
-                },
-                {
-                  "label": "تسوق الكل"
-                }
-              ]
-            },
-            {
-              "title": "تسوّقي حسب القماش",
-              "links": [
-                {
-                  "label": "كريب"
-                },
-                {
-                  "label": "لينن"
-                },
-                {
-                  "label": "ساتان"
-                },
-                {
-                  "label": "تسوق الكل"
-                }
-              ]
-            },
-            {
-              "title": "تسوّقي حسب المناسبة",
-              "links": [
-                {
-                  "label": "عبايات يومية"
-                },
-                {
-                  "label": "عبايات للعمل"
-                },
-                {
-                  "label": "عبايات للزيارات"
-                },
-                {
-                  "label": "عبايات للمناسبات"
-                },
-                {
-                  "label": "تسوق الكل"
-                }
-              ]
-            },
-            {
-              "title": "تسوّقي حسب المقاس",
-              "links": [
-                {
-                  "label": "أطقم العبايات"
-                },
-                {
-                  "label": "مقاس 52"
-                },
-                {
-                  "label": "مقاس 54"
-                },
-                {
-                  "label": "مقاس 56"
-                },
-                {
-                  "label": "جميع المقاسات"
-                }
-              ]
-            }
-          ],
-          "nav_show_popular": true,
-          "style_icon_color": "#FFFFFF",
-          "style_link_color": "#FFFFFF",
-          "style_nav_border": "#262626",
-          "style_nav_height": 60,
-          "nav_enable_search": true,
-          "nav_popular_title": "إظهار عمليات البحث الشائعة",
-          "nav_show_products": true,
-          "style_dropdown_bg": "#111111",
-          "style_logo_height": 40,
-          "header_hide_country": false,
-          "nav_search_bg_color": "#372923",
-          "nav_search_products": {
-            "id": 0,
-            "type": "recent_products"
-          },
-          "search_show_popular": true,
-          "style_search_border": "#27272a",
-          "announcement_bar_url": "",
-          "header_hide_language": false,
-          "nav_enable_mega_menu": true,
-          "nav_popular_searches": [
-            {
-              "term": "هبعتلك ميل"
-            },
-            {
-              "term": "هبعتلك ميل"
-            },
-            {
-              "term": "هبعتلك ميل"
-            }
-          ],
-          "search_enable_search": true,
-          "search_popular_title": "عمليات البحث الشائعة",
-          "search_show_products": true,
-          "nav_search_text_color": "#a1a1a1",
-          "style_dropdown_border": "#333333",
-          "style_mega_link_color": "#FFFFFF",
-          "announcement_bar_texts": [
-            {
-              "text": "أناقة خليجية… بتفاصيل تليق بكِ"
-            }
-          ],
-          "nav_mega_trigger_label": "العبايات",
-          "nav_search_placeholder": " البحث المتقدم",
-          "search_search_bg_color": "#000000",
-          "search_search_products": [
-            {
-              "handle": "شارك رابطك وخذ خصم مباشر "
-            }
-          ],
-          "style_cart_badge_color": "#261F1C",
-          "header_enable_side_cart": true,
-          "nav_search_border_color": "#27272a",
-          "search_popular_searches": [
-            {
-              "term": "هبعتلك ميل"
-            },
-            {
-              "term": "هبعتلك ميل"
-            },
-            {
-              "term": "هبعتلك ميل"
-            }
-          ],
-          "style_icon_color_mobile": "#FFFFFF",
-          "announcement_bar_display": true,
-          "search_search_text_color": "#a1a1a1",
-          "style_search_input_color": "#a1a1a1",
-          "announcement_bar_bar_icon": "",
-          "nav_mega_standalone_links": [
-            {
-              "label": "الشيل",
-              "url": "/categories/1749392/الشيلات"
-            },
-            {
-              "label": "أطقم العبايات",
-              "url": "/categories/1749391/العبايات"
-            }
-          ],
-          "search_search_placeholder": "عمليات البحث الشائعة",
-          "style_mega_col_head_color": "#D4D4D4",
-          "search_search_border_color": "#27272a",
-          "nav_search_card_border_color": "#3f3f46",
-          "announcement_bar_bar_bg_color": "#261F1C",
-          "announcement_bar_page_display": "all",
-          "nav_search_results_text_color": "#ffffff",
-          "announcement_bar_bar_icon_size": 20,
-          "announcement_bar_marquee_speed": 30,
-          "announcement_bar_bar_text_color": "#FFFFFF",
-          "announcement_bar_enable_marquee": false,
-          "search_search_card_border_color": "#3f3f46",
-          "search_search_results_text_color": "#ffffff"
-        }
-      }
-    },
-    {
-      "path": "footer.jinja",
-      "settings": {
-        "ar": {
-          "style_bg_color": "#0E0D0D",
-          "style_bg_image": null,
-          "logo_logo_height": 40,
-          "logo_logo_mobile": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/702814ccca0f47cb9c7915ecbbc844c0.png",
-          "style_text_color": "#D4D4D4",
-          "about_us_about_us": "<p>دارنا للعبايات الخليجية — نقدّم لكِ أرقى التصاميم الخليجية بخامات فاخرة وأسعار مناسبة. أناقة تعيشينها كل يوم.</p>",
-          "link_groups_items": [
-            {
-              "links": [
-                {
-                  "title": "الأسئلة الشائعة"
-                },
-                {
-                  "title": "طلبات الجملة"
-                },
-                {
-                  "title": "طرق الشحن"
-                },
-                {
-                  "title": "الشحن والتوصيل"
-                }
-              ],
-              "title": "تسوّقي معنا"
-            },
-            {
-              "links": [
-                {
-                  "url": "https://iasvhj.dev.zid.store/pages/about-us",
-                  "title": "من نحن"
-                },
-                {
-                  "title": "سياسة الخصوصية"
-                },
-                {
-                  "title": "سياسة الاستبدال والاسترجاع"
-                }
-              ],
-              "title": "عن دارنا"
-            },
-            {
-              "hide": true,
-              "links": [
-                {
-                  "title": "للأسئلة والاستفسارات"
-                },
-                {
-                  "title": "+966573863884"
-                },
-                {
-                  "title": "info@ananasroastery.com"
-                }
-              ],
-              "title": "تواصلي معنا"
-            }
-          ],
-          "logo_logo_desktop": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/702814ccca0f47cb9c7915ecbbc844c0.png",
-          "style_divider_color": "#ffffff26",
-          "style_heading_color": "#D4D4D4",
-          "style_icon_bg_color": "#262626",
-          "style_mobile_height": 300,
-          "style_noise_opacity": 0.15,
-          "style_bg_image_style": "repeat",
-          "style_desktop_height": 300,
-          "style_icon_border_color": "#404040",
-          "bottom_bar_copyright_text": "الحقوق محفوظة © دارنا للعبايات الخليجية - نسخة تجريبية",
-          "newsletter_newsletter_hide": true,
-          "newsletter_newsletter_title": "Subscribe",
-          "bottom_bar_show_language_selector": true,
-          "newsletter_newsletter_description": "Join our newsletter to stay up to date on features and releases.",
-          "newsletter_newsletter_placeholder": "Enter your email",
-          "newsletter_newsletter_button_label": "Subscribe",
-          "style_description_color": "#FAFAFA",
-          "style_copyright_color": "#E5E5E5",
-          "contact_info_contact_info_title": "تواصلي معنا",
-          "contact_info_contact_info_subtitle": "للاستفسارات والطلبات"
-        }
-      }
-    },
-    {
-      "path": "layout.jinja",
-      "settings": {
-        "ar": {
-          "font_family": "IBM+Plex+Sans+Arabic",
-          "cart_page_features": [
-            {
-              "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/1bfe6583db9e44a3844a1fe4074b2b7d.png",
-              "title": "جودة مضمونة",
-              "subtitle": "محاصيل منتقاة بعناية"
-            },
-            {
-              "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/ee113483fc5643168409edc9a70e9247.png",
-              "title": "دفع امن",
-              "subtitle": "خيارات دفع مرنة وآمنة "
-            },
-            {
-              "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/c622641dbbbd48c8bbe33d963a05f796.png",
-              "title": "شحن مجاني",
-              "subtitle": "لكل طلب فوق 130"
-            }
-          ],
-          "category_page_enabled": true,
-          "general_show_breadcrumb": false,
-          "product_card_show_c_tags": true,
-          "product_card_show_rating": true,
-          "cart_page_payment_methods": [
-            {
-              "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/2c2bb95f-c217-4adf-9a3d-feba0ca98ab4.png"
-            },
-            {
-              "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/fe23ac22-bd9b-41b6-a35e-d4f54f544116.png"
-            },
-            {
-              "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/264fdc78-e352-4a7c-af61-d299a758f603.png"
-            },
-            {
-              "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/44c5ded1-4e7a-40e9-b5af-a5ba29aebd42.png"
-            },
-            {
-              "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/f2247b1b-4b65-4c13-90dd-558d58493b8a.png"
-            },
-            {
-              "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/5e93495d-0d1f-4744-b7fe-e98e6553af78.png"
-            },
-            {
-              "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/d16e23ab-3a46-4337-8551-3114c48b8884.png"
-            },
-            {
-              "image": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/ba7b1bf8-962e-49e7-ae02-30499e9d1bfa.png"
-            }
-          ],
-          "cart_features_features_list": [
-            {
-              "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/1bfe6583db9e44a3844a1fe4074b2b7d.png",
-              "title": "المميزات (1)",
-              "description": "المميزات (1)"
-            },
-            {
-              "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/ee113483fc5643168409edc9a70e9247.png",
-              "title": "المميزات (1)",
-              "description": "المميزات (1)المميزات (1)"
-            },
-            {
-              "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/c622641dbbbd48c8bbe33d963a05f796.png",
-              "title": "المميزات (1)",
-              "description": "المميزات (1)"
-            }
-          ],
-          "category_page_filter_layout": "sidebar",
-          "general_enable_theme_loader": false,
-          "product_card_columns_mobile": "2",
-          "cart_page_loyalty_text_color": "#0D0702",
-          "product_card_columns_desktop": "4",
-          "product_card_show_stock_info": true,
-          "cart_page_feature_title_color": "#000000",
-          "cart_page_checkout_button_color": "#6B4A39",
-          "product_card_image_aspect_ratio": "portrait",
-          "product_card_show_color_options": true,
-          "product_card_tags_infinite_loop": true,
-          "cart_page_feature_subtitle_color": "#52525C",
-          "category_page_category_page_title": "hguhf",
-          "product_card_card_aligned_content": "start",
-          "cart_page_loyalty_background_color": "#F5F5F5",
-          "product_card_truncate_product_name": true,
-          "category_page_category_page_enabled": false,
-          "cart_page_checkout_button_text_color": "#FFFFFF",
-          "category_page_category_page_subtitle": "gghgbgbgb",
-          "spacing_section_margin_bottom_mobile": 40,
-          "category_page_infinite_scroll_enabled": false,
-          "product_card_mobile_add_to_cart_style": "button",
-          "spacing_section_margin_bottom_desktop": 0,
-          "category_page_category_page_title_color": "#6B4A39",
-          "single_product_section_head_title_color": "#000000",
-          "single_product_section_head_title_feature": "مزيج نكهات فريد",
-          "category_page_category_page_subtitle_color": "#000000",
-          "category_page_category_page_card_meta_color": "#737373",
-          "category_page_category_page_background_color": "#fbe7e1",
-          "category_page_category_page_breadcrumb_color": "#000000",
-          "category_page_category_page_card_hover_color": "#6B4A39",
-          "category_page_category_page_card_title_color": "#000000",
-          "single_product_section_background_color_page": "#FCFAF7",
-          "category_page_category_page_card_active_color": "#ff0000",
-          "category_page_category_page_breadcrumb_active_color": "#ff0000",
-          "single_product_section_bundle_products_with_selection": [
-            {
-              "bundle_items": [
-                {
-                  "product": {
-                    "id": "8d52aea4-4816-4075-b3f6-f2d0cb7f533b",
-                    "name": "قمع تقطير V60",
-                    "type": "product"
-                  }
-                },
-                {
-                  "product": {
-                    "id": "ad67763c-c9fa-4438-aa15-2d98b8bcc3ff",
-                    "name": "إبريق تقطير بعنق رفيع",
-                    "type": "product"
-                  }
-                },
-                {
-                  "product": {
-                    "id": "36606bd3-b504-4ead-b289-4ccf8f4b96af",
-                    "name": "عباية دارا الرملية",
-                    "type": "product"
-                  }
-                }
-              ],
-              "main_product": {
-                "id": "25a4c3a1-57be-4c4e-8142-5dcc30ea8c85",
-                "name": "عباية دارا السوداء",
-                "type": "product"
-              },
-              "section_title": "تست",
-              "bundle_btn_text": "تست",
-              "bundle_btn_color": "#5a2a2a"
-            }
-          ],
-          "single_product_section_list_features_with_product_selection": null
         }
       }
     }
