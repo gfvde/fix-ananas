@@ -1,5 +1,5 @@
 {
-  "icon": "fa fa-square",
+  "icon": "layout-top-line",
   "name": {
     "ar": "أعلى الصفحة",
     "en": "Header"
@@ -7,7 +7,7 @@
   "groups": [
     {
       "id": "style",
-      "icon": "fa fa-paint-brush",
+      "icon": "brush-line",
       "name": {
         "ar": "المظهر",
         "en": "Appearance"
@@ -142,7 +142,7 @@
     },
     {
       "id": "header",
-      "icon": "fa fa-cog",
+      "icon": "settings-3-line",
       "name": {
         "ar": "إعدادات الرأس",
         "en": "Header Settings"
@@ -183,7 +183,7 @@
     },
     {
       "id": "logo",
-      "icon": "fa fa-image",
+      "icon": "image-line",
       "name": {
         "ar": "الشعار",
         "en": "Logo"
@@ -217,7 +217,7 @@
     },
     {
       "id": "announcement_bar",
-      "icon": "fa fa-bullhorn",
+      "icon": "megaphone-line",
       "name": {
         "ar": "شريط الإعلانات",
         "en": "Announcement Bar"
@@ -371,7 +371,7 @@
     },
     {
       "id": "nav",
-      "icon": "fa fa-bars",
+      "icon": "menu-line",
       "name": {
         "ar": "المنيو والبحث",
         "en": "Navigation & Search"

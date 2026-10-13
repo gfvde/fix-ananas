@@ -5,6 +5,7 @@
     "en": "Shop By Category (About)"
   },
   "icon": "layout-grid-line",
+  "meta": { "type": "categories" },
   "settings": [
     {
       "id": "title",

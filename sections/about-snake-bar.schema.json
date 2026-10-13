@@ -5,6 +5,7 @@
     "en": "Features Bar (About)"
   },
   "icon": "text-wrap",
+  "meta": { "type": "feature" },
   "settings": [
     {
       "id": "bg_color",

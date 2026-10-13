@@ -6,7 +6,7 @@
   "groups": [
     {
       "id": "general",
-      "icon": "fa fa-cog",
+      "icon": "settings-3-line",
       "name": {
         "ar": "إعدادات عامة",
         "en": "General Settings"
@@ -34,7 +34,7 @@
     },
     {
       "id": "product_card",
-      "icon": "fa fa-th-large",
+      "icon": "layout-grid-line",
       "name": {
         "ar": "بطاقة المنتج",
         "en": "Product Card"
@@ -326,7 +326,7 @@
     },
     {
       "id": "category_page",
-      "icon": "fa fa-list",
+      "icon": "list-check",
       "name": {
         "ar": "إعدادات صفحة التصنيفات",
         "en": "Category Page Settings"
@@ -483,7 +483,7 @@
     },
     {
       "id": "cart_page",
-      "icon": "fa fa-shopping-cart",
+      "icon": "shopping-cart-2-line",
       "name": {
         "ar": "إعدادات صفحة السلة",
         "en": "Cart Page Settings"
@@ -656,7 +656,7 @@
     },
     {
       "id": "product_gallery",
-      "icon": "fa fa-image",
+      "icon": "image-line",
       "name": {
         "ar": "معرض صور المنتج",
         "en": "Product Gallery"
@@ -793,7 +793,7 @@
     },
     {
       "id": "single_product_section",
-      "icon": "fa fa-shopping-bag",
+      "icon": "shopping-bag-3-line",
       "name": {
         "ar": "خيارات صفحة المنتج",
         "en": "Product Page Options"
@@ -1595,7 +1595,11 @@
             "ar": "إظهار عداد (يشاهد X شخصاً هذا المنتج الآن)",
             "en": "Show \"X people viewing\" counter"
           },
-          "default": true
+          "info": {
+            "ar": "رقم تقديري وليس عدد زوار حقيقي؛ زد قد ترفض الثيم في المراجعة لو كان مفعّلاً افتراضياً",
+            "en": "An estimated number, not real visitors; Zid review may reject it when on by default"
+          },
+          "default": false
         },
         {
           "id": "viewers_min",
@@ -2074,7 +2078,7 @@
     },
     {
       "id": "font",
-      "icon": "fa fa-font",
+      "icon": "font-size",
       "name": {
         "ar": "الخط",
         "en": "Font"
@@ -2151,7 +2155,7 @@
     },
     {
       "id": "spacing",
-      "icon": "fa fa-arrows-v",
+      "icon": "expand-up-down-line",
       "name": {
         "ar": "المسافات",
         "en": "Spacing"
@@ -2187,7 +2191,7 @@
     },
     {
       "id": "theme",
-      "icon": "fa fa-paint-brush",
+      "icon": "brush-line",
       "name": {
         "ar": "ألوان الثيم",
         "en": "Theme Colors"
@@ -2300,7 +2304,7 @@
     },
     {
       "id": "about_page",
-      "icon": "fa fa-info-circle",
+      "icon": "information-line",
       "name": {
         "ar": "صفحة من نحن",
         "en": "About Us Page"

@@ -5,6 +5,7 @@
     "en": "Ananas Community (About)"
   },
   "icon": "team-line",
+  "meta": { "type": "feature" },
   "settings": [
     {
       "id": "section_bg_color",

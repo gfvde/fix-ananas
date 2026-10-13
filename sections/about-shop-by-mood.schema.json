@@ -5,6 +5,7 @@
     "en": "Coffee for your mood"
   },
   "icon": "emotion-happy-line",
+  "meta": { "type": "categories" },
   "settings": [
     {
       "id": "section_bg_color",
