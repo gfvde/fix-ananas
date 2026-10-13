@@ -77,6 +77,110 @@
   - brands: no connector tool.
 - `presets/default.json` now uses Dara images, uploaded with `vitrin presets -t 73c71cfb… upload-image`, plus DARNA category and product links.
 
+## Darna, part 2 (2026-10-13, PR #43 on `claude/vigilant-johnson-gmlxwi`)
+State when this was written:
+- PR gfvde/fix-ananas#43 is an open draft. It is mergeable, has no CI checks, and has no review comments.
+- PR #42 (the Dara reskin) is already merged into `main`.
+- Darna was pushed as **v1.0.29**. Drafts were uploaded with `vitrin preview 3257518 .`.
+- The Zid validator passes **39/39**: https://pxhvko.dev.zid.store/validate?theme=4c8e8590-70ba-42bd-9a71-61055bcfcf84
+- The live store only shows the changes after the owner presses **نشر** in the theme editor, or after `vitrin activate 3257518 4c8e8590-70ba-42bd-9a71-61055bcfcf84`.
+
+### Store data (DARNA 3257518, via the `DARNA_zid_store` connector)
+- 9 more products from the Darna home design (Figma node `14602:44636`), SKUs **DARA-009 … DARA-017**:
+
+  | SKU | Product | Price |
+  |---|---|---|
+  | DARA-009 | ليل بتطريز ذهبي | 449 |
+  | DARA-010 | رمل من اللينن | 329 |
+  | DARA-011 | سكون كحلية | 389 |
+  | DARA-012 | ورد بتطريز ناعم | 429 |
+  | DARA-013 | زيتون يومية | 299 |
+  | DARA-014 | سهر بتفاصيل فضية | 549 |
+  | DARA-015 | شيلة شيفون | 89 |
+  | DARA-016 | حقيبة جلد بلون التوب | 249 |
+  | DARA-017 | بروش لؤلؤ | 79 |
+
+  - Images come from Figma.
+  - Each short description is `tag · tag · tag`; the card tags come from these (see below).
+- 12 new categories, nested under the 5 old ones (whose ids are unchanged). Each has an image from the Darna Figma.
+  ```
+  العبايات 1749391
+  ├─ عبايات كريب 1750684 ─┬─ كريب أسود 1750685
+  │                        └─ كريب بألوان هادئة 1750686
+  ├─ عبايات لينن 1750687
+  └─ عبايات مطرزة 1750688 ─┬─ تطريز ذهبي 1750689
+                            └─ تطريز ناعم 1750690
+  إطلالات المناسبات 1749394 └─ عبايات سهرة 1750691
+  الشيلات 1749392           ├─ شيلات شيفون 1750692
+                            └─ أطقم عباية وشيلة 1750694
+  الأكسسوارات 1749393       ├─ الحقائب 1750695
+                            └─ البروشات 1750696
+  ```
+- Products are linked to the new categories with `add_product`, which only adds links and never replaces them.
+  - DARA-004 is the only product not in a new category.
+- Connector gotchas:
+  - `ProductCategories.upload_image` cannot fetch `media.zid.store` URLs: it returns a 403, even through the CDN. Use Figma asset URLs instead (`get_design_context` / `get_screenshot`, valid for 7 days).
+  - The connector has no field for product `keywords`.
+
+### Theme changes in PR #43
+- **Card tags** (`components/products/product-card.jinja`): when `product.keywords` is empty, the tags come from the short description split on `·`.
+- **Mouse drag on sliders** (`assets/js/features/drag-scroll.js`, imported in `main.js`):
+  - Any `overflow-x` scroll-snap track scrolls on mouse drag.
+  - The image ghost-drag is blocked, and the click that ends a drag is swallowed.
+  - Tracks with their own drag code are skipped: `.fp-carousel__viewport`, `.pc-tags-wrapper`, `[data-no-drag-scroll]`.
+- **Hero Banner (About) video** (`sections/about-hero-banner.*`, `assets/{css,js}/sections/about-hero-banner.*`):
+  - New settings: `media_type` (image/video), `video_desktop`, `video_mobile`.
+  - The video plays muted on a loop over the poster images and fades in.
+  - The source follows the 768px breakpoint. Reduced motion keeps the image.
+  - Note: Playwright's Chromium cannot decode H.264, so test it with WebM.
+- **Section preview images**: `sections/<name>.jpg` and `<name>_mobile.jpg` for the 13 home sections (about 1MB in total).
+  - Desktop images were exported from the Darna home frames in Figma.
+  - Figma has no mobile frames, so the mobile images were captured from the dev store at 390px, with fixed headers hidden.
+  - The other 11 sections (banner, countdown, partners, carousel, video, …) have no Darna design and are not on the page, so they have no preview yet.
+- **Zid audit fixes**: the audit script and §17.1/§18 of the zid-vitrin-themes skill reference.
+  - The viewers counter is now off by default (schema and preset), with a note on the setting. It is random, and Zid treats fake social proof as grounds for rejection.
+  - Settings group icons switched from Font Awesome to Remixicon.
+  - `meta.type` added to 6 sections.
+  - CDN versions pinned: alpinejs 3.14.9, swiper 11.2.10.
+  - Dropped a hardcoded `direction: rtl` in the mobile drawer.
+  - The preset footer "من نحن" link pointed at another store (`iasvhj`); it is now `/pages/about-us`.
+
+### Test results (v1.0.29)
+- **Validator**: 39/39 templates pass.
+- **Audit script**: Jinja parse 0 problems, translations 0 missing, schema check OK.
+  - Its "setting key not defined" lines are false positives: they are `default()` fallback chains.
+- **Crawl**: 17 pages, desktop and mobile, Arabic.
+  - No overflow, no broken images, no missing `alt`, no "Undefined" text.
+  - No JS errors from theme code.
+- **Flows passing (desktop and mobile)**:
+  - PDP add to cart → side cart opens → cart page → quantity +/- → remove.
+  - Quick view, search (`/products?q=`), out-of-stock state, category subcategories, 3-level mobile drawer, login popup.
+- **Console noise that is not the theme** (ignore it):
+  - `GET /api/v1/account` 401 for guests: fired by the platform's own `zidStore.init` script.
+  - `dmdSdk ProductViewed` errors.
+  - mazeedplus / lordicon / labeih.online app scripts.
+- **Sandbox limits**:
+  - jsdelivr is blocked inside the cloud sandbox, so Swiper, PhotoSwipe, `@tailwindplus/elements` (`el-dialog`) and Alpine do not load there.
+  - Serve them from `npm pack` copies with a Playwright route to test the quick view, gallery, etc.
+  - Prices show in USD because the sandbox is geolocated to the US.
+
+### Still to do
+1. **Notion checklist** ("Zid Theme Test Cases", 124 cases) has **not** been run on Darna.
+   - This session's network policy blocks `notion.site` / `notion.so`.
+   - Either allow those hosts in the environment and start a new session, or have the owner export the DB (CSV/Markdown) into the chat.
+2. **Store settings for the owner (dashboard)**:
+   - enable English; `/en-us/` currently redirects to Arabic, so LTR was not tested;
+   - create the page `about-us`; the footer link and the About template need it;
+   - enable store reviews / questions; `/reviews` and `/questions` return 404;
+   - add sizes and brands to products (connector `add_variants` returns a 400; there is no brands tool);
+   - delete the stray checkbox option "المقاس" on DARA-001.
+3. **Untested**:
+   - Apple Pay (needs Safari);
+   - coupon off, gifting, multi-inventory "require city";
+   - a bundle offer and a preorder product.
+4. **Merge PR #43** into `main` (merge commit), then the owner publishes.
+5. Optional: preview images for the 11 sections without them, once they are placed on a page.
+
 ## Open work (in priority order)
 1. **Demo content in the preview — DONE (partly)**: `python3 scripts/demo-settings.py build/theme` writes `templates/home.json`, `header.json`, `footer.json`, `layout.json` from `presets/default.json` into the preview folder only (not shipped), then `vitrin preview 3255406 .` uploads them as drafted settings.
    Home now renders 25 sections (all 24 types), 0 JS errors desktop + mobile (screenshots: `build/home-desktop.png`, `build/home-mobile.png`, not committed).
@@ -101,7 +205,7 @@
    Drafts from `vitrin preview` are not live until someone presses نشر in the editor; `vitrin activate 3255406 <installation>` switches the active theme.
 4. **Wishlist — DONE (2026-10-06)**: header/drawer heart and `wishlistConfig.pageUrl` now go to the platform page `/account/wishlist`
    (asks guests to log in, then shows Zid's own list). `/pages/wishlist` was a 404 unless the merchant made that page; `/wishlist` exists but errors for guests.
-5. **Section preview images**: Growth ships `sections/<name>.png` for each section; we have none (24 sections). Needs screenshots of each section.
+5. **Section preview images — PARTLY DONE (2026-10-13)**: 13 of 24 sections have `sections/<name>.jpg` + `_mobile.jpg` (see "Darna, part 2"); the 11 sections not on the home page still have none.
 6. **Smaller audit items — DONE (2026-10-06)**: quick view / wishlist `direction` rules in `components.css` scoped to `[dir="rtl"]`;
    dynamic mobile drawer gets "all" links for parent categories (both levels); mobile header height/logo follow the settings (−8px, defaults stay 56/32)
    and logos have a `height`; dead `style.search_bg/search_border/search_input_color` removed (always overridden by `nav.search_*`);

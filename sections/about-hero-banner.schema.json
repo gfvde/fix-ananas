@@ -26,6 +26,55 @@
       }
     },
     {
+      "id": "media_type",
+      "type": "select",
+      "label": {
+        "ar": "نوع الخلفية",
+        "en": "Background Type"
+      },
+      "default": "image",
+      "options": [
+        {
+          "value": "image",
+          "label": {
+            "ar": "صورة",
+            "en": "Image"
+          }
+        },
+        {
+          "value": "video",
+          "label": {
+            "ar": "فيديو",
+            "en": "Video"
+          }
+        }
+      ]
+    },
+    {
+      "id": "video_desktop",
+      "type": "video",
+      "label": {
+        "ar": "فيديو الخلفية (ديسكتوب)",
+        "en": "Background Video (Desktop)"
+      },
+      "info": {
+        "ar": "يشتغل تلقائياً بدون صوت ومتكرر. صور الخلفية تظهر كغلاف لحد ما الفيديو يحمّل",
+        "en": "Autoplays muted on loop. The background images show as the poster until it loads"
+      }
+    },
+    {
+      "id": "video_mobile",
+      "type": "video",
+      "label": {
+        "ar": "فيديو الخلفية (موبايل)",
+        "en": "Background Video (Mobile)"
+      },
+      "info": {
+        "ar": "اختياري، لو فاضي يستخدم فيديو الديسكتوب",
+        "en": "Optional, falls back to the desktop video"
+      }
+    },
+    {
       "id": "desktop_height",
       "type": "range",
       "label": {

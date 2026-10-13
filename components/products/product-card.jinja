@@ -221,12 +221,18 @@
     </h3>
 
     {# Tags strip: one row, auto-slides after ~1s, manual swipe, chevron hint (Figma 11700:23991) #}
-    {% if product.keywords %}
+    {# Falls back to a "·"-separated short description ("كريب · قصة واسعة · رملي") when the
+       product has no keywords. #}
+    {% set pc_tags = product.keywords or [] %}
+    {% if not pc_tags and product.short_description and '·' in product.short_description %}
+      {% set pc_tags = (product.short_description | striptags | string).split('·') | map('trim') | reject('equalto', '') | list %}
+    {% endif %}
+    {% if pc_tags %}
       <div class="pc-tags-container" data-pc-tags>
         <div class="pc-tags-wrapper">
           <div class="pc-tags-track">
             <span class="pc-tags-set">
-              {% for tag in product.keywords %}
+              {% for tag in pc_tags %}
                 <span class="pc-tag">{{ tag }}</span>
               {% endfor %}
             </span>

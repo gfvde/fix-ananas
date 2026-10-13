@@ -5,6 +5,7 @@
     "en": "Countdown Timer"
   },
   "icon": "timer-line",
+  "meta": { "type": "feature" },
   "settings": [
     {
       "id": "badge_text",

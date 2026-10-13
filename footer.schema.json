@@ -1,5 +1,5 @@
 {
-  "icon": "fa fa-square",
+  "icon": "layout-bottom-line",
   "name": {
     "ar": "أسفل الصفحة",
     "en": "Footer"
@@ -7,7 +7,7 @@
   "groups": [
     {
       "id": "style",
-      "icon": "fa fa-paint-brush",
+      "icon": "brush-line",
       "name": {
         "ar": "المظهر",
         "en": "Appearance"
@@ -160,7 +160,7 @@
     },
     {
       "id": "logo",
-      "icon": "fa fa-image",
+      "icon": "image-line",
       "name": {
         "ar": "الشعار",
         "en": "Logo"
@@ -207,7 +207,7 @@
     },
     {
       "id": "about_us",
-      "icon": "fa fa-info-circle",
+      "icon": "information-line",
       "name": {
         "ar": "عن المتجر",
         "en": "About us"
@@ -225,7 +225,7 @@
     },
     {
       "id": "link_groups",
-      "icon": "fa fa-link",
+      "icon": "links-line",
       "name": {
         "ar": "مجموعات الروابط",
         "en": "Link Groups"
@@ -289,7 +289,7 @@
     },
     {
       "id": "contact_info",
-      "icon": "fa fa-address-book",
+      "icon": "contacts-book-line",
       "name": {
         "ar": "معلومات الاتصال",
         "en": "Contact Information"
@@ -321,7 +321,7 @@
     },
     {
       "id": "bottom_bar",
-      "icon": "fa fa-bars",
+      "icon": "menu-line",
       "name": {
         "ar": "الشريط السفلي",
         "en": "Bottom Bar"

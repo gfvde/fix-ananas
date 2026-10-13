@@ -31,7 +31,7 @@
             {
               "links": [
                 {
-                  "url": "https://iasvhj.dev.zid.store/pages/about-us",
+                  "url": "/pages/about-us",
                   "title": "من نحن"
                 },
                 {
@@ -108,7 +108,7 @@
             {
               "links": [
                 {
-                  "url": "https://iasvhj.dev.zid.store/pages/about-us",
+                  "url": "/pages/about-us",
                   "title": "من نحن"
                 },
                 {
@@ -725,7 +725,7 @@
           "single_product_section_coffee_acidity_level": "",
           "single_product_section_faq_section_subtitle": "",
           "single_product_section_shipping_tab_content": "",
-          "single_product_section_show_viewers_counter": true,
+          "single_product_section_show_viewers_counter": false,
           "single_product_section_styling_care_heading": "",
           "single_product_section_styling_guide_button": "",
           "category_page_category_page_background_color": "#eae4de",

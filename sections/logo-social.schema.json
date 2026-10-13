@@ -5,6 +5,7 @@
     "en": "Logo & Social Media"
   },
   "icon": "share-line",
+  "meta": { "type": "partners" },
   "settings": [
     {
       "id": "logo_logo_desktop",
