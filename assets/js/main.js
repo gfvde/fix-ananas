@@ -34,6 +34,7 @@ import "./features/product-filter.js";
 import "./features/price-slider.js";
 import "./features/bundle-offers.js";
 import "./features/notify-me.js";
+import "./features/drag-scroll.js";
 import "./features/product-card.js";
 // Note: the loyalty floating button (js/layout-loyalty.js) is a standalone script in layout.jinja;
 // it opens the platform window.loyalty_rewards_dialog.
