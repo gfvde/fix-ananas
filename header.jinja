@@ -323,7 +323,7 @@
     ════════════════════════════════════════════ #}
     <div class="ananas-nav__inner ananas-nav__inner--mob">
 
-      {# Left: cart + wishlist + region #}
+      {# Left: cart + account + region #}
       <div class="ananas-mob__left">
         <a href="{{ url_for('cart_page') }}" class="ananas-nav__icon-btn" aria-label="{{ _('Cart') }}" {% if settings.header_enable_side_cart %}onclick="event.preventDefault(); if(window.openSideCart) window.openSideCart();"{% endif %}>
 	          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
@@ -331,9 +331,15 @@
 	          </svg>
           <span data-cart-badge hidden class="ananas-nav__cart-badge">0</span>
         </a>
-        <a href="/account/wishlist" class="ananas-nav__icon-btn" aria-label="{{ _('Wishlist') }}">
+        {# Account (login when signed out, profile when signed in — toggled by layout.js) #}
+        <button id="mobile-header-login-btn" type="button" onclick="handleLoginAction()" class="ananas-nav__icon-btn" aria-label="{{ _('Login') }}">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </button>
+        <a id="mobile-header-profile-btn" href="{{ url_for('profile') }}" class="ananas-nav__icon-btn" style="display:none" aria-label="{{ _('Profile') }}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
           </svg>
         </a>
         {% if show_region %}
