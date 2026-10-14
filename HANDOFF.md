@@ -253,6 +253,27 @@ State when this was written:
   - Its images are new Arabic home shots of Darna.
   - To change it later, use `vitrin presets -t 73c71cfb… update 85da5421-… build/preset.json`.
   - The hero «( أناقة بكل تفاصيلها )» is fixed: the desktop CSS adds the brackets, so the setting values must not contain them.
+- **DARNA store data added 2026-10-14** (through the `DARNA_zid_store` connector):
+  - loyalty is on, with a redemption method of 100 points = 10 SAR;
+  - the blog is on, with one post (`choose-your-abaya`);
+  - coupon `DARNA10` (10%, valid until 2027-10-14);
+  - one answered question on DARA-001;
+  - DARA-017 is VAT-exempt;
+  - grouped product DARA-018 (DARA-013 + DARA-006);
+  - two more images on DARA-009;
+  - DARA-019…025 are renamed clones, for 25 products in total, which tests infinite scroll past 24.
+  - The connector refuses images from `media.zid.store` (403). Images can be added from `raw.githubusercontent.com/gfvde/fix-ananas/main/assets/images/dara/…`.
+  - Still impossible through the connector:
+    - bundle offers (401 scope);
+    - variants (400);
+    - FAQs and pages;
+    - turning on reviews and questions;
+    - Tamara and Tabby;
+    - store info and favicon;
+    - a free-shipping rule;
+    - customer accounts;
+    - publishing the theme settings.
+  - Notion now has 73 cases Passed.
 - **Notion**: 66 cases are marked Passed. The 58 still To Do are blocked on store data or a customer login, or are fixed but not yet verified live (price filter swap, cart quantity error, free-shipping rule, closed store).
 - **To do**:
   - the owner presses نشر in the editor, or runs `vitrin activate 3257518 4c8e8590-70ba-42bd-9a71-61055bcfcf84`;

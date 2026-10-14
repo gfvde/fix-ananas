@@ -550,7 +550,7 @@
             {
               "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/1bfe6583db9e44a3844a1fe4074b2b7d.png",
               "title": "جودة مضمونة",
-              "subtitle": "محاصيل منتقاة بعناية"
+              "subtitle": "خامات منتقاة بعناية"
             },
             {
               "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/ee113483fc5643168409edc9a70e9247.png",
@@ -706,7 +706,7 @@
           "single_product_section_enable_faq_section": false,
           "single_product_section_features_icon_size": 56,
           "single_product_section_features_items_gap": 24,
-          "single_product_section_head_title_feature": "مزيج نكهات فريد",
+          "single_product_section_head_title_feature": "تصميم فريد",
           "single_product_section_shipping_tab_title": "",
           "single_product_section_show_story_texture": true,
           "single_product_section_styling_guide_tabs": [
@@ -1624,7 +1624,7 @@
                     "badge_text": "NEW COLLECTION",
                     "button_url": "/products",
                     "button_text": "تسوّق الآن",
-                    "description": "تجربة جريئة محمصة بعناية لتجربة تفهم جوك",
+                    "description": "تصاميم مدروسة لكل مزاج",
                     "text_alignment": "start",
                     "overlay_opacity": 20,
                     "background_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/d540fe84cd9b43ffa3067c5d269e54c5.jpg",
@@ -1690,7 +1690,7 @@
                 "store_features": [
                   {
                     "title": "جودة مضمونة",
-                    "description": "محاصيل منتقاة بعناية"
+                    "description": "خامات منتقاة بعناية"
                   },
                   {
                     "title": "دفع آمن",
@@ -1855,7 +1855,7 @@
                 "button_url": "/products",
                 "text_color": "#FFFFFF",
                 "button_text": "تسوّق الآن",
-                "description": "تجربة جريئة محمصة بعناية",
+                "description": "مصنوعة بعناية",
                 "is_primary_hero": false,
                 "overlay_opacity": 30,
                 "background_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/d540fe84cd9b43ffa3067c5d269e54c5.jpg",
@@ -1885,7 +1885,7 @@
                 "heading": "اكتشفي إطلالتك",
                 "button_url": "/products",
                 "button_text": "تسوّق الآن",
-                "description": "تجربة جريئة محمصة بعناية لتجربة تفهم جوك",
+                "description": "تصاميم مدروسة لكل مزاج",
                 "rating_stars": 5,
                 "rating_value": "4.8",
                 "background_color": "#000000",
