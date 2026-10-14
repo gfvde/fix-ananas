@@ -2166,3 +2166,5 @@ msgstr "عرض المزيد"
 msgid "All filters"
 msgstr "كل الفلاتر"
 
+msgid "Only %s available"
+msgstr "المتوفر %s فقط"

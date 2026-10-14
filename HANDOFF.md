@@ -194,6 +194,56 @@ State when this was written:
   - New setting `desktop_content_side`: `auto` (default, unchanged behaviour), `right`, `left`.
   - The preset sets `right`. Arabic renders exactly as before.
 - Known, not fixed: the preset splits «( أناقة بكل تفاصيلها )» across `rating_label` / `rating_count` so the brackets only order correctly in RTL. On English the merchant writes their own text.
+- **Notion checklist ("Zid Theme Test Cases", 124 cases) — run on DARNA 2026-10-14.**
+  - The `Notion` MCP connector reads it; `curl` to `*.notion.site` is still blocked.
+  - Data source: `collection://1dcf18d9-9015-81b1-b3f1-000b607957d4`.
+  - Fixed in PR #44:
+    - footer:
+      - links with no URL are hidden;
+      - the language name shows in the region button (`lang.code`);
+      - the country code is upper-case;
+      - the address no longer repeats parts already in the street line;
+    - favicon from `store.icon`;
+    - category banner shows `cover_image` when the merchant sets one;
+    - shipping page uses a localized city separator;
+    - cart:
+      - badge and item counts refresh after AJAX updates;
+      - a failed quantity change re-renders the cart;
+      - `is_product_price_updated` is no longer shown as an error;
+      - the side cart's free-shipping bar needs a rule with a `code`;
+    - low stock (card, PDP, `layout.jinja`):
+      - follows `low_stock_label_enabled` and `low_stock_quantity_limit`;
+      - falls back to `low_stock_enabled` / `low_stock_quantity_threshold` / `low_stock_threshold`, because the live store sends `low_stock_quantity_threshold`;
+    - PDP Notify Me opens the dialog (`data-notify-me-trigger`);
+    - the quantity limit shows a toast «المتوفر %s فقط»;
+    - a reversed price filter is swapped;
+    - infinite scroll re-observes after a short page;
+    - the card sold label reads "Sold more than %s times";
+    - preset:
+      - the footer links point to `/faqs` and `/shipping-and-payment`;
+      - the copyright is empty, so the dashboard value or «صنع بواسطة زد» shows;
+    - section names no longer mention Ananas or coffee.
+  - Platform: account pages (profile, orders, addresses, wishlist, loyalty) are Zid's own templates; none is a theme file.
+  - Blocked on store data or dashboard settings:
+    - social links;
+    - VAT, CR and business center numbers;
+    - loyalty;
+    - multi-inventory;
+    - FAQs and blog posts;
+    - a custom menu link;
+    - a category cover;
+    - SEO title and favicon;
+    - reviews and questions;
+    - variants, more images and a video;
+    - bundle offers and a grouped product;
+    - related products;
+    - a VAT-exempt product and a badge;
+    - product filtration;
+    - Tamara and Tabby;
+    - more than 24 products;
+    - a free-shipping rule;
+    - a customer login for the account cases.
+  - Turn off the PDP viewers counter in the live editor; it is still on there.
 - **To do**:
   - re-push the theme (`make package && cd build/theme && vitrin preview 3257518 .`) so the new setting reaches the store (needs `vitrin login` relayed by the owner);
   - the other items in "Darna, part 2 → Still to do" are unchanged. Notion is still blocked by the network policy (`*.notion.site`), and jsdelivr is too.

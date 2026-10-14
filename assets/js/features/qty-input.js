@@ -18,6 +18,12 @@
 // Track initialized wrappers to avoid double-init
 const initializedWrappers = new WeakSet();
 
+// Tell the shopper why the value stopped at the stock limit
+function notifyMaxReached(max) {
+  const template = window.productTranslations?.maxQuantity || "Only %s available";
+  if (window.showAnanasToast) window.showAnanasToast(template.replace("%s", max), "error");
+}
+
 function updateQuantity(wrapper, delta) {
   const input = wrapper.querySelector("[data-qty-value]");
   if (!input) return;
@@ -27,6 +33,7 @@ function updateQuantity(wrapper, delta) {
   const max = input.max ? parseInt(input.max) : Infinity;
 
   const newValue = Math.max(min, Math.min(max, current + delta));
+  if (delta > 0 && current + delta > max) notifyMaxReached(max);
 
   if (newValue !== current) {
     input.value = newValue;
@@ -80,6 +87,7 @@ function handleInputChange(wrapper, input) {
   const clampedValue = Math.max(min, Math.min(max, value));
   if (clampedValue !== value) {
     input.value = clampedValue;
+    if (value > max) notifyMaxReached(max);
   }
 
   updateButtonVisibility(wrapper, clampedValue);

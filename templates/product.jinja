@@ -423,16 +423,22 @@
 
             {# Low stock line (optional). Text is refreshed by variants.js on variant change #}
             {% if show_low_stock %}
+              {% set _stock_cfg = store.settings.products if store.settings and store.settings.products else {} %}
+              {% set low_stock_enabled = _stock_cfg.low_stock_label_enabled or _stock_cfg.low_stock_enabled %}
+              {% set low_stock_limit = (_stock_cfg.low_stock_quantity_limit or _stock_cfg.low_stock_quantity_threshold or _stock_cfg.low_stock_threshold or 5) | int %}
+              {% set _ls_product = product.selected_product or product %}
+              {% set _ls_qty = _ls_product.quantity if _ls_product.quantity is number else none %}
+              {% set pdp_low_stock_qty = product.low_stock_quantity or (_ls_qty if (low_stock_enabled and not _ls_product.is_infinite and _ls_qty and 0 < _ls_qty <= low_stock_limit) else none) %}
               <p
                 data-low-stock-badge
                 data-template="{{ _('Only %s pieces left in stock!') }}"
-                class="pdp-low-stock {{ 'hidden' if not product.low_stock_quantity }}"
+                class="pdp-low-stock {{ 'hidden' if not pdp_low_stock_qty }}"
               >
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                   <path d="M5.56 6.36c-.09.95-.15 2.63.41 3.35 0 0-.26-1.85 2.1-4.16.95-.94 1.17-2.2.84-3.16-.19-.54-.53-.98-.83-1.29-.18-.18-.04-.48.21-.47 1.54.07 4.04.5 5.1 3.16.47 1.17.5 2.38.28 3.6-.14.79-.64 2.53.5 2.74.81.16 1.21-.49 1.38-.96.07-.19.33-.24.47-.08 1.37 1.56 1.49 3.4 1.2 4.99-.55 3.06-3.65 5.3-6.74 5.3-3.85 0-6.92-2.21-7.71-6.2-.32-1.61-.16-4.8 2.32-7.05.19-.17.49-.02.47.23Z" fill="#FF7A00"/>
                   <path d="M11.89 12.1c-1.42-1.83-.78-3.92-.43-4.75.04-.11-.08-.21-.18-.15-.61.42-1.86 1.4-2.45 2.77-.79 1.86-.73 2.77-.26 3.89.28.67-.05.81-.21.84-.16.02-.31-.08-.42-.19a2.5 2.5 0 0 1-.7-1.19c-.02-.1-.15-.12-.21-.04-.43.6-.66 1.57-.67 2.26-.04 2.12 1.72 3.84 3.84 3.84 2.67 0 4.61-2.95 3.08-5.42-.45-.72-.86-1.19-1.39-1.86Z" fill="#FFE07A"/>
                 </svg>
-                <span data-low-stock-text>{{ _('Only %s pieces left in stock!') | format(product.low_stock_quantity) if product.low_stock_quantity }}</span>
+                <span data-low-stock-text>{{ _('Only %s pieces left in stock!') | format(pdp_low_stock_qty) if pdp_low_stock_qty }}</span>
               </p>
             {% else %}
               <span data-low-stock-badge class="!hidden" hidden><span data-low-stock-text></span></span>
@@ -514,8 +520,7 @@
                     type="button"
                     class="btn btn-lg pdp-btn pdp-btn--primary"
                     data-notify-me-btn
-                    command="show-modal"
-                    commandfor="notify-me-dialog"
+                    data-notify-me-trigger=""
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                       <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>

@@ -328,6 +328,12 @@ class ProductFilter {
     } finally {
       this.isLoadingMore = false;
       if (loader) loader.hidden = true;
+      // The sentinel may still be in range after a short page; re-observing
+      // fires a fresh intersection check so loading continues
+      if (this.infiniteObserver && sentinel.dataset.nextUrl) {
+        this.infiniteObserver.unobserve(sentinel);
+        this.infiniteObserver.observe(sentinel);
+      }
     }
   }
 
@@ -447,8 +453,15 @@ class ProductFilter {
     const maxInput = document.getElementById(maxId);
     if (!minInput || !maxInput) return false;
 
-    const fromPrice = minInput.value.replace(/,/g, "") || null;
-    const toPrice = maxInput.value.replace(/,/g, "") || null;
+    let fromPrice = minInput.value.replace(/,/g, "") || null;
+    let toPrice = maxInput.value.replace(/,/g, "") || null;
+
+    // A reversed range (from > to) is swapped instead of returning nothing
+    if (fromPrice !== null && toPrice !== null && Number(fromPrice) > Number(toPrice)) {
+      [fromPrice, toPrice] = [toPrice, fromPrice];
+      minInput.value = fromPrice;
+      maxInput.value = toPrice;
+    }
 
     const popover = document.getElementById("price-popover");
     if (popover) popover.hidePopover();
