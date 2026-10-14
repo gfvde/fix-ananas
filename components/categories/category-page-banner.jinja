@@ -42,6 +42,12 @@
 {% set cph_card_hover_color = normalize_cph_color(cph_card_hover_color_raw, '#6B4A39')|trim %}
 {% set cph_variant_class = 'category-page-banner--with-subcategories' if cph_has_subcategories else 'category-page-banner--plain' %}
 
+{% if cph_is_category and category.cover_image %}
+  <div class="category-page-banner__cover">
+    <img src="{{ category.cover_image }}" alt="{{ category.name }}" decoding="async">
+  </div>
+{% endif %}
+
 <section
   class="category-page-banner {{ cph_variant_class }}"
   data-count-template="{{ _('%(count)s products') }}"
@@ -163,6 +169,13 @@
 </section>
 
 <style>
+  .category-page-banner__cover img {
+    display: block;
+    width: 100%;
+    max-height: 420px;
+    object-fit: cover;
+  }
+
   .category-page-banner {
     background: var(--cph-bg);
     color: var(--cph-subtitle);

@@ -14,15 +14,18 @@
             {
               "links": [
                 {
+                  "url": "/faqs",
                   "title": "الأسئلة الشائعة"
                 },
                 {
                   "title": "طلبات الجملة"
                 },
                 {
+                  "url": "/shipping-and-payment",
                   "title": "طرق الشحن"
                 },
                 {
+                  "url": "/shipping-and-payment",
                   "title": "الشحن والتوصيل"
                 }
               ],
@@ -70,7 +73,7 @@
           "style_copyright_color": "#E5E5E5",
           "style_description_color": "#FAFAFA",
           "style_icon_border_color": "#404040",
-          "bottom_bar_copyright_text": "الحقوق محفوظة © دارنا للعبايات الخليجية - نسخة تجريبية",
+          "bottom_bar_copyright_text": "",
           "newsletter_newsletter_hide": true,
           "newsletter_newsletter_title": "Subscribe",
           "contact_info_contact_info_title": "تواصلي معنا",
@@ -91,15 +94,18 @@
             {
               "links": [
                 {
+                  "url": "/faqs",
                   "title": "الأسئلة الشائعة"
                 },
                 {
                   "title": "طلبات الجملة"
                 },
                 {
+                  "url": "/shipping-and-payment",
                   "title": "طرق الشحن"
                 },
                 {
+                  "url": "/shipping-and-payment",
                   "title": "الشحن والتوصيل"
                 }
               ],
@@ -147,7 +153,7 @@
           "style_copyright_color": "#E5E5E5",
           "style_description_color": "#FAFAFA",
           "style_icon_border_color": "#404040",
-          "bottom_bar_copyright_text": "الحقوق محفوظة © دارنا للعبايات الخليجية - نسخة تجريبية",
+          "bottom_bar_copyright_text": "",
           "newsletter_newsletter_hide": true,
           "newsletter_newsletter_title": "Subscribe",
           "contact_info_contact_info_title": "تواصلي معنا",

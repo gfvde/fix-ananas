@@ -1,8 +1,8 @@
 {
   "template": "sections/about-community.jinja",
   "name": {
-    "ar": "مجتمع أناناس (About)",
-    "en": "Ananas Community (About)"
+    "ar": "مجتمع المتجر (About)",
+    "en": "Store Community (About)"
   },
   "icon": "team-line",
   "meta": { "type": "feature" },
