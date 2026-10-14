@@ -181,6 +181,23 @@ State when this was written:
 4. **Merge PR #43** into `main` (merge commit), then the owner publishes.
 5. Optional: preview images for the 11 sections without them, once they are placed on a page.
 
+## Darna, part 3 (2026-10-14, branch `claude/new-session-ypybvd`)
+- PR #43 is merged into `main`.
+- **English is now enabled on DARNA**: `/en-us/` renders LTR (`dir="ltr"`). The store root redirects to `/en-us/` from the US-located sandbox; use `/ar-sa/` for Arabic.
+- **LTR crawl** (home, PLP, category, cart, blog, wishlist; desktop 1440 and mobile 390):
+  - no horizontal overflow, no theme JS errors;
+  - Arabic text on English pages comes from section settings or the preset (merchant content), not from the theme;
+  - the announcement bar is in carousel mode on English because `announcement_bar_enable_marquee` is off for that language; the theme is fine.
+- **Fix: Hero Banner (About) desktop text side.**
+  - The Dara hero image has its dark empty area on the right.
+  - In LTR the text moved to the left, on top of the photo, and could not be read.
+  - New setting `desktop_content_side`: `auto` (default, unchanged behaviour), `right`, `left`.
+  - The preset sets `right`. Arabic renders exactly as before.
+- Known, not fixed: the preset splits «( أناقة بكل تفاصيلها )» across `rating_label` / `rating_count` so the brackets only order correctly in RTL. On English the merchant writes their own text.
+- **To do**:
+  - re-push the theme (`make package && cd build/theme && vitrin preview 3257518 .`) so the new setting reaches the store (needs `vitrin login` relayed by the owner);
+  - the other items in "Darna, part 2 → Still to do" are unchanged. Notion is still blocked by the network policy (`*.notion.site`), and jsdelivr is too.
+
 ## Open work (in priority order)
 1. **Demo content in the preview — DONE (partly)**: `python3 scripts/demo-settings.py build/theme` writes `templates/home.json`, `header.json`, `footer.json`, `layout.json` from `presets/default.json` into the preview folder only (not shipped), then `vitrin preview 3255406 .` uploads them as drafted settings.
    Home now renders 25 sections (all 24 types), 0 JS errors desktop + mobile (screenshots: `build/home-desktop.png`, `build/home-mobile.png`, not committed).

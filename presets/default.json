@@ -982,6 +982,7 @@
                 "rating_scroll_target": "star_reviews",
                 "remove_bottom_margin": true,
                 "show_desktop_content": true,
+                "desktop_content_side": "right",
                 "desktop_overlay_opacity": 0,
                 "mobile_content_offset_y": 0,
                 "desktop_content_offset_y": 1
@@ -1930,6 +1931,7 @@
                 "rating_scroll_target": "star_reviews",
                 "remove_bottom_margin": true,
                 "show_desktop_content": true,
+                "desktop_content_side": "right",
                 "desktop_overlay_opacity": 0,
                 "mobile_content_offset_y": 0,
                 "desktop_content_offset_y": 1
