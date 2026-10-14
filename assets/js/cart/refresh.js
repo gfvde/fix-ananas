@@ -56,6 +56,9 @@ export function setCartLoadingState(loading, targetProductId) {
       productsList.style.pointerEvents = "";
       productsList.setAttribute("aria-busy", "false");
     }
+    document.querySelectorAll("[data-cart-product-id].opacity-50").forEach((card) => {
+      card.classList.remove("opacity-50");
+    });
   }
 }
 

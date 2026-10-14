@@ -51,7 +51,8 @@ let config = {
     discount: "Discount",
     loyalty: "Loyalty",
     options: "Options",
-    discountTemplate: "%(percent)s discount"
+    discountTemplate: "%(percent)s discount",
+    quantityUpdateError: "Not enough stock for the requested quantity"
   }
 };
 
@@ -114,6 +115,30 @@ function init(options) {
   hydrateCartProductCards(state.cart);
   hydrateCartProductCardsFromApi();
   updateFreeShippingProgress(state.cart, config);
+
+  // Every refresh path (platform zidcart:updated, coupon, loyalty) swaps in
+  // server HTML without images/options, so hydrate after each one
+  // Failed quantity update: tell the customer instead of only logging it.
+  // Kept until the next update so a refresh that lands after the error keeps it.
+  let pendingItemError = null;
+  window.addEventListener("zidcart:loading", () => {
+    pendingItemError = null;
+  });
+  window.addEventListener("zidcart:error", (e) => {
+    const detail = e.detail || {};
+    if (detail.operation !== "update" || !detail.cartProductId) return;
+    pendingItemError = detail.cartProductId;
+    showCartItemError(pendingItemError, config.translations.quantityUpdateError);
+    // Re-render so the input shows the quantity actually in the cart
+    refreshCartPage();
+  });
+
+  window.addEventListener("cart-updated", () => {
+    productHydrationAttempts = 0;
+    hydrateCartProductCards(state.cart || window.cartObject);
+    hydrateCartProductCardsFromApi();
+    if (pendingItemError) showCartItemError(pendingItemError, config.translations.quantityUpdateError);
+  });
 
   state.isInitialized = true;
 }
@@ -883,6 +908,22 @@ function renderCartOption(option, index) {
     ${valueMarkup}
     ${label ? `<span class="ananas-cart-item__option-label">${label}:</span>` : ""}
   </div>`;
+}
+
+function showCartItemError(cartProductId, message) {
+  const card = document.querySelector('.ananas-cart-item[data-cart-product-id="' + cartProductId + '"]');
+  const details = card?.querySelector(".ananas-cart-item__details");
+  if (!details || !message) return;
+
+  let errorEl = details.querySelector("[data-cart-item-error]");
+  if (!errorEl) {
+    errorEl = document.createElement("p");
+    errorEl.className = "ananas-cart-item__error";
+    errorEl.setAttribute("role", "alert");
+    errorEl.setAttribute("data-cart-item-error", "");
+    details.appendChild(errorEl);
+  }
+  errorEl.textContent = message;
 }
 
 function hydrateCartProductCards(cart) {

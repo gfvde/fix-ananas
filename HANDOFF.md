@@ -181,6 +181,41 @@ State when this was written:
 4. **Merge PR #43** into `main` (merge commit), then the owner publishes.
 5. Optional: preview images for the 11 sections without them, once they are placed on a page.
 
+## Darna, part 3 (2026-10-14, Notion checklist run)
+- **Notion DB** "DARNA Theme Test Cases" (https://app.notion.com/p/1dcf18d990158001a921d92eaa79b0db), readable through the Notion connector.
+  - All 51 "To Do" cases were run: now **86 Passed, 38 Blocked, 0 To Do**.
+  - A new **Test Notes** column says why each case passed or what it is blocked on.
+- **The live store runs an older published version.** It still shows the viewers counter and the `iasvhj` "من نحن" link. Test on the preview (`?theme=4c8e8590…`) until the owner presses نشر.
+- **Dashboard (DARNA 3257518), done in Chrome**:
+  - English was already on (`/en-us/` is LTR).
+  - Created page `about-us`.
+  - Turned on customer reviews and questions (العملاء ← التقييمات / الأسئلة).
+  - DARA-001 got S‑M / L‑XL / XXL variants. Variant price edits in the dashboard table do not save.
+  - DARA-001 got 3 custom similar products. The platform sends `related_products` only after this.
+  - Added one FAQ.
+  - Turned on "المدونة" in the main menu.
+- **Theme fixes**:
+  - Footer: link groups without titled links no longer render an empty column.
+  - `--header-h` is re-measured on load and with a ResizeObserver. It was 610px when measured before CSS, which pushed the sticky PDP gallery ~470px down.
+  - Cart: a rejected quantity update shows "Not enough stock for the requested quantity" and re-renders. Every refresh path re-hydrates images and options; before, after a failed update the list lost images, sizes and old prices.
+  - Price filter: junk in `from_price`/`to_price` is ignored (no "NaN"), and min > max is swapped.
+- Uploaded with `vitrin preview 3257518 .`; the validator passes 39/39.
+- **Still blocked (needs the owner)**:
+  - customer login for the 18 account cases;
+  - a bundle offer;
+  - a free-shipping rule;
+  - Tamara/Tabby;
+  - favicon, social links, VAT/CR visibility;
+  - product video and extra images;
+  - a required custom field;
+  - reviews from customers;
+  - multi-inventory;
+  - store-closed hours;
+  - the theme-editor mobile check.
+- **Leftovers**:
+  - the "المقاس" checkbox customization on DARA-001 must be deleted by hand: the delete opens a native confirm that freezes the Chrome extension;
+  - `/reviews` and `/questions` still return 404 after turning those features on.
+
 ## Open work (in priority order)
 1. **Demo content in the preview — DONE (partly)**: `python3 scripts/demo-settings.py build/theme` writes `templates/home.json`, `header.json`, `footer.json`, `layout.json` from `presets/default.json` into the preview folder only (not shipped), then `vitrin preview 3255406 .` uploads them as drafted settings.
    Home now renders 25 sections (all 24 types), 0 JS errors desktop + mobile (screenshots: `build/home-desktop.png`, `build/home-mobile.png`, not committed).
