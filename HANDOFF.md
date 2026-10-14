@@ -249,6 +249,10 @@ State when this was written:
   - Validator: 39/39.
   - The drafts now come from `presets/default.json`, ar and en. The `en` copy is a real English translation; links and slugs are unchanged.
   - Checked on the preview: Notify Me, low stock, the quantity toast, the cart badge and count, no price-changed error, and the footer address.
+- **Darna preset on Zid**: `85da5421-aeef-4052-bfae-645739521988` (type `default`, name دارنا / Darna), created with `python3 scripts/public-preset.py && vitrin presets -t 73c71cfb-ec7d-47c8-a4cd-1ad10a2d0f41 create build/preset.json`.
+  - Its images are new Arabic home shots of Darna.
+  - To change it later, use `vitrin presets -t 73c71cfb… update 85da5421-… build/preset.json`.
+  - The hero «( أناقة بكل تفاصيلها )» is fixed: the desktop CSS adds the brackets, so the setting values must not contain them.
 - **Notion**: 66 cases are marked Passed. The 58 still To Do are blocked on store data or a customer login, or are fixed but not yet verified live (price filter swap, cart quantity error, free-shipping rule, closed store).
 - **To do**:
   - the owner presses نشر in the editor, or runs `vitrin activate 3257518 4c8e8590-70ba-42bd-9a71-61055bcfcf84`;

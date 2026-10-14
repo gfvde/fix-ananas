@@ -50,13 +50,13 @@ for entry in src["presets"]:
 # Preview shots shown under "معاينة القوالب" in the theme editor
 # (uploaded with `vitrin presets upload-image`; desktop first)
 IMAGES = [
-    "https://media.zid.store/48f8b24f425347859debc8f34f3b1217/presets/7b20c81547644c63bec1ef4ae48f8e72.jpg",
-    "https://media.zid.store/48f8b24f425347859debc8f34f3b1217/presets/d3cdff98302e404680774154a6aea429.jpg",
+    "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/bb3006889f374d8798bd34d746f0febe.jpg",
+    "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/307b9fcef50b4a6296aea2793d3f0209.jpg",
 ]
 
 out = {
     "type": "default",
-    "name": {"en": "Roast", "ar": "روست"},
+    "name": {"en": "Darna", "ar": "دارنا"},
     "images": IMAGES,
     "presets": presets,
 }
