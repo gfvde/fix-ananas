@@ -330,6 +330,40 @@ State when this was written:
   - The owner's signed-in Chrome is on Windows and is not connected to the extension; Claude's "Browser 1" (macOS) is a guest.
   - Its storefront language was switched to Arabic during this test.
 
+## Darna, part 8 (2026-10-15) — START HERE NEXT SESSION
+**Notion: 110 Passed / 14 Blocked.**
+
+**State**:
+- v5 is live (`&b=20261015120949`).
+- PR #48 (favicon link) was closed: once the platform cache refreshed, `vitrin_head` outputs the store icon itself, so v5 has the link twice (harmless). The next build from main drops the duplicate.
+
+**Done and Passed this part** (all via the dashboard in the in-app browser pane):
+- **Favicon**: a 32×32 icon was uploaded in Store identity.
+- **Required field**: DARA-009 "Layl Abaya with Gold Embroidery" got a required dropdown "لون التطريز / Embroidery colour" (ذهبي/Gold, فضي/Silver), under the product's تخصيص المنتج section.
+  - Without a choice: no add to cart, and a red toast.
+  - With Gold: the product is added.
+- **Product video**: the owner's YouTube video `tEAAqjU0-gs` was added to DARA-009.
+  - The gallery has a 4th slide with a play button, which loads the embed with autoplay.
+  - Close resets the iframe to `about:blank` (an empty `src` does not reload the page).
+- **Tamara + Tabby on the PDP**: both are active. They only show in **SAR**: Claude's in-app browser opens `/en-eg/` (EGP), so test on `/ar-sa/`.
+- **Wishlist**: adding works; remove works but the server is slow to reflect it; `/account/wishlist` shows the cards.
+- **Theme-editor mobile check**: Dashboard → الثيمات → DARNA → تخصيص, phone preview. It matches the store at 390px.
+
+**Still Blocked, and why**:
+- **Share wishlist (Zid bug)**: the platform `/wishlist?token=` page never fetches by token; it shows empty for guests. Report in `build/zid-wishlist-bug-report.md` (not sent).
+- **Cart payment widgets (Zid)**: `vitrin:cart/payment_widgets.jinja` renders an empty `<div data-payment-widgets>` even in SAR with items, while the PDP widgets work.
+- **Closed hours**: the auto-mode classifier blocks saving "إيقاف استقبال الطلبات"; the owner has to save it.
+- **Loyalty redeem**: the customer login does not work in Claude's browsers (captcha in the pane; the Mac Chrome is a guest); the owner tests it.
+- **Needs an order (owner approval)**: sold count, product rates, 10 reviews.
+- **Needs a new empty customer account**: "no addresses" and "no orders"; Claude must not create accounts.
+- **Needs real data**: VAT/CR, social links.
+- **Platform setup**: Mazeed, multi-inventory.
+
+**Dashboard tips**:
+- The new dashboard paths are `/ar-sa/stores/3257518/catalog/products/<id>`, `/settings/...`, `/channels/online-store/brand` and `/services/payments`.
+- Pages render slowly. Wait for content before reading.
+- Emulate 1400×900 for the desktop layout.
+
 ## Open work (in priority order)
 1. **Demo content in the preview — DONE (partly)**: `python3 scripts/demo-settings.py build/theme` writes `templates/home.json`, `header.json`, `footer.json`, `layout.json` from `presets/default.json` into the preview folder only (not shipped), then `vitrin preview 3255406 .` uploads them as drafted settings.
    Home now renders 25 sections (all 24 types), 0 JS errors desktop + mobile (screenshots: `build/home-desktop.png`, `build/home-mobile.png`, not committed).
