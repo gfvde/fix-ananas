@@ -302,7 +302,7 @@ State when this was written:
   - If it stays 0, the theme needs its own cache-buster on JS/CSS URLs.
 - Still to check: the points list with the owner's customer login, once the new JS is served.
 
-## Darna, part 6 (2026-10-15) — START HERE NEXT SESSION
+## Darna, part 6 (2026-10-15)
 **State**:
 - PR #46 (v3) is merged.
 - A newer zip, **`build/darna-theme-2026-10-15-v4.zip`** (not committed), is on branch `claude/loyalty-list-rtl`. The owner still has to upload it.
@@ -329,6 +329,26 @@ State when this was written:
 - Still not seen: the real redemption options of a signed-in customer.
   - The owner's signed-in Chrome is on Windows and is not connected to the extension; Claude's "Browser 1" (macOS) is a guest.
   - Its storefront language was switched to Arabic during this test.
+
+## Darna, part 7 (2026-10-15) — START HERE NEXT SESSION
+**State**:
+- PR #47 (v4) is merged.
+- **`build/darna-theme-2026-10-15-v5.zip`** (not committed) adds the favicon link. The owner still has to upload it.
+
+**Favicon**:
+- A 32×32 icon (espresso `#6B4A39` with a cream "د") was uploaded in Dashboard → Online store → Store identity (هوية المتجر) → أيقونة المتجر and saved.
+  - The new dashboard lives at `/ar-sa/stores/3257518/channels/online-store/brand`.
+- The value shows up as `store.settings.branding.icon`. `__vitrinStoreSettings.icon` stays empty, and `vitrin_head` outputs **no** `<link rel="icon">` (Growth has the same gap).
+- `layout.jinja` now adds `<link rel="icon">` and `apple-touch-icon` from `store.settings.branding.icon` when it is set.
+
+**Dashboard access**:
+- The owner signed in to the dashboard in the **in-app browser pane** (Windows), not in the Chrome extension's "Browser 1" (macOS, signed out).
+- The pane is narrow, so emulate 1400×900 with `resize_window` to get the desktop layout.
+
+**Not done (needs the owner)**:
+- Closed hours: Settings → أوقات العمل الرسمية, set to "إيقاف استقبال الطلبات" for 20 minutes with a message. Claude filled the form, but the save was blocked by the permission classifier (it pauses orders on the store), so nothing changed. The owner must save it (or allow it), test checkout, then turn it off.
+- Still open: product video, a required custom field, the Tabby cart widget setting, redeeming points as the signed-in customer (the pane is not signed in as a customer yet), and the theme-editor mobile check.
+- The Zid wishlist bug report is drafted in `build/zid-wishlist-bug-report.md` (not sent).
 
 ## Open work (in priority order)
 1. **Demo content in the preview — DONE (partly)**: `python3 scripts/demo-settings.py build/theme` writes `templates/home.json`, `header.json`, `footer.json`, `layout.json` from `presets/default.json` into the preview folder only (not shipped), then `vitrin preview 3255406 .` uploads them as drafted settings.

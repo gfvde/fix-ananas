@@ -21,6 +21,12 @@
     />
     <style>.no-js-init dialog,.no-js-init el-dialog,.no-js-init .ananas-mega,.no-js-init .ananas-search{visibility:hidden!important;pointer-events:none!important}</style>
     {% vitrin_head %}
+    {# vitrin_head does not output the store icon; it lives in the dashboard's Store identity #}
+    {% set store_icon = store.settings.branding.icon if store.settings and store.settings.branding and store.settings.branding.icon else '' %}
+    {% if store_icon %}
+      <link rel="icon" href="{{ store_icon }}" />
+      <link rel="apple-touch-icon" href="{{ store_icon }}" />
+    {% endif %}
     <link
       rel="preconnect"
       href="https://fonts.googleapis.com"
