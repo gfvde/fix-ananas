@@ -47,7 +47,38 @@ export function initLoyaltyProgram(config) {
   if (!state.initialized) {
     state.initialized = true;
     window.addEventListener("cart-updated", () => initLoyaltyProgram());
+    // "toggle" does not bubble, so listen in the capture phase
+    document.addEventListener("toggle", onLoyaltyOptionsToggle, true);
   }
+}
+
+/**
+ * The redemption list is sized with w-[var(--anchor-width)], but el-select never
+ * sets that variable, so the list spanned the page. Set it from the button on the
+ * el-select (el-select rewrites the list's own style attribute); el-select then
+ * aligns the list to the button.
+ */
+let openLoyaltyList = null;
+
+function onLoyaltyOptionsToggle(event) {
+  const list = event.target;
+  if (!(list instanceof HTMLElement) || !list.matches("[data-loyalty-options]")) return;
+
+  if (event.newState === "open") {
+    openLoyaltyList = list;
+    sizeLoyaltyList();
+    window.addEventListener("resize", sizeLoyaltyList);
+  } else {
+    openLoyaltyList = null;
+    window.removeEventListener("resize", sizeLoyaltyList);
+  }
+}
+
+function sizeLoyaltyList() {
+  const select = openLoyaltyList?.closest("el-select");
+  const button = select?.querySelector("button");
+  if (!button) return;
+  select.style.setProperty("--anchor-width", `${button.offsetWidth}px`);
 }
 
 function getCurrentCartTotalValue() {
