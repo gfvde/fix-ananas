@@ -217,6 +217,21 @@ State when this was written:
   - the "المقاس" checkbox customization on DARA-001 must be deleted by hand: the delete opens a native confirm that freezes the Chrome extension;
   - `/reviews` and `/questions` still return 404 after turning those features on.
 
+## DARNA now runs an uploaded custom theme (2026-10-15)
+- The owner uploaded the zip build (`build/darna-theme-2026-10-15.zip`, made from the PR #45 branch) to DARNA 3257518, under Custom themes, as **"DARNA"**, and activated it. **Rely on this from now on.**
+  - The vitrin partner preview (installation `4c8e8590…`) is no longer what the live store shows.
+- **To ship a change**:
+  1. `npm run build`
+  2. `rm -rf build/theme && bash scripts/package.sh`
+  3. Zip `build/theme` with Python (`zip` is not installed on this Windows machine).
+  4. Do not include the demo-settings JSON from `scripts/demo-settings.py`.
+  5. The owner uploads the zip.
+- **Live check after the upload**: the wishlist fix, the review CTA and similar products are live.
+- **Still from saved editor settings** (fix them in Customize, not in the code):
+  - the viewers counter is on;
+  - the footer "من نحن" link points to `iasvhj.dev.zid.store`.
+- **Chrome**: two browsers are connected. The owner's logged-in one is "Browser 1" (Windows).
+
 ## Open work (in priority order)
 1. **Demo content in the preview — DONE (partly)**: `python3 scripts/demo-settings.py build/theme` writes `templates/home.json`, `header.json`, `footer.json`, `layout.json` from `presets/default.json` into the preview folder only (not shipped), then `vitrin preview 3255406 .` uploads them as drafted settings.
    Home now renders 25 sections (all 24 types), 0 JS errors desktop + mobile (screenshots: `build/home-desktop.png`, `build/home-mobile.png`, not committed).
