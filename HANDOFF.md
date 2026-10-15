@@ -232,7 +232,7 @@ State when this was written:
   - the footer "من نحن" link points to `iasvhj.dev.zid.store`.
 - **Chrome**: two browsers are connected. The owner's logged-in one is "Browser 1" (Windows).
 
-## Darna, part 4 (2026-10-15) — START HERE NEXT SESSION
+## Darna, part 4 (2026-10-15)
 **State**:
 - PR #45 is merged into `main`.
 - The live store runs the custom-theme zip the owner uploaded (first version).
@@ -277,6 +277,24 @@ State when this was written:
   - delete the "المقاس" checkbox customization on DARA-001 by hand: its native confirm freezes the extension;
   - `/reviews` and `/questions` return 404;
   - "المدونة" was turned on in the main menu for a test.
+
+## Darna, part 5 (2026-10-15) — START HERE NEXT SESSION
+**State**:
+- v2 is live on DARNA (the live `cart-page.css`, `?v=v1.0.11`, has the bundle block).
+- A newer zip, **`build/darna-theme-2026-10-15-v3.zip`** (not committed), has the two fixes below. The owner still has to upload it.
+
+**Fixes in v3**:
+- Cart bundle block: the saving showed a raw float ("4224.867611169646"), because `format_price` does not format converted amounts.
+  It now uses `offer.discount_total_string` ("4,224.87 EGP"), with `format_price` only as a fallback.
+- Cart loyalty redemption list (`el-options` in `components/cart/loyalty-redemption.jinja`): it opened across the whole page.
+  - Cause: its class is `w-[var(--anchor-width)]`, but `el-select` never sets that variable. `el-select` then puts the list at `left = button end − list width`.
+  - Fix in `assets/js/cart/loyalty.js`: on the list's `toggle` event, set `--anchor-width` to the button width on the `el-select`.
+  - It goes on the `el-select` because `el-select` rewrites the list's own `style` attribute all the time, and the variable still reaches the list by inheritance.
+  - Verified on the live store by injecting the code into the page (guest cart, section un-hidden by hand).
+
+**After the upload**:
+- Check the points list with the owner's customer login.
+- In Notion, mark the 3 bundle cases (cart / PDP / card tag) as Passed.
 
 ## Open work (in priority order)
 1. **Demo content in the preview — DONE (partly)**: `python3 scripts/demo-settings.py build/theme` writes `templates/home.json`, `header.json`, `footer.json`, `layout.json` from `presets/default.json` into the preview folder only (not shipped), then `vitrin preview 3255406 .` uploads them as drafted settings.

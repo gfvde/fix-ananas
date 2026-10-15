@@ -89,7 +89,7 @@
         <p class="ananas-cart-bundle-offer__desc">{{ offer.description }}</p>
       {% endif %}
       {% if offer.discount_total %}
-        <p class="ananas-cart-bundle-offer__saving">{{ _('You saved') }} {{ format_price(offer.discount_total) }}</p>
+        <p class="ananas-cart-bundle-offer__saving">{{ _('You saved') }} {{ offer.discount_total_string | default(format_price(offer.discount_total)) }}</p>
       {% elif offer.quantity_towards_next_set %}
         <p class="ananas-cart-bundle-offer__saving">{{ _('Add %(count)s more to get the offer') | format(count=offer.quantity_towards_next_set) }}</p>
       {% endif %}
