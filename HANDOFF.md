@@ -292,9 +292,15 @@ State when this was written:
   - It goes on the `el-select` because `el-select` rewrites the list's own `style` attribute all the time, and the variable still reaches the list by inheritance.
   - Verified on the live store by injecting the code into the page (guest cart, section un-hidden by hand).
 
-**After the upload**:
-- Check the points list with the owner's customer login.
-- In Notion, mark the 3 bundle cases (cart / PDP / card tag) as Passed.
+**After the v3 upload (checked 2026-10-15)**:
+- Live: the bundle saving shows "You saved 4,224.87 EGP"; all 24 cards on /products have the "Buy 2 Get 1" tag; the PDP has the badge and the bundle tab.
+- Free-shipping rule now exists: one product shows "Add purchases worth 3603.15 EGP to get free shipping" with a progress bar.
+- Notion: the 3 bundle cases and the free-shipping case → Passed (now 102 Passed / 22 Blocked). Loyalty-redeem and sold-count stay Blocked, with updated notes.
+- **CDN gotcha**: `asset_url` adds `?v=v1.0.11`, and that did not change with the v3 upload. The edge served the old `dist/cart-controller.js` under that URL, while any other `?v=` returned the new file.
+  - So the template changes went live at once, but the loyalty JS fix did not, at least at first.
+  - Check with `curl -s --compressed "https://static.zid.store/ce032fa0/dist/cart-controller.js?v=v1.0.11" | grep -c anchor-width`. It should print 1.
+  - If it stays 0, the theme needs its own cache-buster on JS/CSS URLs.
+- Still to check: the points list with the owner's customer login, once the new JS is served.
 
 ## Open work (in priority order)
 1. **Demo content in the preview — DONE (partly)**: `python3 scripts/demo-settings.py build/theme` writes `templates/home.json`, `header.json`, `footer.json`, `layout.json` from `presets/default.json` into the preview folder only (not shipped), then `vitrin preview 3255406 .` uploads them as drafted settings.
