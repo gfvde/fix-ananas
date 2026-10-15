@@ -183,7 +183,7 @@ State when this was written:
 
 ## Darna, part 3 (2026-10-14, Notion checklist run)
 - **Notion DB** "DARNA Theme Test Cases" (https://app.notion.com/p/1dcf18d990158001a921d92eaa79b0db), readable through the Notion connector.
-  - All 51 "To Do" cases were run: now **86 Passed, 38 Blocked, 0 To Do**.
+  - All 51 "To Do" cases were run: now **98 Passed, 26 Blocked, 0 To Do** (after the owner signed in as a customer on 2026-10-15).
   - A new **Test Notes** column says why each case passed or what it is blocked on.
 - **The live store runs an older published version.** It still shows the viewers counter and the `iasvhj` "من نحن" link. Test on the preview (`?theme=4c8e8590…`) until the owner presses نشر.
 - **Dashboard (DARNA 3257518), done in Chrome**:
@@ -201,7 +201,8 @@ State when this was written:
   - Price filter: junk in `from_price`/`to_price` is ignored (no "NaN"), and min > max is swapped.
 - Uploaded with `vitrin preview 3257518 .`; the validator passes 39/39.
 - **Still blocked (needs the owner)**:
-  - customer login for the 18 account cases;
+  - account empty states (the test customer has orders and addresses), Mazeed;
+  - wishlist: Zid's `addToWishlists` returns 200 but saves nothing on DARNA (platform bug). The theme bug that sent signed-in customers to /account is fixed in `wishlist.js`;
   - a bundle offer;
   - a free-shipping rule;
   - Tamara/Tabby;
