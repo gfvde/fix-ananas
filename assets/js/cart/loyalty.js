@@ -53,10 +53,10 @@ export function initLoyaltyProgram(config) {
 }
 
 /**
- * The redemption list is sized with w-[var(--anchor-width)], but el-select never
- * sets that variable, so the list spanned the page. Set it from the button on the
- * el-select (el-select rewrites the list's own style attribute); el-select then
- * aligns the list to the button.
+ * Pin the redemption list under its button. el-select's own placement puts it
+ * off-screen in RTL, and at left: 0 with no width otherwise (it never sets
+ * --anchor-width). The variables go on the el-select, because el-select keeps
+ * rewriting the list's style attribute; the CSS is in assets/css/cart-page.css.
  */
 let openLoyaltyList = null;
 
@@ -66,19 +66,24 @@ function onLoyaltyOptionsToggle(event) {
 
   if (event.newState === "open") {
     openLoyaltyList = list;
-    sizeLoyaltyList();
-    window.addEventListener("resize", sizeLoyaltyList);
+    placeLoyaltyList();
+    window.addEventListener("scroll", placeLoyaltyList, true);
+    window.addEventListener("resize", placeLoyaltyList);
   } else {
     openLoyaltyList = null;
-    window.removeEventListener("resize", sizeLoyaltyList);
+    window.removeEventListener("scroll", placeLoyaltyList, true);
+    window.removeEventListener("resize", placeLoyaltyList);
   }
 }
 
-function sizeLoyaltyList() {
+function placeLoyaltyList() {
   const select = openLoyaltyList?.closest("el-select");
   const button = select?.querySelector("button");
   if (!button) return;
-  select.style.setProperty("--anchor-width", `${button.offsetWidth}px`);
+  const rect = button.getBoundingClientRect();
+  select.style.setProperty("--anchor-width", `${rect.width}px`);
+  select.style.setProperty("--loyalty-list-left", `${rect.left}px`);
+  select.style.setProperty("--loyalty-list-top", `${rect.bottom + 4}px`);
 }
 
 function getCurrentCartTotalValue() {

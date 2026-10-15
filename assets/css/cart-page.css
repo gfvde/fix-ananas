@@ -1595,3 +1595,15 @@ html[dir="ltr"] .cart-coupon__form {
   font-size: 13px;
   line-height: 20px;
 }
+
+/* Loyalty redemption list: el-select's own placement puts it off-screen in RTL
+   and at left: 0 without a width, so pin it under its button. assets/js/cart/loyalty.js
+   sets the variables on the el-select; !important beats el-select's inline style. */
+[data-loyalty-options]:popover-open {
+  position: fixed !important;
+  inset: auto !important;
+  margin: 0 !important;
+  left: var(--loyalty-list-left) !important;
+  top: var(--loyalty-list-top) !important;
+  width: var(--anchor-width) !important;
+}
