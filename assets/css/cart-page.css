@@ -1572,3 +1572,26 @@ html[dir="ltr"] .cart-coupon__form {
   font-size: 13px;
   text-align: end;
 }
+
+/* Cart-level bundle offer (cart.bundle_offers) */
+.ananas-cart-bundle-offer {
+  margin-bottom: 12px;
+  padding: 12px 16px;
+  border-inline-start: 3px solid #d3db6f;
+  background: #fbfbe9;
+  text-align: start;
+}
+
+.ananas-cart-bundle-offer__name {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.ananas-cart-bundle-offer__desc,
+.ananas-cart-bundle-offer__saving {
+  margin: 2px 0 0;
+  font-size: 13px;
+  line-height: 20px;
+}

@@ -232,6 +232,52 @@ State when this was written:
   - the footer "من نحن" link points to `iasvhj.dev.zid.store`.
 - **Chrome**: two browsers are connected. The owner's logged-in one is "Browser 1" (Windows).
 
+## Darna, part 4 (2026-10-15) — START HERE NEXT SESSION
+**State**:
+- PR #45 is merged into `main`.
+- The live store runs the custom-theme zip the owner uploaded (first version).
+- A newer zip, **`build/darna-theme-2026-10-15-v2.zip`** (not committed, `build/` is ignored), adds the cart bundle-offer block below. The owner still has to upload it. If it is lost, rebuild it with the steps above.
+- Validator 39/39 on the preview.
+
+**Done in this part**:
+- In the theme editor (Customize → Publish):
+  - the footer "من نحن" link now points to the About Us page (`/pages/123956`);
+  - the viewers counter is off;
+  - both verified on the live store.
+- Code changes:
+  - `templates/product.jinja`: the viewers counter is opt-in (`== true`). It used to show whenever the setting was not saved.
+  - Wishlist: before redirecting to login, it re-checks the login state (`ensureLoggedIn`). Signed-in customers were sent to /account.
+  - Cart: a new block shows `cart.bundle_offers` (name, description, "وفّرتِ X" / "أضيفي N…") above the items, in `components/cart/products-list.jinja` with CSS in `assets/css/cart-page.css`. Zid puts bundle info on the cart, and `item.discount_rules` stays empty.
+  - Translations: 2 new Arabic strings; the `.mo` was recompiled with babel (`pip install babel`).
+- Dashboard:
+  - Bundle offer **"عرض 2+1"**: buy 2 of any product, get the cheapest free. It is active.
+  - The live store shows the card tag, the PDP tab with name, description and products, and the cart total discount.
+  - The "sold count" threshold was lowered from 50 to 1. The label still does not show, because no DARNA product has a sale.
+- Account tests with the owner's customer login: 12 of 18 passed; see Notion.
+
+**Notion status**: 98 Passed / 26 Blocked. Update these once v2 is uploaded:
+- the 3 bundle cases (cart / PDP / card tag) → Passed;
+- the sold-count case stays Blocked.
+
+**Still blocked, and why**:
+- **Free-shipping rule**:
+  - A draft "شحن مجاني فوق 300" (automatic) was filled in and **not saved**: the permission checker blocked opening its Conditions section.
+  - The owner should create it with a 300 SAR minimum, then test the cart progress bar.
+- **VAT number / CR**: the store has none. Real numbers are needed from the owner; never invent them.
+- **Social links**: the owner's real handles are needed.
+- **Sold count / product rates / 10 reviews / loyalty redemption**: need a real or test order and reviews. Ask the owner before placing an order.
+- **Wishlist (4 cases)**: Zid's `addToWishlists` returns 200 and saves nothing. Report it to Zid.
+- **Empty states for addresses / orders**: need a fresh customer account (Claude must not create accounts).
+- **Mazeed, Tamara/Tabby, multi-inventory**: platform or contract setup.
+- **Still fixable from the dashboard**:
+  - product video and extra images, the favicon, and a required custom field: product edit page / Store identity;
+  - store-closed hours: settings → work time; reopen after testing;
+  - the theme-editor mobile check.
+- **Leftovers**:
+  - delete the "المقاس" checkbox customization on DARA-001 by hand: its native confirm freezes the extension;
+  - `/reviews` and `/questions` return 404;
+  - "المدونة" was turned on in the main menu for a test.
+
 ## Open work (in priority order)
 1. **Demo content in the preview — DONE (partly)**: `python3 scripts/demo-settings.py build/theme` writes `templates/home.json`, `header.json`, `footer.json`, `layout.json` from `presets/default.json` into the preview folder only (not shipped), then `vitrin preview 3255406 .` uploads them as drafted settings.
    Home now renders 25 sections (all 24 types), 0 JS errors desktop + mobile (screenshots: `build/home-desktop.png`, `build/home-mobile.png`, not committed).
