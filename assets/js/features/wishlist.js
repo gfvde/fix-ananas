@@ -120,7 +120,7 @@ class WishlistManager {
     const productId = button.dataset.productId;
     if (!productId) return;
 
-    if (!this.isLoggedIn) {
+    if (!(await this.ensureLoggedIn())) {
       this.redirectToLogin();
       return;
     }
@@ -138,7 +138,7 @@ class WishlistManager {
   async handleProductCardWishlist(productId) {
     if (!productId) return;
 
-    if (!this.isLoggedIn) {
+    if (!(await this.ensureLoggedIn())) {
       this.redirectToLogin();
       return;
     }
@@ -179,6 +179,18 @@ class WishlistManager {
     if (event.key === "Escape" && this.isModalOpen) {
       this.closeWishlistPopup();
     }
+  }
+
+  /**
+   * The first sync can run before the platform fills customerAuthState, which
+   * left signed-in customers stuck as guests (heart click -> login -> account).
+   * Re-sync once on demand before treating the click as a guest's.
+   */
+  async ensureLoggedIn() {
+    if (this.isLoggedIn) return true;
+    if (window.customerAuthState && !window.customerAuthState.isAuthenticated) return false;
+    await this.syncWishlistState();
+    return this.isLoggedIn;
   }
 
   async syncWishlistState() {
