@@ -278,7 +278,7 @@ State when this was written:
   - `/reviews` and `/questions` return 404;
   - "المدونة" was turned on in the main menu for a test.
 
-## Darna, part 5 (2026-10-15) — START HERE NEXT SESSION
+## Darna, part 5 (2026-10-15)
 **State**:
 - v2 is live on DARNA (the live `cart-page.css`, `?v=v1.0.11`, has the bundle block).
 - A newer zip, **`build/darna-theme-2026-10-15-v3.zip`** (not committed), has the two fixes below. The owner still has to upload it.
@@ -301,6 +301,34 @@ State when this was written:
   - Check with `curl -s --compressed "https://static.zid.store/ce032fa0/dist/cart-controller.js?v=v1.0.11" | grep -c anchor-width`. It should print 1.
   - If it stays 0, the theme needs its own cache-buster on JS/CSS URLs.
 - Still to check: the points list with the owner's customer login, once the new JS is served.
+
+## Darna, part 6 (2026-10-15) — START HERE NEXT SESSION
+**State**:
+- PR #46 (v3) is merged.
+- A newer zip, **`build/darna-theme-2026-10-15-v4.zip`** (not committed), is on branch `claude/loyalty-list-rtl`. The owner still has to upload it.
+
+**Why v4**:
+- The v3 loyalty-list fix only fixed the width.
+- Tested with real clicks on the theme preview (`pxhvko.dev.zid.store/ar/cart?theme=c72de127-…&previewMode=true`; the preview loads assets with `?v=<timestamp>`, so it always has the newest JS).
+- In Arabic (RTL), el-select placed the list at x=1458, off-screen, while the button was at x=256.
+- Fix: `assets/js/cart/loyalty.js` sets `--loyalty-list-left/top` and `--anchor-width` on the `el-select` when the list opens, and updates them on scroll and resize. A rule in `assets/css/cart-page.css` (part of the global `styles.css`) pins `[data-loyalty-options]:popover-open` with `!important`.
+- Verified on the preview with injected CSS/JS: list at x=256, 314px wide, same as the button; it follows the button on scroll.
+
+**Cache-buster** (`scripts/package.sh`):
+- In the staged copy only, every `'<file>.css|js' | asset_url }}` gets `&b=<build id>`. The source templates are unchanged.
+- Reason: the live store kept `?v=v1.0.11` after the v3 upload, and the CDN served the old `cart-controller.js` for 40+ minutes.
+
+**After the v4 upload (checked 2026-10-15)**:
+- Live asset URLs are `?v=v1.0.14&b=20261015114132`, and both `styles.css` and `cart-controller.js` have the fix. (Zid also bumped `v` this time.)
+- On the live cart, with the uploaded code and a real click on the dropdown, the list sits under the button at the button's width:
+  - Arabic/RTL (`/ar-sa/cart`): x=256, width 314.
+  - English/LTR (`/en-sa/cart`): x=1207, width 309.
+  - The section was un-hidden by hand and one option was added, because Claude's Chrome is a guest.
+  - The list follows the button on scroll.
+- PR #47 is merged.
+- Still not seen: the real redemption options of a signed-in customer.
+  - The owner's signed-in Chrome is on Windows and is not connected to the extension; Claude's "Browser 1" (macOS) is a guest.
+  - Its storefront language was switched to Arabic during this test.
 
 ## Open work (in priority order)
 1. **Demo content in the preview — DONE (partly)**: `python3 scripts/demo-settings.py build/theme` writes `templates/home.json`, `header.json`, `footer.json`, `layout.json` from `presets/default.json` into the preview folder only (not shipped), then `vitrin preview 3255406 .` uploads them as drafted settings.
