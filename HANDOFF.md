@@ -318,11 +318,17 @@ State when this was written:
 - In the staged copy only, every `'<file>.css|js' | asset_url }}` gets `&b=<build id>`. The source templates are unchanged.
 - Reason: the live store kept `?v=v1.0.11` after the v3 upload, and the CDN served the old `cart-controller.js` for 40+ minutes.
 
-**Still to check after the v4 upload**:
-- The page source should show `&b=2026…` on `styles.css` and `cart-controller.js`.
-- The points list with a signed-in customer.
-  - Claude's Chrome ("Browser 1", macOS) is not signed in as a customer.
-  - The owner's signed-in Chrome is on Windows and is not connected to the extension.
+**After the v4 upload (checked 2026-10-15)**:
+- Live asset URLs are `?v=v1.0.14&b=20261015114132`, and both `styles.css` and `cart-controller.js` have the fix. (Zid also bumped `v` this time.)
+- On the live cart, with the uploaded code and a real click on the dropdown, the list sits under the button at the button's width:
+  - Arabic/RTL (`/ar-sa/cart`): x=256, width 314.
+  - English/LTR (`/en-sa/cart`): x=1207, width 309.
+  - The section was un-hidden by hand and one option was added, because Claude's Chrome is a guest.
+  - The list follows the button on scroll.
+- PR #47 is merged.
+- Still not seen: the real redemption options of a signed-in customer.
+  - The owner's signed-in Chrome is on Windows and is not connected to the extension; Claude's "Browser 1" (macOS) is a guest.
+  - Its storefront language was switched to Arabic during this test.
 
 ## Open work (in priority order)
 1. **Demo content in the preview — DONE (partly)**: `python3 scripts/demo-settings.py build/theme` writes `templates/home.json`, `header.json`, `footer.json`, `layout.json` from `presets/default.json` into the preview folder only (not shipped), then `vitrin preview 3255406 .` uploads them as drafted settings.
