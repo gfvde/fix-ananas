@@ -570,6 +570,11 @@
   }
   syncHeaderHeight();
   window.addEventListener('resize', syncHeaderHeight);
+  /* First run can happen before the header CSS applies (absolute panels still in flow) */
+  window.addEventListener('load', syncHeaderHeight);
+  if (header && 'ResizeObserver' in window) {
+    new ResizeObserver(syncHeaderHeight).observe(header);
+  }
 
   function openDrawer() {
     if (!drawer || !btn) return;

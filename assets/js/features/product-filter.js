@@ -447,8 +447,16 @@ class ProductFilter {
     const maxInput = document.getElementById(maxId);
     if (!minInput || !maxInput) return false;
 
-    const fromPrice = minInput.value.replace(/,/g, "") || null;
-    const toPrice = maxInput.value.replace(/,/g, "") || null;
+    const parsePrice = (value) => {
+      const n = Number(String(value).replace(/,/g, "").trim());
+      return value !== "" && Number.isFinite(n) && n >= 0 ? n : null;
+    };
+    let fromPrice = parsePrice(minInput.value);
+    let toPrice = parsePrice(maxInput.value);
+    // Min above max: swap rather than return an empty listing
+    if (fromPrice !== null && toPrice !== null && fromPrice > toPrice) {
+      [fromPrice, toPrice] = [toPrice, fromPrice];
+    }
 
     const popover = document.getElementById("price-popover");
     if (popover) popover.hidePopover();

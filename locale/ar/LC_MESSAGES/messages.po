@@ -2166,3 +2166,9 @@ msgstr "عرض المزيد"
 msgid "All filters"
 msgstr "كل الفلاتر"
 
+
+msgid "You saved"
+msgstr "وفّرتِ"
+
+msgid "Add %(count)s more to get the offer"
+msgstr "أضيفي %(count)s للحصول على العرض"

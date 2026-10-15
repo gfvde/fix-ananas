@@ -22,7 +22,7 @@
 
   {# ── Dara PDP options (layout.schema.json → single_product_section / product_gallery) ── #}
   {% set details_on_top = settings.product_gallery_details_thumbnail_position == 'top' %}
-  {% set show_viewers = settings.single_product_section_show_viewers_counter != false %}
+  {% set show_viewers = settings.single_product_section_show_viewers_counter == true %}
   {% set show_fabric = settings.single_product_section_show_fabric != false %}
   {% set show_look_details = settings.single_product_section_show_look_details != false %}
   {% set show_story_texture = settings.single_product_section_show_story_texture != false %}
