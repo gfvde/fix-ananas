@@ -175,8 +175,8 @@ msgid "OUT OF STOCK"
 msgstr "غير متوفر"
 
 #, python-format
-msgid "Sold more than %s times"
-msgstr "بيع أكثر من %s مرة"
+msgid "%s sold"
+msgstr "تم بيع %s"
 
 #, python-format
 msgid "Remaining %s only"

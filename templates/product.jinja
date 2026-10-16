@@ -115,7 +115,7 @@
                 data-sold-count-badge
                 class="badge pdp-badge pdp-badge--light {{ '!hidden' if not sold_count }}"
               >
-                <span data-sold-count-text>{{ _("Sold more than %s times") | format(sold_count) if sold_count }}</span>
+                <span data-sold-count-text>{{ _("%s sold") | format(sold_count) if sold_count }}</span>
               </span>
             </div>
 

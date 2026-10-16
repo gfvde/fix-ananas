@@ -289,7 +289,7 @@
           {% if has_sold %}
             <span class="pc-stock-sold">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M2.03666 4.01755C1.97432 4.68255 1.93057 5.85942 2.32323 6.36036C2.32323 6.36036 2.13838 5.06755 3.79541 3.44552C4.4626 2.79255 4.61682 1.90442 4.38385 1.23833C4.25151 0.860984 4.00979 0.549265 3.79979 0.331609C3.67729 0.20364 3.77135 -0.00745363 3.94963 0.000202624C5.02807 0.0483276 6.77588 0.348015 7.51854 2.21177C7.84447 3.02989 7.86854 3.87536 7.71322 4.73505C7.61479 5.28411 7.26479 6.50473 8.06322 6.65458C8.63307 6.76177 8.90869 6.30895 9.03229 5.98302C9.08369 5.84739 9.26198 5.81348 9.35822 5.92177C10.3207 7.01661 10.4028 8.30614 10.2037 9.4163C9.81869 11.5622 7.64541 13.1241 5.48635 13.1241C2.78916 13.1241 0.642131 11.5808 0.0854127 8.78739C-0.138806 7.65973 -0.0250559 5.42848 1.71401 3.85348C1.84307 3.73536 2.05416 3.84036 2.03666 4.01755Z" fill="url(#pc-fire-grad-{{ product.id }})"/><defs><radialGradient id="pc-fire-grad-{{ product.id }}" cx="0" cy="0" r="1" gradientTransform="matrix(-7.72045 -0.0335068 -0.0550468 12.6677 4.95214 13.1581)" gradientUnits="userSpaceOnUse"><stop offset="0.314" stop-color="#FF9800"/><stop offset="0.662" stop-color="#FF6D00"/><stop offset="0.972" stop-color="#F44336"/></radialGradient></defs></svg>
-              {{ _("Sold more than %s times") | format(product.sold_products_count) }}
+              {{ _("%s sold") | format(product.sold_products_count) }}
             </span>
           {% endif %}
           {% if has_qty %}
