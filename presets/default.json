@@ -14,15 +14,18 @@
             {
               "links": [
                 {
+                  "url": "/faqs",
                   "title": "الأسئلة الشائعة"
                 },
                 {
                   "title": "طلبات الجملة"
                 },
                 {
+                  "url": "/shipping-and-payment",
                   "title": "طرق الشحن"
                 },
                 {
+                  "url": "/shipping-and-payment",
                   "title": "الشحن والتوصيل"
                 }
               ],
@@ -70,7 +73,7 @@
           "style_copyright_color": "#E5E5E5",
           "style_description_color": "#FAFAFA",
           "style_icon_border_color": "#404040",
-          "bottom_bar_copyright_text": "الحقوق محفوظة © دارنا للعبايات الخليجية - نسخة تجريبية",
+          "bottom_bar_copyright_text": "",
           "newsletter_newsletter_hide": true,
           "newsletter_newsletter_title": "Subscribe",
           "contact_info_contact_info_title": "تواصلي معنا",
@@ -86,45 +89,48 @@
           "logo_logo_height": 40,
           "logo_logo_mobile": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/702814ccca0f47cb9c7915ecbbc844c0.png",
           "style_text_color": "#D4D4D4",
-          "about_us_about_us": "<p>دارنا للعبايات الخليجية — نقدّم لكِ أرقى التصاميم الخليجية بخامات فاخرة وأسعار مناسبة. أناقة تعيشينها كل يوم.</p>",
+          "about_us_about_us": "<p>Darna Gulf Abayas — refined Gulf designs in premium fabrics at fair prices. Elegance you live every day.</p>",
           "link_groups_items": [
             {
               "links": [
                 {
-                  "title": "الأسئلة الشائعة"
+                  "url": "/faqs",
+                  "title": "FAQs"
                 },
                 {
-                  "title": "طلبات الجملة"
+                  "title": "Wholesale orders"
                 },
                 {
-                  "title": "طرق الشحن"
+                  "url": "/shipping-and-payment",
+                  "title": "Shipping methods"
                 },
                 {
-                  "title": "الشحن والتوصيل"
+                  "url": "/shipping-and-payment",
+                  "title": "Shipping & delivery"
                 }
               ],
-              "title": "تسوّقي معنا"
+              "title": "Shop with us"
             },
             {
               "links": [
                 {
                   "url": "/pages/about-us",
-                  "title": "من نحن"
+                  "title": "About us"
                 },
                 {
-                  "title": "سياسة الخصوصية"
+                  "title": "Privacy policy"
                 },
                 {
-                  "title": "سياسة الاستبدال والاسترجاع"
+                  "title": "Exchange & return policy"
                 }
               ],
-              "title": "عن دارنا"
+              "title": "About Darna"
             },
             {
               "hide": true,
               "links": [
                 {
-                  "title": "للأسئلة والاستفسارات"
+                  "title": "Questions & inquiries"
                 },
                 {
                   "title": "+966573863884"
@@ -133,7 +139,7 @@
                   "title": "info@ananasroastery.com"
                 }
               ],
-              "title": "تواصلي معنا"
+              "title": "Contact us"
             }
           ],
           "logo_logo_desktop": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/702814ccca0f47cb9c7915ecbbc844c0.png",
@@ -147,14 +153,14 @@
           "style_copyright_color": "#E5E5E5",
           "style_description_color": "#FAFAFA",
           "style_icon_border_color": "#404040",
-          "bottom_bar_copyright_text": "الحقوق محفوظة © دارنا للعبايات الخليجية - نسخة تجريبية",
+          "bottom_bar_copyright_text": "",
           "newsletter_newsletter_hide": true,
           "newsletter_newsletter_title": "Subscribe",
-          "contact_info_contact_info_title": "تواصلي معنا",
+          "contact_info_contact_info_title": "Contact us",
           "bottom_bar_show_language_selector": true,
           "newsletter_newsletter_description": "Join our newsletter to stay up to date on features and releases.",
           "newsletter_newsletter_placeholder": "Enter your email",
-          "contact_info_contact_info_subtitle": "للاستفسارات والطلبات",
+          "contact_info_contact_info_subtitle": "For inquiries and orders",
           "newsletter_newsletter_button_label": "Subscribe"
         }
       }
@@ -276,13 +282,13 @@
           "nav_enable_mega_menu": true,
           "nav_popular_searches": [
             {
-              "term": "هبعتلك ميل"
+              "term": "عبايات"
             },
             {
-              "term": "هبعتلك ميل"
+              "term": "عبايات"
             },
             {
-              "term": "هبعتلك ميل"
+              "term": "عبايات"
             }
           ],
           "search_enable_search": true,
@@ -310,13 +316,13 @@
           "nav_search_border_color": "#27272a",
           "search_popular_searches": [
             {
-              "term": "هبعتلك ميل"
+              "term": "عبايات"
             },
             {
-              "term": "هبعتلك ميل"
+              "term": "عبايات"
             },
             {
-              "term": "هبعتلك ميل"
+              "term": "عبايات"
             }
           ],
           "style_icon_color_mobile": "#FFFFFF",
@@ -358,85 +364,85 @@
           "style_mega_bg": "#372923",
           "nav_mega_decor": "",
           "nav_mega_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/774458d7603143619007de3dfd8fffe3.jpg",
-          "nav_mega_label": "اكتشفي أناقتك",
+          "nav_mega_label": "Discover your elegance",
           "style_search_bg": "#000000",
           "nav_mega_columns": [
             {
               "links": [
                 {
-                  "label": "كلاسيكية"
+                  "label": "Classic"
                 },
                 {
-                  "label": "مطرزة"
+                  "label": "Embroidered"
                 },
                 {
-                  "label": "مفتوحة"
+                  "label": "Open front"
                 },
                 {
-                  "label": "مغلقة"
+                  "label": "Closed front"
                 },
                 {
-                  "label": "تسوق الكل"
+                  "label": "Shop all"
                 }
               ],
-              "title": "تسوّق حسب النوع"
+              "title": "Shop by style"
             },
             {
               "links": [
                 {
-                  "label": "كريب"
+                  "label": "Crepe"
                 },
                 {
-                  "label": "لينن"
+                  "label": "Linen"
                 },
                 {
-                  "label": "ساتان"
+                  "label": "Satin"
                 },
                 {
-                  "label": "تسوق الكل"
+                  "label": "Shop all"
                 }
               ],
-              "title": "تسوّقي حسب القماش"
+              "title": "Shop by fabric"
             },
             {
               "links": [
                 {
-                  "label": "عبايات يومية"
+                  "label": "Everyday abayas"
                 },
                 {
-                  "label": "عبايات للعمل"
+                  "label": "Work abayas"
                 },
                 {
-                  "label": "عبايات للزيارات"
+                  "label": "Visiting abayas"
                 },
                 {
-                  "label": "عبايات للمناسبات"
+                  "label": "Occasion abayas"
                 },
                 {
-                  "label": "تسوق الكل"
+                  "label": "Shop all"
                 }
               ],
-              "title": "تسوّقي حسب المناسبة"
+              "title": "Shop by occasion"
             },
             {
               "links": [
                 {
-                  "label": "أطقم العبايات"
+                  "label": "Abaya sets"
                 },
                 {
-                  "label": "مقاس 52"
+                  "label": "Size 52"
                 },
                 {
-                  "label": "مقاس 54"
+                  "label": "Size 54"
                 },
                 {
-                  "label": "مقاس 56"
+                  "label": "Size 56"
                 },
                 {
-                  "label": "جميع المقاسات"
+                  "label": "All sizes"
                 }
               ],
-              "title": "تسوّقي حسب المقاس"
+              "title": "Shop by size"
             }
           ],
           "nav_show_popular": true,
@@ -445,7 +451,7 @@
           "style_nav_border": "#262626",
           "style_nav_height": 60,
           "nav_enable_search": true,
-          "nav_popular_title": "إظهار عمليات البحث الشائعة",
+          "nav_popular_title": "Show popular searches",
           "nav_show_products": true,
           "style_dropdown_bg": "#111111",
           "style_logo_height": 40,
@@ -462,32 +468,32 @@
           "nav_enable_mega_menu": true,
           "nav_popular_searches": [
             {
-              "term": "هبعتلك ميل"
+              "term": "Abayas"
             },
             {
-              "term": "هبعتلك ميل"
+              "term": "Abayas"
             },
             {
-              "term": "هبعتلك ميل"
+              "term": "Abayas"
             }
           ],
           "search_enable_search": true,
-          "search_popular_title": "عمليات البحث الشائعة",
+          "search_popular_title": "Popular searches",
           "search_show_products": true,
           "nav_search_text_color": "#a1a1a1",
           "style_dropdown_border": "#333333",
           "style_mega_link_color": "#FFFFFF",
           "announcement_bar_texts": [
             {
-              "text": "أناقة خليجية… بتفاصيل تليق بكِ"
+              "text": "Gulf elegance… in details made for you"
             }
           ],
-          "nav_mega_trigger_label": "العبايات",
-          "nav_search_placeholder": " البحث المتقدم",
+          "nav_mega_trigger_label": "Abayas",
+          "nav_search_placeholder": "Search",
           "search_search_bg_color": "#000000",
           "search_search_products": [
             {
-              "handle": "شارك رابطك وخذ خصم مباشر "
+              "handle": "Share your link and get an instant discount"
             }
           ],
           "style_cart_badge_color": "#261F1C",
@@ -495,13 +501,13 @@
           "nav_search_border_color": "#27272a",
           "search_popular_searches": [
             {
-              "term": "هبعتلك ميل"
+              "term": "Abayas"
             },
             {
-              "term": "هبعتلك ميل"
+              "term": "Abayas"
             },
             {
-              "term": "هبعتلك ميل"
+              "term": "Abayas"
             }
           ],
           "style_icon_color_mobile": "#FFFFFF",
@@ -512,14 +518,14 @@
           "nav_mega_standalone_links": [
             {
               "url": "/categories/1749392/الشيلات",
-              "label": "الشيل"
+              "label": "Shawls"
             },
             {
               "url": "/categories/1749391/العبايات",
-              "label": "أطقم العبايات"
+              "label": "Abaya sets"
             }
           ],
-          "search_search_placeholder": "عمليات البحث الشائعة",
+          "search_search_placeholder": "Popular searches",
           "style_mega_col_head_color": "#D4D4D4",
           "search_search_border_color": "#27272a",
           "nav_search_card_border_color": "#3f3f46",
@@ -544,7 +550,7 @@
             {
               "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/1bfe6583db9e44a3844a1fe4074b2b7d.png",
               "title": "جودة مضمونة",
-              "subtitle": "محاصيل منتقاة بعناية"
+              "subtitle": "خامات منتقاة بعناية"
             },
             {
               "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/ee113483fc5643168409edc9a70e9247.png",
@@ -700,7 +706,7 @@
           "single_product_section_enable_faq_section": false,
           "single_product_section_features_icon_size": 56,
           "single_product_section_features_items_gap": 24,
-          "single_product_section_head_title_feature": "مزيج نكهات فريد",
+          "single_product_section_head_title_feature": "تصميم فريد",
           "single_product_section_shipping_tab_title": "",
           "single_product_section_show_story_texture": true,
           "single_product_section_styling_guide_tabs": [
@@ -801,18 +807,18 @@
           "cart_page_features": [
             {
               "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/1bfe6583db9e44a3844a1fe4074b2b7d.png",
-              "title": "جودة مضمونة",
-              "subtitle": "محاصيل منتقاة بعناية"
+              "title": "Guaranteed quality",
+              "subtitle": "Carefully selected fabrics"
             },
             {
               "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/ee113483fc5643168409edc9a70e9247.png",
-              "title": "دفع امن",
-              "subtitle": "خيارات دفع مرنة وآمنة "
+              "title": "Secure payment",
+              "subtitle": "Flexible, secure payment options"
             },
             {
               "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/c622641dbbbd48c8bbe33d963a05f796.png",
-              "title": "شحن مجاني",
-              "subtitle": "لكل طلب فوق 130"
+              "title": "Free shipping",
+              "subtitle": "On every order over 130"
             }
           ],
           "category_page_enabled": true,
@@ -848,18 +854,18 @@
           "cart_features_features_list": [
             {
               "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/1bfe6583db9e44a3844a1fe4074b2b7d.png",
-              "title": "المميزات (1)",
-              "description": "المميزات (1)"
+              "title": "Features",
+              "description": "Features"
             },
             {
               "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/ee113483fc5643168409edc9a70e9247.png",
-              "title": "المميزات (1)",
-              "description": "المميزات (1)المميزات (1)"
+              "title": "Features",
+              "description": "Features"
             },
             {
               "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/c622641dbbbd48c8bbe33d963a05f796.png",
-              "title": "المميزات (1)",
-              "description": "المميزات (1)"
+              "title": "Features",
+              "description": "Features"
             }
           ],
           "category_page_filter_layout": "sidebar",
@@ -887,7 +893,7 @@
           "spacing_section_margin_bottom_desktop": 0,
           "category_page_category_page_title_color": "#6B4A39",
           "single_product_section_head_title_color": "#000000",
-          "single_product_section_head_title_feature": "مزيج نكهات فريد",
+          "single_product_section_head_title_feature": "A unique design",
           "category_page_category_page_subtitle_color": "#000000",
           "category_page_category_page_card_meta_color": "#737373",
           "category_page_category_page_background_color": "#fbe7e1",
@@ -903,32 +909,32 @@
                 {
                   "product": {
                     "id": "8d52aea4-4816-4075-b3f6-f2d0cb7f533b",
-                    "name": "قمع تقطير V60",
+                    "name": "V60 dripper",
                     "type": "product"
                   }
                 },
                 {
                   "product": {
                     "id": "ad67763c-c9fa-4438-aa15-2d98b8bcc3ff",
-                    "name": "إبريق تقطير بعنق رفيع",
+                    "name": "Gooseneck kettle",
                     "type": "product"
                   }
                 },
                 {
                   "product": {
                     "id": "36606bd3-b504-4ead-b289-4ccf8f4b96af",
-                    "name": "عباية دارا الرملية",
+                    "name": "Dara Sand Abaya",
                     "type": "product"
                   }
                 }
               ],
               "main_product": {
                 "id": "25a4c3a1-57be-4c4e-8142-5dcc30ea8c85",
-                "name": "عباية دارا السوداء",
+                "name": "Dara Black Abaya",
                 "type": "product"
               },
-              "section_title": "تست",
-              "bundle_btn_text": "تست",
+              "section_title": "Featured",
+              "bundle_btn_text": "Featured",
               "bundle_btn_color": "#5a2a2a"
             }
           ],
@@ -966,8 +972,8 @@
                 "subheading": "تصاميم خليجية فاخرة تجمع بين الأصالة والعصرية",
                 "show_rating": true,
                 "cta_bg_color": "rgba(255,255,255,0)",
-                "rating_count": "بكل تفاصيلها )",
-                "rating_label": "أناقة (",
+                "rating_count": "بكل تفاصيلها",
+                "rating_label": "أناقة",
                 "rating_stars": 5,
                 "heading_color": "#946E40",
                 "mobile_height": 460,
@@ -982,6 +988,7 @@
                 "rating_scroll_target": "star_reviews",
                 "remove_bottom_margin": true,
                 "show_desktop_content": true,
+                "desktop_content_side": "right",
                 "desktop_overlay_opacity": 0,
                 "mobile_content_offset_y": 0,
                 "desktop_content_offset_y": 1
@@ -1617,7 +1624,7 @@
                     "badge_text": "NEW COLLECTION",
                     "button_url": "/products",
                     "button_text": "تسوّق الآن",
-                    "description": "تجربة جريئة محمصة بعناية لتجربة تفهم جوك",
+                    "description": "تصاميم مدروسة لكل مزاج",
                     "text_alignment": "start",
                     "overlay_opacity": 20,
                     "background_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/d540fe84cd9b43ffa3067c5d269e54c5.jpg",
@@ -1683,7 +1690,7 @@
                 "store_features": [
                   {
                     "title": "جودة مضمونة",
-                    "description": "محاصيل منتقاة بعناية"
+                    "description": "خامات منتقاة بعناية"
                   },
                   {
                     "title": "دفع آمن",
@@ -1848,7 +1855,7 @@
                 "button_url": "/products",
                 "text_color": "#FFFFFF",
                 "button_text": "تسوّق الآن",
-                "description": "تجربة جريئة محمصة بعناية",
+                "description": "مصنوعة بعناية",
                 "is_primary_hero": false,
                 "overlay_opacity": 30,
                 "background_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/d540fe84cd9b43ffa3067c5d269e54c5.jpg",
@@ -1878,7 +1885,7 @@
                 "heading": "اكتشفي إطلالتك",
                 "button_url": "/products",
                 "button_text": "تسوّق الآن",
-                "description": "تجربة جريئة محمصة بعناية لتجربة تفهم جوك",
+                "description": "تصاميم مدروسة لكل مزاج",
                 "rating_stars": 5,
                 "rating_value": "4.8",
                 "background_color": "#000000",
@@ -1908,16 +1915,16 @@
                   }
                 ],
                 "cta_url": "/products",
-                "heading": "عباءة تُكمل أناقتك",
-                "cta_text": "تسوّقي عباءتك الآن",
+                "heading": "An abaya that completes your look",
+                "cta_text": "Shop your abaya now",
                 "bg_mobile": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/eff7f59b4cfb40fb9e45059430f7a16f.jpg",
                 "bg_desktop": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/eff7f59b4cfb40fb9e45059430f7a16f.jpg",
                 "cta_radius": 4,
-                "subheading": "تصاميم خليجية فاخرة تجمع بين الأصالة والعصرية",
+                "subheading": "Luxury Gulf designs that blend heritage and modern style",
                 "show_rating": true,
                 "cta_bg_color": "rgba(255,255,255,0)",
-                "rating_count": "بكل تفاصيلها )",
-                "rating_label": "أناقة (",
+                "rating_count": "in every detail",
+                "rating_label": "Elegance",
                 "rating_stars": 5,
                 "heading_color": "#946E40",
                 "mobile_height": 460,
@@ -1930,6 +1937,7 @@
                 "rating_scroll_target": "star_reviews",
                 "remove_bottom_margin": true,
                 "show_desktop_content": true,
+                "desktop_content_side": "right",
                 "desktop_overlay_opacity": 0,
                 "mobile_content_offset_y": 0,
                 "desktop_content_offset_y": 1
@@ -1941,21 +1949,21 @@
               "meta": {},
               "display": true,
               "settings": {
-                "title": "مختاراتنا لكِ",
+                "title": "Picked for you",
                 "layout": "carousel",
                 "more_url": "/categories/1749391/العبايات",
                 "products": null,
                 "subtitle": "",
-                "more_text": "عرض الكل",
+                "more_text": "View all",
                 "active_tab": "tab_2",
-                "tab_1_text": "جديدنا",
-                "tab_2_text": "الأكثر مبيعا",
+                "tab_1_text": "New in",
+                "tab_2_text": "Best sellers",
                 "text_color": "#000000",
                 "explore_url": "/products",
                 "muted_color": "#737373",
                 "border_color": "#000000",
                 "display_more": true,
-                "explore_text": "اكتشفي إطلالتك",
+                "explore_text": "Discover your look",
                 "tab_bg_color": "#FCFAF7",
                 "chip_bg_color": "#F5F0E8",
                 "badge_bg_color": "#946E40",
@@ -1965,7 +1973,7 @@
                 },
                 "tab_2_products": {
                   "id": 1749395,
-                  "name": "عبايات يومية",
+                  "name": "Everyday abayas",
                   "type": "products_category"
                 },
                 "button_bg_color": "#FCFAF7",
@@ -2019,7 +2027,7 @@
               "meta": {},
               "display": true,
               "settings": {
-                "title": "تسوّقي حسب اختيارك",
+                "title": "Shop your way",
                 "cat1_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/5b8aa8c52f744fea999c3d4218ac42f2.jpg",
                 "cat1_url": "/categories/1749391/العبايات",
                 "cat2_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/4ec86aba757f4ce680a9ca2ebf20648b.jpg",
@@ -2032,13 +2040,13 @@
                 "cat5_url": "/products/عباية-دارا-السوداء",
                 "cat6_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/5eb09ef0fbf94c57934776114b513f96.jpg",
                 "cat6_url": "/products/عباية-دارا-المطرزة",
-                "cat1_name": "العبايات الكحلية",
-                "cat2_name": "عبايات اللينن",
-                "cat3_name": "العبايات الكلاسيكية",
-                "cat4_name": "عبايات المناسبات",
-                "cat5_name": "العبايات اليومية",
-                "cat6_name": "العبايات المطرزة",
-                "hover_text": "اكتشفي المجموعة",
+                "cat1_name": "Navy abayas",
+                "cat2_name": "Linen abayas",
+                "cat3_name": "Classic abayas",
+                "cat4_name": "Occasion abayas",
+                "cat5_name": "Everyday abayas",
+                "cat6_name": "Embroidered abayas",
+                "hover_text": "Discover the collection",
                 "title_color": "#000000",
                 "mobile_layout": "caption",
                 "overlay_color": null,
@@ -2065,16 +2073,16 @@
               "meta": {},
               "display": true,
               "settings": {
-                "title": "لكل مناسبة، عباءتها",
+                "title": "An abaya for every occasion",
                 "layout": "carousel",
                 "more_url": "/products",
                 "products": {
                   "id": 1749392,
-                  "name": "أدوات التحضير",
+                  "name": "Accessories",
                   "type": "products_category"
                 },
-                "subtitle": "اختاري العباءة التي تناسب أسلوبك وذوقك",
-                "more_text": "اكتشفي المجموعة",
+                "subtitle": "Choose the abaya that suits your style and taste",
+                "more_text": "Discover the collection",
                 "text_color": "#000000",
                 "muted_color": "#737373",
                 "border_color": "#000000",
@@ -2097,19 +2105,19 @@
               "settings": {
                 "items": [
                   {
-                    "text": "دفع آمن",
+                    "text": "Secure payment",
                     "icon_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/2162ef57176f4b5ab4b846b8c1921679.png"
                   },
                   {
-                    "text": "شحن سريع",
+                    "text": "Fast shipping",
                     "icon_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/ec7107f8c979482fb616c9e8a172aeaa.png"
                   },
                   {
-                    "text": "تغليف مميز",
+                    "text": "Special packaging",
                     "icon_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/9ac7417f80be45a6b1a98b479601207c.png"
                   },
                   {
-                    "text": "خياطة متقنة",
+                    "text": "Fine tailoring",
                     "icon_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/72e7061c5f64455ab48f1f9d51b178b5.png"
                   }
                 ],
@@ -2127,35 +2135,35 @@
               "meta": {},
               "display": true,
               "settings": {
-                "title": "اختاري عباءتك حسب مزاجك",
+                "title": "Choose your abaya by mood",
                 "cta_url": "/categories/1749391/العبايات",
-                "cta_text": "اكتشفي المجموعة",
-                "subtitle": "نرشّح لكِ العباءة المناسبة لكل مناسبة",
-                "card1_tag": "مختاراتنا",
+                "cta_text": "Discover the collection",
+                "subtitle": "We suggest the right abaya for every occasion",
+                "card1_tag": "Our picks",
                 "card1_url": "/products/عباية-رمل-بقصة-واسعة",
-                "card2_tag": "مختاراتنا",
+                "card2_tag": "Our picks",
                 "card2_url": "/products/عباية-دارا-الرملية",
-                "card3_tag": "مختاراتنا",
+                "card3_tag": "Our picks",
                 "card3_url": "/products/عباية-دارا-المطرزة",
-                "card4_tag": "مختاراتنا",
+                "card4_tag": "Our picks",
                 "card4_url": "/products/عباية-دارا-السوداء",
-                "card1_desc": "راحة وأناقة في آنٍ واحد كل يوم",
-                "card2_desc": "أناقة المساء بلمسة خليجية أصيلة",
-                "card3_desc": "إطلالة تليق بكل مناسبة فارهة",
-                "card4_desc": "بداية يومك بأناقة خليجية",
+                "card1_desc": "Comfort and elegance, every day",
+                "card2_desc": "Evening elegance with an authentic Gulf touch",
+                "card3_desc": "A look for every grand occasion",
+                "card4_desc": "Start your day with Gulf elegance",
                 "text_color": "#000000",
                 "card1_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/9ca3e64cdf294d06922d9bd2ea669844.jpg",
-                "card1_title": "زياراتك الجميلة",
+                "card1_title": "Lovely visits",
                 "card2_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/a03c1019e9f7452b8a6ce3c03ef5d341.jpg",
-                "card2_title": "أناقة المساء",
+                "card2_title": "Evening elegance",
                 "card3_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/569e33221a8b453887ab915e8fa03a47.jpg",
-                "card3_title": "إطلالة العمل",
+                "card3_title": "Work look",
                 "card4_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/a59ec4de5c944587bd033dc2057f8cdb.jpg",
-                "card4_title": "أناقة يومية",
+                "card4_title": "Everyday elegance",
                 "tag_bg_color": "#946E40",
                 "cta_text_color": "#000000",
                 "tag_text_color": "#FFFFFF",
-                "mobile_subtitle": "نرشّح لكِ العباءة المناسبة لكل مناسبة",
+                "mobile_subtitle": "We suggest the right abaya for every occasion",
                 "cta_border_color": "#000000",
                 "hover_text_color": "#946E40",
                 "section_bg_color": "#FCFAF7"
@@ -2167,22 +2175,22 @@
               "meta": {},
               "display": true,
               "settings": {
-                "body1": "أناقة خليجية أصيلة، من قلب الخليج إليكِ.",
-                "body2": "كل عباءة قصة تروينها.",
-                "body3": "من العباءة إلى الشيلة، تفاصيل تكمل إطلالتكِ وتعبّر عن ذوقكِ الرفيع. اكتشفي أناقة خليجية ترافقكِ في كل مناسبة.",
+                "body1": "Authentic Gulf elegance, from the heart of the Gulf to you.",
+                "body2": "Every abaya is a story you tell.",
+                "body3": "From abaya to shawl, details that complete your look and reflect your refined taste. Discover Gulf elegance for every occasion.",
                 "photo": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/1f9653a02b8c4bedba0dfdc8178ef026.jpg",
-                "title": "دارنا للعبايات الخليجية",
+                "title": "Darna Gulf Abayas",
                 "video": "",
                 "cta_url": "#",
-                "cta_text": "تعرّفي على دارنا",
-                "image_alt": "دارنا للعبايات الخليجية",
+                "cta_text": "Meet Darna",
+                "image_alt": "Darna Gulf Abayas",
                 "body_color": "#3D2B1F",
                 "lead_color": "#1A0A2E",
                 "media_type": "image",
                 "title_color": "#8B5E3C",
-                "body3_mobile": "من العباءة إلى الشيلة،",
-                "body4_mobile": "تفاصيل تكمل إطلالتكِ وتعبّر عن ذوقكِ الرفيع.",
-                "body5_mobile": "اكتشفي أناقة خليجية ترافقكِ في كل مناسبة.",
+                "body3_mobile": "From abaya to shawl,",
+                "body4_mobile": "details that complete your look and reflect your refined taste.",
+                "body5_mobile": "Discover Gulf elegance for every occasion.",
                 "cta_bg_color": "#F7F3ED",
                 "poster_image": null,
                 "cta_text_color": "#1A0A2E",
@@ -2197,17 +2205,17 @@
               "meta": {},
               "display": true,
               "settings": {
-                "title": "إكسسوارات تُكمل إطلالتكِ",
+                "title": "Accessories that complete your look",
                 "cta_url": "/categories/1749395/عبايات-يومية",
-                "cta_text": "عرض الكل",
-                "hero_alt": "إكسسوارات دارنا",
+                "cta_text": "View all",
+                "hero_alt": "Darna accessories",
                 "products": {
                   "id": 1749395,
-                  "name": "عبايات يومية",
+                  "name": "Everyday abayas",
                   "type": "products_category"
                 },
                 "show_cta": true,
-                "subtitle": "شيلات وحقائب ولمسات تُكمل أناقتكِ",
+                "subtitle": "Shawls, bags and finishing touches",
                 "mobile_bg": "#FCFAF7",
                 "hero_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/07ee18abeebf4490bae6572812b064d6.jpg",
                 "section_bg": "#FCFAF7",
@@ -2215,7 +2223,7 @@
                 "text_color": "#000000",
                 "title_color": "#261F1C",
                 "desktop_height": 650,
-                "mobile_nav_text": "تصفّح المنتجات",
+                "mobile_nav_text": "Browse products",
                 "mobile_card_size": 297,
                 "desktop_card_size": 327,
                 "mobile_hero_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/07ee18abeebf4490bae6572812b064d6.jpg",
@@ -2229,7 +2237,7 @@
               "meta": {},
               "display": true,
               "settings": {
-                "title": "آراء عميلاتنا الكريمات",
+                "title": "What our customers say",
                 "section_bg": "#FCFAF7",
                 "star_color": "#946E40",
                 "title_color": "#000000",
@@ -2237,40 +2245,40 @@
                 "verified_color": "#946E40",
                 "star_reviews_items": [
                   {
-                    "name": "فاطمة المنصوري",
-                    "text": "«قماش ناعم وقصة مريحة، والتطريز يضيف لمسة راقية لإطلالتي.»",
+                    "name": "Fatima Al-Mansouri",
+                    "text": "“Soft fabric and a comfortable cut; the embroidery adds a refined touch to my look.”",
                     "stars": 5,
                     "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/9a8352b4f0744e5e947c3bc21da4570d.jpg",
                     "card_bg": "#EEEEEE",
                     "text_color": "#000000"
                   },
                   {
-                    "name": "ليلى العجمي",
-                    "text": "«اللون هادئ والخياطة متقنة، عباية تناسب يومي بكل راحة.»",
+                    "name": "Layla Al-Ajmi",
+                    "text": "“A calm colour and fine tailoring; an abaya that fits my day in comfort.”",
                     "stars": 5,
                     "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/b2546ded6f264731a2c344522adcca42.jpg",
                     "card_bg": "#171717",
                     "text_color": "#FFFFFF"
                   },
                   {
-                    "name": "هند القحطاني",
-                    "text": "«تفاصيل أنيقة وقصة واسعة، خيار جميل للمناسبات والزيارات.»",
+                    "name": "Hind Al-Qahtani",
+                    "text": "“Elegant details and a wide cut; a lovely choice for occasions and visits.”",
                     "stars": 5,
                     "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/2ba669e16610425b89dbcba8c1668705.jpg",
                     "card_bg": "#171717",
                     "text_color": "#FFFFFF"
                   },
                   {
-                    "name": "نورة العتيبي",
-                    "text": "«قماش ناعم وقصة مريحة، والتطريز يضيف لمسة راقية لإطلالتي.»",
+                    "name": "Noura Al-Otaibi",
+                    "text": "“Soft fabric and a comfortable cut; the embroidery adds a refined touch to my look.”",
                     "stars": 5,
                     "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/8a8700cb38cc494ca902bf95c230a54d.jpg",
                     "card_bg": "#171717",
                     "text_color": "#FFFFFF"
                   },
                   {
-                    "name": "سارة الشمري",
-                    "text": "«اللون هادئ والخياطة متقنة، عباية تناسب يومي بكل راحة.»",
+                    "name": "Sara Al-Shammari",
+                    "text": "“A calm colour and fine tailoring; an abaya that fits my day in comfort.”",
                     "stars": 5,
                     "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/d8a09d19e6ce4bbeac61827abebc853c.jpg",
                     "card_bg": "#EEEEEE",
@@ -2285,36 +2293,36 @@
               "meta": {},
               "display": true,
               "settings": {
-                "title": "مزيد من تجارب عميلاتنا",
+                "title": "More customer stories",
                 "reviews": [
                   {
-                    "name": "سارة عبدالله",
-                    "text": "«قماش ناعم وقصة مريحة، والتطريز يضيف لمسة راقية لإطلالتي.»",
+                    "name": "Sara Abdullah",
+                    "text": "“Soft fabric and a comfortable cut; the embroidery adds a refined touch to my look.”",
                     "stars": 5
                   },
                   {
-                    "name": "رهف الدوسري",
-                    "text": "«قماش ناعم وقصة مريحة، والتطريز يضيف لمسة راقية لإطلالتي.»",
+                    "name": "Rahaf Al-Dosari",
+                    "text": "“Soft fabric and a comfortable cut; the embroidery adds a refined touch to my look.”",
                     "stars": 5,
                     "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/2ca089612430451b8caa26d67c20905d.jpg",
                     "background_color": "#946E40"
                   },
                   {
-                    "name": "عبير السليم",
-                    "text": "«اللون هادئ والخياطة متقنة، عباية تناسب يومي بكل راحة.»",
+                    "name": "Abeer Al-Sulaim",
+                    "text": "“A calm colour and fine tailoring; an abaya that fits my day in comfort.”",
                     "stars": 5,
                     "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/50e52263108b49c4ace9547ececdc2c2.jpg",
                     "background_color": "#E2E899"
                   },
                   {
-                    "name": "دانة المطيري",
-                    "text": "«تفاصيل أنيقة وقصة واسعة، خيار جميل للمناسبات والزيارات.»",
+                    "name": "Dana Al-Mutairi",
+                    "text": "“Elegant details and a wide cut; a lovely choice for occasions and visits.”",
                     "stars": 5,
                     "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/6cb428b6621a45c09aaae5f136a7bb62.jpg"
                   },
                   {
-                    "name": "أميرة الحربي",
-                    "text": "«قماش ناعم وقصة مريحة، والتطريز يضيف لمسة راقية لإطلالتي.»",
+                    "name": "Amira Al-Harbi",
+                    "text": "“Soft fabric and a comfortable cut; the embroidery adds a refined touch to my look.”",
                     "stars": 5,
                     "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/8df44702bc814068b043d1ce7e72e9f0.jpg"
                   }
@@ -2331,7 +2339,7 @@
               "meta": {},
               "display": true,
               "settings": {
-                "title": "دارنا… في كل لقطة",
+                "title": "Darna… in every shot",
                 "videos": [
                   {
                     "video": "",
@@ -2354,7 +2362,7 @@
                     "thumbnail": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/231b23a705894cc88cd96127a2134e82.jpg"
                   }
                 ],
-                "subtitle": "لحظات إطلالاتكِ الخليجية الأنيقة",
+                "subtitle": "Moments of your elegant Gulf looks",
                 "title_color": "#000000",
                 "border_radius": 8,
                 "subtitle_color": "#000000",
@@ -2367,8 +2375,8 @@
               "meta": {},
               "display": true,
               "settings": {
-                "title": "لحظات من عالم دارنا",
-                "subtitle": "العباءة لا تُلبس فقط… تُرتدى بعناية وأصالة",
+                "title": "Moments from the world of Darna",
+                "subtitle": "An abaya isn't just worn… it's worn with care and heritage",
                 "media_items": [
                   {
                     "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/c4c76f906add4e2b9c6c0c280e41d867.jpg",
@@ -2423,21 +2431,21 @@
               "meta": {},
               "display": false,
               "settings": {
-                "title": "مختارات دارا",
+                "title": "Dara picks",
                 "layout": "grid",
                 "more_url": "/categories/1749391/العبايات",
                 "products": null,
                 "subtitle": "",
-                "more_text": "عرض الكل",
+                "more_text": "View all",
                 "active_tab": "tab_2",
-                "tab_1_text": "جديدنا",
-                "tab_2_text": "الأكثر مبيعا",
+                "tab_1_text": "New in",
+                "tab_2_text": "Best sellers",
                 "text_color": "#000000",
                 "explore_url": "/products",
                 "muted_color": "#737373",
                 "border_color": "#000000",
                 "display_more": true,
-                "explore_text": "اكتشفي إطلالتك",
+                "explore_text": "Discover your look",
                 "tab_bg_color": "#FAF7F2",
                 "chip_bg_color": "#F0F0F0",
                 "badge_bg_color": "#6B4A39",
@@ -2448,7 +2456,7 @@
                 },
                 "tab_2_products": {
                   "id": 1749395,
-                  "name": "عبايات يومية",
+                  "name": "Everyday abayas",
                   "type": "products_category"
                 },
                 "button_bg_color": "#FAF7F2",
@@ -2470,7 +2478,7 @@
               "meta": {},
               "display": false,
               "settings": {
-                "title": "تسوّقي حسب اختيارك",
+                "title": "Shop your way",
                 "cat1_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/dd5bd2ebeeb3420984e40d13ba81c5d5.jpg",
                 "cat1_url": "/categories/1749391/العبايات",
                 "cat2_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f665f233e2264c9fa443e3e67ed9abc1.jpg",
@@ -2483,12 +2491,12 @@
                 "cat5_url": "/products/عباية-دارا-السوداء",
                 "cat6_img": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f34acf78e028411bb90c4739c6c3fad9.jpg",
                 "cat6_url": "/products/عباية-دارا-المطرزة",
-                "cat1_name": "الشيلات",
-                "cat2_name": "العبايات",
-                "cat3_name": "الأطقم",
-                "cat4_name": "إطلالات الموسم",
-                "cat5_name": "أكسسوارات دارا",
-                "cat6_name": "الأكسسوارات",
+                "cat1_name": "Shawls",
+                "cat2_name": "Abayas",
+                "cat3_name": "Sets",
+                "cat4_name": "Looks of the season",
+                "cat5_name": "Dara accessories",
+                "cat6_name": "Accessories",
                 "hover_text": "VIEW THE COLLECTION",
                 "title_color": "#000000",
                 "mobile_layout": "overlay",
@@ -2515,35 +2523,35 @@
               "meta": {},
               "display": false,
               "settings": {
-                "title": "دليل الأناقة من دارا",
+                "title": "Dara style guide",
                 "reviews": [
                   {
-                    "name": "دليل التنسيق",
-                    "text": "دليل توضيحي: شيلة هادئة وأكسسوارات بسيطة تكمل إطلالتك.",
+                    "name": "Styling guide",
+                    "text": "Styling tip: a soft shawl and simple accessories complete your look.",
                     "stars": 5,
                     "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f23d99b61b2f48f69dabd058bb5eb15b.jpg"
                   },
                   {
-                    "name": "دليل التنسيق",
-                    "text": "دليل توضيحي: شيلة هادئة وأكسسوارات بسيطة تكمل إطلالتك.",
+                    "name": "Styling guide",
+                    "text": "Styling tip: a soft shawl and simple accessories complete your look.",
                     "stars": 5,
                     "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/f45d6fca06c343ddb858214c0b67c83c.jpg"
                   },
                   {
-                    "name": "دليل التنسيق",
-                    "text": "دليل توضيحي: شيلة هادئة وأكسسوارات بسيطة تكمل إطلالتك.",
+                    "name": "Styling guide",
+                    "text": "Styling tip: a soft shawl and simple accessories complete your look.",
                     "stars": 5,
                     "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/71a9ab7578334adbb6988fb3aa69082f.jpg"
                   },
                   {
-                    "name": "دليل التنسيق",
-                    "text": "دليل توضيحي: شيلة هادئة وأكسسوارات بسيطة تكمل إطلالتك.",
+                    "name": "Styling guide",
+                    "text": "Styling tip: a soft shawl and simple accessories complete your look.",
                     "stars": 5,
                     "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/99aff446df4e4d83a8baafe5c6161535.jpg"
                   },
                   {
-                    "name": "دليل التنسيق",
-                    "text": "دليل توضيحي: شيلة هادئة وأكسسوارات بسيطة تكمل إطلالتك.",
+                    "name": "Styling guide",
+                    "text": "Styling tip: a soft shawl and simple accessories complete your look.",
                     "stars": 5,
                     "avatar": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/500fbe2b952441f993529d77496cf2e8.jpg"
                   }
@@ -2561,11 +2569,11 @@
               "settings": {
                 "slides": [
                   {
-                    "heading": "أناقة على طريقتك",
+                    "heading": "Elegance, your way",
                     "badge_text": "NEW COLLECTION",
                     "button_url": "/products",
-                    "button_text": "تسوّق الآن",
-                    "description": "تجربة جريئة محمصة بعناية لتجربة تفهم جوك",
+                    "button_text": "Shop now",
+                    "description": "Thoughtful designs for every mood",
                     "text_alignment": "start",
                     "overlay_opacity": 20,
                     "background_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/d540fe84cd9b43ffa3067c5d269e54c5.jpg",
@@ -2589,7 +2597,7 @@
               "meta": {},
               "display": false,
               "settings": {
-                "title": "معرض الصور",
+                "title": "Gallery",
                 "gallery": [
                   {
                     "alt": "",
@@ -2630,20 +2638,20 @@
               "settings": {
                 "store_features": [
                   {
-                    "title": "جودة مضمونة",
-                    "description": "محاصيل منتقاة بعناية"
+                    "title": "Guaranteed quality",
+                    "description": "Carefully selected fabrics"
                   },
                   {
-                    "title": "دفع آمن",
-                    "description": "خيارات دفع مرنة وآمنة"
+                    "title": "Secure payment",
+                    "description": "Flexible, secure payment options"
                   },
                   {
-                    "title": "شحن سريع",
-                    "description": "توصيل لباب بيتك"
+                    "title": "Fast shipping",
+                    "description": "Delivered to your door"
                   },
                   {
-                    "title": "تغليف مميز",
-                    "description": "تجربة فتح علبة لا تُنسى"
+                    "title": "Special packaging",
+                    "description": "An unforgettable unboxing"
                   }
                 ],
                 "background_color": "#ffffff",
@@ -2656,19 +2664,19 @@
               "meta": {},
               "display": false,
               "settings": {
-                "title": "شركاؤنا",
+                "title": "Our partners",
                 "store_partners": [
                   {
                     "url": "",
-                    "name": "شريك 1"
+                    "name": "Partner 1"
                   },
                   {
                     "url": "",
-                    "name": "شريك 2"
+                    "name": "Partner 2"
                   },
                   {
                     "url": "",
-                    "name": "شريك 3"
+                    "name": "Partner 3"
                   }
                 ],
                 "background_color": "#ffffff",
@@ -2681,21 +2689,21 @@
               "meta": {},
               "display": false,
               "settings": {
-                "title": "آراء عملائنا",
+                "title": "Customer reviews",
                 "testimonials": [
                   {
-                    "name": "أحمد",
-                    "text": "تجربة رائعة! الخامة ناعمة والقصة مريحة جدًا.",
+                    "name": "Ahmed",
+                    "text": "Great experience! Soft fabric and a very comfortable cut.",
                     "rating": 5
                   },
                   {
-                    "name": "سارة",
-                    "text": "أجمل عباية اشتريتها، التفاصيل متقنة.",
+                    "name": "Sara",
+                    "text": "The most beautiful abaya I've bought; the details are perfect.",
                     "rating": 5
                   },
                   {
-                    "name": "محمد",
-                    "text": "خدمة ممتازة وشحن سريع، أنصح بها بشدة.",
+                    "name": "Mohammed",
+                    "text": "Excellent service and fast shipping. Highly recommended.",
                     "rating": 5
                   }
                 ],
@@ -2709,33 +2717,33 @@
               "meta": {},
               "display": false,
               "settings": {
-                "title": "تسوّق حسب التصنيف",
+                "title": "Shop by category",
                 "categories": [
                   {
                     "category": {
                       "id": 1749391,
-                      "name": "العبايات",
+                      "name": "Abayas",
                       "slug": "العبايات"
                     }
                   },
                   {
                     "category": {
                       "id": 1749395,
-                      "name": "عبايات يومية",
+                      "name": "Everyday abayas",
                       "slug": "عبايات-يومية"
                     }
                   },
                   {
                     "category": {
                       "id": 1749394,
-                      "name": "إثيوبيا",
+                      "name": "Ethiopia",
                       "slug": "إثيوبيا"
                     }
                   },
                   {
                     "category": {
                       "id": 1749392,
-                      "name": "أدوات التحضير",
+                      "name": "Accessories",
                       "slug": "أدوات-التحضير"
                     }
                   }
@@ -2751,13 +2759,13 @@
               "meta": {},
               "display": false,
               "settings": {
-                "title": "عرض محدود الوقت",
+                "title": "Limited-time offer",
                 "end_date": "2027-12-31",
-                "badge_text": "عرض خاص",
+                "badge_text": "Special offer",
                 "button_url": "/products",
                 "text_color": "#FFFFFF",
-                "button_text": "تسوّق الآن",
-                "description": "لا تفوّت الفرصة",
+                "button_text": "Shop now",
+                "description": "Don't miss out",
                 "background_color": "#000000",
                 "remove_bottom_margin": false
               },
@@ -2768,7 +2776,7 @@
               "meta": {},
               "display": false,
               "settings": {
-                "title": "شاهد تجربتنا",
+                "title": "Watch our story",
                 "video": "https://media.zid.store/f6ff3466-6f78-46a5-969b-528813ef5c68/0db8b874-5e5e-4503-8038-17dc28dc8509.mp4",
                 "autoplay": true,
                 "controls": false,
@@ -2792,11 +2800,11 @@
               "meta": {},
               "display": false,
               "settings": {
-                "heading": "أناقة على طريقتك",
+                "heading": "Elegance, your way",
                 "button_url": "/products",
                 "text_color": "#FFFFFF",
-                "button_text": "تسوّق الآن",
-                "description": "تجربة جريئة محمصة بعناية",
+                "button_text": "Shop now",
+                "description": "Crafted with care",
                 "is_primary_hero": false,
                 "overlay_opacity": 30,
                 "background_image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/d540fe84cd9b43ffa3067c5d269e54c5.jpg",
@@ -2823,10 +2831,10 @@
                     "image": "https://media.zid.store/73c71cfbec7d47c8a4cd1ad10a2d0f41/presets/71a9ab7578334adbb6988fb3aa69082f.jpg"
                   }
                 ],
-                "heading": "اكتشفي إطلالتك",
+                "heading": "Discover your look",
                 "button_url": "/products",
-                "button_text": "تسوّق الآن",
-                "description": "تجربة جريئة محمصة بعناية لتجربة تفهم جوك",
+                "button_text": "Shop now",
+                "description": "Thoughtful designs for every mood",
                 "rating_stars": 5,
                 "rating_value": "4.8",
                 "background_color": "#000000",

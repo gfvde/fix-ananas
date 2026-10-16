@@ -46,7 +46,7 @@
     {# cart.total is a totals entry ({value, value_string}) on some pages, a number on others #}
     {% set side_cart_total = side_cart.total.value if side_cart.total.value is defined else side_cart.total %}
     {% set side_cart_total_string = side_cart.total_string or (side_cart.total.value_string if side_cart.total.value_string is defined else side_cart.total) %}
-    {% set side_cart_subtotal_condition = side_cart.free_shipping_rule.subtotal_condition if side_cart.free_shipping_rule else none %}
+    {% set side_cart_subtotal_condition = side_cart.free_shipping_rule.subtotal_condition if side_cart.free_shipping_rule and side_cart.free_shipping_rule.code else none %}
     {% set side_cart_free_shipping_status = side_cart_subtotal_condition.status | default('') if side_cart_subtotal_condition else '' %}
     {% set side_cart_free_shipping_remaining = side_cart_subtotal_condition.remaining | default('') if side_cart_subtotal_condition else '' %}
     {% set side_cart_free_shipping_percent = side_cart_subtotal_condition.products_subtotal_percentage_from_min | default(0) if side_cart_subtotal_condition else 0 %}
@@ -805,10 +805,13 @@
     };
 
     function getFreeShippingState(cartData, total) {
-      const condition =
-        cartData?.free_shipping_rule?.subtotal_condition ||
-        cartData?.cart?.free_shipping_rule?.subtotal_condition ||
-        null;
+      // The API always sends subtotal_condition (with nulls); only a rule with a code is real
+      const rule = cartData?.free_shipping_rule?.code
+        ? cartData.free_shipping_rule
+        : cartData?.cart?.free_shipping_rule?.code
+          ? cartData.cart.free_shipping_rule
+          : null;
+      const condition = rule?.subtotal_condition || null;
 
       if (condition) {
         const status = condition.status || "";

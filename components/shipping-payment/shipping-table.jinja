@@ -41,8 +41,7 @@
               {% set preview_cities = cities[:preview_count] %}
               {% set remaining = cities | length - preview_count %}
               <span>
-                {% for city in preview_cities %}{{ city.name or city.city_name }}{% if not loop.last %},{% endif %}{% endfor %}{% if remaining > 0 %}
-                  , +
+                {% set city_sep = '، ' if session.lang == 'ar' else ', ' %}{% for city in preview_cities %}{{ city.name or city.city_name }}{% if not loop.last %}{{ city_sep }}{% endif %}{% endfor %}{% if remaining > 0 %}{{ city_sep }}+
                   <button
                     type="button"
                     class="underline"

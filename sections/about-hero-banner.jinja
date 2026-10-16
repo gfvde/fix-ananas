@@ -27,7 +27,7 @@
 <section
   section-id="{{ sectionId }}" data-section="about-hero-banner"
   data-no-mb="{{ 'true' if settings.remove_bottom_margin else 'false' }}"
-  class="about-hero-banner {% if settings.show_desktop_content %}about-hero-banner--desktop-content{% endif %}"
+  class="about-hero-banner {% if settings.show_desktop_content %}about-hero-banner--desktop-content{% endif %}{% if settings.desktop_content_side in ['right', 'left'] %} about-hero-banner--side-{{ settings.desktop_content_side }}{% endif %}"
   style="
     --ahb-bg: {{ settings.background_color | default('#171717') }};
     --ahb-desktop-height: {{ settings.desktop_height | default(468, true) }}px;

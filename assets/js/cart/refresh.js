@@ -8,6 +8,7 @@
 import { updatePaymentWidgets, updateLoyaltyDisplay } from "./totals.js";
 import { setupCouponInput } from "./coupon.js";
 import { calculateLoyaltyPoints } from "./loyalty.js";
+import { refreshBadge } from "./badge.js";
 
 // Module state
 let isRefreshing = false;
@@ -23,6 +24,7 @@ const SELECTORS = {
   loyaltySection: "[data-loyalty-section]",
   shippingProgress: "[data-free-shipping-bar]",
   paymentWidgets: "[data-payment-widgets]",
+  itemsCount: ".cart-page-header__count, .cart-mobile-header__title",
   emptyState: ".theme-container"
 };
 
@@ -170,6 +172,9 @@ async function doRefreshCartPage() {
     // Swap payment widgets
     swapElement(SELECTORS.paymentWidgets, doc);
 
+    // Swap item counts in the page and mobile headers
+    swapElements(SELECTORS.itemsCount, doc);
+
     // Re-initialize quantity inputs
     if (window.initQtyInputs) {
       window.initQtyInputs();
@@ -179,9 +184,7 @@ async function doRefreshCartPage() {
     setupCouponInput();
 
     // Update cart badge in header
-    if (window.cartManager && window.cartManager.refreshBadge) {
-      window.cartManager.refreshBadge();
-    }
+    refreshBadge();
 
     // Update payment widgets (Tamara, Tabby) and loyalty calculations
     updatePaymentWidgets();
@@ -245,6 +248,10 @@ export function setupZidCartEventListeners() {
     const detail = e.detail || {};
     console.error("Cart error:", detail.error);
     setCartLoadingState(false);
+    // Re-render so inputs show the quantity the cart really holds
+    if (document.querySelector(SELECTORS.cartContainer)) {
+      refreshCartPage();
+    }
   });
 }
 

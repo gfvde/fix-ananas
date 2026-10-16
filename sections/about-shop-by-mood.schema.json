@@ -1,8 +1,8 @@
 {
   "template": "sections/about-shop-by-mood.jinja",
   "name": {
-    "ar": "قهوتك على مزاجك",
-    "en": "Coffee for your mood"
+    "ar": "تسوّق حسب المزاج",
+    "en": "Shop by Mood"
   },
   "icon": "emotion-happy-line",
   "meta": { "type": "categories" },

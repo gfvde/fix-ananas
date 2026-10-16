@@ -490,7 +490,8 @@
         sold: {{ _('Sold more than %s times') | tojson }},
         soldThisMonth: {{ _('Sold %s pieces this month') | tojson }},
         lowStockPacks: {{ _('Only %(count)s packs left in stock!') | tojson }},
-        limitedStock: {{ _('Limited quantity in stock!') | tojson }}
+        limitedStock: {{ _('Limited quantity in stock!') | tojson }},
+        maxQuantity: {{ _('Only %s available') | tojson }}
       };
       window.themeSettings = {
         showBreadcrumb: {{ 'true' if settings.general_show_breadcrumb != false else 'false' }},
@@ -507,8 +508,9 @@
           columnsMobile: {{ (settings.product_card_columns_mobile | default('2')) | tojson }}
         }
       };
-      window.storeLowStockEnabled = {{ 'true' if store.settings.products.low_stock_enabled else 'false' }};
-      window.storeLowStockThreshold = {{ store.settings.products.low_stock_threshold | default(5) }};
+      {%- set _stock_cfg = store.settings.products if store.settings and store.settings.products else {} %}
+      window.storeLowStockEnabled = {{ 'true' if (_stock_cfg.low_stock_label_enabled or _stock_cfg.low_stock_enabled) else 'false' }};
+      window.storeLowStockThreshold = {{ (_stock_cfg.low_stock_quantity_limit or _stock_cfg.low_stock_quantity_threshold or _stock_cfg.low_stock_threshold or 5) | int }};
 
       window.ananasTranslations = {
         paymentMethods: {{ _('Payment methods') | tojson }},

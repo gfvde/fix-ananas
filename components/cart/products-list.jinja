@@ -125,10 +125,9 @@
         {% set item_error = error_texts.original_quantity_finished | default(_('Out of stock. Remove it to complete your order'), true) %}
       {% elif item.is_requested_quantity_enough is sameas false %}
         {% set item_error = error_texts.requested_quantity_not_enough | default(_('Not enough stock for the requested quantity'), true) %}
-      {% elif item.is_product_price_updated %}
-        {% set item_error = error_texts.product_price_updated | default(_('The price of this product has changed'), true) %}
       {% endif %}
-      {% set item_error = (item_error or item.error_message or '') | replace('<br/>', ' ') | replace('<br />', ' ') | replace('<br>', ' ') | striptags %}
+      {# is_product_price_updated is not an error: the API sets it on freshly added lines too #}
+      {% set item_error = (item_error or ('' if item.is_product_price_updated else item.error_message) or '') | replace('<br/>', ' ') | replace('<br />', ' ') | replace('<br>', ' ') | striptags %}
       {% set sub_items = item.sub_items or [] %}
       {% set offer_rules = item.discount_rules or [] %}
 

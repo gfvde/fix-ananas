@@ -192,7 +192,8 @@ function openNotifyMeDialog(productId) {
   productIdInput = document.querySelector("[data-notify-product-id]");
 
   if (dialog && productIdInput) {
-    productIdInput.value = productId;
+    // An empty id (PDP button) keeps the id that variant changes already set
+    if (productId) productIdInput.value = productId;
 
     const dialogWrapper = document.getElementById("notify-me-dialog-wrapper");
     if (dialogWrapper && typeof dialogWrapper.open === "function") {

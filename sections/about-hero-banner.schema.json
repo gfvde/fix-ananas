@@ -162,6 +162,38 @@
       "default": false
     },
     {
+      "id": "desktop_content_side",
+      "type": "select",
+      "label": {
+        "ar": "مكان النص على الديسكتوب",
+        "en": "Desktop Text Position"
+      },
+      "default": "auto",
+      "options": [
+        {
+          "value": "auto",
+          "label": {
+            "ar": "حسب اتجاه اللغة",
+            "en": "Follow language direction"
+          }
+        },
+        {
+          "value": "right",
+          "label": {
+            "ar": "يمين دائمًا",
+            "en": "Always right"
+          }
+        },
+        {
+          "value": "left",
+          "label": {
+            "ar": "يسار دائمًا",
+            "en": "Always left"
+          }
+        }
+      ]
+    },
+    {
       "id": "heading",
       "type": "text",
       "label": {
