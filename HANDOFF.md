@@ -181,103 +181,188 @@ State when this was written:
 4. **Merge PR #43** into `main` (merge commit), then the owner publishes.
 5. Optional: preview images for the 11 sections without them, once they are placed on a page.
 
-## Darna, part 3 (2026-10-14, branch `claude/new-session-ypybvd`)
-- PR #43 is merged into `main`.
-- **English is now enabled on DARNA**: `/en-us/` renders LTR (`dir="ltr"`). The store root redirects to `/en-us/` from the US-located sandbox; use `/ar-sa/` for Arabic.
-- **LTR crawl** (home, PLP, category, cart, blog, wishlist; desktop 1440 and mobile 390):
-  - no horizontal overflow, no theme JS errors;
-  - Arabic text on English pages comes from section settings or the preset (merchant content), not from the theme;
-  - the announcement bar is in carousel mode on English because `announcement_bar_enable_marquee` is off for that language; the theme is fine.
-- **Fix: Hero Banner (About) desktop text side.**
-  - The Dara hero image has its dark empty area on the right.
-  - In LTR the text moved to the left, on top of the photo, and could not be read.
-  - New setting `desktop_content_side`: `auto` (default, unchanged behaviour), `right`, `left`.
-  - The preset sets `right`. Arabic renders exactly as before.
-- Known, not fixed: the preset splits «( أناقة بكل تفاصيلها )» across `rating_label` / `rating_count` so the brackets only order correctly in RTL. On English the merchant writes their own text.
-- **Notion checklist ("Zid Theme Test Cases", 124 cases) — run on DARNA 2026-10-14.**
-  - The `Notion` MCP connector reads it; `curl` to `*.notion.site` is still blocked.
-  - Data source: `collection://1dcf18d9-9015-81b1-b3f1-000b607957d4`.
-  - Fixed in PR #44:
-    - footer:
-      - links with no URL are hidden;
-      - the language name shows in the region button (`lang.code`);
-      - the country code is upper-case;
-      - the address no longer repeats parts already in the street line;
-    - favicon from `store.icon`;
-    - category banner shows `cover_image` when the merchant sets one;
-    - shipping page uses a localized city separator;
-    - cart:
-      - badge and item counts refresh after AJAX updates;
-      - a failed quantity change re-renders the cart;
-      - `is_product_price_updated` is no longer shown as an error;
-      - the side cart's free-shipping bar needs a rule with a `code`;
-    - low stock (card, PDP, `layout.jinja`):
-      - follows `low_stock_label_enabled` and `low_stock_quantity_limit`;
-      - falls back to `low_stock_enabled` / `low_stock_quantity_threshold` / `low_stock_threshold`, because the live store sends `low_stock_quantity_threshold`;
-    - PDP Notify Me opens the dialog (`data-notify-me-trigger`);
-    - the quantity limit shows a toast «المتوفر %s فقط»;
-    - a reversed price filter is swapped;
-    - infinite scroll re-observes after a short page;
-    - the card sold label reads "Sold more than %s times";
-    - preset:
-      - the footer links point to `/faqs` and `/shipping-and-payment`;
-      - the copyright is empty, so the dashboard value or «صنع بواسطة زد» shows;
-    - section names no longer mention Ananas or coffee.
-  - Platform: account pages (profile, orders, addresses, wishlist, loyalty) are Zid's own templates; none is a theme file.
-  - Blocked on store data or dashboard settings:
-    - social links;
-    - VAT, CR and business center numbers;
-    - loyalty;
-    - multi-inventory;
-    - FAQs and blog posts;
-    - a custom menu link;
-    - a category cover;
-    - SEO title and favicon;
-    - reviews and questions;
-    - variants, more images and a video;
-    - bundle offers and a grouped product;
-    - related products;
-    - a VAT-exempt product and a badge;
-    - product filtration;
-    - Tamara and Tabby;
-    - more than 24 products;
-    - a free-shipping rule;
-    - a customer login for the account cases.
-  - Turn off the PDP viewers counter in the live editor; it is still on there.
-- **Uploaded 2026-10-14**:
-  - `make package && python3 scripts/demo-settings.py build/theme && cd build/theme && vitrin preview 3257518 .`
-  - Validator: 39/39.
-  - The drafts now come from `presets/default.json`, ar and en. The `en` copy is a real English translation; links and slugs are unchanged.
-  - Checked on the preview: Notify Me, low stock, the quantity toast, the cart badge and count, no price-changed error, and the footer address.
-- **Darna preset on Zid**: `85da5421-aeef-4052-bfae-645739521988` (type `default`, name دارنا / Darna), created with `python3 scripts/public-preset.py && vitrin presets -t 73c71cfb-ec7d-47c8-a4cd-1ad10a2d0f41 create build/preset.json`.
-  - Its images are new Arabic home shots of Darna.
-  - To change it later, use `vitrin presets -t 73c71cfb… update 85da5421-… build/preset.json`.
-  - The hero «( أناقة بكل تفاصيلها )» is fixed: the desktop CSS adds the brackets, so the setting values must not contain them.
-- **DARNA store data added 2026-10-14** (through the `DARNA_zid_store` connector):
-  - loyalty is on, with a redemption method of 100 points = 10 SAR;
-  - the blog is on, with one post (`choose-your-abaya`);
-  - coupon `DARNA10` (10%, valid until 2027-10-14);
-  - one answered question on DARA-001;
-  - DARA-017 is VAT-exempt;
-  - grouped product DARA-018 (DARA-013 + DARA-006);
-  - two more images on DARA-009;
-  - DARA-019…025 are renamed clones, for 25 products in total, which tests infinite scroll past 24.
-  - The connector refuses images from `media.zid.store` (403). Images can be added from `raw.githubusercontent.com/gfvde/fix-ananas/main/assets/images/dara/…`.
-  - Still impossible through the connector:
-    - bundle offers (401 scope);
-    - variants (400);
-    - FAQs and pages;
-    - turning on reviews and questions;
-    - Tamara and Tabby;
-    - store info and favicon;
-    - a free-shipping rule;
-    - customer accounts;
-    - publishing the theme settings.
-  - Notion now has 73 cases Passed.
-- **Notion**: 66 cases are marked Passed. The 58 still To Do are blocked on store data or a customer login, or are fixed but not yet verified live (price filter swap, cart quantity error, free-shipping rule, closed store).
-- **To do**:
-  - the owner presses نشر in the editor, or runs `vitrin activate 3257518 4c8e8590-70ba-42bd-9a71-61055bcfcf84`;
-  - the other items in "Darna, part 2 → Still to do" are unchanged. Notion is still blocked by the network policy (`*.notion.site`), and jsdelivr is too.
+## Darna, part 3 (2026-10-14, Notion checklist run)
+- **Notion DB** "DARNA Theme Test Cases" (https://app.notion.com/p/1dcf18d990158001a921d92eaa79b0db), readable through the Notion connector.
+  - All 51 "To Do" cases were run: now **98 Passed, 26 Blocked, 0 To Do** (after the owner signed in as a customer on 2026-10-15).
+  - A new **Test Notes** column says why each case passed or what it is blocked on.
+- **The live store runs an older published version.** It still shows the viewers counter and the `iasvhj` "من نحن" link. Test on the preview (`?theme=4c8e8590…`) until the owner presses نشر.
+- **Dashboard (DARNA 3257518), done in Chrome**:
+  - English was already on (`/en-us/` is LTR).
+  - Created page `about-us`.
+  - Turned on customer reviews and questions (العملاء ← التقييمات / الأسئلة).
+  - DARA-001 got S‑M / L‑XL / XXL variants. Variant price edits in the dashboard table do not save.
+  - DARA-001 got 3 custom similar products. The platform sends `related_products` only after this.
+  - Added one FAQ.
+  - Turned on "المدونة" in the main menu.
+- **Theme fixes**:
+  - Footer: link groups without titled links no longer render an empty column.
+  - `--header-h` is re-measured on load and with a ResizeObserver. It was 610px when measured before CSS, which pushed the sticky PDP gallery ~470px down.
+  - Cart: a rejected quantity update shows "Not enough stock for the requested quantity" and re-renders. Every refresh path re-hydrates images and options; before, after a failed update the list lost images, sizes and old prices.
+  - Price filter: junk in `from_price`/`to_price` is ignored (no "NaN"), and min > max is swapped.
+- Uploaded with `vitrin preview 3257518 .`; the validator passes 39/39.
+- **Still blocked (needs the owner)**:
+  - account empty states (the test customer has orders and addresses), Mazeed;
+  - wishlist: Zid's `addToWishlists` returns 200 but saves nothing on DARNA (platform bug). The theme bug that sent signed-in customers to /account is fixed in `wishlist.js`;
+  - a bundle offer;
+  - a free-shipping rule;
+  - Tamara/Tabby;
+  - favicon, social links, VAT/CR visibility;
+  - product video and extra images;
+  - a required custom field;
+  - reviews from customers;
+  - multi-inventory;
+  - store-closed hours;
+  - the theme-editor mobile check.
+- **Leftovers**:
+  - the "المقاس" checkbox customization on DARA-001 must be deleted by hand: the delete opens a native confirm that freezes the Chrome extension;
+  - `/reviews` and `/questions` still return 404 after turning those features on.
+
+## DARNA now runs an uploaded custom theme (2026-10-15)
+- The owner uploaded the zip build (`build/darna-theme-2026-10-15.zip`, made from the PR #45 branch) to DARNA 3257518, under Custom themes, as **"DARNA"**, and activated it. **Rely on this from now on.**
+  - The vitrin partner preview (installation `4c8e8590…`) is no longer what the live store shows.
+- **To ship a change**:
+  1. `npm run build`
+  2. `rm -rf build/theme && bash scripts/package.sh`
+  3. Zip `build/theme` with Python (`zip` is not installed on this Windows machine).
+  4. Do not include the demo-settings JSON from `scripts/demo-settings.py`.
+  5. The owner uploads the zip.
+- **Live check after the upload**: the wishlist fix, the review CTA and similar products are live.
+- **Still from saved editor settings** (fix them in Customize, not in the code):
+  - the viewers counter is on;
+  - the footer "من نحن" link points to `iasvhj.dev.zid.store`.
+- **Chrome**: two browsers are connected. The owner's logged-in one is "Browser 1" (Windows).
+
+## Darna, part 4 (2026-10-15)
+**State**:
+- PR #45 is merged into `main`.
+- The live store runs the custom-theme zip the owner uploaded (first version).
+- A newer zip, **`build/darna-theme-2026-10-15-v2.zip`** (not committed, `build/` is ignored), adds the cart bundle-offer block below. The owner still has to upload it. If it is lost, rebuild it with the steps above.
+- Validator 39/39 on the preview.
+
+**Done in this part**:
+- In the theme editor (Customize → Publish):
+  - the footer "من نحن" link now points to the About Us page (`/pages/123956`);
+  - the viewers counter is off;
+  - both verified on the live store.
+- Code changes:
+  - `templates/product.jinja`: the viewers counter is opt-in (`== true`). It used to show whenever the setting was not saved.
+  - Wishlist: before redirecting to login, it re-checks the login state (`ensureLoggedIn`). Signed-in customers were sent to /account.
+  - Cart: a new block shows `cart.bundle_offers` (name, description, "وفّرتِ X" / "أضيفي N…") above the items, in `components/cart/products-list.jinja` with CSS in `assets/css/cart-page.css`. Zid puts bundle info on the cart, and `item.discount_rules` stays empty.
+  - Translations: 2 new Arabic strings; the `.mo` was recompiled with babel (`pip install babel`).
+- Dashboard:
+  - Bundle offer **"عرض 2+1"**: buy 2 of any product, get the cheapest free. It is active.
+  - The live store shows the card tag, the PDP tab with name, description and products, and the cart total discount.
+  - The "sold count" threshold was lowered from 50 to 1. The label still does not show, because no DARNA product has a sale.
+- Account tests with the owner's customer login: 12 of 18 passed; see Notion.
+
+**Notion status**: 98 Passed / 26 Blocked. Update these once v2 is uploaded:
+- the 3 bundle cases (cart / PDP / card tag) → Passed;
+- the sold-count case stays Blocked.
+
+**Still blocked, and why**:
+- **Free-shipping rule**:
+  - A draft "شحن مجاني فوق 300" (automatic) was filled in and **not saved**: the permission checker blocked opening its Conditions section.
+  - The owner should create it with a 300 SAR minimum, then test the cart progress bar.
+- **VAT number / CR**: the store has none. Real numbers are needed from the owner; never invent them.
+- **Social links**: the owner's real handles are needed.
+- **Sold count / product rates / 10 reviews / loyalty redemption**: need a real or test order and reviews. Ask the owner before placing an order.
+- **Wishlist (4 cases)**: Zid's `addToWishlists` returns 200 and saves nothing. Report it to Zid.
+- **Empty states for addresses / orders**: need a fresh customer account (Claude must not create accounts).
+- **Mazeed, Tamara/Tabby, multi-inventory**: platform or contract setup.
+- **Still fixable from the dashboard**:
+  - product video and extra images, the favicon, and a required custom field: product edit page / Store identity;
+  - store-closed hours: settings → work time; reopen after testing;
+  - the theme-editor mobile check.
+- **Leftovers**:
+  - delete the "المقاس" checkbox customization on DARA-001 by hand: its native confirm freezes the extension;
+  - `/reviews` and `/questions` return 404;
+  - "المدونة" was turned on in the main menu for a test.
+
+## Darna, part 5 (2026-10-15)
+**State**:
+- v2 is live on DARNA (the live `cart-page.css`, `?v=v1.0.11`, has the bundle block).
+- A newer zip, **`build/darna-theme-2026-10-15-v3.zip`** (not committed), has the two fixes below. The owner still has to upload it.
+
+**Fixes in v3**:
+- Cart bundle block: the saving showed a raw float ("4224.867611169646"), because `format_price` does not format converted amounts.
+  It now uses `offer.discount_total_string` ("4,224.87 EGP"), with `format_price` only as a fallback.
+- Cart loyalty redemption list (`el-options` in `components/cart/loyalty-redemption.jinja`): it opened across the whole page.
+  - Cause: its class is `w-[var(--anchor-width)]`, but `el-select` never sets that variable. `el-select` then puts the list at `left = button end − list width`.
+  - Fix in `assets/js/cart/loyalty.js`: on the list's `toggle` event, set `--anchor-width` to the button width on the `el-select`.
+  - It goes on the `el-select` because `el-select` rewrites the list's own `style` attribute all the time, and the variable still reaches the list by inheritance.
+  - Verified on the live store by injecting the code into the page (guest cart, section un-hidden by hand).
+
+**After the v3 upload (checked 2026-10-15)**:
+- Live: the bundle saving shows "You saved 4,224.87 EGP"; all 24 cards on /products have the "Buy 2 Get 1" tag; the PDP has the badge and the bundle tab.
+- Free-shipping rule now exists: one product shows "Add purchases worth 3603.15 EGP to get free shipping" with a progress bar.
+- Notion: the 3 bundle cases and the free-shipping case → Passed (now 102 Passed / 22 Blocked). Loyalty-redeem and sold-count stay Blocked, with updated notes.
+- **CDN gotcha**: `asset_url` adds `?v=v1.0.11`, and that did not change with the v3 upload. The edge served the old `dist/cart-controller.js` under that URL, while any other `?v=` returned the new file.
+  - So the template changes went live at once, but the loyalty JS fix did not, at least at first.
+  - Check with `curl -s --compressed "https://static.zid.store/ce032fa0/dist/cart-controller.js?v=v1.0.11" | grep -c anchor-width`. It should print 1.
+  - If it stays 0, the theme needs its own cache-buster on JS/CSS URLs.
+- Still to check: the points list with the owner's customer login, once the new JS is served.
+
+## Darna, part 6 (2026-10-15) — START HERE NEXT SESSION
+**State**:
+- PR #46 (v3) is merged.
+- A newer zip, **`build/darna-theme-2026-10-15-v4.zip`** (not committed), is on branch `claude/loyalty-list-rtl`. The owner still has to upload it.
+
+**Why v4**:
+- The v3 loyalty-list fix only fixed the width.
+- Tested with real clicks on the theme preview (`pxhvko.dev.zid.store/ar/cart?theme=c72de127-…&previewMode=true`; the preview loads assets with `?v=<timestamp>`, so it always has the newest JS).
+- In Arabic (RTL), el-select placed the list at x=1458, off-screen, while the button was at x=256.
+- Fix: `assets/js/cart/loyalty.js` sets `--loyalty-list-left/top` and `--anchor-width` on the `el-select` when the list opens, and updates them on scroll and resize. A rule in `assets/css/cart-page.css` (part of the global `styles.css`) pins `[data-loyalty-options]:popover-open` with `!important`.
+- Verified on the preview with injected CSS/JS: list at x=256, 314px wide, same as the button; it follows the button on scroll.
+
+**Cache-buster** (`scripts/package.sh`):
+- In the staged copy only, every `'<file>.css|js' | asset_url }}` gets `&b=<build id>`. The source templates are unchanged.
+- Reason: the live store kept `?v=v1.0.11` after the v3 upload, and the CDN served the old `cart-controller.js` for 40+ minutes.
+
+**After the v4 upload (checked 2026-10-15)**:
+- Live asset URLs are `?v=v1.0.14&b=20261015114132`, and both `styles.css` and `cart-controller.js` have the fix. (Zid also bumped `v` this time.)
+- On the live cart, with the uploaded code and a real click on the dropdown, the list sits under the button at the button's width:
+  - Arabic/RTL (`/ar-sa/cart`): x=256, width 314.
+  - English/LTR (`/en-sa/cart`): x=1207, width 309.
+  - The section was un-hidden by hand and one option was added, because Claude's Chrome is a guest.
+  - The list follows the button on scroll.
+- PR #47 is merged.
+- Still not seen: the real redemption options of a signed-in customer.
+  - The owner's signed-in Chrome is on Windows and is not connected to the extension; Claude's "Browser 1" (macOS) is a guest.
+  - Its storefront language was switched to Arabic during this test.
+
+## Darna, part 8 (2026-10-15) — START HERE NEXT SESSION
+**Notion: 110 Passed / 14 Blocked.**
+
+**State**:
+- v5 is live (`&b=20261015120949`).
+- PR #48 (favicon link) was closed: once the platform cache refreshed, `vitrin_head` outputs the store icon itself, so v5 has the link twice (harmless). The next build from main drops the duplicate.
+
+**Done and Passed this part** (all via the dashboard in the in-app browser pane):
+- **Favicon**: a 32×32 icon was uploaded in Store identity.
+- **Required field**: DARA-009 "Layl Abaya with Gold Embroidery" got a required dropdown "لون التطريز / Embroidery colour" (ذهبي/Gold, فضي/Silver), under the product's تخصيص المنتج section.
+  - Without a choice: no add to cart, and a red toast.
+  - With Gold: the product is added.
+- **Product video**: the owner's YouTube video `tEAAqjU0-gs` was added to DARA-009.
+  - The gallery has a 4th slide with a play button, which loads the embed with autoplay.
+  - Close resets the iframe to `about:blank` (an empty `src` does not reload the page).
+- **Tamara + Tabby on the PDP**: both are active. They only show in **SAR**: Claude's in-app browser opens `/en-eg/` (EGP), so test on `/ar-sa/`.
+- **Wishlist**: adding works; remove works but the server is slow to reflect it; `/account/wishlist` shows the cards.
+- **Theme-editor mobile check**: Dashboard → الثيمات → DARNA → تخصيص, phone preview. It matches the store at 390px.
+
+**Still Blocked, and why**:
+- **Share wishlist (Zid bug)**: the platform `/wishlist?token=` page never fetches by token; it shows empty for guests. Report in `build/zid-wishlist-bug-report.md` (not sent).
+- **Cart payment widgets (Zid)**: `vitrin:cart/payment_widgets.jinja` renders an empty `<div data-payment-widgets>` even in SAR with items, while the PDP widgets work.
+- **Closed hours**: the auto-mode classifier blocks saving "إيقاف استقبال الطلبات"; the owner has to save it.
+- **Loyalty redeem**: the customer login does not work in Claude's browsers (captcha in the pane; the Mac Chrome is a guest); the owner tests it.
+- **Needs an order (owner approval)**: sold count, product rates, 10 reviews.
+- **Needs a new empty customer account**: "no addresses" and "no orders"; Claude must not create accounts.
+- **Needs real data**: VAT/CR, social links.
+- **Platform setup**: Mazeed, multi-inventory.
+
+**Dashboard tips**:
+- The new dashboard paths are `/ar-sa/stores/3257518/catalog/products/<id>`, `/settings/...`, `/channels/online-store/brand` and `/services/payments`.
+- Pages render slowly. Wait for content before reading.
+- Emulate 1400×900 for the desktop layout.
 
 ## Open work (in priority order)
 1. **Demo content in the preview — DONE (partly)**: `python3 scripts/demo-settings.py build/theme` writes `templates/home.json`, `header.json`, `footer.json`, `layout.json` from `presets/default.json` into the preview folder only (not shipped), then `vitrin preview 3255406 .` uploads them as drafted settings.

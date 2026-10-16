@@ -27,8 +27,13 @@ function initPriceSliders() {
     const fromPrice = urlParams.get("from_price");
     const toPrice = urlParams.get("to_price");
 
-    let realMinValue = fromPrice ? Number(fromPrice) : null;
-    let realMaxValue = toPrice ? Number(toPrice) : null;
+    // Ignore hand-edited junk in the URL (?from_price=abc) instead of showing NaN
+    const toPriceValue = (v) => {
+      const n = Number(v);
+      return v && Number.isFinite(n) && n >= 0 ? n : null;
+    };
+    let realMinValue = toPriceValue(fromPrice);
+    let realMaxValue = toPriceValue(toPrice);
 
     const startMin = Math.min(Math.max(realMinValue || MIN, MIN), MAX);
     const startMax = Math.min(Math.max(realMaxValue || MAX, MIN), MAX);

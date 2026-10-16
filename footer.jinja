@@ -249,13 +249,14 @@
 
       {# ── Link group columns ────────────────────────────────────────────── #}
       {% for group in settings.link_groups_items or [] %}
-        {% if not group.hide and group.links %}
+        {% set group_links = (group.links or []) | selectattr('title') | selectattr('url') | list %}
+        {% if not group.hide and group_links %}
 	          <div class="footer-links flex flex-col gap-[10px] ltr:text-left rtl:text-right">
             {% if group.title %}
               <h3 class="text-sm font-medium leading-5 mb-1.5" style="color: {{ heading_color }};">{{ group.title }}</h3>
             {% endif %}
             <ul class="flex flex-col gap-[10px] ltr:text-left rtl:text-right">
-              {% for link in group.links if link.url %}
+              {% for link in group_links %}
                 <li>
                   <a href="{{ link.url }}" class="footer-link text-sm font-medium leading-5 transition-opacity hover:opacity-70" style="color: {{ text_color }};">
                     {{ link.title }}

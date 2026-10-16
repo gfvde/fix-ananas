@@ -80,6 +80,23 @@
   {%- endif -%}
 {%- endmacro %}
 
+{# Bundle offers are reported on the cart, not on each item (item.discount_rules stays empty) #}
+{% for offer in cart.bundle_offers or [] %}
+  {% if offer.name %}
+    <div class="ananas-cart-bundle-offer" data-cart-bundle-offer>
+      <p class="ananas-cart-bundle-offer__name">{{ offer.name }}</p>
+      {% if offer.description %}
+        <p class="ananas-cart-bundle-offer__desc">{{ offer.description }}</p>
+      {% endif %}
+      {% if offer.discount_total %}
+        <p class="ananas-cart-bundle-offer__saving">{{ _('You saved') }} {{ offer.discount_total_string | default(format_price(offer.discount_total)) }}</p>
+      {% elif offer.quantity_towards_next_set %}
+        <p class="ananas-cart-bundle-offer__saving">{{ _('Add %(count)s more to get the offer') | format(count=offer.quantity_towards_next_set) }}</p>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endfor %}
+
 {% if cart.products and cart.products | length > 0 %}
   <div class="ananas-cart-products">
     {% for item in cart.products %}

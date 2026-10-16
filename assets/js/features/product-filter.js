@@ -453,11 +453,14 @@ class ProductFilter {
     const maxInput = document.getElementById(maxId);
     if (!minInput || !maxInput) return false;
 
-    let fromPrice = minInput.value.replace(/,/g, "") || null;
-    let toPrice = maxInput.value.replace(/,/g, "") || null;
-
-    // A reversed range (from > to) is swapped instead of returning nothing
-    if (fromPrice !== null && toPrice !== null && Number(fromPrice) > Number(toPrice)) {
+    const parsePrice = (value) => {
+      const n = Number(String(value).replace(/,/g, "").trim());
+      return value !== "" && Number.isFinite(n) && n >= 0 ? n : null;
+    };
+    let fromPrice = parsePrice(minInput.value);
+    let toPrice = parsePrice(maxInput.value);
+    // Min above max: swap rather than return an empty listing
+    if (fromPrice !== null && toPrice !== null && fromPrice > toPrice) {
       [fromPrice, toPrice] = [toPrice, fromPrice];
       minInput.value = fromPrice;
       maxInput.value = toPrice;

@@ -47,7 +47,43 @@ export function initLoyaltyProgram(config) {
   if (!state.initialized) {
     state.initialized = true;
     window.addEventListener("cart-updated", () => initLoyaltyProgram());
+    // "toggle" does not bubble, so listen in the capture phase
+    document.addEventListener("toggle", onLoyaltyOptionsToggle, true);
   }
+}
+
+/**
+ * Pin the redemption list under its button. el-select's own placement puts it
+ * off-screen in RTL, and at left: 0 with no width otherwise (it never sets
+ * --anchor-width). The variables go on the el-select, because el-select keeps
+ * rewriting the list's style attribute; the CSS is in assets/css/cart-page.css.
+ */
+let openLoyaltyList = null;
+
+function onLoyaltyOptionsToggle(event) {
+  const list = event.target;
+  if (!(list instanceof HTMLElement) || !list.matches("[data-loyalty-options]")) return;
+
+  if (event.newState === "open") {
+    openLoyaltyList = list;
+    placeLoyaltyList();
+    window.addEventListener("scroll", placeLoyaltyList, true);
+    window.addEventListener("resize", placeLoyaltyList);
+  } else {
+    openLoyaltyList = null;
+    window.removeEventListener("scroll", placeLoyaltyList, true);
+    window.removeEventListener("resize", placeLoyaltyList);
+  }
+}
+
+function placeLoyaltyList() {
+  const select = openLoyaltyList?.closest("el-select");
+  const button = select?.querySelector("button");
+  if (!button) return;
+  const rect = button.getBoundingClientRect();
+  select.style.setProperty("--anchor-width", `${rect.width}px`);
+  select.style.setProperty("--loyalty-list-left", `${rect.left}px`);
+  select.style.setProperty("--loyalty-list-top", `${rect.bottom + 4}px`);
 }
 
 function getCurrentCartTotalValue() {

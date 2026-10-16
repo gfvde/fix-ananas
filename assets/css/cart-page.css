@@ -1572,3 +1572,38 @@ html[dir="ltr"] .cart-coupon__form {
   font-size: 13px;
   text-align: end;
 }
+
+/* Cart-level bundle offer (cart.bundle_offers) */
+.ananas-cart-bundle-offer {
+  margin-bottom: 12px;
+  padding: 12px 16px;
+  border-inline-start: 3px solid #d3db6f;
+  background: #fbfbe9;
+  text-align: start;
+}
+
+.ananas-cart-bundle-offer__name {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.ananas-cart-bundle-offer__desc,
+.ananas-cart-bundle-offer__saving {
+  margin: 2px 0 0;
+  font-size: 13px;
+  line-height: 20px;
+}
+
+/* Loyalty redemption list: el-select's own placement puts it off-screen in RTL
+   and at left: 0 without a width, so pin it under its button. assets/js/cart/loyalty.js
+   sets the variables on the el-select; !important beats el-select's inline style. */
+[data-loyalty-options]:popover-open {
+  position: fixed !important;
+  inset: auto !important;
+  margin: 0 !important;
+  left: var(--loyalty-list-left) !important;
+  top: var(--loyalty-list-top) !important;
+  width: var(--anchor-width) !important;
+}
