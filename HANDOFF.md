@@ -302,7 +302,7 @@ State when this was written:
   - If it stays 0, the theme needs its own cache-buster on JS/CSS URLs.
 - Still to check: the points list with the owner's customer login, once the new JS is served.
 
-## Darna, part 6 (2026-10-15) — START HERE NEXT SESSION
+## Darna, part 6 (2026-10-15)
 **State**:
 - PR #46 (v3) is merged.
 - A newer zip, **`build/darna-theme-2026-10-15-v4.zip`** (not committed), is on branch `claude/loyalty-list-rtl`. The owner still has to upload it.
@@ -330,7 +330,41 @@ State when this was written:
   - The owner's signed-in Chrome is on Windows and is not connected to the extension; Claude's "Browser 1" (macOS) is a guest.
   - Its storefront language was switched to Arabic during this test.
 
-## Darna, part 8 (2026-10-15) — START HERE NEXT SESSION
+## Darna, part 9 (2026-10-16) — START HERE NEXT SESSION
+**Notion: 113 Passed / 11 Blocked.**
+
+**State**:
+- PR #44 (`claude/new-session-ypybvd`) now has main merged in. It is no longer a draft and still needs merging into `main` (merge commit). Its fixes were never live: the live zips were built from the PR #45+ branches.
+  - Conflicts resolved:
+    - footer: only links with a title and a URL;
+    - price filter: main's parser, and the swapped range is written back to the inputs;
+    - `.po`: both sides kept, `.mo` recompiled.
+  - The duplicate favicon link was dropped, because `vitrin_head` outputs it.
+- **v6 zip**: `build/roast-theme-2026-10-16.zip` (build id `20261016140522`, not committed). It is built from that branch. The owner still has to upload it.
+- Uploaded with `vitrin preview 3257518 .`; the validator passes 39/39.
+- `scripts/package.sh` now uses `perl -pi` for the cache-buster. On macOS, `sed -i -E` failed.
+
+**After the v6 upload, re-check on the live store**:
+- free-shipping bar only with a rule `code`;
+- «المتوفر %s فقط»;
+- low stock from the store setting;
+- PDP Notify Me;
+- footer links without a URL;
+- category `cover_image`;
+- sold label wording «بيع أكثر من %s مرة»;
+- English preset copy.
+
+**Notion recheck (2026-10-16, live v5)**:
+- **Sold count → Passed**: the API now returns `sold_products_count` (DARA-001 9, DARA-023 3, …), and the cards show it. Zid fills the count some time after the order, not at once.
+- **Still Blocked** (new notes added):
+  - Cart payment widgets: still empty in SAR with an item (platform).
+  - Closed hours: `closed_now` stayed false; the saved period has ended.
+  - Ratings and 10 reviews: `total_count` is 0 on every product.
+  - Mazeed: `display_places` is `{}`.
+  - Business center: still null.
+- **Unchanged**: loyalty redeem, share wishlist, no addresses, no orders, multi-inventory.
+
+## Darna, part 8 (2026-10-15)
 **Notion: 110 Passed / 14 Blocked.**
 
 **State**:
