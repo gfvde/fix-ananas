@@ -33,6 +33,87 @@
       ]
     },
     {
+      "id": "motion",
+      "icon": "speed-line",
+      "name": {
+        "ar": "الحركة والتمرير",
+        "en": "Motion & Scrolling"
+      },
+      "settings": [
+        {
+          "id": "smooth_scroll",
+          "type": "checkbox",
+          "label": {
+            "ar": "تمرير ناعم (Smooth scroll)",
+            "en": "Smooth scroll"
+          },
+          "info": {
+            "ar": "تمرير سلس بقصور ذاتي للصفحة. يتوقف تلقائيًا داخل النوافذ والقوائم ولمن يفضّل تقليل الحركة.",
+            "en": "Inertia scrolling for the page. It stays off inside dialogs and menus, and for visitors who prefer reduced motion."
+          },
+          "default": false
+        },
+        {
+          "id": "scroll_animations",
+          "type": "checkbox",
+          "label": {
+            "ar": "حركة الظهور عند التمرير",
+            "en": "Scroll animations"
+          },
+          "info": {
+            "ar": "تظهر الأقسام وكروت المنتجات بحركة عند الوصول إليها.",
+            "en": "Sections and product cards animate in as they scroll into view."
+          },
+          "default": true
+        },
+        {
+          "id": "animation_style",
+          "type": "select",
+          "label": {
+            "ar": "نوع الحركة",
+            "en": "Animation style"
+          },
+          "options": [
+            {
+              "value": "fade-up",
+              "label": {
+                "ar": "ظهور مع صعود",
+                "en": "Fade up"
+              }
+            },
+            {
+              "value": "fade",
+              "label": {
+                "ar": "ظهور تدريجي",
+                "en": "Fade"
+              }
+            },
+            {
+              "value": "zoom",
+              "label": {
+                "ar": "تكبير خفيف",
+                "en": "Zoom in"
+              }
+            }
+          ],
+          "default": "fade-up"
+        },
+        {
+          "id": "animation_duration",
+          "type": "range",
+          "label": {
+            "ar": "مدة الحركة",
+            "en": "Animation duration"
+          },
+          "min": 300,
+          "max": 1200,
+          "step": 100,
+          "unit": "ms",
+          "default": 700
+        }
+      ]
+    },
+    {
       "id": "product_card",
       "icon": "layout-grid-line",
       "name": {

@@ -506,6 +506,12 @@
           imageAspectRatio: {{ (settings.product_card_image_aspect_ratio | default('adapt')) | tojson }},
           columnsDesktop: {{ (settings.product_card_columns_desktop | default('5')) | tojson }},
           columnsMobile: {{ (settings.product_card_columns_mobile | default('2')) | tojson }}
+        },
+        motion: {
+          smoothScroll: {{ 'true' if settings.motion_smooth_scroll == true else 'false' }},
+          scrollAnimations: {{ 'false' if settings.motion_scroll_animations == false else 'true' }},
+          animationStyle: {{ (settings.motion_animation_style | default('fade-up')) | tojson }},
+          animationDuration: {{ (settings.motion_animation_duration | default(700)) | int }}
         }
       };
       {%- set _stock_cfg = store.settings.products if store.settings and store.settings.products else {} %}
