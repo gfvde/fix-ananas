@@ -176,7 +176,7 @@ export function updateProductInfo(selectedProduct) {
   // Update Sold Count Badge
   const soldBadge = document.querySelector("[data-sold-count-badge]");
   if (soldBadge && selectedProduct.sold_products_count) {
-    const template = window.productTranslations?.sold || "Sold more than %s times";
+    const template = window.productTranslations?.sold || "%s sold";
     const textEl = soldBadge.querySelector("[data-sold-count-text]");
     if (textEl) {
       textEl.textContent = template.replace("%s", selectedProduct.sold_products_count);
