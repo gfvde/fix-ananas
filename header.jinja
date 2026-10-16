@@ -733,6 +733,8 @@
 	    direction: ltr;
 	    width: 100%;
 	  }
+  /* The mobile bar is laid out for Arabic (cart group left, menu right); mirror it for English */
+  [dir="ltr"] .ananas-nav__inner--mob { direction: rtl; }
   .ananas-mob__left  { display: flex; align-items: center; justify-content: flex-start;gap: 5px; }
   .ananas-mob__right { display: flex; align-items: center; justify-content: flex-end; }
   /* Center logo inside its grid cell */

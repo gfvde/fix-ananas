@@ -8,6 +8,7 @@
 @import "./css/product-filters.css";
 @import "./css/cart-page.css";
 @import "./css/lightbox.css";
+@import "./css/motion.css";
 @plugin "@tailwindcss/typography";
 
 @theme inline {

@@ -259,32 +259,28 @@ export function applyLoyaltyRedemption(onSuccess) {
   if (text) text.classList.add("hidden");
   if (spinner) spinner.classList.remove("hidden");
 
-  // Pass object with id property as per SDK documentation
-  window.zid.cart
-    .addRedemptionMethod({ id })
+  // The SDK throws on a 400 (ZidderError with responseData) instead of
+  // returning !ok. One case seen on DARNA: "points were already redeemed for
+  // this cart" while the cart reports no redemption. Clear it and retry once.
+  const tryApply = () => window.zid.cart.addRedemptionMethod({ id });
+
+  tryApply()
+    .catch((err) => {
+      if (err?.status !== 400 || !window.zid.cart.removeRedemptionMethod) throw err;
+      return window.zid.cart.removeRedemptionMethod().then(tryApply);
+    })
     .then(async (response) => {
-      if (response.ok) {
-        // Success - refresh the cart page
+      if (!response || response.ok) {
         if (onSuccess) onSuccess();
-      } else {
-        // Error response - parse and show error
-        const data = await response.json();
-        if (data && data.message) {
-          // Show error using toastr if available
-          if (window.toastr) {
-            window.toastr.error(data.message.description || data.message.name, data.message.name);
-          } else {
-            console.error("Redemption error:", data.message.description || data.message.name);
-          }
-        }
-        resetButton();
+        return;
       }
+      const data = await response.json().catch(() => null);
+      showLoyaltyError(data?.message);
+      resetButton();
     })
     .catch((err) => {
       console.error("Error applying redemption:", err);
-      if (window.toastr) {
-        window.toastr.error(err.message || "Failed to apply redemption");
-      }
+      showLoyaltyError(err?.responseData?.message, err?.message);
       resetButton();
     });
 }
@@ -318,22 +314,14 @@ export function removeLoyaltyRedemption(onSuccess) {
         if (onSuccess) onSuccess();
       } else {
         // Error response - parse and show error
-        const data = await response.json();
-        if (data && data.message) {
-          if (window.toastr) {
-            window.toastr.error(data.message.description || data.message.name, data.message.name);
-          } else {
-            console.error("Remove redemption error:", data.message.description || data.message.name);
-          }
-        }
+        const data = await response.json().catch(() => null);
+        showLoyaltyError(data?.message);
         resetButton();
       }
     })
     .catch((err) => {
       console.error("Error removing redemption:", err);
-      if (window.toastr) {
-        window.toastr.error(err.message || "Failed to remove redemption");
-      }
+      showLoyaltyError(err?.responseData?.message, err?.message);
       resetButton();
     });
 }
@@ -344,4 +332,20 @@ export function removeLoyaltyRedemption(onSuccess) {
  */
 export function getLoyaltyState() {
   return { ...state };
+}
+
+/**
+ * Show a platform error message ({name, description}) to the shopper.
+ * window.toastr is not on Vitrin pages; zid.toaster is.
+ */
+function showLoyaltyError(message, fallback) {
+  const text = message?.description || message?.name || fallback;
+  if (!text) return;
+  if (window.zid?.toaster?.showError) {
+    window.zid.toaster.showError(text);
+  } else if (window.toastr) {
+    window.toastr.error(text);
+  } else {
+    console.error(text);
+  }
 }

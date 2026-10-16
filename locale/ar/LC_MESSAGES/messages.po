@@ -2146,3 +2146,13 @@ msgstr "يعاد فتح المتجر بعد %(days)s يوم و%(hours)s ساعة
 #, python-format
 msgid "Reopens in %(hours)s h %(minutes)s min"
 msgstr "يعاد فتح المتجر بعد %(hours)s ساعة و%(minutes)s دقيقة"
+
+msgid "Loyalty points discount"
+msgstr "خصم نقاط الولاء"
+
+#, python-format
+msgid "%(count)s points"
+msgstr "%(count)s نقطة"
+
+msgid "Shipping companies"
+msgstr "شركات الشحن"

@@ -825,7 +825,7 @@
   #product-quick-view-modal #header {
     width: 100%;
     gap: 8px !important;
-    text-align: right;
+    text-align: start;
   }
 
   #product-quick-view-modal #header > .space-y-1 {
@@ -841,11 +841,11 @@
     font-size: 18px !important;
     font-weight: 500 !important;
     line-height: 28px !important;
-    text-align: right;
+    text-align: start;
     white-space: nowrap;
   }
 
-  #product-quick-view-modal #header .flex.items-center.gap-2 {
+  [dir="rtl"] #product-quick-view-modal #header .flex.items-center.gap-2 {
     flex-direction: row-reverse;
     gap: 6px !important;
   }
@@ -891,7 +891,7 @@
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
-    text-align: right;
+    text-align: start;
   }
 
   #product-quick-view-modal .product-details-column > .prose * {
@@ -1193,7 +1193,7 @@
     }
 
     #product-quick-view-modal #header {
-      text-align: right;
+      text-align: start;
     }
 
     #product-quick-view-modal h1 {
@@ -1202,7 +1202,7 @@
       color: #000;
       font-size: 18px !important;
       line-height: 28px !important;
-      text-align: right;
+      text-align: start;
     }
 
     #product-quick-view-modal #header > .space-y-1 {
@@ -1803,7 +1803,7 @@
       width: 100%;
       margin: 0;
       gap: 8px !important;
-      text-align: right;
+      text-align: start;
     }
 
     #product-quick-view-modal #header > .space-y-1 {
@@ -1817,7 +1817,7 @@
       font-size: 18px !important;
       font-weight: 500 !important;
       line-height: 28px !important;
-      text-align: right;
+      text-align: start;
       white-space: nowrap;
     }
 
@@ -1837,7 +1837,7 @@
       color: #282828;
       font-size: 16px;
       line-height: 24px;
-      text-align: right;
+      text-align: start;
     }
 
     #product-quick-view-modal .quick-view-tags {
@@ -2083,7 +2083,7 @@
       width: 100%;
       align-items: flex-end;
       gap: 8px;
-      text-align: right;
+      text-align: start;
     }
 
     #product-quick-view-modal h1 {
@@ -2092,7 +2092,7 @@
       font-size: 18px !important;
       font-weight: 500 !important;
       line-height: 28px !important;
-      text-align: right;
+      text-align: start;
       white-space: normal;
     }
 
@@ -2109,7 +2109,7 @@
       color: #525252;
       font-size: 16px;
       line-height: 24px;
-      text-align: right;
+      text-align: start;
       display: -webkit-box;
       overflow: hidden;
       -webkit-box-orient: vertical;
@@ -2330,3 +2330,15 @@
     }
   }
 } /* end @layer components */
+
+/* Quick view close: mirror the Arabic placement in English (desktop end, mobile start) */
+[dir="ltr"] #product-quick-view-modal .quick-view-header {
+  left: auto;
+  right: 16px;
+}
+@media (max-width: 767px) {
+  [dir="ltr"] #product-quick-view-modal .quick-view-header {
+    right: auto;
+    left: 16px;
+  }
+}

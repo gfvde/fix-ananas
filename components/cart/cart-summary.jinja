@@ -20,7 +20,7 @@
 {%- endmacro %}
 
 {# Totals come from the platform-formatted cart.totals (value_string) only #}
-{% set subtotal_text = get_first_total(['sub_totals', 'subtotal', 'sub_total', 'products_subtotal', 'products_total']) | trim %}
+{% set subtotal_text = get_first_total(['sub_totals', 'sub_totals_before_vat', 'subtotal', 'sub_total', 'products_subtotal', 'products_total']) | trim %}
 {% if not subtotal_text %}
   {% set subtotal_text = cart.sub_total_string | default(cart.subtotal_string | default(cart.products_subtotal_string | default(cart.products_total_string | default('')))) %}
 {% endif %}
@@ -34,6 +34,9 @@
   {% set discount_text = '-' ~ discount_text %}
 {% endif %}
 {% if not shipping_text %}{% set shipping_text = '-' %}{% endif %}
+{# Loyalty points redemption is its own total (code loyalty_redemption, already negative) #}
+{% set loyalty_text = get_total('loyalty_redemption') | trim %}
+{% set loyalty_points = cart.loyalty_applied_redemption_method.points_to_redeem if cart.loyalty_applied_redemption_method else '' %}
 {% if not subtotal_text %}
   {% set subtotal_text = total_text %}
 {% endif %}
@@ -192,6 +195,14 @@
         >{{ money_text(discount_text) }}</span
       >
       <span class="cart-summary__label">{{ _('Discount') }}</span>
+    </div>
+    <div class="cart-summary__row cart-summary__row--discount cart-summary__row--loyalty{% if not loyalty_text %} hidden{% endif %}" data-cart-summary-loyalty-row>
+      <span
+        class="cart-summary__value cart-summary__value--discount"
+        data-cart-summary-loyalty
+        >{{ money_text(loyalty_text) }}</span
+      >
+      <span class="cart-summary__label">{{ _('Loyalty points discount') }}<span data-cart-summary-loyalty-points>{% if loyalty_points %} ({{ _('%(count)s points') | format(count=loyalty_points) }}){% endif %}</span></span>
     </div>
     <div class="cart-summary__divider"></div>
     <div class="cart-summary__row cart-summary__row--total">

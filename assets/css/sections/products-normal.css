@@ -376,13 +376,14 @@
 
 [data-section="products-normal"] .pc-card--figma-products .pc-actions {
   top: 8px;
-  left: 8px;
+  inset-inline-end: 8px;
   gap: 6px;
 }
 
 [data-section="products-normal"] .pc-card--figma-products .pc-info {
   gap: 6px;
-  padding: 0 0 0 16px;
+  padding: 0;
+  padding-inline-end: 16px;
 }
 
 [data-section="products-normal"] .pc-card--figma-products .pc-name {
@@ -466,7 +467,7 @@
 }
 
 [data-section="products-normal"] .pc-card--figma-grid .pc-info {
-  padding-left: 8px;
+  padding-inline-end: 8px;
 }
 
 @media (min-width: 768px) {
