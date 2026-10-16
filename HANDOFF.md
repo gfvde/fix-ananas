@@ -330,7 +330,35 @@ State when this was written:
   - The owner's signed-in Chrome is on Windows and is not connected to the extension; Claude's "Browser 1" (macOS) is a guest.
   - Its storefront language was switched to Arabic during this test.
 
-## Darna, part 10 (2026-10-16) — START HERE NEXT SESSION
+## Darna, part 11 (2026-10-16) — START HERE NEXT SESSION
+**Notion: 114 Passed / 10 Blocked.**
+
+**State**:
+- v7 is live (`&b=20261016141651`).
+- **v8**: `build/darna-theme-2026-10-16-v8.zip` (build id `20261016143454`). It is built from branch `claude/cart-rtl-loyalty`. The owner still has to upload it. The validator passes 39/39.
+
+**v8 fixes** (found with the owner's signed-in customer in the owner's Chrome, "Browser 1"):
+- **Cart RTL**: `.cart-page-layout` flips `direction` to order its columns, so these came out LTR in Arabic:
+  - the page title «عربة التسوق (2 منتجات)»;
+  - the «عرض 2+1» block;
+  - the points block.
+
+  They now follow `[dir]` again. The balance line also gets 16px above it.
+  - Any new block inside `.cart-page-layout` needs the same `[dir="rtl"] … { direction: rtl }` rule.
+- **Points**: sometimes the balance showed 0 and the list was empty, because the auth state arrived after the cart init. The balance and options are now fetched again on `zid-customer-fetched` and `vitrin:auth:success`.
+- **Apply / remove points**: the page now reloads. The AJAX refresh never swapped the redemption block (the spinner kept running, the balance went stale) and the item images disappeared.
+
+**Done in the dashboard this part**:
+- Category العبايات got a cover image (`build/covers/abayas-cover.jpg`). The banner shows it live.
+- Store-closing period saved: 16/10 1:00 PM → 17/10 1:00 PM, with AR and EN messages.
+  - Claude cannot press **تفعيل الميزة** (auto-mode block), so the owner has to.
+
+**Loyalty test**: 100 points redeemed (1287 → 1187, total 285.14 → 273.64), then removed (back to 1287). Now Passed.
+
+**Still to do in Customize (owner, English)**: the announcement bar and the mega-menu column texts. The DARNA editor never saved English values for them.
+- The Themes page in the dashboard showed «نمو 1.0.0» as the current theme, while the storefront serves the uploaded DARNA build. Check which theme «تخصيص» edits before changing anything.
+
+## Darna, part 10 (2026-10-16)
 **Notion: 113 Passed / 11 Blocked.**
 
 **State**:
