@@ -47,6 +47,12 @@ export function initLoyaltyProgram(config) {
   if (!state.initialized) {
     state.initialized = true;
     window.addEventListener("cart-updated", () => initLoyaltyProgram());
+    // customerAuthState is only confirmed after the page loads (layout.js), so a
+    // signed-in customer still read as a guest above: fetch the balance then.
+    // setTimeout lets layout.js's own listener mark the customer first.
+    const reinitAfterAuth = () => setTimeout(() => initLoyaltyProgram(), 0);
+    document.addEventListener("zid-customer-fetched", reinitAfterAuth);
+    window.addEventListener("vitrin:auth:success", reinitAfterAuth);
     // "toggle" does not bubble, so listen in the capture phase
     document.addEventListener("toggle", onLoyaltyOptionsToggle, true);
   }
