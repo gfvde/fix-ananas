@@ -330,7 +330,37 @@ State when this was written:
   - The owner's signed-in Chrome is on Windows and is not connected to the extension; Claude's "Browser 1" (macOS) is a guest.
   - Its storefront language was switched to Arabic during this test.
 
-## Darna, part 11 (2026-10-16) — START HERE NEXT SESSION
+## Darna, part 12 (2026-10-16) — START HERE NEXT SESSION
+**Notion: 116 Passed / 8 Blocked.**
+
+**State**:
+- v8 is live (`&b=20261016143454`).
+- **v9**: `build/darna-theme-2026-10-16-v9.zip` (build id `20261016144918`). It is built from branch `claude/notion-final`. The owner still has to upload it. The validator passes 39/39.
+
+**v9 changes**:
+- **Cart Tamara/Tabby fallback** (`components/cart/cart-sidebar.jinja`):
+  - When `vitrin:cart/payment_widgets.jinja` renders nothing although `store.settings.checkout.is_*_cart_widget_enabled` is true (DARNA: always), the theme renders `<tamara-widget>` (publicKey from `settings.checkout.tamara_public_key`) and `.tabby-cart-widget` + `TabbyPromo`. This is the same markup as the PDP include.
+  - `updatePaymentWidgets()` keeps them in step with quantity changes.
+  - They now sit above the loyalty card (owner's request).
+- **Store closed**: the merchant's `availability.message` and the `time_until_reopening` countdown show under the disabled «المتجر مغلق» button. There are 2 new Arabic strings.
+- **Mobile cart**: products first, then the order summary (owner's request). The summary moved into `.cart-page-layout__products` and follows `[dir]`.
+- **Item images after an AJAX refresh**:
+  - `zid.cart.get()` items use `{origin, thumbs:{fullSize}}`, and `resolveImageUrl` did not read them. Every quantity change used to blank the images.
+  - `products-list.jinja` reads the same shape.
+
+**Notion this part**:
+- Closed hours → Passed. The owner activated the closing; checkout buttons are disabled live. **Turn the closing off** in Settings → أوقات العمل after testing; it runs until 17/10 1:00 PM.
+- Cart payment widgets → Passed (preview). Re-check live after v9.
+
+**Still Blocked (8), and why** (Claude cannot do these):
+- **Ratings and 10 reviews**: posting a review as the customer is blocked for Claude. The owner can open `/ar/products/عباية-زيتون-يومية-1/reviews/new` as the test customer and press إرسال.
+- **Multi-inventory**: needs a second inventory location in the dashboard (a store-setup change).
+- **No addresses / no orders**: needs a new empty customer account.
+- **Share wishlist**: Zid platform bug.
+- **Mazeed**: not set up.
+- **Business center**: needs the real certificate number.
+
+## Darna, part 11 (2026-10-16)
 **Notion: 114 Passed / 10 Blocked.**
 
 **State**:
