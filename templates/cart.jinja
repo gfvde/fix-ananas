@@ -37,10 +37,9 @@
             <p class="cart-page-header__count">( {{ _('%(count)s products') | format(count=(cart.products_count | default(0))) }} )</p>
           </div>
 
-          {# MOBILE: header + summary shown above products #}
+          {# MOBILE: header above products #}
           <div class="cart-mobile-top cart-mobile-only">
             {% include 'components/cart/mobile-header.jinja' %}
-            {% include 'components/cart/cart-summary.jinja' %}
           </div>
 
           {# DESKTOP sidebar + MOBILE products — flex layout on desktop #}
@@ -79,6 +78,11 @@
                 </svg>
                 {{ _("Continue shopping") }}
               </a>
+
+              {# MOBILE: summary below the products (the sidebar with the payment widgets follows) #}
+              <div class="cart-mobile-top cart-mobile-only mt-4">
+                {% include 'components/cart/cart-summary.jinja' %}
+              </div>
             </div>
           </div>
 

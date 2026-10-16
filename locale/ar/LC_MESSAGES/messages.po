@@ -2138,3 +2138,11 @@ msgstr "وفّرتِ"
 
 msgid "Add %(count)s more to get the offer"
 msgstr "أضيفي %(count)s للحصول على العرض"
+
+#, python-format
+msgid "Reopens in %(days)s d %(hours)s h %(minutes)s min"
+msgstr "يعاد فتح المتجر بعد %(days)s يوم و%(hours)s ساعة و%(minutes)s دقيقة"
+
+#, python-format
+msgid "Reopens in %(hours)s h %(minutes)s min"
+msgstr "يعاد فتح المتجر بعد %(hours)s ساعة و%(minutes)s دقيقة"

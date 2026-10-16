@@ -1583,11 +1583,13 @@ html[dir="ltr"] .cart-coupon__form {
 }
 /* .cart-page-layout flips direction to order its columns; follow the page again */
 [dir="rtl"] .cart-page-header,
+[dir="rtl"] .cart-page-layout .cart-mobile-top,
 [dir="rtl"] .ananas-cart-bundle-offer,
 [dir="rtl"] .cart-sidebar__loyalty-redeem {
   direction: rtl;
 }
 [dir="ltr"] .cart-page-header,
+[dir="ltr"] .cart-page-layout .cart-mobile-top,
 [dir="ltr"] .ananas-cart-bundle-offer,
 [dir="ltr"] .cart-sidebar__loyalty-redeem {
   direction: ltr;
@@ -1621,4 +1623,22 @@ html[dir="ltr"] .cart-coupon__form {
   left: var(--loyalty-list-left) !important;
   top: var(--loyalty-list-top) !important;
   width: var(--anchor-width) !important;
+}
+
+/* Store closed: the merchant's message and the reopening countdown under the button */
+.cart-summary__closed-note {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 4px;
+  background: #fbf3ec;
+  color: #6b4a39;
+  font-size: 13px;
+  line-height: 20px;
+  text-align: center;
+}
+.cart-summary__closed-note p {
+  margin: 0;
+}
+.cart-summary__closed-reopen {
+  font-weight: 600;
 }
