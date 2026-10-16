@@ -63,9 +63,59 @@
 	  #footer .footer-legal-item--tax { order: 1; }
 	  #footer .footer-legal-item--commerce { order: 2; }
 	  #footer .footer-legal-item--commercial { order: 3; }
+	  #footer .footer-legal-badges {
+	    display: flex;
+	    flex-wrap: wrap;
+	    justify-content: center;
+	    gap: 8px;
+	  }
+	  #footer .footer-legal-badges > * {
+	    padding: 8px 12px;
+	    border: 1px solid {{ divider_color }};
+	    border-radius: 8px;
+	    min-height: 48px;
+	  }
+	  #footer .footer-logos {
+	    display: flex;
+	    flex-direction: column;
+	    gap: 12px;
+	    width: 100%;
+	  }
+	  #footer .footer-logos__group {
+	    display: flex;
+	    flex-direction: column;
+	    align-items: center;
+	    gap: 6px;
+	  }
+	  #footer .footer-logos__label {
+	    font-size: 11px;
+	    line-height: 16px;
+	    opacity: 0.8;
+	  }
+	  #footer .footer-logos__list {
+	    display: flex;
+	    flex-wrap: wrap;
+	    justify-content: center;
+	    gap: 6px;
+	  }
 	  #footer .footer-payment-item {
+	    display: flex;
+	    align-items: center;
+	    justify-content: center;
 	    width: 48px;
 	    height: 30px;
+	    padding: 3px 6px;
+	    border-radius: 4px;
+	    background: #ffffff;
+	    transition: transform 0.2s ease;
+	  }
+	  #footer .footer-payment-item:hover {
+	    transform: translateY(-1px);
+	  }
+	  #footer .footer-payment-item img {
+	    max-width: 100%;
+	    max-height: 100%;
+	    object-fit: contain;
 	  }
 	  @media (min-width: 768px) {
 	    #footer {
@@ -90,14 +140,83 @@
 	      flex-direction: row;
 	    }
 	    #footer .footer-payment-item {
-	      width: 50px;
-	      height: 30px;
+	      width: 52px;
+	      height: 32px;
+	    }
+	    #footer .footer-legal-badges {
+	      justify-content: flex-end;
+	      flex-wrap: nowrap;
+	    }
+	    #footer .footer-logos {
+	      width: auto;
+	      flex: 1 1 auto;
+	      min-width: 0;
+	    }
+	    #footer .footer-logos__group {
+	      flex-direction: row;
+	      align-items: center;
+	      gap: 12px;
+	    }
+	    #footer .footer-logos__label {
+	      flex: 0 0 auto;
+	      width: 110px;
+	    }
+	    #footer .footer-logos__list {
+	      justify-content: flex-start;
+	    }
+	  }
+	  /* Mobile accordion (setting style.mobile_accordion) */
+	  @media (max-width: 767px) {
+	    #footer[data-footer-accordion] .footer-links,
+	    #footer[data-footer-accordion] .footer-contact {
+	      grid-column: 1 / -1;
+	      gap: 0;
+	      border-bottom: 1px solid {{ divider_color }};
+	    }
+	    #footer[data-footer-accordion] .is-open {
+	      gap: 10px;
+	    }
+	    #footer[data-footer-accordion] .footer-links > h3,
+	    #footer[data-footer-accordion] .footer-contact > h3 {
+	      display: flex;
+	      align-items: center;
+	      justify-content: space-between;
+	      margin: 0;
+	      padding: 12px 0;
+	      cursor: pointer;
+	      user-select: none;
+	    }
+	    #footer[data-footer-accordion] .footer-links > h3::after,
+	    #footer[data-footer-accordion] .footer-contact > h3::after {
+	      content: "";
+	      width: 8px;
+	      height: 8px;
+	      border-inline-end: 1.5px solid currentColor;
+	      border-bottom: 1.5px solid currentColor;
+	      transform: rotate(45deg);
+	      transition: transform 0.2s ease;
+	      margin-inline-start: 12px;
+	    }
+	    #footer[data-footer-accordion] .is-open > h3::after {
+	      transform: rotate(-135deg);
+	    }
+	    #footer[data-footer-accordion] .footer-links > :not(h3),
+	    #footer[data-footer-accordion] .footer-contact > :not(h3) {
+	      display: none;
+	    }
+	    #footer[data-footer-accordion] .is-open > :not(h3) {
+	      /* back to the element's own utility class (flex / block) */
+	      display: revert-layer;
+	    }
+	    #footer[data-footer-accordion] .is-open > :last-child {
+	      padding-bottom: 12px;
 	    }
 	  }
 	</style>
 
 <footer
   id="footer"
+  {% if settings.style_mobile_accordion %}data-footer-accordion{% endif %}
   class="flex flex-col px-6 pt-4 pb-1 gap-2 md:px-20 md:pt-8"
   style="
     background-color: {{ bg_color }}; 
@@ -320,12 +439,12 @@
   {% set has_payment = store.settings.checkout.payment_methods | length > 0 or store.settings.checkout.shipping_methods | length > 0 %}
   {% set has_legal = store.settings.contact.business_center or store.settings.general.tax_settings.is_certificate_visible or store.settings.general.tax_settings.tax_number or store.settings.general.commercial_registration_number %}
   {% if has_payment or has_legal %}
-		    <div class="footer-legal-strip  py-4 px-0 flex flex-col md:flex-row-reverse items-center justify-between gap-4 md:gap-4 w-full" >
+		    <div class="footer-legal-strip py-5 px-0 flex flex-col md:flex-row-reverse items-center md:items-start justify-between gap-5 md:gap-8 w-full" >
 
       {# Legal Badges #}
-		      <div class="order-1 md:order-2 flex flex-wrap justify-center md:justify-end items-center gap-4 md:gap-6">
+		      <div class="footer-legal-badges order-1 md:order-2">
 	        {% if store.settings.general.commercial_registration_number %}
-		          <div class="footer-legal-item--commercial flex items-center gap-2 text-right">
+		          <div class="footer-legal-item--commercial flex items-center gap-2 text-start">
 	            <div class="flex items-center justify-center w-7 h-7">
 	              <svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" aria-hidden="true">
 	                <path d="M27.2634 27C25.9462 19.0976 25.6828 11.722 27.3951 0C18.8331 0.921947 13.9599 1.9756 0 0C1.05273 7.90244 1.97468 13.4341 0 27C0.658418 26.8432 16.595 24.8927 27.2634 27Z" fill="#03534C"/>
@@ -342,7 +461,7 @@
         {% endif %}
 
         {% if store.settings.contact.business_center %}
-		          <a href="https://eauthenticate.saudibusiness.gov.sa/certificate-details/{{ store.settings.contact.business_center }}" target="_blank" rel="noopener noreferrer" class="ltr:flex-row-reverse footer-legal-item--commerce flex items-center gap-2 text-right transition-opacity hover:opacity-80">
+		          <a href="https://eauthenticate.saudibusiness.gov.sa/certificate-details/{{ store.settings.contact.business_center }}" target="_blank" rel="noopener noreferrer" class="footer-legal-item--commerce flex items-center gap-2 text-start transition-opacity hover:opacity-80">
 	            <div class="flex items-center justify-center w-7 h-7">
 	              <img src="{{ 'images/ecommerce-certificate.webp' | asset_url }}" alt="{{ _('E-commerce authentication certificate') }}" width="28" height="28" loading="lazy" decoding="async" class="w-7 h-7 object-contain" />
 	            </div>
@@ -354,7 +473,7 @@
         {% endif %}
 
         {% if store.settings.general.tax_settings.is_certificate_visible or store.settings.general.tax_settings.tax_number %}
-		          <a {% if store.settings.general.tax_settings.is_certificate_visible and store.settings.general.tax_settings.tax_registration_certificate %}href="{{ store.settings.general.tax_settings.tax_registration_certificate }}" target="_blank" rel="noopener noreferrer"{% endif %} class="footer-legal-item--tax flex items-center gap-2 text-right transition-opacity hover:opacity-80">
+		          <a {% if store.settings.general.tax_settings.is_certificate_visible and store.settings.general.tax_settings.tax_registration_certificate %}href="{{ store.settings.general.tax_settings.tax_registration_certificate }}" target="_blank" rel="noopener noreferrer"{% endif %} class="footer-legal-item--tax flex items-center gap-2 text-start transition-opacity hover:opacity-80">
             <div class="flex items-center justify-center w-7 h-7 rounded-full" >
               <svg width="22" height="28" viewBox="0 0 22 28" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-6">
 <g clip-path="url(#clip0_364_35401)">
@@ -396,19 +515,43 @@
         {% endif %}
       </div>
 
-      {# Payment Methods #}
-		      <div class="order-2 md:order-1 flex flex-wrap overflow-hidden justify-center md:justify-start items-center gap-2">
-		        {% for payment_method in store.settings.checkout.payment_methods %}
-		          <a href="/shipping-and-payment" class="footer-payment-item flex items-center justify-center bg-white rounded-[4px] px-1.5 md:px-2">
-		            <img src="{{ image_url(payment_method.icon, w=92, h=40, q=100, f='auto') }}" alt="{{ payment_method.name }}" width="46" height="20" loading="lazy" decoding="async" class="max-h-7 max-w-full object-contain" />
-		          </a>
-		        {% endfor %}
-		        {% for shipping_method in store.settings.checkout.shipping_methods %}
-		          <a href="/shipping-and-payment" class="footer-payment-item flex items-center justify-center bg-white rounded-[4px] px-1.5 md:px-2">
-		            <img src="{{ image_url(shipping_method.icon, w=92, h=40, q=100, f='auto') }}" alt="{{ shipping_method.name }}" width="46" height="20" loading="lazy" decoding="async" class="max-h-7 max-w-full object-contain" />
-		          </a>
-	        {% endfor %}
-	      </div>
+      {# Payment and shipping logos: two labelled rows, one logo per carrier. A carrier
+         has several methods ("سمسا", "سمسا | تسليم للفرع", "ارامكس | ثقيل"), so the key is
+         the name before " | " / " - ", with the hamza forms of alef folded. #}
+      {% set ns_logos = namespace(seen=[], shipping=[]) %}
+      {% for shipping_method in store.settings.checkout.shipping_methods %}
+        {% set carrier = ((shipping_method.name or '') | string).split(' | ')[0].split(' - ')[0] | replace('أ', 'ا') | replace('إ', 'ا') | replace('آ', 'ا') | trim | lower %}
+        {% if shipping_method.icon and carrier not in ns_logos.seen %}
+          {% set ns_logos.seen = ns_logos.seen + [carrier] %}
+          {% set ns_logos.shipping = ns_logos.shipping + [shipping_method] %}
+        {% endif %}
+      {% endfor %}
+      <div class="footer-logos order-2 md:order-1">
+        {% if store.settings.checkout.payment_methods | length > 0 %}
+          <div class="footer-logos__group">
+            <span class="footer-logos__label" style="color: {{ text_color }};">{{ _('Payment methods') }}</span>
+            <div class="footer-logos__list">
+              {% for payment_method in store.settings.checkout.payment_methods %}
+                <a href="/shipping-and-payment" class="footer-payment-item" title="{{ payment_method.name }}">
+                  <img src="{{ image_url(payment_method.icon, w=92, h=40, q=100, f='auto') }}" alt="{{ payment_method.name }}" width="46" height="20" loading="lazy" decoding="async" />
+                </a>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+        {% if ns_logos.shipping | length > 0 %}
+          <div class="footer-logos__group">
+            <span class="footer-logos__label" style="color: {{ text_color }};">{{ _('Shipping companies') }}</span>
+            <div class="footer-logos__list">
+              {% for shipping_method in ns_logos.shipping %}
+                <a href="/shipping-and-payment" class="footer-payment-item" title="{{ shipping_method.name }}">
+                  <img src="{{ image_url(shipping_method.icon, w=92, h=40, q=100, f='auto') }}" alt="{{ shipping_method.name }}" width="46" height="20" loading="lazy" decoding="async" />
+                </a>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
 
     </div>
   {% endif %}
@@ -460,3 +603,29 @@
   </div>
 
 </footer>
+{% if settings.style_mobile_accordion %}
+<script>
+  (function () {
+    var footer = document.querySelector("#footer[data-footer-accordion]");
+    if (!footer) return;
+    footer.querySelectorAll(".footer-links > h3, .footer-contact > h3").forEach(function (title) {
+      title.setAttribute("role", "button");
+      title.setAttribute("tabindex", "0");
+      title.setAttribute("aria-expanded", "false");
+      function toggle() {
+        var open = title.parentElement.classList.toggle("is-open");
+        title.setAttribute("aria-expanded", open ? "true" : "false");
+      }
+      title.addEventListener("click", function () {
+        if (window.matchMedia("(max-width: 767px)").matches) toggle();
+      });
+      title.addEventListener("keydown", function (e) {
+        if ((e.key === "Enter" || e.key === " ") && window.matchMedia("(max-width: 767px)").matches) {
+          e.preventDefault();
+          toggle();
+        }
+      });
+    });
+  })();
+</script>
+{% endif %}

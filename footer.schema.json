@@ -155,6 +155,19 @@
           "max": 100,
           "step": 5,
           "default": 20
+        },
+        {
+          "id": "mobile_accordion",
+          "type": "checkbox",
+          "label": {
+            "ar": "طيّ أعمدة الروابط في الجوال",
+            "en": "Collapsible link columns on mobile"
+          },
+          "info": {
+            "ar": "على الجوال تتحول عناوين الأعمدة إلى أزرار تفتح وتغلق روابطها.",
+            "en": "On mobile, column titles become toggles that open and close their links."
+          },
+          "default": false
         }
       ]
     },
