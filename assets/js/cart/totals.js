@@ -417,7 +417,7 @@ function getDiscountText(cart, discountTotal, productsSubtotal, fallbackSubtotal
 
 function updateCustomCartSummary(cart, config) {
   const translations = config?.translations || {};
-  const subtotal = findFirstTotal(cart, ["sub_totals", "subtotal", "sub_total", "products_subtotal", "products_total"]);
+  const subtotal = findFirstTotal(cart, ["sub_totals", "sub_totals_before_vat", "subtotal", "sub_total", "products_subtotal", "products_total"]);
   const shipping = findTotal(cart, "shipping");
   const discount = findFirstTotal(cart, [
     "discount",
@@ -438,14 +438,21 @@ function updateCustomCartSummary(cart, config) {
     cart.products_total_string ||
     total?.value_string ||
     "";
-  const productsSubtotalText = formatCurrencyValue(productsSubtotal, fallbackSubtotalText, cart);
+  // Prefer the platform subtotal: line totals already carry the bundle and
+  // points discounts, so their sum came out equal to the grand total
+  const productsSubtotalText = subtotal?.value_string || formatCurrencyValue(productsSubtotal, fallbackSubtotalText, cart);
 
   setText("[data-cart-summary-subtotal]", productsSubtotalText || fallbackSubtotalText);
   setText("[data-cart-summary-shipping]", shipping?.value_string || "-");
   const discountText = getDiscountText(cart, discount, productsSubtotal, productsSubtotalText || fallbackSubtotalText);
   setText("[data-cart-summary-discount]", discountText);
-  document.querySelectorAll(".cart-summary__row--discount").forEach((row) => {
+  document.querySelectorAll(".cart-summary__row--discount:not([data-cart-summary-loyalty-row])").forEach((row) => {
     row.classList.toggle("hidden", !discountText);
+  });
+  const loyaltyText = findTotal(cart, "loyalty_redemption")?.value_string || "";
+  setText("[data-cart-summary-loyalty]", loyaltyText);
+  document.querySelectorAll("[data-cart-summary-loyalty-row]").forEach((row) => {
+    row.classList.toggle("hidden", !loyaltyText);
   });
   setText("[data-cart-summary-total]", total?.value_string || "");
   setText("[data-cart-summary-checkout-total]", total?.value_string || "");
