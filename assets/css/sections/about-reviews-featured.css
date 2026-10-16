@@ -140,6 +140,15 @@
 .arf-featured-card__text {
   color: inherit;
 }
+/* The text keeps dir="auto" for its punctuation, but lines up with the page */
+[dir="rtl"] [data-section="about-reviews-featured"] .arf-bg-card__text,
+[dir="rtl"] [data-section="about-reviews-featured"] .arf-featured-card__text {
+  text-align: right;
+}
+[dir="ltr"] [data-section="about-reviews-featured"] .arf-bg-card__text,
+[dir="ltr"] [data-section="about-reviews-featured"] .arf-featured-card__text {
+  text-align: left;
+}
 
 .arf-bg-card__author,
 .arf-featured-card__author {

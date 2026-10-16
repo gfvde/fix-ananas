@@ -14,6 +14,11 @@
   flex-direction: row-reverse;
   background: #fff;
 }
+/* row-reverse is the Arabic order (− on the left); English PDP / quick view keep − first */
+[dir="ltr"] .dara-pdp .qty-input,
+[dir="ltr"] #product-quick-view-modal .qty-input {
+  flex-direction: row;
+}
 
 /* الأزرار */
 @media (max-width:768px) {
