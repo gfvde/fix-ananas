@@ -330,7 +330,52 @@ State when this was written:
   - The owner's signed-in Chrome is on Windows and is not connected to the extension; Claude's "Browser 1" (macOS) is a guest.
   - Its storefront language was switched to Arabic during this test.
 
-## Darna, part 13 (2026-10-16) — START HERE NEXT SESSION
+## Darna, part 14 (2026-10-16) — START HERE NEXT SESSION
+**Notion: 121 Passed / 3 Blocked.**
+
+The 3 left:
+- 10 reviews on one product: needs 10 buying customers.
+- Mazeed: a Zid service.
+- Share wishlist: a Zid platform bug.
+
+**State**:
+- v12 is live.
+- **v13**: `build/darna-theme-2026-10-16-v13.zip` (build id `20261016221525`). It is built from PR #54 (`claude/loyalty-apply-fix`), which is not merged yet. The owner still has to upload it. The validator passes 39/39.
+
+**PR #54 contents**:
+- **Cart**:
+  - points Apply recovers from a stuck redemption («استُبدلت نقاط لهذه السلة من قبل»: clear, then retry once), and errors show via `zid.toaster`;
+  - a «خصم نقاط الولاء (N نقطة)» summary row;
+  - the subtotal reads `sub_totals_before_vat`;
+  - the whole sidebar panel follows `[dir]`.
+- **Motion** (new `layout.schema.json` group `motion`):
+  - `smooth_scroll`: Lenis, off by default. It falls back to native scrolling inside dialogs, popovers and overflow areas, and while a modal locks the page;
+  - `scroll_animations` (on), `animation_style`, `animation_duration`;
+  - code: `assets/js/features/motion.js`, `assets/css/motion.css`.
+- **Footer**:
+  - legal badges;
+  - labelled payment and shipping rows, with carriers deduplicated by base name;
+  - the `style.mobile_accordion` option (off by default).
+- **English fixes**:
+  - product card actions vs the offer label;
+  - side cart opens from the right;
+  - the mobile header mirrors;
+  - quick view: alignment, close button, and qty «− 1 +»;
+  - featured reviews text alignment.
+- **About page**: the default journey marker is a sewing button (it was a coffee bean).
+
+**Store data done this part**:
+- A test review was published; the stars show on the card.
+- Jeddah inventory with city selection: the popup works.
+- Business-center number set.
+- A new empty customer account exists (owner's); the empty states were checked on the dev domain.
+
+**Notes**:
+- **Store closing** is on until 17/10 1:00 PM. Turn it off in Settings → أوقات العمل.
+- **Owner's English content**: section titles and the announcement bar on `/en-sa/` are still Arabic in the saved editor settings (not code).
+- **Preview-only drafts**: to try `smooth_scroll` / `mobile_accordion` on the vitrin preview, set them in `build/theme/layout.json` / `footer.json` after `scripts/demo-settings.py`. Never ship those.
+
+## Darna, part 13 (2026-10-16)
 **State**: v9 is live (`&b=20261016144918`). Checked live:
 - Tamara and Tabby show in the cart;
 - the closed note shows;
