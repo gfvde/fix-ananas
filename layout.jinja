@@ -511,7 +511,27 @@
           smoothScroll: {{ 'true' if settings.motion_smooth_scroll == true else 'false' }},
           scrollAnimations: {{ 'false' if settings.motion_scroll_animations == false else 'true' }},
           animationStyle: {{ (settings.motion_animation_style | default('fade-up')) | tojson }},
-          animationDuration: {{ (settings.motion_animation_duration | default(700)) | int }}
+          animationDuration: {{ (settings.motion_animation_duration | default(700)) | int }},
+          heroKenburns: {{ 'false' if settings.motion_hero_kenburns == false else 'true' }},
+          titleWords: {{ 'false' if settings.motion_title_words == false else 'true' }},
+          imageReveal: {{ 'false' if settings.motion_image_reveal == false else 'true' }},
+          cardHover: {{ 'false' if settings.motion_card_hover == false else 'true' }},
+          heartPop: {{ 'false' if settings.motion_heart_pop == false else 'true' }},
+          cartBounce: {{ 'false' if settings.motion_cart_bounce == false else 'true' }},
+          buttonSheen: {{ 'false' if settings.motion_button_sheen == false else 'true' }},
+          navUnderline: {{ 'false' if settings.motion_nav_underline == false else 'true' }},
+          scrollProgress: {{ 'true' if settings.motion_scroll_progress == true else 'false' }},
+          headerAutohide: {{ 'true' if settings.motion_header_autohide == true else 'false' }},
+          scrollSkew: {{ 'true' if settings.motion_scroll_skew == true else 'false' }},
+          imageParallax: {{ 'true' if settings.motion_image_parallax == true else 'false' }},
+          imageShimmer: {{ 'true' if settings.motion_image_shimmer == true else 'false' }},
+          countUp: {{ 'true' if settings.motion_count_up == true else 'false' }},
+          imageSwap: {{ 'true' if settings.motion_image_swap == true else 'false' }},
+          badgePulse: {{ 'true' if settings.motion_badge_pulse == true else 'false' }},
+          magneticButtons: {{ 'true' if settings.motion_magnetic_buttons == true else 'false' }},
+          tiltTiles: {{ 'true' if settings.motion_tilt_tiles == true else 'false' }},
+          customCursor: {{ 'true' if settings.motion_custom_cursor == true else 'false' }},
+          pageTransition: {{ 'true' if settings.motion_page_transition == true else 'false' }}
         }
       };
       {%- set _stock_cfg = store.settings.products if store.settings and store.settings.products else {} %}

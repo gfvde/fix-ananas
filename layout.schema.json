@@ -36,8 +36,8 @@
       "id": "motion",
       "icon": "speed-line",
       "name": {
-        "ar": "الحركة والتمرير",
-        "en": "Motion & Scrolling"
+        "ar": "الحركة والأنيميشن",
+        "en": "Motion & Animations"
       },
       "settings": [
         {
@@ -94,6 +94,13 @@
                 "ar": "تكبير خفيف",
                 "en": "Zoom in"
               }
+            },
+            {
+              "value": "sides",
+              "label": {
+                "ar": "دخول من الجانبين بالتبادل",
+                "en": "Slide in from alternating sides"
+              }
             }
           ],
           "default": "fade-up"
@@ -110,6 +117,194 @@
           "step": 100,
           "unit": "ms",
           "default": 700
+        },
+        {
+          "id": "scroll_progress",
+          "type": "checkbox",
+          "label": {
+            "ar": "شريط تقدّم التمرير أعلى الصفحة",
+            "en": "Scroll progress bar"
+          },
+          "default": false
+        },
+        {
+          "id": "header_autohide",
+          "type": "checkbox",
+          "label": {
+            "ar": "إخفاء الهيدر عند النزول وإظهاره عند الصعود",
+            "en": "Hide header on scroll down"
+          },
+          "default": false
+        },
+        {
+          "id": "scroll_skew",
+          "type": "checkbox",
+          "label": {
+            "ar": "ميلان خفيف للصور مع سرعة التمرير",
+            "en": "Skew images with scroll speed"
+          },
+          "default": false
+        },
+        {
+          "id": "hero_kenburns",
+          "type": "checkbox",
+          "label": {
+            "ar": "زووم سينمائي لصورة البانر الأول وظهور نصه بالتتابع",
+            "en": "Cinematic zoom on the first banner"
+          },
+          "default": true
+        },
+        {
+          "id": "title_words",
+          "type": "checkbox",
+          "label": {
+            "ar": "العناوين تظهر كلمة كلمة",
+            "en": "Headings reveal word by word"
+          },
+          "default": true
+        },
+        {
+          "id": "image_reveal",
+          "type": "checkbox",
+          "label": {
+            "ar": "انكشاف الصور بالمسح عند الظهور",
+            "en": "Images reveal with a wipe"
+          },
+          "default": true
+        },
+        {
+          "id": "image_parallax",
+          "type": "checkbox",
+          "label": {
+            "ar": "بارالاكس خفيف للصور",
+            "en": "Image parallax"
+          },
+          "default": false
+        },
+        {
+          "id": "image_shimmer",
+          "type": "checkbox",
+          "label": {
+            "ar": "لمعة أثناء تحميل الصور",
+            "en": "Shimmer while images load"
+          },
+          "default": false
+        },
+        {
+          "id": "count_up",
+          "type": "checkbox",
+          "label": {
+            "ar": "عدّاد للأرقام عند ظهورها (مثل التقييم)",
+            "en": "Count up numbers (e.g. ratings)"
+          },
+          "default": false
+        },
+        {
+          "id": "card_hover",
+          "type": "checkbox",
+          "label": {
+            "ar": "رفع الكارت وتكبير صورته عند المرور",
+            "en": "Lift card and zoom image on hover"
+          },
+          "default": true
+        },
+        {
+          "id": "image_swap",
+          "type": "checkbox",
+          "label": {
+            "ar": "إظهار الصورة الثانية للمنتج عند المرور",
+            "en": "Show the second image on hover"
+          },
+          "default": false,
+          "info": {
+            "ar": "تُحمَّل الصورة الثانية فقط عند تفعيل الخيار.",
+            "en": "The second image only loads when this is on."
+          }
+        },
+        {
+          "id": "badge_pulse",
+          "type": "checkbox",
+          "label": {
+            "ar": "نبض خفيف لشارات العروض",
+            "en": "Pulse offer badges"
+          },
+          "default": false
+        },
+        {
+          "id": "heart_pop",
+          "type": "checkbox",
+          "label": {
+            "ar": "نبضة قلب المفضلة عند الضغط",
+            "en": "Pop the wishlist heart on click"
+          },
+          "default": true
+        },
+        {
+          "id": "cart_bounce",
+          "type": "checkbox",
+          "label": {
+            "ar": "قفزة أيقونة السلة عند إضافة منتج",
+            "en": "Bounce the cart icon on add"
+          },
+          "default": true
+        },
+        {
+          "id": "button_sheen",
+          "type": "checkbox",
+          "label": {
+            "ar": "لمعة على الأزرار عند المرور",
+            "en": "Sheen on buttons on hover"
+          },
+          "default": true
+        },
+        {
+          "id": "magnetic_buttons",
+          "type": "checkbox",
+          "label": {
+            "ar": "أزرار مغناطيسية تتبع الماوس",
+            "en": "Magnetic buttons"
+          },
+          "default": false
+        },
+        {
+          "id": "nav_underline",
+          "type": "checkbox",
+          "label": {
+            "ar": "خط منزلق تحت روابط القائمة",
+            "en": "Sliding underline under menu links"
+          },
+          "default": true
+        },
+        {
+          "id": "tilt_tiles",
+          "type": "checkbox",
+          "label": {
+            "ar": "ميل ثلاثي الأبعاد لبطاقات الأقسام",
+            "en": "3D tilt on category tiles"
+          },
+          "default": false
+        },
+        {
+          "id": "custom_cursor",
+          "type": "checkbox",
+          "label": {
+            "ar": "مؤشر دائري يتبع الماوس",
+            "en": "Custom ring cursor"
+          },
+          "default": false,
+          "info": {
+            "ar": "على أجهزة الماوس فقط.",
+            "en": "Mouse devices only."
+          }
+        },
+        {
+          "id": "page_transition",
+          "type": "checkbox",
+          "label": {
+            "ar": "انتقال ناعم بين الصفحات",
+            "en": "Fade between pages"
+          },
+          "default": false
         }
       ]
     },

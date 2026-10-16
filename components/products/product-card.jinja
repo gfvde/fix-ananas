@@ -61,6 +61,17 @@
         {% set img_index = index if index is defined else (loop.index0 if loop is defined else 0) %}
         {% if img_index > 3 %}loading="lazy"{% elif img_index == 0 and is_priority | default(false) %}fetchpriority="high"{% endif %}
       />
+      {# Second image for the "show the second image on hover" motion setting.
+         No src: assets/js/features/motion.js loads it only when that setting is on. #}
+      {% if product.images and product.images|length > 1 and product.images[1].image %}
+        <img
+          data-alt-src="{{ image_url(product.images[1].image.full_size, w=600, q=80, f='auto') }}"
+          alt=""
+          aria-hidden="true"
+          class="pc-img-alt"
+          decoding="async"
+        />
+      {% endif %}
     </a>
 
     {# Badges: top-start (right in RTL) #}
