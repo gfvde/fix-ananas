@@ -330,7 +330,31 @@ State when this was written:
   - The owner's signed-in Chrome is on Windows and is not connected to the extension; Claude's "Browser 1" (macOS) is a guest.
   - Its storefront language was switched to Arabic during this test.
 
-## Darna, part 9 (2026-10-16) — START HERE NEXT SESSION
+## Darna, part 10 (2026-10-16) — START HERE NEXT SESSION
+**Notion: 113 Passed / 11 Blocked.**
+
+**State**:
+- PR #44 is merged. The owner uploaded v6 (`&b=20261016140522`), and it is live. There is one favicon link now.
+- **v7**: `build/darna-theme-2026-10-16-v7.zip` (build id `20261016141651`, not committed). It is built from branch `claude/darna-v6-fixes`. The owner still has to upload it.
+  - Fix: the sold label shows the exact count, «تم بيع %s» / "%s sold". v6 said «بيع أكثر من 9 مرة», which is wrong because `sold_products_count` is exact.
+  - The validator passes 39/39 on the vitrin preview.
+
+**Checked live on v6 (passing)**:
+- free-shipping bar (14.86 ر.س left at 285.14);
+- bundle offer block;
+- cart badge;
+- PDP Notify Me dialog (DARA-008, product id filled in);
+- quantity stops at the stock limit with «المتوفر 3 فقط» (DARA-004);
+- low stock from the store setting (threshold 10);
+- category, about and English pages render without errors.
+
+**Not testable yet**: category `cover_image`. No DARNA category has a cover; set one in the dashboard to test it.
+
+**Store-settings issue, not code**: `/en-sa/` shows Arabic in the announcement bar and the mega-menu columns, and the category names are Arabic.
+- `presets/default.json` has English for these: "Gulf elegance…", "Shop by fabric".
+- The DARNA editor never saved English values. In Customize, switch to English and fill them, or add English names to the categories.
+
+## Darna, part 9 (2026-10-16)
 **Notion: 113 Passed / 11 Blocked.**
 
 **State**:
