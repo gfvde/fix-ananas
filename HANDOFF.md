@@ -330,7 +330,48 @@ State when this was written:
   - The owner's signed-in Chrome is on Windows and is not connected to the extension; Claude's "Browser 1" (macOS) is a guest.
   - Its storefront language was switched to Arabic during this test.
 
-## Darna, part 14 (2026-10-16) — START HERE NEXT SESSION
+## Darna, part 15 (2026-10-16) — START HERE NEXT SESSION
+**State**:
+- v13 is merged (PR #54).
+- **v14**: `build/darna-theme-2026-10-16-v14.zip` (build id `20261016223915`), built from branch `claude/motion-pack`. The owner still has to upload it. The validator passes 39/39.
+
+**Motion & Animations** (Customize → «الحركة والأنيميشن»; code in `assets/js/features/motion.js` and `assets/css/motion.css`):
+- **On by default**:
+  - scroll reveal;
+  - cinematic hero zoom with staggered copy;
+  - headings word by word;
+  - image wipe reveal;
+  - card lift + image zoom;
+  - wishlist heart pop;
+  - cart icon bounce;
+  - button sheen;
+  - menu link underline.
+- **Off by default**:
+  - smooth scroll (Lenis);
+  - scroll progress bar;
+  - header auto-hide;
+  - scroll skew;
+  - parallax;
+  - image shimmer;
+  - count-up;
+  - second image on hover;
+  - badge pulse;
+  - magnetic buttons;
+  - 3D tilt on category tiles;
+  - custom cursor;
+  - page transition.
+- **animation_style**: fade-up / fade / zoom / sides.
+
+**Rules learned while building it** (keep them):
+- Effects use the individual `translate` / `scale` / `rotate` properties. Writing `transform` hid images that already had one: the hero, strips and galleries.
+- `IntersectionObserver` never fires for slides a carousel keeps off-screen sideways. `revealBand()` reveals anything in the vertical viewport band.
+- Lenis `prevent` must also let any element that scrolls on its own keep native scrolling (`inScrollableArea`). The mobile drawer could not scroll.
+- Never give an element class the same name as an html flag. `html.mo-cursor` picked up `.mo-cursor { position: fixed }` and froze the page.
+- The product card prints the second image as `data-alt-src`. It only loads on hover when `image_swap` is on.
+
+**Browser demo**: the owner first tried the effects through an injected panel (`fx-demo.js` in the session scratchpad, not in the repo). Every effect in it is now a setting.
+
+## Darna, part 14 (2026-10-16)
 **Notion: 121 Passed / 3 Blocked.**
 
 The 3 left:
