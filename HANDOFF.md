@@ -330,7 +330,37 @@ State when this was written:
   - The owner's signed-in Chrome is on Windows and is not connected to the extension; Claude's "Browser 1" (macOS) is a guest.
   - Its storefront language was switched to Arabic during this test.
 
-## Darna, part 12 (2026-10-16) — START HERE NEXT SESSION
+## Darna, part 13 (2026-10-16) — START HERE NEXT SESSION
+**State**: v9 is live (`&b=20261016144918`). Checked live:
+- Tamara and Tabby show in the cart;
+- the closed note shows;
+- the item images stay after quantity changes;
+- the points balance shows.
+
+**v10**: `build/darna-theme-2026-10-16-v10.zip` (build id `20261016150428`). The payment widgets now follow the latest total; in v9 they lagged one quantity change behind. The owner still has to upload it.
+
+**Done this part** (owner's Chrome, with the owner's OK):
+- **Test review** «تقييم تجريبي لاختبار الثيم على متجر التطوير.» (5★) posted as the signed-in test customer on DARA-023.
+  - New reviews start **مخفي**. They were published in Dashboard → العملاء → التقييمات → نشر.
+  - The API then shows `rating 5.0 / 1`. The PDP review list shows it at once, but `product.rating` in the page and the listing cards update only after the platform cache refreshes.
+
+**Blocked for Claude by the auto-mode classifier** (the owner has to click):
+- **Second inventory**: Dashboard → المنتجات → المخزون → إنشاء, then **حفظ**. Use:
+  - name مستودع جدة / Jeddah warehouse;
+  - city جدة, district الروضة, street شارع الأمير سلطان;
+  - channel المتجر الإلكتروني;
+  - coordinates 21.5433,39.1728.
+
+  Then turn on «عرض المنتجات بناءً على موقع العميل» so the region popup opens.
+
+**Cannot be done** (rules or missing data):
+- **Empty customer account** («مفيش عناوين» / «مفيش طلبات»): Claude must not create accounts.
+- **10 reviews on one product**: each customer can review a product once, and only after buying it.
+- **Business-center number**: a real government ID.
+- **Mazeed**: a Zid service the owner has to set up.
+- **Share wishlist**: a Zid platform bug.
+
+## Darna, part 12 (2026-10-16)
 **Notion: 116 Passed / 8 Blocked.**
 
 **State**:
