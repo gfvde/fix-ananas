@@ -96,8 +96,9 @@ fi
 # does not change, so the CDN kept serving old JS/CSS under the same URL.
 # Append a per-build id to every .css/.js asset URL in the staged copy only.
 BUILD_ID="$(date +%Y%m%d%H%M%S)"
-find "$STAGE" -name '*.jinja' -exec sed -i -E \
-  "s/(\.(css|js)['\"] *\| *asset_url *\}\})/\1\&b=$BUILD_ID/g" {} +
+# perl, not sed -i: BSD sed (macOS) reads the next flag as the backup suffix
+find "$STAGE" -name '*.jinja' -exec perl -pi -e \
+  "s/(\.(css|js)['\"] *\| *asset_url *\}\})/\1&b=$BUILD_ID/g" {} +
 echo "Build id: $BUILD_ID"
 
 rm -f "$ZIP"
