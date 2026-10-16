@@ -212,12 +212,12 @@ function setupEventDelegation() {
 
       case "loyalty-apply":
         e.preventDefault();
-        applyLoyaltyRedemption(refreshCartPage);
+        applyLoyaltyRedemption(reloadAfterLoyaltyChange);
         break;
 
       case "loyalty-remove":
         e.preventDefault();
-        removeLoyaltyRedemption(refreshCartPage);
+        removeLoyaltyRedemption(reloadAfterLoyaltyChange);
         break;
 
       case "login":
@@ -280,6 +280,12 @@ async function handleQuantityAction(btn) {
   setCartLoadingState(true, cartProductId);
   await updateQuantity(cartProductId, productId, delta, () => refreshAndHydrateCart());
   setCartLoadingState(false);
+}
+
+// The AJAX refresh does not swap the redemption block (applied state, balance,
+// button spinner) and lost the item images, so reload after a points change
+function reloadAfterLoyaltyChange() {
+  window.location.reload();
 }
 
 function refreshAndHydrateCart(cartOverride) {
@@ -1216,8 +1222,8 @@ const CartController = {
   updateQuantity: (cartId, productId, delta) => updateQuantity(cartId, productId, delta, refreshCartPage),
 
   // Loyalty
-  applyLoyaltyRedemption: () => applyLoyaltyRedemption(refreshCartPage),
-  removeLoyaltyRedemption: () => removeLoyaltyRedemption(refreshCartPage),
+  applyLoyaltyRedemption: () => applyLoyaltyRedemption(reloadAfterLoyaltyChange),
+  removeLoyaltyRedemption: () => removeLoyaltyRedemption(reloadAfterLoyaltyChange),
 
   // Coupon
   applyCoupon: (sourceElement) => applyCoupon(refreshCartPage, sourceElement),

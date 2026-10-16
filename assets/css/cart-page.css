@@ -1581,6 +1581,21 @@ html[dir="ltr"] .cart-coupon__form {
   background: #fbfbe9;
   text-align: start;
 }
+/* .cart-page-layout flips direction to order its columns; follow the page again */
+[dir="rtl"] .cart-page-header,
+[dir="rtl"] .ananas-cart-bundle-offer,
+[dir="rtl"] .cart-sidebar__loyalty-redeem {
+  direction: rtl;
+}
+[dir="ltr"] .cart-page-header,
+[dir="ltr"] .ananas-cart-bundle-offer,
+[dir="ltr"] .cart-sidebar__loyalty-redeem {
+  direction: ltr;
+}
+/* The panel has no gap: keep the balance line off the free-shipping bar */
+.cart-sidebar__loyalty-redeem > [data-loyalty-redemption-section]:not(.hidden) {
+  margin-top: 16px;
+}
 
 .ananas-cart-bundle-offer__name {
   margin: 0;
