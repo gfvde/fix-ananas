@@ -1583,16 +1583,22 @@ html[dir="ltr"] .cart-coupon__form {
 }
 /* .cart-page-layout flips direction to order its columns; follow the page again */
 [dir="rtl"] .cart-page-header,
+[dir="rtl"] .cart-sidebar__panel,
 [dir="rtl"] .cart-page-layout .cart-mobile-top,
 [dir="rtl"] .ananas-cart-bundle-offer,
 [dir="rtl"] .cart-sidebar__loyalty-redeem {
   direction: rtl;
 }
 [dir="ltr"] .cart-page-header,
+[dir="ltr"] .cart-sidebar__panel,
 [dir="ltr"] .cart-page-layout .cart-mobile-top,
 [dir="ltr"] .ananas-cart-bundle-offer,
 [dir="ltr"] .cart-sidebar__loyalty-redeem {
   direction: ltr;
+}
+/* The button markup is total then label; keep the label first in reading order */
+.cart-sidebar__panel .cart-summary__checkout {
+  flex-direction: row-reverse;
 }
 /* The panel has no gap: keep the balance line off the free-shipping bar */
 .cart-sidebar__loyalty-redeem > [data-loyalty-redemption-section]:not(.hidden) {
