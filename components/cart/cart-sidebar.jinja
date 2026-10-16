@@ -78,6 +78,54 @@
     <div class="cart-sidebar__loyalty-redeem">{% include 'components/cart/loyalty-redemption.jinja' %}</div>
     <div class="cart-sidebar__summary">{% include 'components/cart/cart-summary.jinja' %}</div>
 
+    {# Platform payment features, above the loyalty card (bank discounts above payment widgets, Apple Pay once per page) #}
+    <div class="cart-sidebar__widgets">
+      {% include 'vitrin:shared/bank_discounts.jinja' %}
+      {% set platform_cart_widgets %}{% include 'vitrin:cart/payment_widgets.jinja' %}{% endset %}
+      <div data-payment-widgets>
+        {% if platform_cart_widgets | trim %}
+          {{ platform_cart_widgets }}
+        {% else %}
+          {# The platform include can come back empty although the cart widgets are
+             on (seen on DARNA): render them the way the PDP include does #}
+          {% set pw_checkout = store.settings.checkout if store.settings and store.settings.checkout else {} %}
+          {% set pw_currency = cart.currency.cart_currency.code if cart.currency and cart.currency.cart_currency else session.currency.code %}
+          {% set pw_lang = session.lang | default('ar', true) %}
+          {% set pw_country = (store.current_country.code if store.current_country and store.current_country.code else session.country.code) | default('SA', true) %}
+          {% set pw_total = namespace(value=0) %}
+          {% for t in cart.totals or [] if t.code == 'total' %}{% set pw_total.value = t.value %}{% endfor %}
+          {% if pw_total.value and pw_checkout.is_tamara_cart_widget_enabled and pw_checkout.tamara_public_key
+                and pw_currency in (pw_checkout.tamara_supported_currencies or []) %}
+            <tamara-widget class="tamara-cart-widget" type="tamara-summary" inline-type="2" amount="{{ pw_total.value }}"></tamara-widget>
+            <script>
+              window.tamaraWidgetConfig = window.tamaraWidgetConfig || {
+                lang: {{ pw_lang | tojson }},
+                country: {{ pw_country | tojson }},
+                publicKey: {{ pw_checkout.tamara_public_key | tojson }}
+              };
+            </script>
+            <script defer src="https://cdn.tamara.co/widget-v2/tamara-widget.js"></script>
+          {% endif %}
+          {% if pw_total.value and pw_checkout.is_tabby_cart_widget_enabled and pw_currency in ['SAR', 'AED', 'KWD'] %}
+            <div class="tabby-cart-widget" data-currency="{{ pw_currency }}" data-lang="{{ pw_lang }}"></div>
+            <script src="https://checkout.tabby.ai/tabby-promo.js"></script>
+            <script>
+              if (window.TabbyPromo) {
+                window.TabbyPromo = new TabbyPromo({
+                  selector: ".tabby-cart-widget",
+                  currency: {{ pw_currency | tojson }},
+                  lang: {{ pw_lang | tojson }},
+                  price: {{ pw_total.value | tojson }},
+                  installmentsCount: 4,
+                  source: "cart"
+                });
+              }
+            </script>
+          {% endif %}
+        {% endif %}
+      </div>
+      {% include 'vitrin:checkout/apple-pay-quick-checkout.jinja' %}
+    </div>
     <div class="cart-benefits">
       {% if store.settings.checkout.is_loyalty_enabled | default(false) %}
         <div
@@ -158,11 +206,5 @@
       {% include 'components/cart/cart-payments.jinja' %}
     </div>
 
-    {# Platform payment features (bank discounts above payment widgets, Apple Pay once per page) #}
-    <div class="cart-sidebar__widgets">
-      {% include 'vitrin:shared/bank_discounts.jinja' %}
-      <div data-payment-widgets>{% include 'vitrin:cart/payment_widgets.jinja' %}</div>
-      {% include 'vitrin:checkout/apple-pay-quick-checkout.jinja' %}
-    </div>
   </div>
 </aside>

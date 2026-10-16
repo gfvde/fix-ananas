@@ -24,7 +24,7 @@
     {%- set product_image = item.image.full_size | default(item.image.medium | default(item.image.thumbnail | default(item.image.url | default('')))) -%}
   {%- endif -%}
   {%- if not product_image and item.images and item.images[0] -%}
-    {%- set product_image = item.images[0].url | default(item.images[0].image.url | default(item.images[0].image.full_size | default(item.images[0].image.medium | default('')))) -%}
+    {%- set product_image = item.images[0].url | default(item.images[0].image.url | default(item.images[0].image.full_size | default(item.images[0].image.medium | default(item.images[0].thumbs.fullSize | default(item.images[0].origin | default('')))))) -%}
   {%- endif -%}
   {%- if not product_image -%}
     {%- set product_image = item.product.image.full_size | default(item.product.image.medium | default(item.product.image.thumbnail | default(item.product.image.url | default(item.product.image_url | default(''))))) -%}

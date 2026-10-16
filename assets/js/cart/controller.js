@@ -343,6 +343,10 @@ function resolveImageUrl(value) {
     value.data?.medium ||
     value.data?.thumbnail ||
     value.data?.image_url ||
+    // zid.cart.get() items: { origin, thumbs: { fullSize, thumbnail, small } }
+    value.thumbs?.fullSize ||
+    value.thumbs?.thumbnail ||
+    value.origin ||
     ""
   );
 }
