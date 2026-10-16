@@ -186,10 +186,11 @@ async function doRefreshCartPage() {
     // Update cart badge in header
     refreshBadge();
 
-    // Update payment widgets (Tamara, Tabby) and loyalty calculations
+    // updateCartLoyaltyPoints refreshes window.cartObj first; the widgets and
+    // the loyalty display read it (before, they lagged one change behind)
+    await updateCartLoyaltyPoints();
     updatePaymentWidgets();
     updateLoyaltyDisplay();
-    await updateCartLoyaltyPoints();
 
     // Dispatch event for other components
     window.dispatchEvent(new CustomEvent("cart-updated"));
